@@ -117,6 +117,7 @@ const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
   const isFileUploaded = Object.keys(etoDocuments).some(
     uploadedKey => etoDocuments[uploadedKey].documentType === documentKey,
   );
+  console.log("UploadableDocument", documentKey, etoDocuments)
   return (
     <UploadableDocumentTile
       documentKey={documentKey}
@@ -141,6 +142,7 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
   const { allTemplates, stateInfo } = etoFilesData;
   const generalUploadables = stateInfo ? stateInfo.uploadableDocuments : [];
   const etoTemplateKeys = Object.keys(etoTemplates);
+  console.log("DocumentsLayout",etoDocuments, etoFilesData)
   return (
     <>
       <div data-test-id="eto-documents" className={styles.layout}>
