@@ -1065,6 +1065,8 @@
   "your-ethereum-address-widget.explanation": "This is the wallet address you are registered with on Neufund.",
   "your-ethereum-address-widget.header": "Wallet address",
   "download-agreement-widget.download-and-sign": "download and sign",
-  "download-agreement-widget.title": "download and sign",
-  "download-agreement-widget.text": "Your application is almost complete. Just sign the downloaded Investor Agreement and then upload the signed agreement to your legal documents."
+  "download-agreement-widget.signing-title": "download and sign",
+  "download-agreement-widget.signing-text": "Your application is almost complete. Just sign the downloaded Investor Agreement and then upload the signed agreement to your legal documents.",
+  "download-agreement-widget.go-to-wallet": "go to wallet",
+  "download-agreement-widget.success-title": "ETO Completed Successfully"
 }
