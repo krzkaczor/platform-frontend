@@ -1,4 +1,4 @@
-import { IEtoFiles } from "../../lib/api/eto/EtoFileApi.interfaces";
+import {IEtoFiles} from "../../lib/api/eto/EtoFileApi.interfaces";
 import { DeepReadonly } from "../../types";
 import { IEtoDocumentState } from "./reducer";
 
@@ -15,3 +15,4 @@ export const selectEtoDocumentLoading = (state: DeepReadonly<IEtoDocumentState>)
 export const selectEtoDocumentData = (
   state: DeepReadonly<IEtoDocumentState>,
 ): DeepReadonly<IEtoFiles> => state.etoFileData;
+

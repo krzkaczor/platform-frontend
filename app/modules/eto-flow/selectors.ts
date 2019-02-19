@@ -4,7 +4,7 @@ import {
   TPartialCompanyEtoData,
   TPartialEtoSpecData,
 } from "../../lib/api/eto/EtoApi.interfaces";
-import { TEtoDocumentTemplates } from "../../lib/api/eto/EtoFileApi.interfaces";
+import {EEtoDocumentType, IEtoDocument, TEtoDocumentTemplates} from "../../lib/api/eto/EtoFileApi.interfaces";
 import { ERequestStatus } from "../../lib/api/KycApi.interfaces";
 import { IAppState } from "../../store";
 import { selectIsUserEmailVerified } from "../auth/selectors";
@@ -14,6 +14,7 @@ import { selectKycRequestStatus } from "../kyc/selectors";
 import { selectEtoWithCompanyAndContract, selectPublicEto } from "../public-etos/selectors";
 import { EETOStateOnChain } from "../public-etos/types";
 import { isValidEtoStartDate } from "./utils";
+import {DeepReadonly} from "../../types";
 
 export const selectIssuerEtoPreviewCode = (state: IAppState) => state.etoFlow.etoPreviewCode;
 
@@ -53,7 +54,7 @@ export const selectMaxPledges = (state: IAppState) => {
   return eto !== undefined ? eto.maxPledges : null;
 };
 
-export const selectEtoId = (state: IAppState) => {
+export const selectEtoId = (state: IAppState):string|undefined => {
   const eto = selectIssuerEto(state);
   if (eto) {
     return eto.etoId;
@@ -149,6 +150,23 @@ export const selectIsOfferingDocumentSubmitted = (state: IAppState): boolean | u
   }
   return undefined;
 };
+
+export const selectUploadedInvestmentAgreement = (state: DeepReadonly<IAppState>): IEtoDocument | null => {
+  const etoDocuments = selectIssuerEtoDocuments(state)!;
+
+  const key = Object.keys(etoDocuments).find(
+    uploadedKey => etoDocuments[uploadedKey].documentType === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
+  )
+  return key ? etoDocuments[key] : null
+}
+
+export const selectInvestmentAgreementLoading = (state: DeepReadonly<IAppState>): boolean => {
+  return state.etoFlow.signedInvestmentAgreementUrlLoading
+}
+
+export const selectSignedInvestmentAgreementUrl = (state: DeepReadonly<IAppState>): string | null => {
+  return state.etoFlow.signedInvestmentAgreementUrl
+}
 
 export const selectShouldEtoDataLoad = (state: IAppState) =>
   selectKycRequestStatus(state) === ERequestStatus.ACCEPTED &&

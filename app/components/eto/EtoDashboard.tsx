@@ -36,7 +36,7 @@ import { UploadInvestmentMemorandum } from "./dashboard/UploadInvestmentMemorand
 import { UploadProspectusWidget } from "./dashboard/UploadProspectusWidget";
 import { UploadTermSheetWidget } from "./dashboard/UploadTermSheetWidget";
 import { DashboardSection } from "./shared/DashboardSection";
-import {DownloadInvestmentAgreement} from './dashboard/downloadInvestmentAgreementWidget/DownloadInvestmentAgreementWidget'
+import {UploadInvestmentAgreement} from "./dashboard/signInvestmentAgreementWidget/UploadInvestmentAgreementWidget";
 
 const SUBMIT_PROPOSAL_THRESHOLD = 1;
 
@@ -178,7 +178,7 @@ const EtoDashboardStateViewComponent: React.FunctionComponent<IEtoStateRender> =
         <>
           <DashboardSection hasDecorator={false} title={dashboardTitle} />
           <Col lg={6} xs={12}>
-            <DownloadInvestmentAgreement />
+            <UploadInvestmentAgreement />
           </Col>
           <Col lg={6} xs={12}>
             <ChooseEtoStartDateWidget />

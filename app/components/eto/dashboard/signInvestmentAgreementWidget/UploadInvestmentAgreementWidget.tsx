@@ -1,4 +1,4 @@
-import {branch, renderComponent} from "recompose";
+import {branch, renderComponent, renderNothing} from "recompose";
 import * as React from "react";
 import {compose} from "redux";
 import {FormattedMessage} from "react-intl-phraseapp";
@@ -7,18 +7,21 @@ import * as cn from "classnames";
 import {Panel} from "../../../shared/Panel";
 import {createErrorBoundary} from "../../../shared/errorBoundary/ErrorBoundary";
 import {ErrorBoundaryPanel} from "../../../shared/errorBoundary/ErrorBoundaryPanel";
-import {appConnect, IAppState} from "../../../../store";
-import * as styles from "../../EtoContentWidget.module.scss";
+import {appConnect} from "../../../../store";
 import {ButtonArrowRight} from "../../../shared/buttons/Button";
 import {EETOStateOnChain} from "../../../../modules/public-etos/types";
-import {selectEtoId, selectIssuerEtoDocuments} from "../../../../modules/eto-flow/selectors";
+import {SignInvestmentAgreement} from "./SignInvestmentAgreement";
+import {
+  selectEtoId,
+  selectUploadedInvestmentAgreement
+} from "../../../../modules/eto-flow/selectors";
 import {selectEtoOnChainStateById} from "../../../../modules/public-etos/selectors";
 import {actions} from "../../../../modules/actions";
-import {EEtoDocumentType, IEtoDocument} from "../../../../lib/api/eto/EtoFileApi.interfaces";
-import {NullComponent} from "../../shared/NullComponent";
+import {IEtoDocument} from "../../../../lib/api/eto/EtoFileApi.interfaces";
 import {PanelHeader} from "../../../shared/PanelHeader";
 import {selectEtoDocumentData} from "../../../../modules/eto-documents/selectors";
 
+import * as styles from "../../EtoContentWidget.module.scss";
 
 interface IDispatchProps {
   downloadAgreementTemplate: (agreementTemplate: IEtoDocument) => void;
@@ -30,35 +33,27 @@ interface IStateProps {
   uploadedAgreement: IEtoDocument | null;
 }
 
-interface IComponentStateProps {
+interface IUploadComponentStateProps {
   agreementTemplate: IEtoDocument;
   uploadedAgreement: IEtoDocument | null;
 }
 
-export const DownloadInvestmentAgreementLayout: React.FunctionComponent<IComponentStateProps & IDispatchProps> =
-  ({downloadAgreementTemplate, agreementTemplate, uploadedAgreement}) => {
-    if (uploadedAgreement === null) { //not uploaded
-      return (
-        <Panel>
-          <PanelHeader headerText={<FormattedMessage id="download-agreement-widget.signing-title"/>}/>
-          <div className={styles.content}>
-            <p className={cn(styles.text, "pt-2")}>
-              <FormattedMessage id="download-agreement-widget.signing-text"/>
-            </p>
-            <ButtonArrowRight data-test-id="eto-dashboard-submit-proposal"
-                              onClick={() => downloadAgreementTemplate(agreementTemplate)}>
-              <FormattedMessage id="download-agreement-widget.download-and-sign"/>
-            </ButtonArrowRight>
-          </div>
-        </Panel>
-      )
-    } else if (etoCommitment.signedInvestmentAgreementUrl() === undefined) { //uploaded, not signed
-      // widget says sign me
-      return null
-    } else if (etoCommitment.signedInvestmentAgreementUrl() === uploadedAgreement.ipfsHash) { // uploaded, signed
-      // widget says wait for nominee to sign it
-      return null
-    }
+export const UploadInvestmentAgreementLayout: React.FunctionComponent<IUploadComponentStateProps & IDispatchProps> =
+  ({downloadAgreementTemplate, agreementTemplate}) => {
+    return (
+      <Panel>
+        <PanelHeader headerText={<FormattedMessage id="download-agreement-widget.signing-title"/>}/>
+        <div className={styles.content}>
+          <p className={cn(styles.text, "pt-2")}>
+            <FormattedMessage id="download-agreement-widget.signing-text"/>
+          </p>
+          <ButtonArrowRight data-test-id="eto-dashboard-submit-proposal"
+                            onClick={() => downloadAgreementTemplate(agreementTemplate)}>
+            <FormattedMessage id="download-agreement-widget.download-and-sign"/>
+          </ButtonArrowRight>
+        </div>
+      </Panel>
+    )
   }
 
 export const EtoCompletedWidgetLayout: React.ComponentType<any> = ({goToWallet}) => { //fixme
@@ -74,17 +69,7 @@ export const EtoCompletedWidgetLayout: React.ComponentType<any> = ({goToWallet})
   )
 }
 
-const selectDoc = (state: IAppState): IEtoDocument | null => { //fixme this goes into selectors
-  const etoDocuments = selectIssuerEtoDocuments(state)!;
-  console.log("DownloadInvestmentAgreement", etoDocuments)
-
-  const key = Object.keys(etoDocuments).find(
-    uploadedKey => etoDocuments[uploadedKey].documentType === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
-  )
-  return key ? etoDocuments[key] : null
-}
-
-export const DownloadInvestmentAgreement = compose<React.FunctionComponent>(
+export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
   createErrorBoundary(ErrorBoundaryPanel),
   appConnect<IStateProps | null, IDispatchProps>({
     stateToProps: state => {
@@ -93,7 +78,7 @@ export const DownloadInvestmentAgreement = compose<React.FunctionComponent>(
         return ({
           stateOnChain: selectEtoOnChainStateById(state, etoId),
           agreementTemplate: selectEtoDocumentData(state.etoDocuments).allTemplates.investmentAndShareholderAgreementTemplate,
-          uploadedAgreement: selectDoc(state)
+          uploadedAgreement: selectUploadedInvestmentAgreement(state),
         })
       } else {
         return null
@@ -107,9 +92,21 @@ export const DownloadInvestmentAgreement = compose<React.FunctionComponent>(
       }
     }),
   }),
-  branch<IStateProps | null>(props => props === null, renderComponent(NullComponent)),
+  branch<IStateProps | null>(props => props === null, renderNothing),
   branch<IStateProps>(props => (
     props.stateOnChain === EETOStateOnChain.Claim || props.stateOnChain === EETOStateOnChain.Payout
   ), renderComponent(EtoCompletedWidgetLayout)),
-  branch<IStateProps>(props => props.stateOnChain !== EETOStateOnChain.Signing, renderComponent(NullComponent)),
-)(DownloadInvestmentAgreementLayout);
+  branch<IStateProps>(props => props.stateOnChain !== EETOStateOnChain.Signing, renderNothing),
+  branch<IStateProps>(props => props.uploadedAgreement !== null, renderComponent(SignInvestmentAgreement)),
+)(UploadInvestmentAgreementLayout);
+
+//invalid state, props invalid
+//stateOnChain is Claim, Proceeds
+//stateOnChain is not Signing
+//uploadedAgreement is there
+//uploadedAgreement is null
+//----------//
+//signed agreement loading
+//signed agreement loaded, it's null
+//signed agreemtn loaded, it's a string
+
