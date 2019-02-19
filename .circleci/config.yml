@@ -40,7 +40,7 @@ jobs:
             keys:
               - v15-deps-{{ checksum "package.json" }}
               - v15-deps-
-
+        - run: yarn
         - run: yarn prepare
         - run:
             name: Deploy Master to Heroku
