@@ -15,8 +15,8 @@ import { selectMaxAvailableEther } from "../../../../modules/wallet/selectors";
 import { doesUserHaveEnoughEther, validateAddress } from "../../../../modules/web3/utils";
 import { appConnect } from "../../../../store";
 import { IIntlProps, injectIntlHelpers } from "../../../../utils/injectIntlHelpers";
-import { SpinningEthereum } from "../../../landing/parts/SpinningEthereum";
 import { Button } from "../../../shared/buttons";
+import { SpinningEthereum } from "../../../shared/ethererum";
 import { Form, FormField } from "../../../shared/forms";
 import { ValidationErrorMessage } from "../shared/ValidationErrorMessage";
 

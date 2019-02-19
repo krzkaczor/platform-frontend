@@ -7,7 +7,6 @@ import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import { ITxData } from "../../lib/web3/types";
 import { IAppState } from "../../store";
 import { addBigNumbers, compareBigNumbers, subtractBigNumbers } from "../../utils/BigNumberUtils";
-import { isLessThanNHours } from "../../utils/Date.utils";
 import { convertToBigInt } from "../../utils/Number.utils";
 import { extractNumber } from "../../utils/StringUtils";
 import { actions, TAction } from "../actions";
@@ -17,11 +16,7 @@ import {
   selectCalculatedEtoTicketSizesUlpsById,
   selectIsWhitelisted,
 } from "../investor-portfolio/selectors";
-import {
-  selectEtoOnChainStateById,
-  selectEtoWithCompanyAndContractById,
-  selectPublicEtoById,
-} from "../public-etos/selectors";
+import { selectEtoOnChainStateById, selectPublicEtoById } from "../public-etos/selectors";
 import { EETOStateOnChain } from "../public-etos/types";
 import { neuCall } from "../sagasUtils";
 import { selectEtherPriceEur, selectEurPriceEther } from "../shared/tokenPrice/selectors";
@@ -34,28 +29,15 @@ import {
   selectLockedEtherBalance,
   selectLockedEuroTokenBalance,
 } from "../wallet/selectors";
-import {
-  EBankTransferFlowState,
-  EInvestmentCurrency,
-  EInvestmentErrorState,
-  EInvestmentType,
-  IInvestmentFlowState,
-} from "./reducer";
+import { EInvestmentCurrency, EInvestmentErrorState, EInvestmentType } from "./reducer";
 import {
   selectCurrencyByInvestmentType,
   selectInvestmentEthValueUlps,
   selectInvestmentEtoId,
   selectInvestmentEurValueUlps,
   selectInvestmentType,
-  selectIsBankTransferModalOpened,
   selectIsICBMInvestment,
 } from "./selectors";
-
-// default: 3 days
-const HOURS_TO_DISABLE_BANK_TRANSFER = parseInt(
-  process.env.NF_HOURS_TO_DISABLE_BANK_TRANSFER_INVESTMENT || "72",
-  10,
-);
 
 function* processCurrencyValue(action: TAction): any {
   if (action.type !== "INVESTMENT_FLOW_SUBMIT_INVESTMENT_VALUE") return;
@@ -199,14 +181,11 @@ function* validateAndCalculateInputs({ contractsService }: TGlobalDependencies):
       state = yield select();
       yield put(actions.investmentFlow.setErrorState(validateInvestment(state)));
 
-      // validate and set transaction if not on bank transfer
-      if (state.investmentFlow.investmentType !== EInvestmentType.BankTransfer) {
-        const txData: ITxData = yield neuCall(
-          txValidateSaga,
-          actions.txValidator.txSenderValidateDraft({ type: ETxSenderType.INVEST }),
-        );
-        yield put(actions.txSender.setTransactionData(txData));
-      }
+      const txData: ITxData = yield neuCall(
+        txValidateSaga,
+        actions.txValidator.txSenderValidateDraft({ type: ETxSenderType.INVEST }),
+      );
+      yield put(actions.txSender.setTransactionData(txData));
 
       yield put(actions.investmentFlow.setIsInputValidated(true));
     }
@@ -231,43 +210,15 @@ function* start(action: TAction): any {
 }
 
 export function* onInvestmentTxModalHide(): any {
-  const isModalOpen = yield select(selectIsBankTransferModalOpened);
-  if (!isModalOpen) {
-    yield put(actions.investmentFlow.resetInvestment());
-  }
+  yield put(actions.investmentFlow.resetInvestment());
 }
 
 function* getActiveInvestmentTypes(): any {
   const state: IAppState = yield select();
   const etoId = selectInvestmentEtoId(state);
-  const eto = selectEtoWithCompanyAndContractById(state, etoId);
   const etoState = selectEtoOnChainStateById(state, etoId);
 
-  let activeTypes: EInvestmentType[] = [
-    EInvestmentType.InvestmentWallet,
-    EInvestmentType.BankTransfer,
-  ];
-
-  // no public bank transfer 3 days before eto end
-  const etoEndDate = eto && eto.contract && eto.contract.startOfStates[EETOStateOnChain.Signing];
-  if (
-    etoState === EETOStateOnChain.Public &&
-    etoEndDate &&
-    isLessThanNHours(new Date(), etoEndDate, HOURS_TO_DISABLE_BANK_TRANSFER)
-  ) {
-    activeTypes.splice(1); // remove bank transfer
-  }
-
-  // no whitelist bank transfer 3 days before public eto
-  const etoEndWhitelistDate =
-    eto && eto.contract && eto.contract.startOfStates[EETOStateOnChain.Public];
-  if (
-    etoState === EETOStateOnChain.Whitelist &&
-    etoEndWhitelistDate &&
-    isLessThanNHours(new Date(), etoEndWhitelistDate, HOURS_TO_DISABLE_BANK_TRANSFER)
-  ) {
-    activeTypes.splice(1); // remove bank transfer
-  }
+  let activeTypes: EInvestmentType[] = [EInvestmentType.InvestmentWallet];
 
   // no regular investment if not whitelisted in pre eto
   if (etoState === EETOStateOnChain.Whitelist && !selectIsWhitelisted(state, etoId)) {
@@ -304,25 +255,6 @@ function* recalculateCurrencies(): any {
   }
 }
 
-function* showBankTransferDetails(): any {
-  const state: IInvestmentFlowState = yield select((s: IAppState) => s.investmentFlow);
-  if (state.investmentType !== EInvestmentType.BankTransfer) return;
-  yield put(actions.investmentFlow.setBankTransferFlowState(EBankTransferFlowState.Details));
-  yield put(actions.txSender.txSenderHideModal());
-}
-
-function* showBankTransferSummary(): any {
-  const state: IInvestmentFlowState = yield select((s: IAppState) => s.investmentFlow);
-  if (state.investmentType !== EInvestmentType.BankTransfer) return;
-  yield put(actions.investmentFlow.setBankTransferFlowState(EBankTransferFlowState.Summary));
-  yield put(actions.txSender.txSenderHideModal());
-}
-
-function* bankTransferChange(action: TAction): any {
-  if (action.type !== "INVESTMENT_FLOW_BANK_TRANSFER_CHANGE") return;
-  yield put(actions.txSender.txSenderChange(action.payload.type));
-}
-
 function* resetTxDataAndValidations(): any {
   yield put(actions.txValidator.setValidationState());
   const initialTxData = yield neuCall(generateInvestmentTransaction);
@@ -337,10 +269,7 @@ export function* investmentFlowSagas(): any {
   yield takeEvery("INVESTMENT_FLOW_SUBMIT_INVESTMENT_VALUE", processCurrencyValue);
   yield takeLatest("INVESTMENT_FLOW_VALIDATE_INPUTS", neuCall, validateAndCalculateInputs);
   yield takeEvery("INVESTMENT_FLOW_START", start);
-  yield takeEvery("INVESTMENT_FLOW_SHOW_BANK_TRANSFER_SUMMARY", showBankTransferSummary);
-  yield takeEvery("INVESTMENT_FLOW_SHOW_BANK_TRANSFER_DETAILS", showBankTransferDetails);
   yield takeEvery("TOKEN_PRICE_SAVE", recalculateCurrencies);
-  yield takeEvery("INVESTMENT_FLOW_BANK_TRANSFER_CHANGE", bankTransferChange);
   yield takeEvery("INVESTMENT_FLOW_SELECT_INVESTMENT_TYPE", resetTxDataAndValidations);
   yield takeEvery("INVESTMENT_FLOW_INVEST_ENTIRE_BALANCE", investEntireBalance);
   yield takeEvery("@@router/LOCATION_CHANGE", stop); // stop investment if some link is clicked

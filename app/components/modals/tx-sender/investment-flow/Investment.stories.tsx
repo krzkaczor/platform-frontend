@@ -6,7 +6,6 @@ import {
   EInvestmentErrorState,
   EInvestmentType,
 } from "../../../../modules/investment-flow/reducer";
-import { EValidationState } from "../../../../modules/tx/sender/reducer";
 import { injectIntlHelpers } from "../../../../utils/injectIntlHelpers";
 import { withModalBody } from "../../../../utils/storybookHelpers";
 import { InvestmentSelectionComponent } from "./Investment";
@@ -35,7 +34,6 @@ storiesOf("Investment/Form", module)
         eurPriceEther={"0.123412341234123412341234"}
         investEntireBalance={() => {}}
         investmentType={EInvestmentType.InvestmentWallet}
-        isWalletBalanceKnown={true}
         minTicketEth={"12341234123412341234"}
         minTicketEur={"1234"}
         maxTicketEur={"123456"}
@@ -45,43 +43,7 @@ storiesOf("Investment/Form", module)
         totalCostEth={"1234141234123412341234"}
         totalCostEur={"123412341234123412341234"}
         sendTransaction={() => {}}
-        showBankTransferSummary={() => {}}
-        isBankTransfer={false}
         hasPreviouslyInvested={true}
-      />
-    </Container>
-  ))
-  .add("bank", () => (
-    <Container>
-      <Investment
-        wallets={wallets}
-        changeEthValue={() => {}}
-        changeEuroValue={() => {}}
-        changeInvestmentType={() => {}}
-        equityTokenCount={"1234"}
-        errorState={EValidationState.VALIDATION_OK}
-        ethValue={"1234123412341232341234"}
-        // tslint:disable-next-line:no-object-literal-type-assertion
-        eto={{ etoId: 11234 } as any}
-        euroValue={"123412341234123412341234"}
-        gasCostEth={"0"}
-        gasCostEuro={"0"}
-        etherPriceEur={"123412341234123412341234"}
-        eurPriceEther={"0.123412341234123412341234"}
-        investEntireBalance={() => {}}
-        investmentType={EInvestmentType.BankTransfer}
-        isWalletBalanceKnown={true}
-        minTicketEth={"12341234123412341234"}
-        minTicketEur={"1234"}
-        maxTicketEur={"123456"}
-        readyToInvest={false}
-        investNow={() => {}}
-        showTokens={true}
-        totalCostEth={"1234141234123412341234"}
-        totalCostEur={"123412341234123412341234"}
-        sendTransaction={() => {}}
-        showBankTransferSummary={() => {}}
-        isBankTransfer={true}
       />
     </Container>
   ));

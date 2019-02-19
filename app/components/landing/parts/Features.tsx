@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Col, Container, Row } from "reactstrap";
 
+import { SpinningEthereum } from "../../shared/ethererum";
 import { Interoperable } from "./Interoperable";
 import { RainbowSheepTip } from "./RainbowSheepTip";
 import { SmartContractWindow } from "./SmartContractWindow";
-import { SpinningEthereum } from "./SpinningEthereum";
 
 import * as styles from "./Features.module.scss";
 

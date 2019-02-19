@@ -1,6 +1,6 @@
 import { ITxData } from "../../../lib/web3/types";
 import { AppReducer } from "../../../store";
-import { ETxSenderType } from "./../interfaces";
+import { ETxSenderType } from "../interfaces";
 
 export enum ETransactionErrorType {
   NOT_ENOUGH_ETHER_FOR_GAS = "not_enough_ether_for_gas",

@@ -4,6 +4,7 @@ import { portfolioActions } from "../components/portfolio/actions";
 import { TDictionaryValues } from "../types";
 import { accessWalletActions } from "./access-wallet/actions";
 import { authActions } from "./auth/actions";
+import { bankTransferFLowActions } from "./bank-transfer-flow/actions";
 import { bookBuildingFlowActions } from "./bookbuilding-flow/actions";
 import { contractsActions } from "./contracts/actions";
 import { depositModalActions } from "./deposit-eth-modal/actions";
@@ -39,6 +40,7 @@ import { web3Actions } from "./web3/actions";
 
 /** You should add new actions also here (with a namespace).*/
 export const actions = {
+  bankTransferFlow: bankTransferFLowActions,
   contracts: contractsActions,
   txValidator: txValidatorActions,
   txTransactions: txTransactionsActions,

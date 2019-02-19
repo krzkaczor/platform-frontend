@@ -4,6 +4,7 @@ import { branch, renderComponent } from "recompose";
 import { compose } from "redux";
 
 import { actions } from "../../../../modules/actions";
+import { EBankTransferType } from "../../../../modules/bank-transfer-flow/reducer";
 import { ETokenType } from "../../../../modules/tx/interfaces";
 import {
   selectICBMLockedEtherBalance,
@@ -52,6 +53,7 @@ interface IDispatchProps {
   withdrawEthUnlockedWallet: () => void;
   upgradeWalletEtherToken: () => void;
   upgradeWalletEuroToken: () => void;
+  purchaseNEur: () => void;
 }
 
 type TProps = IStateProps & IDispatchProps;
@@ -65,6 +67,7 @@ export const WalletStartComponent: React.FunctionComponent<TProps> = ({
   withdrawEthUnlockedWallet,
   upgradeWalletEuroToken,
   upgradeWalletEtherToken,
+  purchaseNEur,
 }) => (
   <>
     <Row className="row-gutter-top" data-test-id="wallet-start-container">
@@ -85,7 +88,7 @@ export const WalletStartComponent: React.FunctionComponent<TProps> = ({
           className="h-100"
           neuroAmount={liquidWalletData.neuroAmount}
           neuroEuroAmount={liquidWalletData.neuroEuroAmount}
-          onTopUP={() => {}}
+          onTopUP={purchaseNEur}
           onRedeem={() => {}}
         />
       </Col>
@@ -164,6 +167,8 @@ export const WalletStart = compose<React.FunctionComponent>(
       upgradeWalletEuroToken: () => dispatch(actions.txTransactions.startUpgrade(ETokenType.EURO)),
       upgradeWalletEtherToken: () =>
         dispatch(actions.txTransactions.startUpgrade(ETokenType.ETHER)),
+      purchaseNEur: () =>
+        dispatch(actions.bankTransferFlow.startBankTransfer(EBankTransferType.PURCHASE)),
     }),
   }),
   branch<IStateProps>(props => props.isLoading, renderComponent(LoadingIndicator)),

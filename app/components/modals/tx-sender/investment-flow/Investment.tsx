@@ -58,7 +58,6 @@ import {
   formatEurTsd,
   formatVaryingDecimals,
   getInputErrorMessage,
-  getInvestmentTypeMessages,
 } from "./utils";
 
 import * as styles from "./Investment.module.scss";
@@ -89,19 +88,16 @@ interface IDispatchProps {
   changeEuroValue: (value: string) => void;
   changeEthValue: (value: string) => void;
   changeInvestmentType: (type: EInvestmentType) => void;
-  showBankTransferSummary: () => void;
   investEntireBalance: () => void;
 }
 
 interface IWithProps {
   gasCostEuro: string;
-  isWalletBalanceKnown: boolean;
   minTicketEth: string;
   minTicketEur: string;
   maxTicketEur: string;
   totalCostEth: string;
   totalCostEur: string;
-  isBankTransfer: boolean;
 }
 
 interface IHandlersProps {
@@ -124,7 +120,6 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
   intl,
   investEntireBalance,
   investmentType,
-  isWalletBalanceKnown,
   minTicketEth,
   minTicketEur,
   maxTicketEur,
@@ -135,7 +130,6 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
   totalCostEth,
   totalCostEur,
   wallets,
-  isBankTransfer,
   hasPreviouslyInvested,
 }) => (
   <>
@@ -153,7 +147,6 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
           currentType={investmentType}
           onSelect={changeInvestmentType}
         />
-        <Col className={styles.walletInfo}>{getInvestmentTypeMessages(investmentType)}</Col>
       </Row>
       <Row>
         <Col>
@@ -213,12 +206,7 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
               "investment-flow.min-ticket-size",
             )} ${formatMoney(minTicketEth, 0, 4)} ETH`}
             value={formatVaryingDecimals(ethValue)}
-            className={cn(
-              "form-control",
-              styles.investInput,
-              isBankTransfer && styles.disabledInput,
-            )}
-            disabled={isBankTransfer}
+            className={cn("form-control", styles.investInput)}
             renderInput={props => (
               <MaskedInput
                 {...props}
@@ -233,19 +221,17 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
               />
             )}
           />
-          {isWalletBalanceKnown && (
-            <a
-              className={styles.investAll}
-              data-test-id="invest-modal-full-balance-btn"
-              href="#"
-              onClick={e => {
-                e.preventDefault();
-                investEntireBalance();
-              }}
-            >
-              <FormattedMessage id="investment-flow.invest-entire-balance" />
-            </a>
-          )}
+          <a
+            className={styles.investAll}
+            data-test-id="invest-modal-full-balance-btn"
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              investEntireBalance();
+            }}
+          >
+            <FormattedMessage id="investment-flow.invest-entire-balance" />
+          </a>
         </Col>
       </Row>
     </Container>
@@ -363,7 +349,6 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
     },
     dispatchToProps: dispatch => ({
       sendTransaction: () => dispatch(actions.txSender.txSenderAcceptDraft()),
-      showBankTransferSummary: () => dispatch(actions.investmentFlow.showBankTransferSummary()),
       changeEthValue: value =>
         dispatch(actions.investmentFlow.submitCurrencyValue(value, EInvestmentCurrency.Ether)),
       changeEuroValue: value =>
@@ -374,22 +359,12 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
     }),
   }),
   withProps<IWithProps, IStateProps>(
-    ({
-      ethValue,
-      etoTicketSizes,
-      investmentType,
-      gasCostEth,
-      euroValue,
-      etherPriceEur,
-      eurPriceEther,
-    }) => {
-      const isBankTransfer = investmentType === EInvestmentType.BankTransfer;
-      const gasCostEther = isBankTransfer || !ethValue ? "0" : gasCostEth;
+    ({ ethValue, etoTicketSizes, gasCostEth, euroValue, etherPriceEur, eurPriceEther }) => {
+      const gasCostEther = !ethValue ? "0" : gasCostEth;
       const gasCostEuro = multiplyBigNumbers([gasCostEther, etherPriceEur]);
       const minTicketEur = formatEur(etoTicketSizes && etoTicketSizes.minTicketEurUlps) || "0";
       const maxTicketEur = formatEur(etoTicketSizes && etoTicketSizes.maxTicketEurUlps) || "0";
       return {
-        isBankTransfer,
         minTicketEur,
         maxTicketEur,
         minTicketEth: multiplyBigNumbers([minTicketEur, eurPriceEther]),
@@ -397,17 +372,12 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
         gasCostEth: gasCostEther,
         totalCostEth: addBigNumbers([gasCostEther, ethValue || "0"]),
         totalCostEur: addBigNumbers([gasCostEuro, euroValue || "0"]),
-        isWalletBalanceKnown: !isBankTransfer,
       };
     },
   ),
   withHandlers<IStateProps & IDispatchProps & IWithProps, IHandlersProps>({
-    investNow: ({ investmentType, sendTransaction, showBankTransferSummary }) => () => {
-      if (investmentType !== EInvestmentType.BankTransfer) {
-        sendTransaction();
-      } else {
-        showBankTransferSummary();
-      }
+    investNow: ({ sendTransaction }) => () => {
+      sendTransaction();
     },
   }),
 )(InvestmentSelectionComponent);

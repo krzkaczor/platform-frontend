@@ -1,3 +1,4 @@
+import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { Container } from "reactstrap";
@@ -7,7 +8,6 @@ import { withModalBody } from "../../../../utils/storybookHelpers";
 import { InvestmentTypeSelector, WalletSelectionData } from "./InvestmentTypeSelector";
 
 import * as ethIcon from "../../../../assets/img/eth_icon.svg";
-import * as euroIcon from "../../../../assets/img/euro_icon.svg";
 import * as neuroIcon from "../../../../assets/img/nEUR_icon.svg";
 
 export const wallets: WalletSelectionData[] = [
@@ -32,15 +32,7 @@ export const wallets: WalletSelectionData[] = [
     name: "Investment Wallet",
     icon: ethIcon,
   },
-  {
-    type: EInvestmentType.BankTransfer,
-    name: "Invest with EUR",
-    icon: euroIcon,
-  },
 ];
-
-// tslint:disable-next-line:no-console
-const onSelect = (v: any) => console.log(v);
 
 storiesOf("Investment/InvestmentTypeSelector", module)
   .addDecorator(withModalBody())
@@ -49,7 +41,7 @@ storiesOf("Investment/InvestmentTypeSelector", module)
       <InvestmentTypeSelector
         wallets={wallets}
         currentType={EInvestmentType.InvestmentWallet}
-        onSelect={onSelect}
+        onSelect={action("onSelect")}
       />
     </Container>
   ));

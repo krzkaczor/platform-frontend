@@ -6,9 +6,8 @@ import {
   TWalletMigrationSteps,
 } from "../../../modules/icbm-wallet-balance-modal/reducer";
 import { myEtherWalletUrl } from "../../../utils/myEtherWallet";
-import { ConfettiEthereum } from "../../landing/parts/ConfettiEthereum";
-import { SpinningEthereum } from "../../landing/parts/SpinningEthereum";
 import { ButtonArrowRight } from "../../shared/buttons";
+import { ConfettiEthereum, SpinningEthereum } from "../../shared/ethererum";
 import { HighlightedStripField } from "../../shared/HighlightedStripField";
 import { ExternalLink } from "../../shared/links";
 import { SectionHeader } from "../../shared/SectionHeader";

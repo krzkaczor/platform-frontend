@@ -10,6 +10,7 @@ interface ITranslationValues {
 }
 
 export type TranslatedMessageType =
+  | BankTransferFlowMessage
   | GenericErrorMessage
   | GenericModalMessage
   | SignInUserErrorMessage
@@ -92,6 +93,10 @@ export enum BackupRecoveryMessage {
 export enum ToSMessage {
   TOS_ACCEPT_PERMISSION_TITLE = "tosAcceptPermissionTitle",
   TOS_ACCEPT_PERMISSION_TEXT = "tosAcceptPermissionText",
+}
+
+export enum BankTransferFlowMessage {
+  BANK_TRANSFER_FLOW_ERROR = "bankTransferFlowError",
 }
 
 export enum BookbuildingFlowMessage {
@@ -230,6 +235,9 @@ const getMessageTranslation = ({ messageType, messageData }: TMessage): TTransla
 
     case GenericModalMessage.ERROR_TITLE:
       return <FormattedMessage id="modal.generic.title.error" />;
+
+    case BankTransferFlowMessage.BANK_TRANSFER_FLOW_ERROR:
+      return <FormattedMessage id="bank-transfer-flow.failed-to-start" />;
 
     case BrowserWalletErrorMessage.WALLET_IS_LOCKED:
       return <FormattedMessage id="error-message.browser-wallet.wallet-locked" />;

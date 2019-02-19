@@ -1,9 +1,8 @@
 import BigNumber from "bignumber.js";
 import * as React from "react";
-import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
+import { FormattedMessage } from "react-intl-phraseapp";
 
 import { MONEY_DECIMALS } from "../../../../config/constants";
-import { externalRoutes } from "../../../../config/externalRoutes";
 import {
   EInvestmentErrorState,
   EInvestmentType,
@@ -25,7 +24,6 @@ import { formatThousands } from "../../../../utils/Number.utils";
 import { WalletSelectionData } from "./InvestmentTypeSelector";
 
 import * as ethIcon from "../../../../assets/img/eth_icon.svg";
-import * as euroIcon from "../../../../assets/img/euro_icon.svg";
 import * as neuroIcon from "../../../../assets/img/nEUR_icon.svg";
 
 export function createWallets(state: IAppState): WalletSelectionData[] {
@@ -40,11 +38,6 @@ export function createWallets(state: IAppState): WalletSelectionData[] {
       type: EInvestmentType.InvestmentWallet,
       name: "Investment Wallet",
       icon: ethIcon,
-    },
-    [EInvestmentType.BankTransfer]: {
-      type: EInvestmentType.BankTransfer,
-      name: "Invest with EUR",
-      icon: euroIcon,
     },
     [EInvestmentType.ICBMnEuro]: {
       type: EInvestmentType.ICBMnEuro,
@@ -100,35 +93,37 @@ export function getInputErrorMessage(
   }
 }
 
-export function getInvestmentTypeMessages(type?: EInvestmentType): React.ReactNode {
-  switch (type) {
-    case EInvestmentType.BankTransfer:
-      return (
-        <FormattedHTMLMessage
-          id="investment-flow.bank-transfer-info-message"
-          tagName="p"
-          values={{ href: `${externalRoutes.neufundSupport}/home` }}
-        />
-      );
-  }
-}
-
+/**
+ * @deprecated Use Money component
+ */
 export function formatEur(val?: string | BigNumber): string | undefined {
   return val && formatMoney(val, MONEY_DECIMALS, 2);
 }
 
+/**
+ * @deprecated Use Money component
+ */
 export function formatEurTsd(val?: string | BigNumber): string | undefined {
   return formatThousands(formatEur(val));
 }
 
+/**
+ * @deprecated Use Money component
+ */
 export function formatEth(val?: string | BigNumber): string | undefined {
   return val && formatMoney(val, MONEY_DECIMALS, 4);
 }
 
+/**
+ * @deprecated Use Money component
+ */
 export function formatEthTsd(val?: string | BigNumber): string | undefined {
   return formatThousands(formatEth(val));
 }
 
+/**
+ * @deprecated Use Money component
+ */
 export function formatVaryingDecimals(val?: string | BigNumber): string | undefined {
   return val && formatMoney(val, MONEY_DECIMALS);
 }
