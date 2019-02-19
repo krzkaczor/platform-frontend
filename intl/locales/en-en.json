@@ -1068,5 +1068,9 @@
   "download-agreement-widget.signing-title": "download and sign",
   "download-agreement-widget.signing-text": "Your application is almost complete. Just sign the downloaded Investor Agreement and then upload the signed agreement to your legal documents.",
   "download-agreement-widget.go-to-wallet": "go to wallet",
-  "download-agreement-widget.success-title": "ETO Completed Successfully"
+  "download-agreement-widget.success-title": "ETO Completed Successfully",
+  "download-agreement-widget.sign-on-ethereum": "Sign on ethereum",
+  "download-agreement-widget.sign-on-ethereum-text": "This is the final step. Announced agreements can only be confirmed by the nominee. Click below to sign the agreement on Ethereum.",
+  "download-agreement-widget.wait-for-nominee-to-sign": "Awaiting confirmation...",
+  "download-agreement-widget.wait-for-nominee-to-sign-text": "Please be patient. It should not take long for your agreement to be confirmed."
 }
