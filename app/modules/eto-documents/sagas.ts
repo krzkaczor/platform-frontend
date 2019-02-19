@@ -175,12 +175,12 @@ function* uploadEtoFile(
 
     const uploadResult:IEtoDocument = yield apiEtoFileService.uploadEtoDocument(file, documentType);
     notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_UPLOADED));
-    if(documentType ===  EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){
+
+    if(documentType ===  EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){//fixme mb move to separate saga
       const state = yield select();
       const etoId = yield selectEtoId(state);
-      yield put(actions.etoDocuments.loadFileDataStart());
-      // yield put(actions.etoFlow.setInvestmentAgreementHash(uploadResult.ipfsHash))
-      yield put(actions.etoFlow.signInvestmentAgreement(etoId,uploadResult.ipfsHash))
+      // yield put(actions.etoDocuments.loadFileDataStart());
+      yield put(actions.etoFlow.signInvestmentAgreement(etoId, uploadResult.ipfsHash))
     }
   } catch (e) {
     if (e instanceof FileAlreadyExists) {

@@ -13,7 +13,7 @@ import {
   TPartialEtoSpecData,
 } from "../../lib/api/eto/EtoApi.interfaces";
 import {IAppState} from "../../store";
-import {actions, TAction} from "../actions";
+import {actions, TAction, TActionFromCreator} from "../actions";
 import {ensurePermissionsArePresent} from "../auth/jwt/sagas";
 import {loadEtoContact} from "../public-etos/sagas";
 import {neuCall, neuTakeEvery, neuTakeLatest} from "../sagasUtils";
@@ -176,9 +176,9 @@ export function* cleanupSetDateTX(): any {
 
 export function* loadInvestmentAgreement(
   {contractsService,}: TGlobalDependencies,
-  action: TAction
+  action: TActionFromCreator<typeof actions.etoFlow.loadSignedInvestmentAgreement>,
 ): any {
-  if (action.type !== etoFlowActions.loadSignedInvestmentAgreement.getType()) return;
+  // if (action.type !== etoFlowActions.loadSignedInvestmentAgreement.getType()) return;
   const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(action.payload.etoId)
   const url: string | null = yield  contract.signedInvestmentAgreementUrl
   console.log("loadInvestmentAgreement :","'",url,"'", typeof url)

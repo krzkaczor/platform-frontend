@@ -160,6 +160,15 @@ export const selectUploadedInvestmentAgreement = (state: DeepReadonly<IAppState>
   return key ? etoDocuments[key] : null
 }
 
+// export const selectSignedInvestmentAgreement = (state: DeepReadonly<IAppState>): IEtoDocument | null => {
+//   const etoDocuments = selectIssuerEtoDocuments(state)!;
+//
+//   const key = Object.keys(etoDocuments).find(
+//     uploadedKey => etoDocuments[uploadedKey].documentType === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
+//   )
+//   return key ? etoDocuments[key] : null
+// }
+
 export const selectInvestmentAgreementLoading = (state: DeepReadonly<IAppState>): boolean => {
   return state.etoFlow.signedInvestmentAgreementUrlLoading
 }
