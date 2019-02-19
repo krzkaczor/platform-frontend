@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { IKycIndividualData, TKycBankAccount } from "../../lib/api/KycApi.interfaces";
 import { InlineIcon } from "../shared/InlineIcon";
 
-import * as bankIcon from "../../assets/img/inline_icons/plus.svg";
+import * as bankIcon from "../../assets/img/inline_icons/bank.svg";
 import * as styles from "./VerifiedBankAccount.module.scss";
 
 interface IExternalProps {
