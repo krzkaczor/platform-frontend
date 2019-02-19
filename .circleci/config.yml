@@ -41,7 +41,7 @@ jobs:
               - v14-deps-{{ checksum "package.json" }}
               - v14-deps-
 
-        - run: yarn prepare
+        - run: yarn prepare --ignore-engines
         - run:
             name: Deploy Master to Heroku
             command: |
