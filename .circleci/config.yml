@@ -33,7 +33,7 @@ jobs:
 
   deploy-heroku:
       docker:
-        - image: buildpack-deps:trusty
+        - image: krzkaczor/neufund-platform-base
       steps:
         - checkout
         - run:
