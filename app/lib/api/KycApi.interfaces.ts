@@ -153,6 +153,7 @@ export enum EKycBusinessType {
 
 export const KycBankAccountSchema = YupTS.object({
   bankAccountNumberLast4: YupTS.string(),
+  holderName: YupTS.string(),
 });
 
 export type TKycBankAccount = YupTS.TypeOf<typeof KycBankAccountSchema>;
