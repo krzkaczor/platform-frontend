@@ -1,36 +1,37 @@
 import * as cn from "classnames";
 import * as React from "react";
-import { FormattedMessage } from "react-intl-phraseapp";
-import { Modal } from "reactstrap";
+import {FormattedMessage} from "react-intl-phraseapp";
+import {Modal} from "reactstrap";
 
-import { ITxData } from "../../../lib/web3/types";
-import { actions } from "../../../modules/actions";
-import { ETxSenderType } from "../../../modules/tx/interfaces";
-import { ETransactionErrorType, ETxSenderState } from "../../../modules/tx/sender/reducer";
-import { selectTxSenderModalOpened } from "../../../modules/tx/sender/selectors";
-import { appConnect } from "../../../store";
-import { LoadingIndicator } from "../../shared/loading-indicator";
-import { ModalComponentBody } from "../ModalComponentBody";
-import { AccessWalletContainer } from "../wallet-access/AccessWalletModal";
-import { SetEtoDateSummary } from "./eto-flow/SetDateSummary";
-import { InvestmentSelection } from "./investment-flow/Investment";
-import { InvestmentSuccess } from "./investment-flow/Success";
-import { InvestmentSummary } from "./investment-flow/Summary";
-import { InvestorAcceptPayoutSuccess } from "./investor-payout/AcceptSuccess";
-import { InvestorAcceptPayoutSummary } from "./investor-payout/AcceptSummary";
-import { InvestorRedistributePayoutConfirm } from "./investor-payout/RedistributeConfirm";
-import { InvestorRedistributePayoutSuccess } from "./investor-payout/RedistributeSuccess";
-import { InvestorRedistributePayoutSummary } from "./investor-payout/RedistributeSummary";
-import { ErrorMessage } from "./shared/ErrorMessage";
-import { SigningMessage } from "./shared/SigningMessage";
-import { TxPending } from "./shared/TxPending";
-import { WatchPendingTxs } from "./shared/WatchPeningTxs";
-import { UpgradeSummary } from "./upgrade-flow/Summary";
-import { UserClaimSuccess } from "./user-claim/Success";
-import { UserClaimSummary } from "./user-claim/Summary";
-import { WithdrawSuccess } from "./withdraw-flow/Success";
-import { WithdrawSummary } from "./withdraw-flow/Summary";
-import { Withdraw } from "./withdraw-flow/Withdraw";
+import {ITxData} from "../../../lib/web3/types";
+import {actions} from "../../../modules/actions";
+import {ETxSenderType} from "../../../modules/tx/interfaces";
+import {ETransactionErrorType, ETxSenderState} from "../../../modules/tx/sender/reducer";
+import {selectTxSenderModalOpened} from "../../../modules/tx/sender/selectors";
+import {appConnect} from "../../../store";
+import {LoadingIndicator} from "../../shared/loading-indicator";
+import {ModalComponentBody} from "../ModalComponentBody";
+import {AccessWalletContainer} from "../wallet-access/AccessWalletModal";
+import {SetEtoDateSummary} from "./eto-flow/SetDateSummary";
+import {InvestmentSelection} from "./investment-flow/Investment";
+import {InvestmentSuccess} from "./investment-flow/Success";
+import {InvestmentSummary} from "./investment-flow/Summary";
+import {InvestorAcceptPayoutSuccess} from "./investor-payout/AcceptSuccess";
+import {InvestorAcceptPayoutSummary} from "./investor-payout/AcceptSummary";
+import {InvestorRedistributePayoutConfirm} from "./investor-payout/RedistributeConfirm";
+import {InvestorRedistributePayoutSuccess} from "./investor-payout/RedistributeSuccess";
+import {InvestorRedistributePayoutSummary} from "./investor-payout/RedistributeSummary";
+import {ErrorMessage} from "./shared/ErrorMessage";
+import {SigningMessage} from "./shared/SigningMessage";
+import {TxPending} from "./shared/TxPending";
+import {WatchPendingTxs} from "./shared/WatchPeningTxs";
+import {UpgradeSummary} from "./upgrade-flow/Summary";
+import {UserClaimSuccess} from "./user-claim/Success";
+import {UserClaimSummary} from "./user-claim/Summary";
+import {WithdrawSuccess} from "./withdraw-flow/Success";
+import {WithdrawSummary} from "./withdraw-flow/Summary";
+import {Withdraw} from "./withdraw-flow/Withdraw";
+import {SignInvestmentAgreementSummary} from "./eto-flow/SignInvestmentAgreementSummary";
 
 interface IStateProps {
   isOpen: boolean;
@@ -91,6 +92,8 @@ const SummaryComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ t
       return <InvestorAcceptPayoutSummary />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
       return <InvestorRedistributePayoutSummary />;
+    case ETxSenderType.SIGN_INVESTMENT_AGREEMENT:
+      return <SignInvestmentAgreementSummary />;
     default:
       return <WithdrawSummary />;
   }

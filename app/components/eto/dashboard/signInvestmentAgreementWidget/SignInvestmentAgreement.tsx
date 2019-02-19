@@ -11,7 +11,8 @@ import {appConnect} from "../../../../store";
 import {onEnterAction} from "../../../../utils/OnEnterAction";
 import {
   selectEtoId,
-  selectInvestmentAgreementLoading, selectSignedInvestmentAgreementUrl,
+  selectInvestmentAgreementLoading,
+  selectSignedInvestmentAgreementUrl,
   selectUploadedInvestmentAgreement
 } from "../../../../modules/eto-flow/selectors";
 
@@ -21,26 +22,27 @@ import {branch, renderComponent, renderNothing} from "recompose";
 import {LoadingIndicator} from "../../../shared/loading-indicator/LoadingIndicator";
 
 interface IDispatchProps {
-  signInvestmentAgreement: (etoId:string,agreementHash:string)=>void;
+  signInvestmentAgreement: (etoId: string, agreementHash: string) => void;
 }
 
 interface IStateProps {
   uploadedAgreement: IEtoDocument | null;
   signedInvestmentAgreementUrlLoading: boolean;
-  signedInvestmentAgreementHash: string | null
+  signedInvestmentAgreementUrl: string | null
 }
 
 interface ISignComponentStateProps {
-  etoId:string;
+  etoId: string;
   uploadedAgreement: IEtoDocument;
   signedInvestmentAgreementUrlLoading: boolean;
-  signedInvestmentAgreementHash: string | null
+  signedInvestmentAgreementUrl: string | null
 }
 
 export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignComponentStateProps & IDispatchProps> =
-  ({etoId,signedInvestmentAgreementHash, uploadedAgreement,signInvestmentAgreement}) => {
+  ({etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement}) => {
+    console.log("SignInvestmentAgreementLayout", signedInvestmentAgreementUrl, uploadedAgreement.ipfsHash)
 
-  if (signedInvestmentAgreementHash === null) { //uploaded, not signed
+    if (signedInvestmentAgreementUrl === null) { //uploaded, not signed
       // widget says sign me
       return (
         <Panel>
@@ -50,13 +52,13 @@ export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignCompone
               <FormattedMessage id="download-agreement-widget.sign-on-ethereum-text"/>
             </p>
             <ButtonArrowRight data-test-id="eto-dashboard-submit-proposal"
-                              onClick={() => signInvestmentAgreement(etoId,uploadedAgreement.ipfsHash)}>
+                              onClick={() => signInvestmentAgreement(etoId, uploadedAgreement.ipfsHash)}>
               <FormattedMessage id="download-agreement-widget.sign-on-ethereum"/>
             </ButtonArrowRight>
           </div>
         </Panel>
       )
-    } else if (signedInvestmentAgreementHash === uploadedAgreement.ipfsHash) { // uploaded, signed
+    } else if (signedInvestmentAgreementUrl === `ifps:${uploadedAgreement.ipfsHash}`) { // uploaded, signed
       // widget says wait for nominee to sign it
       return (
         <Panel>
@@ -69,22 +71,22 @@ export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignCompone
         </Panel>
       )
     } else {
-      return null
+      return <>bla</>
     }
   }
 
 export const SignInvestmentAgreement = compose<React.FunctionComponent>(
-
   appConnect<IStateProps | null, IDispatchProps>({
     stateToProps: state => {
       const uploadedAgreement = selectUploadedInvestmentAgreement(state);
+
       const etoId = selectEtoId(state);
       if (etoId && uploadedAgreement) {
         return {
           etoId,
           uploadedAgreement,
           signedInvestmentAgreementUrlLoading: selectInvestmentAgreementLoading(state),
-          signedInvestmentAgreementHash: selectSignedInvestmentAgreementUrl(state),
+          signedInvestmentAgreementUrl: selectSignedInvestmentAgreementUrl(state),
         }
       } else {
         return null
@@ -92,13 +94,13 @@ export const SignInvestmentAgreement = compose<React.FunctionComponent>(
     },
     dispatchToProps: dispatch => {
       return {
-        signInvestmentAgreement: (etoId:string, agreementHash:string) => dispatch(actions.etoFlow.signInvestmentAgreement(etoId, agreementHash))
+        signInvestmentAgreement: (etoId: string, agreementHash: string) => dispatch(actions.etoFlow.signInvestmentAgreement(etoId, agreementHash))
       }
     }
   }),
   branch<IStateProps | null>(props => props === null, renderNothing),
   onEnterAction(
-    {actionCreator: (dispatch, props) => {console.log("SignInvestmentAgreement",props); return dispatch(actions.etoFlow.loadSignedInvestmentAgreement(props.etoId))}}
+    {actionCreator: (dispatch, props) => dispatch(actions.etoFlow.loadSignedInvestmentAgreement(props.etoId))}
   ),
   branch<IStateProps>(props => props.signedInvestmentAgreementUrlLoading, renderComponent(LoadingIndicator)),
 )(SignInvestmentAgreementLayout)

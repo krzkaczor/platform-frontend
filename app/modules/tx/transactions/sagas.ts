@@ -138,7 +138,7 @@ export function* etoSignInvestmentAgreementSaga(
 ): any {
   try {
     yield txSendSaga({
-      type: ETxSenderType.ETO_SET_DATE,
+      type: ETxSenderType.SIGN_INVESTMENT_AGREEMENT,
       transactionFlowGenerator: etoSignInvestmentAgreementGenerator,
       extraParam: action.payload
     });
