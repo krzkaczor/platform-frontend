@@ -12,8 +12,8 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v14-deps-{{ checksum "package.json" }}
-            - v14-deps-
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
       - run:
           mkdir -p /home/circleci/.cache/Cypress && cp -R /home/circleci/.cache/Cypress
           ~/.cache/Cypress
@@ -29,7 +29,7 @@ jobs:
           paths:
             - node_modules
             - /home/circleci/.cache/Cypress
-          key: v14-deps-{{ checksum "package.json" }}
+          key: v15-deps-{{ checksum "package.json" }}
 
   deploy-heroku:
       docker:
@@ -38,8 +38,8 @@ jobs:
         - checkout
         - restore_cache:
             keys:
-              - v14-deps-{{ checksum "package.json" }}
-              - v14-deps-
+              - v15-deps-{{ checksum "package.json" }}
+              - v15-deps-
 
         - run: yarn prepare --ignore-engines
         - run:
@@ -56,8 +56,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-deps-{{ checksum "package.json" }}
-            - v14-deps-
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
 
       - run: yarn prepare
       - run:
@@ -77,8 +77,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-deps-{{ checksum "package.json" }}
-            - v14-deps-
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
       - run: yarn
 
       - run: yarn test:browser-coverage && yarn test:node
@@ -100,8 +100,8 @@ jobs:
       - run: ./.circleci/install-yarn.sh
       - restore_cache:
           keys:
-            - v14-deps-{{ checksum "package.json" }}
-            - v14-deps-
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
       - run: source /opt/circleci/.nvm/nvm.sh && yarn prepare
 
       - run:
@@ -125,8 +125,8 @@ jobs:
       - run: ./.circleci/install-chrome.sh
       - restore_cache:
           keys:
-            - v14-deps-{{ checksum "package.json" }}
-            - v14-deps-
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
       - run: source /opt/circleci/.nvm/nvm.sh && yarn prepare
 
       - run:
@@ -142,8 +142,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-deps-{{ checksum "package.json" }}
-            - v14-deps-
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
       - run: yarn storybook:screenshots
       - run:
           (export BASE_KEY=$(git rev-parse origin/master) && export CURRENT_KEY=${CIRCLE_SHA1} &&
@@ -159,8 +159,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-deps-{{ checksum "package.json" }}
-            - v14-deps-
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
 
       - run: yarn 
       - run: yarn bundlewatcher
@@ -174,8 +174,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-deps-{{ checksum "package.json" }}
-            - v14-deps-
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
       - run: yarn prepare
 
       - run: yarn deploy-storybook --ci --host-token-env-variable=DANGER_GITHUB_API_TOKEN
