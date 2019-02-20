@@ -3,7 +3,7 @@ import { call, fork, put, select } from "redux-saga/effects";
 
 import { EtoDocumentsMessage, IpfsMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
-import { ETHEREUM_ZERO_ADDRESS, UPLOAD_IMMUTABLE_DOCUMENT } from "../../config/constants";
+import { EJwtPermissions, ETHEREUM_ZERO_ADDRESS } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { FileAlreadyExists } from "../../lib/api/eto/EtoFileApi";
 import {
@@ -12,7 +12,7 @@ import {
   TEtoDocumentTemplates,
 } from "../../lib/api/eto/EtoFileApi.interfaces";
 import { actions, TAction } from "../actions";
-import { ensurePermissionsArePresent } from "../auth/jwt/sagas";
+import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { downloadLink } from "../immutable-file/utils";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
@@ -152,8 +152,21 @@ async function getDocumentOfTypePromise(
   return documents[matchingDocument!];
 }
 
+function* uploadEtoFileEffect(
+  { apiEtoFileService, notificationCenter }: TGlobalDependencies,
+  file: File,
+  documentType: EEtoDocumentType,
+): Iterator<any> {
+  const matchingDocument = yield neuCall(getDocumentOfTypePromise, documentType);
+  if (matchingDocument)
+    yield apiEtoFileService.deleteSpecificEtoDocument(matchingDocument.ipfsHash);
+
+  yield apiEtoFileService.uploadEtoDocument(file, documentType);
+  notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_UPLOADED));
+}
+
 function* uploadEtoFile(
-  { apiEtoFileService, notificationCenter, logger }: TGlobalDependencies,
+  { notificationCenter, logger }: TGlobalDependencies,
   action: TAction,
 ): Iterator<any> {
   if (action.type !== "ETO_DOCUMENTS_UPLOAD_DOCUMENT_START") return;
@@ -162,18 +175,12 @@ function* uploadEtoFile(
     yield put(actions.etoDocuments.hideIpfsModal());
 
     yield neuCall(
-      ensurePermissionsArePresent,
-      [UPLOAD_IMMUTABLE_DOCUMENT],
+      ensurePermissionsArePresentAndRunEffect,
+      neuCall(uploadEtoFileEffect, file, documentType),
+      [EJwtPermissions.UPLOAD_IMMUTABLE_DOCUMENT],
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_UPLOAD_DOCUMENT_TITLE),
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_UPLOAD_DOCUMENT_DESCRIPTION),
     );
-
-    const matchingDocument = yield neuCall(getDocumentOfTypePromise, documentType);
-    if (matchingDocument)
-      yield apiEtoFileService.deleteSpecificEtoDocument(matchingDocument.ipfsHash);
-
-    yield apiEtoFileService.uploadEtoDocument(file, documentType);
-    notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_UPLOADED));
   } catch (e) {
     if (e instanceof FileAlreadyExists) {
       notificationCenter.error(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_EXISTS));

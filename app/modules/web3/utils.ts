@@ -1,5 +1,4 @@
-import * as Eip55 from "eip55";
-import * as Web3Utils from "web3-utils";
+import { isAddress, toChecksumAddress } from "web3-utils";
 
 import { TBigNumberVariant } from "../../lib/web3/types";
 import { EthereumAddress, EthereumAddressWithChecksum, EthereumNetworkId } from "../../types";
@@ -9,7 +8,7 @@ import { convertToBigInt } from "../../utils/Number.utils";
 export function makeEthereumAddressChecksummed(
   ethereumAddress: EthereumAddress,
 ): EthereumAddressWithChecksum {
-  return Eip55.encode(ethereumAddress) as EthereumAddressWithChecksum;
+  return toChecksumAddress(ethereumAddress) as EthereumAddressWithChecksum;
 }
 
 export function ethereumNetworkIdToNetworkName(networkId: EthereumNetworkId): string {
@@ -29,7 +28,7 @@ export function ethereumNetworkIdToNetworkName(networkId: EthereumNetworkId): st
   }
 }
 
-export const validateAddress = (value: string) => value && Web3Utils.isAddress(value.toUpperCase());
+export const validateAddress = (value: string) => value && isAddress(value.toUpperCase());
 
 export const doesUserHaveEnoughEther = (
   value: TBigNumberVariant,

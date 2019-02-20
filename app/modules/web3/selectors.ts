@@ -74,11 +74,11 @@ export const selectWalletType = (state: IWeb3State): EWalletType | undefined =>
     ? state.wallet.walletType
     : state.previousConnectedWallet && state.previousConnectedWallet.walletType;
 
-export const selectLightWalletSalt = (state: IWeb3State): string | undefined =>
-  (state.connected &&
-    state.wallet &&
-    state.wallet.walletType === EWalletType.LIGHT &&
-    state.wallet.salt) ||
+export const selectCurrentLightWalletSalt = (state: IAppState): string | undefined =>
+  (state.web3.connected &&
+    state.web3.wallet &&
+    state.web3.wallet.walletType === EWalletType.LIGHT &&
+    state.web3.wallet.salt) ||
   undefined;
 
 export const selectIsUnlocked = (state: IWeb3State): boolean => {
@@ -92,12 +92,20 @@ export const selectPreviousLightWalletEmail = (state: IWeb3State): string | unde
     state.previousConnectedWallet.email) ||
   undefined;
 
-export const selectPreviousLightWalletSalt = (state: IWeb3State): string | undefined =>
-  (!state.connected &&
-    state.previousConnectedWallet &&
-    state.previousConnectedWallet.walletType === EWalletType.LIGHT &&
-    state.previousConnectedWallet.salt) ||
+export const selectPreviousLightWalletSalt = (state: IAppState): string | undefined =>
+  (!state.web3.connected &&
+    state.web3.previousConnectedWallet &&
+    state.web3.previousConnectedWallet.walletType === EWalletType.LIGHT &&
+    state.web3.previousConnectedWallet.salt) ||
   undefined;
+
+export const selectLightWalletSalt = createSelector(
+  selectCurrentLightWalletSalt,
+  selectPreviousLightWalletSalt,
+  (currentLightWalletSalt, previousLightWalletSalt) => {
+    return currentLightWalletSalt || previousLightWalletSalt;
+  },
+);
 
 export const selectPreviousConnectedWallet = (state: IWeb3State): TWalletMetadata | undefined =>
   (!state.connected && state.previousConnectedWallet) || undefined;

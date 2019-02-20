@@ -87,7 +87,7 @@ const CampaigningActivatedInvestorApprovedWidgetLayout: React.FunctionComponent<
       ) : (
         <Formik<{ amount: number | "" }>
           initialValues={{ amount: pledgedAmount }}
-          onSubmit={({ amount }) => backNow(amount as number)}
+          onSubmit={({ amount }) => backNow(Number(amount))}
           validationSchema={generateCampaigningValidation(minPledge, maxPledge)}
         >
           <Form className={styles.group}>
@@ -98,7 +98,7 @@ const CampaigningActivatedInvestorApprovedWidgetLayout: React.FunctionComponent<
                 name="amount"
                 prefix="€"
                 maxLength={8}
-                type="number"
+                type="text"
               />
             </div>
             <div className={cn(styles.value, styles.backNow)}>

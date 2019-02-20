@@ -17,6 +17,7 @@ export interface IBookBuildingStats {
 
 export const generateCampaigningValidation = (minPledge: number, maxPledge?: number) => {
   const amount = Yup.number()
+    .typeError(<FormattedMessage id="form.field.error.number.integer" /> as any)
     .min(minPledge, (
       <FormattedMessage
         id="shared-component.eto-overview.error.min-pledge"

@@ -3,7 +3,7 @@ import { fork, put, select } from "redux-saga/effects";
 
 import { EtoDocumentsMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
-import { DO_BOOK_BUILDING, SUBMIT_ETO_PERMISSION } from "../../config/constants";
+import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { IHttpResponse } from "../../lib/api/client/IHttpClient";
 import {
@@ -14,7 +14,7 @@ import {
 } from "../../lib/api/eto/EtoApi.interfaces";
 import { IAppState } from "../../store";
 import { actions, TAction } from "../actions";
-import { ensurePermissionsArePresent } from "../auth/jwt/sagas";
+import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { loadEtoContact } from "../public-etos/sagas";
 import { neuCall, neuTakeEvery, neuTakeLatest } from "../sagasUtils";
 import { selectIsNewPreEtoStartDateValid, selectIssuerCompany, selectIssuerEto } from "./selectors";
@@ -47,18 +47,29 @@ export function* loadIssuerEto({
   }
 }
 
+function* changeBookBuildingStatusEffect(
+  { apiEtoService }: TGlobalDependencies,
+  status: boolean,
+): Iterator<any> {
+  yield apiEtoService.changeBookBuildingState(status);
+}
+
 export function* changeBookBuildingStatus(
-  { apiEtoService, notificationCenter, logger }: TGlobalDependencies,
+  { notificationCenter, logger }: TGlobalDependencies,
   action: TAction,
 ): any {
   if (action.type !== "ETO_FLOW_CHANGE_BOOK_BUILDING_STATES") return;
+  const { status } = action.payload;
   try {
     const message = action.payload.status
       ? createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_START_BOOKBUILDING)
       : createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_STOP_BOOKBUILDING);
-
-    yield neuCall(ensurePermissionsArePresent, [DO_BOOK_BUILDING], message);
-    yield apiEtoService.changeBookBuildingState(action.payload.status);
+    yield neuCall(
+      ensurePermissionsArePresentAndRunEffect,
+      neuCall(changeBookBuildingStatusEffect, status),
+      [EJwtPermissions.DO_BOOK_BUILDING],
+      message,
+    );
   } catch (e) {
     logger.error("Failed to change book-building status", e);
     notificationCenter.error(
@@ -136,22 +147,29 @@ export function* saveEtoData(
   }
 }
 
+export function* submitEtoDataEffect({
+  apiEtoService,
+  notificationCenter,
+}: TGlobalDependencies): Iterator<any> {
+  yield apiEtoService.submitCompanyAndEto();
+  notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_SUBMIT_SUCCESS));
+  yield put(actions.etoFlow.loadIssuerEto());
+  yield put(actions.routing.goToDashboard());
+}
+
 export function* submitEtoData(
-  { apiEtoService, notificationCenter, logger }: TGlobalDependencies,
+  { notificationCenter, logger }: TGlobalDependencies,
   action: TAction,
-): any {
+): Iterator<any> {
   if (action.type !== "ETO_FLOW_SUBMIT_DATA_START") return;
   try {
     yield neuCall(
-      ensurePermissionsArePresent,
-      [SUBMIT_ETO_PERMISSION],
+      ensurePermissionsArePresentAndRunEffect,
+      neuCall(submitEtoDataEffect),
+      [EJwtPermissions.SUBMIT_ETO_PERMISSION],
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_SUBMIT_ETO_TITLE), //eto.modal.submit-title
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_SUBMIT_ETO_DESCRIPTION), //eto.modal.submit-description
     );
-    yield apiEtoService.submitCompanyAndEto();
-    notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_SUBMIT_SUCCESS));
-    yield put(actions.etoFlow.loadIssuerEto());
-    yield put(actions.routing.goToDashboard());
   } catch (e) {
     logger.error("Failed to Submit ETO data", e);
     notificationCenter.error(

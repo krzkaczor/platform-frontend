@@ -3,7 +3,7 @@ import { call, cancel, fork, put, select, take } from "redux-saga/effects";
 
 import { KycFlowMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
-import { SUBMIT_KYC_PERMISSION } from "../../config/constants";
+import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { IHttpResponse } from "../../lib/api/client/IHttpClient";
 import {
@@ -21,7 +21,7 @@ import { IUser } from "../../lib/api/users/interfaces";
 import { IdentityRegistry } from "../../lib/contracts/IdentityRegistry";
 import { IAppAction, IAppState } from "../../store";
 import { actions, TAction } from "../actions";
-import { ensurePermissionsArePresent } from "../auth/jwt/sagas";
+import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { selectUser } from "../auth/selectors";
 import { displayErrorModalSaga } from "../generic-modal/sagas";
 import { EInitType } from "../init/reducer";
@@ -205,29 +205,33 @@ function* loadIndividualRequest(
   }
 }
 
+function* submitIndividualRequestEffect({ apiKycService }: TGlobalDependencies): Iterator<any> {
+  yield put(actions.kyc.kycUpdateIndividualRequestState(true));
+  const result: IHttpResponse<IKycRequestState> = yield apiKycService.submitIndividualRequest();
+  yield put(actions.kyc.kycUpdateIndividualRequestState(false, result.body));
+  yield put(
+    actions.genericModal.showGenericModal(
+      createMessage(KycFlowMessage.KYC_VERIFICATION_TITLE),
+      createMessage(KycFlowMessage.KYC_VERIFICATION_DESCRIPTION),
+      undefined,
+      createMessage(KycFlowMessage.KYC_SETTINGS_BUTTON),
+      actions.routing.goToProfile(),
+    ),
+  );
+}
+
 function* submitIndividualRequest(
-  { apiKycService, notificationCenter }: TGlobalDependencies,
+  { notificationCenter }: TGlobalDependencies,
   action: TAction,
 ): Iterator<any> {
   if (action.type !== "KYC_SUBMIT_INDIVIDUAL_REQUEST") return;
   try {
     yield neuCall(
-      ensurePermissionsArePresent,
-      [SUBMIT_KYC_PERMISSION],
+      ensurePermissionsArePresentAndRunEffect,
+      neuCall(submitIndividualRequestEffect),
+      [EJwtPermissions.SUBMIT_KYC_PERMISSION],
       createMessage(KycFlowMessage.KYC_SUBMIT_TITLE),
       createMessage(KycFlowMessage.KYC_SUBMIT_DESCRIPTION),
-    );
-    yield put(actions.kyc.kycUpdateIndividualRequestState(true));
-    const result: IHttpResponse<IKycRequestState> = yield apiKycService.submitIndividualRequest();
-    yield put(actions.kyc.kycUpdateIndividualRequestState(false, result.body));
-    yield put(
-      actions.genericModal.showGenericModal(
-        createMessage(KycFlowMessage.KYC_VERIFICATION_TITLE),
-        createMessage(KycFlowMessage.KYC_VERIFICATION_DESCRIPTION),
-        undefined,
-        createMessage(KycFlowMessage.KYC_SETTINGS_BUTTON),
-        actions.routing.goToProfile(),
-      ),
     );
   } catch {
     yield put(actions.kyc.kycUpdateIndividualRequestState(false));
@@ -535,9 +539,23 @@ function* loadBusinessRequest(
     yield put(actions.kyc.kycUpdateBusinessRequestState(false, undefined, e.message));
   }
 }
+function* submitBusinessRequestEffect({ apiKycService }: TGlobalDependencies): Iterator<any> {
+  yield put(actions.kyc.kycUpdateBusinessRequestState(true));
+  const result: IHttpResponse<IKycRequestState> = yield apiKycService.submitBusinessRequest();
+  yield put(actions.kyc.kycUpdateBusinessRequestState(false, result.body));
+  yield put(
+    actions.genericModal.showGenericModal(
+      createMessage(KycFlowMessage.KYC_VERIFICATION_TITLE),
+      createMessage(KycFlowMessage.KYC_VERIFICATION_DESCRIPTION),
+      undefined,
+      createMessage(KycFlowMessage.KYC_SETTINGS_BUTTON),
+      actions.routing.goToProfile(),
+    ),
+  );
+}
 
 function* submitBusinessRequest(
-  { apiKycService, notificationCenter }: TGlobalDependencies,
+  { notificationCenter }: TGlobalDependencies,
   action: TAction,
 ): Iterator<any> {
   if (action.type !== "KYC_SUBMIT_BUSINESS_REQUEST") return;
@@ -554,23 +572,11 @@ function* submitBusinessRequest(
     }
 
     yield neuCall(
-      ensurePermissionsArePresent,
-      [SUBMIT_KYC_PERMISSION],
+      ensurePermissionsArePresentAndRunEffect,
+      neuCall(submitBusinessRequestEffect),
+      [EJwtPermissions.SUBMIT_KYC_PERMISSION],
       createMessage(KycFlowMessage.KYC_SUBMIT_TITLE),
       createMessage(KycFlowMessage.KYC_SUBMIT_DESCRIPTION),
-    );
-
-    yield put(actions.kyc.kycUpdateBusinessRequestState(true));
-    const result: IHttpResponse<IKycRequestState> = yield apiKycService.submitBusinessRequest();
-    yield put(actions.kyc.kycUpdateBusinessRequestState(false, result.body));
-    yield put(
-      actions.genericModal.showGenericModal(
-        createMessage(KycFlowMessage.KYC_VERIFICATION_TITLE),
-        createMessage(KycFlowMessage.KYC_VERIFICATION_DESCRIPTION),
-        undefined,
-        createMessage(KycFlowMessage.KYC_SETTINGS_BUTTON),
-        actions.routing.goToProfile(),
-      ),
     );
   } catch {
     yield put(actions.kyc.kycUpdateBusinessRequestState(false));

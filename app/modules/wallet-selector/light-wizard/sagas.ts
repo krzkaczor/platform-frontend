@@ -8,7 +8,7 @@ import {
   SignInUserErrorMessage,
 } from "../../../components/translatedMessages/messages";
 import { createMessage } from "../../../components/translatedMessages/utils";
-import { CHANGE_EMAIL_PERMISSION } from "../../../config/constants";
+import { EJwtPermissions } from "../../../config/constants";
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { IUser, IUserInput } from "../../../lib/api/users/interfaces";
 import { EmailAlreadyExists, UserNotExisting } from "../../../lib/api/users/UsersApi";
@@ -208,7 +208,7 @@ export function* lightWalletRecoverWatch(
     const walletMetadata = yield neuCall(setupLightWalletPromise, email, password, seed, userType);
 
     yield put(actions.walletSelector.messageSigning());
-    yield neuCall(obtainJWT, [CHANGE_EMAIL_PERMISSION]);
+    yield neuCall(obtainJWT, [EJwtPermissions.CHANGE_EMAIL_PERMISSION]);
     const userUpdate: IUserInput = {
       salt: walletMetadata.salt,
       backupCodesVerified: true,

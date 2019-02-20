@@ -121,6 +121,7 @@ describe("Eto campaigning state", () => {
 
             confirmAccessModal();
 
+            cy.wait(1000);
             cy.get(tid("campaigning-your-commitment")).then($element => {
               cy.wrap($element).contains(`€${formatThousands(CHANGED_AMOUNT)}`);
             });

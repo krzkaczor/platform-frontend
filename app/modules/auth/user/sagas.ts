@@ -14,7 +14,7 @@ import { loadPreviousWallet } from "../../web3/sagas";
 import { EWalletSubType, EWalletType } from "../../web3/types";
 import { obtainJWT } from "../jwt/sagas";
 import { selectUserType } from "../selectors";
-import { SIGN_TOS } from "./../../../config/constants";
+import { EJwtPermissions } from "./../../../config/constants";
 import { SignerTimeoutError, SignerUnknownError } from "./../../../lib/web3/Web3Manager";
 
 export function* signInUser({
@@ -27,7 +27,7 @@ export function* signInUser({
     const probableUserType: EUserType = yield select((s: IAppState) => selectUrlUserType(s.router));
     yield put(actions.walletSelector.messageSigning());
 
-    yield neuCall(obtainJWT, [SIGN_TOS]); // by default we have the sign-tos permission, as this is the first thing a user will have to do after signup
+    yield neuCall(obtainJWT, [EJwtPermissions.SIGN_TOS]); // by default we have the sign-tos permission, as this is the first thing a user will have to do after signup
     yield call(loadOrCreateUser, probableUserType);
 
     const userType: EUserType = yield select(selectUserType);
