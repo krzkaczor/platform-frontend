@@ -9,8 +9,6 @@
 }
 
 .link-button {
-  @include font-label;
-
   text-transform: none;
   color: $neu-blue;
   text-align: right;

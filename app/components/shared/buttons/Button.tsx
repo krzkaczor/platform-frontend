@@ -100,7 +100,7 @@ const Button: React.ForwardRefExoticComponent<
           [buttonThemeClassNames[theme!]]: layout !== EButtonLayout.INLINE,
           [styles.isActive]: isActive,
         },
-        layout !== EButtonLayout.INLINE ? size : null,
+        size,
         width,
       )}
       disabled={disabled || isLoading}

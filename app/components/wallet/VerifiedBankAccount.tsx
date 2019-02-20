@@ -7,7 +7,7 @@ import { selectBankAccount } from "../../modules/kyc/selectors";
 import { TBankAccount } from "../../modules/kyc/types";
 import { appConnect } from "../../store";
 import { DeepReadonly } from "../../types";
-import { Button, EButtonLayout } from "../shared/buttons";
+import { Button, ButtonSize, EButtonLayout } from "../shared/buttons";
 import { BankAccount } from "./BankAccount";
 
 import * as styles from "./VerifiedBankAccount.module.scss";
@@ -33,6 +33,7 @@ const VerifiedBankAccountComponent: React.FunctionComponent<IComponentProps> = (
         onClick={() => {}}
         data-test-id="wallet-verified-bank-account.link-account"
         layout={EButtonLayout.INLINE}
+        size={ButtonSize.SMALL}
       >
         <FormattedMessage id="shared-component.wallet-verified-bank-account.link-account" />
       </Button>
