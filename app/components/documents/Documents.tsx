@@ -130,7 +130,7 @@ const canUploadInOnChainStates = (documentKey:EEtoDocumentType, onChainState:EET
 }
 //todo
 const mayBeSignedNow = (documentKey: EEtoDocumentType, transactionPending: boolean) => {
-  console.log("mayBeSignedNow",documentKey, transactionPending)
+
   if(documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){
     return !transactionPending
   } else {
@@ -286,8 +286,8 @@ const Documents = compose<React.FunctionComponent>(
         etoTemplates: selectIssuerEtoTemplates(state)!,
         etoDocuments: selectIssuerEtoDocuments(state)!,
         documentTitles: getDocumentTitles(isRetailEto),
-        documentsDownloading: selectEtoDocumentsUploading(state.etoDocuments),
-        documentsUploading: selectEtoDocumentsDownloading(state.etoDocuments),
+        documentsDownloading: selectEtoDocumentsDownloading(state.etoDocuments),
+        documentsUploading: selectEtoDocumentsUploading(state.etoDocuments),
         documentsGenerated: selectPendingDownloads(state),
         transactionPending: selectAreTherePendingTxs(state.txMonitor),
         isRetailEto,

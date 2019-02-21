@@ -199,7 +199,7 @@ export function* loadInvestmentAgreement(
   // if (action.type !== etoFlowActions.loadSignedInvestmentAgreement.getType()) return;
   const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(action.payload.etoId)
   const url: string | null = yield  contract.signedInvestmentAgreementUrl
-  console.log("loadInvestmentAgreement :","'",url,"'", typeof url)
+
   yield put(actions.etoFlow.setInvestmentAgreementHash(url !== "" ? url : null))
 }
 
