@@ -28,7 +28,7 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  stateOnChain?: EETOStateOnChain;
+  stateOnChain: EETOStateOnChain;
   agreementTemplate: IEtoDocument;
   uploadedAgreement: IEtoDocument | null;
 }
@@ -76,7 +76,7 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
       const etoId = selectEtoId(state);
       if (etoId) {
         return ({
-          stateOnChain: selectEtoOnChainStateById(state, etoId),
+          stateOnChain: selectEtoOnChainStateById(state, etoId)!,
           agreementTemplate: selectEtoDocumentData(state.etoDocuments).allTemplates.investmentAndShareholderAgreementTemplate,
           uploadedAgreement: selectUploadedInvestmentAgreement(state),
         })
@@ -93,10 +93,8 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
     }),
   }),
   branch<IStateProps | null>(props => props === null, renderNothing),
-  branch<IStateProps>(props => (
-    props.stateOnChain === EETOStateOnChain.Claim || props.stateOnChain === EETOStateOnChain.Payout
-  ), renderComponent(EtoCompletedWidgetLayout)),
-  branch<IStateProps>(props => props.stateOnChain !== EETOStateOnChain.Signing, renderNothing),
+  branch<IStateProps>(props => props.stateOnChain < EETOStateOnChain.Signing, renderNothing),
+  branch<IStateProps>(props => props.stateOnChain > EETOStateOnChain.Signing, renderComponent(EtoCompletedWidgetLayout)),
   branch<IStateProps>(props => props.uploadedAgreement !== null, renderComponent(SignInvestmentAgreement)),
 )(UploadInvestmentAgreementLayout);
 

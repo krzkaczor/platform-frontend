@@ -20,6 +20,7 @@ import {
   selectEtoDocumentLoading,
 } from "../../modules/eto-documents/selectors";
 import {
+  selectEtoId,
   selectIssuerEtoDocuments,
   selectIssuerEtoIsRetail,
   selectIssuerEtoLoading,
@@ -42,6 +43,8 @@ import { LoadingIndicator } from "../shared/loading-indicator";
 import { SectionHeader } from "../shared/SectionHeader";
 import { SingleColDocuments } from "../shared/SingleColDocumentWidget";
 import { getDocumentTitles } from "./utils";
+import {selectEtoOnChainStateById} from "../../modules/public-etos/selectors";
+import {EETOStateOnChain} from "../../modules/public-etos/types";
 
 import * as styles from "./Documents.module.scss";
 
@@ -56,6 +59,7 @@ interface IComponentStateProps {
   etoDocuments: TEtoDocumentTemplates;
   documentTitles: TDocumentTitles;
   isRetailEto: boolean;
+  onChainState: EETOStateOnChain
 }
 
 type IStateProps = IComponentStateProps & {
@@ -80,6 +84,7 @@ interface IUploadableDocumentProps {
   stateInfo: DeepReadonly<TStateInfo>;
   etoState: EEtoState;
   downloadDocumentByType: (documentType: EEtoDocumentType) => void;
+  onChainState: EETOStateOnChain
 }
 
 export type TDocumentTitles = { [key in EEtoDocumentType]: TTranslatedString };
@@ -99,12 +104,23 @@ export const GeneratedDocument: React.FunctionComponent<IGeneratedDocumentProps>
   );
 };
 
+//todo
+const canUploadInOnChainStates = (documentKey:EEtoDocumentType, onChainState:EETOStateOnChain) => {
+  if (onChainState === EETOStateOnChain.Signing && documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){
+    return true
+  } else {
+    return false
+  }
+}
+// const noPendingTransactions
+
 const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
   documentTitles,
   documentKey,
   etoDocuments,
   stateInfo,
   etoState,
+  onChainState,
   downloadDocumentByType,
 }) => {
   const typedFileName = documentTitles[documentKey];
@@ -113,7 +129,9 @@ const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
     etoState &&
     stateInfo.canUploadInStates[EtoStateToCamelcase[etoState]].some(
       (fileName: string) => fileName === documentKey,
-    );
+    ) &&
+    canUploadInOnChainStates(documentKey, onChainState)
+  ;
   const isFileUploaded = Object.keys(etoDocuments).some(
     uploadedKey => etoDocuments[uploadedKey].documentType === documentKey,
   );
@@ -137,6 +155,8 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
   downloadDocumentByType,
   documentTitles,
   isRetailEto,
+  onChainState,
+
 }) => {
   const { allTemplates, stateInfo } = etoFilesData;
   const generalUploadables = stateInfo ? stateInfo.uploadableDocuments : [];
@@ -180,6 +200,7 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
           {stateInfo &&
             etoState &&
             generalUploadables.map((key: EEtoDocumentType) => {
+              console.log("generalUploadables", generalUploadables, stateInfo, etoState)
               return (
                 <UploadableDocument
                   key={key}
@@ -189,6 +210,7 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
                   stateInfo={stateInfo}
                   etoState={etoState}
                   downloadDocumentByType={downloadDocumentByType}
+                  onChainState={onChainState}
                 />
               );
             })}
@@ -221,6 +243,7 @@ const Documents = compose<React.FunctionComponent>(
         loadingData: selectIssuerEtoLoading(state),
         etoFileLoading: selectEtoDocumentLoading(state.etoDocuments),
         etoState: selectIssuerEtoState(state),
+        onChainState: selectEtoOnChainStateById(state, selectEtoId(state)!)!,
         etoTemplates: selectIssuerEtoTemplates(state)!,
         etoDocuments: selectIssuerEtoDocuments(state)!,
         documentTitles: getDocumentTitles(isRetailEto),

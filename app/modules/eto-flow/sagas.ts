@@ -57,7 +57,7 @@ function* changeBookBuildingStatusEffect(
 }
 
 export function* changeBookBuildingStatus(
-  {apiEtoService, notificationCenter, logger}: TGlobalDependencies,
+  { notificationCenter, logger}: TGlobalDependencies,
   action: TAction,
 ): any {
   if (action.type !== "ETO_FLOW_CHANGE_BOOK_BUILDING_STATES") return;
@@ -158,7 +158,7 @@ export function* submitEtoDataEffect({
 }
 
 export function* submitEtoData(
-  {apiEtoService, notificationCenter, logger}: TGlobalDependencies,
+  {notificationCenter, logger}: TGlobalDependencies,
   action: TAction,
 ): Iterator<any> {
   if (action.type !== "ETO_FLOW_SUBMIT_DATA_START") return;

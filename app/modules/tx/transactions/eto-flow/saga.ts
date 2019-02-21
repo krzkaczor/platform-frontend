@@ -61,19 +61,12 @@ export function* generateSignInvestmentAgreementTx(
   const {etoId, agreementHash} = extraParam
   const state: IAppState = yield select();
 
-  // const etoId:string|undefined = yield selectEtoId(state);
-  // const agreementUrl:IEtoDocument|null = yield selectUploadedInvestmentAgreement(state)
-  console.log("generateSignInvestmentAgreementTx",etoId,agreementHash)
-
-
   if(etoId && agreementHash){
     const userAddress: EthereumAddressWithChecksum = yield selectEthereumAddressWithChecksum(state);
     const gasPriceWithOverhead: string = yield selectStandardGasPriceWithOverHead(state);
 
     const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(etoId)
     const txData: string = yield contract.companySignsInvestmentAgreementTx(`ifps:${agreementHash}`).getData()
-
-    console.log("generateSignInvestmentAgreementTx",contract)
 
     const txInitialDetails = {
       to: contract.address,
