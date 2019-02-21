@@ -22,6 +22,7 @@ import {
   selectEtoDocumentsUploading,
 } from "../../modules/eto-documents/selectors";
 import {
+  selectEtoId,
   selectIssuerEtoDocuments,
   selectIssuerEtoIsRetail,
   selectIssuerEtoLoading,
@@ -44,12 +45,12 @@ import {LoadingIndicator} from "../shared/loading-indicator";
 import {SectionHeader} from "../shared/SectionHeader";
 import {SingleColDocuments} from "../shared/SingleColDocumentWidget";
 import {getDocumentTitles} from "./utils";
-import {selectEtoOnChainStateById} from "../../modules/public-etos/selectors";
 import {EETOStateOnChain} from "../../modules/public-etos/types";
-
-import * as styles from "./Documents.module.scss";
 import {selectAreTherePendingTxs} from "../../modules/tx/monitor/selectors";
 import {selectPendingDownloads} from "../../modules/immutable-file/selectors";
+import {selectEtoOnChainStateById} from "../../modules/public-etos/selectors";
+
+import * as styles from "./Documents.module.scss";
 
 type IProps = IComponentStateProps & IDispatchProps;
 
@@ -281,6 +282,7 @@ const Documents = compose<React.FunctionComponent>(
         loadingData: selectIssuerEtoLoading(state),
         etoFileLoading: selectEtoDocumentsLoading(state.etoDocuments),
         etoState: selectIssuerEtoState(state),
+        onChainState: selectEtoOnChainStateById(state, selectEtoId(state)!)!, //fixme
         etoTemplates: selectIssuerEtoTemplates(state)!,
         etoDocuments: selectIssuerEtoDocuments(state)!,
         documentTitles: getDocumentTitles(isRetailEto),
