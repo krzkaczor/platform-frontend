@@ -24,6 +24,7 @@ export const ETOAddDocumentsComponent: React.FunctionComponent<IDispatchProps & 
   disabled,
 }) => {
   const onDrop = (accepted: File[]) => accepted[0] && onDropFile(accepted[0], documentType);
+  console.log("ETOAddDocumentsComponent",disabled, documentType)
   return (
     <Dropzone
       data-test-id="eto-add-document-drop-zone"

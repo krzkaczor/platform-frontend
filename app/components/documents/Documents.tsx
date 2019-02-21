@@ -129,6 +129,7 @@ const canUploadInOnChainStates = (documentKey:EEtoDocumentType, onChainState:EET
 }
 //todo
 const mayBeSignedNow = (documentKey: EEtoDocumentType, transactionPending: boolean) => {
+  console.log("mayBeSignedNow",documentKey, transactionPending)
   if(documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){
     return !transactionPending
   } else {
@@ -156,7 +157,7 @@ const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
     ) &&
     canUploadInOnChainStates(documentKey, onChainState);
 
-  const busy = !mayBeSignedNow(documentKey, transactionPending) && documentUploading
+  const busy = !mayBeSignedNow(documentKey, transactionPending) || documentUploading
 
   const isFileUploaded = Object.keys(etoDocuments).some(
     uploadedKey => etoDocuments[uploadedKey].documentType === documentKey,
@@ -193,7 +194,7 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
   const { allTemplates, stateInfo } = etoFilesData;
   const generalUploadables = stateInfo ? stateInfo.uploadableDocuments : [];
   const etoTemplateKeys = Object.keys(etoTemplates);
-  console.log("DocumentsLayout", allTemplates, stateInfo)
+
   return (
     <>
       <div data-test-id="eto-documents" className={styles.layout}>
@@ -293,7 +294,6 @@ const Documents = compose<React.FunctionComponent>(
     dispatchToProps: dispatch => ({
       generateTemplate: document => dispatch(actions.etoDocuments.generateTemplate(document)),
       startDocumentDownload: documentType => {
-        console.log("startDocumentDownload")
         return dispatch(actions.etoDocuments.downloadDocumentStart(documentType))
       }
     }),
