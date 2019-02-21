@@ -47,7 +47,7 @@ export const ETOAddDocuments = compose<React.FunctionComponent<IOwnProps>>(
       onDropFile: (file: File, documentType: EEtoDocumentType) =>
         dispatch(
           actions.etoDocuments.showIpfsModal(() =>
-            dispatch(actions.etoDocuments.etoUploadDocument(file, documentType)),
+            dispatch(actions.etoDocuments.etoUploadDocumentStart(file, documentType)),
           ),
         ),
     }),

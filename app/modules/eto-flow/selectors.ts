@@ -9,7 +9,7 @@ import { ERequestStatus } from "../../lib/api/KycApi.interfaces";
 import { IAppState } from "../../store";
 import { selectIsUserEmailVerified } from "../auth/selectors";
 import { selectPlatformTermsConstants } from "../contracts/selectors";
-import { selectEtoDocumentLoading } from "../eto-documents/selectors";
+import { selectEtoDocumentsLoading } from "../eto-documents/selectors";
 import { selectKycRequestStatus } from "../kyc/selectors";
 import { selectEtoWithCompanyAndContract, selectPublicEto } from "../public-etos/selectors";
 import { EETOStateOnChain } from "../public-etos/types";
@@ -155,7 +155,7 @@ export const selectShouldEtoDataLoad = (state: IAppState) =>
   selectIsUserEmailVerified(state.auth);
 
 export const selectIsGeneralEtoLoading = (state: IAppState) =>
-  selectIssuerEtoLoading(state) && selectEtoDocumentLoading(state.etoDocuments);
+  selectIssuerEtoLoading(state) && selectEtoDocumentsLoading(state.etoDocuments);
 
 export const selectNewPreEtoStartDate = (state: IAppState) => state.etoFlow.newStartDate;
 

@@ -36,6 +36,7 @@
   justify-content: center;
   padding: px-to-rem(20px);
   padding-bottom: px-to-rem(5px);
+  cursor: default;
 
   :global(.document-icon) {
     width: px-to-rem(70px);
@@ -76,11 +77,20 @@
 
 .active {
   border: 1px solid $green-light;
-  cursor: pointer;
 
   &:active,
   &:hover {
     box-shadow: 0 0 px-to-rem(5px) px-to-rem(1px) $green-light;
+  }
+}
+
+.busy {
+  border: 1px solid red;
+  cursor: default;
+
+  &:active,
+  &:hover {
+    box-shadow: 0 0 px-to-rem(5px) px-to-rem(1px) red;
   }
 }
 
@@ -105,5 +115,16 @@
   &:focus {
     text-decoration: underline;
     text-decoration-color: $neu-piss-yellow;
+  }
+}
+
+.download-link-disabled {
+  color: $gray10;
+  cursor: default;
+
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: none;
   }
 }

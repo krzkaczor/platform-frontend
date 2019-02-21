@@ -19,14 +19,17 @@ interface IDocumentTileProps {
   onlyDownload?: boolean;
   blank?: boolean;
   active?: boolean;
+  busy?:boolean;
 }
 
 interface IUploadableDocumentTileProps {
   documentKey: EEtoDocumentType;
-  canUpload: boolean;
+  active: boolean;
   typedFileName: TTranslatedString;
   isFileUploaded: boolean;
-  downloadDocumentByType: (documentType: EEtoDocumentType) => void;
+  downloadDocumentStart: (documentType: EEtoDocumentType) => void;
+  documentDownloadLinkInactive:boolean;
+  busy?:boolean
 }
 
 interface IClickableDocumentTileProps {
@@ -67,9 +70,10 @@ export const DocumentTile: React.FunctionComponent<IDocumentProps & IDocumentTil
   blank,
   onlyDownload,
   active,
+  busy = false
 }) => {
   return (
-    <div className={cn(styles.tile, active && styles.active, !blank && styles.enabled, className)}>
+    <div className={cn(styles.tile, busy && styles.busy, !blank && styles.enabled, (active && styles.active), className)}>
       <Document extension={extension} blank={blank} />
       <p
         className={cn(
@@ -91,16 +95,22 @@ export const DocumentTile: React.FunctionComponent<IDocumentProps & IDocumentTil
 
 export const ClickableDocumentTile: React.FunctionComponent<
   IDocumentProps & IDocumentTileProps & IClickableDocumentTileProps
-> = ({ generateTemplate, title, document, extension }) => {
+> = ({ generateTemplate, title, document, extension, busy }) => {
   return (
     <div>
       <button
+        disabled={busy}
         className={styles.clickableArea}
         onClick={() => {
           generateTemplate(document);
         }}
       >
-        <DocumentTile title={title} extension={extension} blank={false} onlyDownload={true} />
+        <DocumentTile
+          title={title}
+          extension={extension}
+          blank={false}
+          onlyDownload={true}
+          busy={busy}/>
       </button>
     </div>
   );
@@ -108,26 +118,31 @@ export const ClickableDocumentTile: React.FunctionComponent<
 
 export const UploadableDocumentTile: React.FunctionComponent<IUploadableDocumentTileProps> = ({
   documentKey,
-  canUpload,
+  active,
   typedFileName,
   isFileUploaded,
-  downloadDocumentByType,
+  downloadDocumentStart,
+  documentDownloadLinkInactive,
+  busy
 }) => {
+  const linkDisabled = documentDownloadLinkInactive || busy
   return (
     <div data-test-id={`form.name.${documentKey}`}>
-      <ETOAddDocuments documentType={documentKey} disabled={!canUpload}>
+      <ETOAddDocuments documentType={documentKey} disabled={!active || busy}>
         <DocumentTile
           title={typedFileName}
           extension={".pdf"}
-          active={canUpload}
+          active={active}
           blank={!isFileUploaded}
+          busy={busy}
         />
       </ETOAddDocuments>
       {isFileUploaded && (
         <button
           data-test-id="documents-download-document"
-          onClick={() => downloadDocumentByType(documentKey)}
-          className={cn(styles.subTitleDownload)}
+          onClick={() => downloadDocumentStart(documentKey)}
+          className={cn(styles.subTitleDownload, linkDisabled && styles.downloadLinkDisabled)}
+          disabled={linkDisabled}
         >
           <FormattedMessage id="documents.download-document" />
         </button>

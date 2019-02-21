@@ -11,7 +11,7 @@ import {
   IEtoDocument,
   TEtoDocumentTemplates,
 } from "../../lib/api/eto/EtoFileApi.interfaces";
-import { actions, TAction } from "../actions";
+import {actions, TAction, TActionFromCreator} from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { downloadLink } from "../immutable-file/utils";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
@@ -24,7 +24,7 @@ export function* generateDocumentFromTemplate(
   if (action.type !== "ETO_DOCUMENTS_GENERATE_TEMPLATE") return;
   try {
     const document = action.payload.document;
-
+    console.log("--------->generating!")
     yield put(actions.immutableStorage.downloadDocumentStarted(document.ipfsHash));
 
     const templates = yield apiEtoFileService.getEtoTemplate(
@@ -51,6 +51,8 @@ export function* generateDocumentFromTemplate(
     notificationCenter.error(createMessage(IpfsMessage.IPFS_FAILED_TO_DOWNLOAD_IPFS_FILE));
   } finally {
     yield put(actions.immutableStorage.downloadImmutableFileDone(action.payload.document.ipfsHash));
+    console.log("--------->finished generating!")
+
   }
 }
 
@@ -96,12 +98,13 @@ export function* generateDocumentFromTemplateByEtoId(
   }
 }
 
-export function* downloadDocumentByType(
+export function* downloadDocumentStart(
   { apiImmutableStorage, notificationCenter, logger }: TGlobalDependencies,
-  action: TAction,
+  action: TActionFromCreator<typeof actions.etoDocuments.downloadDocumentStart>,
 ): any {
-  if (action.type !== "ETO_DOCUMENTS_DOWNLOAD_BY_TYPE") return;
   try {
+    console.log("--------->downloading!")
+
     const matchingDocument = yield neuCall(getDocumentOfTypePromise, action.payload.documentType);
     const downloadedDocument = yield apiImmutableStorage.getFile({
       ipfsHash: matchingDocument.ipfsHash,
@@ -114,6 +117,10 @@ export function* downloadDocumentByType(
     notificationCenter.error(
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FAILED_TO_DOWNLOAD_FILE),
     );
+  } finally {
+    yield put(actions.etoDocuments.downloadDocumentFinish(action.payload.documentType))
+    console.log("--------->finished downloading!")
+
   }
 }
 
@@ -167,9 +174,9 @@ function* uploadEtoFileEffect(
 
 function* uploadEtoFile(
   { notificationCenter, logger }: TGlobalDependencies,
-  action: TAction,
+  action: TActionFromCreator<typeof actions.etoDocuments.etoUploadDocumentStart>,
 ): Iterator<any> {
-  if (action.type !== "ETO_DOCUMENTS_UPLOAD_DOCUMENT_START") return;
+  console.log('upload started')
   const { file, documentType } = action.payload;
   try {
     yield put(actions.etoDocuments.hideIpfsModal());
@@ -201,6 +208,6 @@ export function* etoDocumentsSagas(): any {
   );
   yield fork(neuTakeEvery, "ETO_DOCUMENTS_GENERATE_TEMPLATE", generateDocumentFromTemplate);
   yield fork(neuTakeEvery, "ETO_DOCUMENTS_LOAD_FILE_DATA_START", loadEtoFileData);
-  yield fork(neuTakeEvery, "ETO_DOCUMENTS_UPLOAD_DOCUMENT_START", uploadEtoFile);
-  yield fork(neuTakeEvery, "ETO_DOCUMENTS_DOWNLOAD_BY_TYPE", downloadDocumentByType);
+  yield fork(neuTakeEvery, actions.etoDocuments.etoUploadDocumentStart.getType(), uploadEtoFile);
+  yield fork(neuTakeEvery, actions.etoDocuments.downloadDocumentStart.getType(), downloadDocumentStart);
 }

@@ -16,7 +16,7 @@ const props = {
   documentTitles: getDocumentTitles(false),
   isRetailEto: false,
   generateTemplate: () => {},
-  downloadDocumentByType: () => {},
+  downloadDocumentStart: () => {},
 };
 
 storiesOf("ETO/Documents", module).add("default", () => {
