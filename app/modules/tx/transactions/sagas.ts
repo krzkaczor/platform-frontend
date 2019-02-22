@@ -2,18 +2,18 @@ import { fork, put } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { actions, TAction, TActionFromCreator } from "../../actions";
+import { etoFlowActions } from "../../eto-flow/actions";
 import { onInvestmentTxModalHide } from "../../investment-flow/sagas";
 import { neuTakeLatest } from "../../sagasUtils";
 import { ETxSenderType } from "../interfaces";
 import { ITxSendParams, txSendSaga } from "../sender/sagas";
 import { startClaimGenerator } from "./claim/saga";
-import {etoSetDateGenerator, etoSignInvestmentAgreementGenerator} from "./eto-flow/saga";
+import { etoSetDateGenerator, etoSignInvestmentAgreementGenerator } from "./eto-flow/saga";
 import { investmentFlowGenerator } from "./investment/sagas";
 import { startInvestorPayoutAcceptGenerator } from "./payout/accept/saga";
 import { startInvestorPayoutRedistributionGenerator } from "./payout/redistribute/saga";
 import { upgradeTransactionFlow } from "./upgrade/sagas";
 import { ethWithdrawFlow } from "./withdraw/sagas";
-import {etoFlowActions} from "../../eto-flow/actions";
 
 export function* withdrawSaga({ logger }: TGlobalDependencies): any {
   try {
@@ -134,13 +134,13 @@ export function* etoSetDateSaga({ logger }: TGlobalDependencies): any {
 
 export function* etoSignInvestmentAgreementSaga(
   { logger }: TGlobalDependencies,
-  action: TActionFromCreator<typeof actions.etoFlow.signInvestmentAgreement>
+  action: TActionFromCreator<typeof actions.etoFlow.signInvestmentAgreement>,
 ): any {
   try {
     yield txSendSaga({
       type: ETxSenderType.SIGN_INVESTMENT_AGREEMENT,
       transactionFlowGenerator: etoSignInvestmentAgreementGenerator,
-      extraParam: action.payload
+      extraParam: action.payload,
     });
     logger.info("Signing investment agreement was successful");
     // cleanup & refresh eto data
@@ -149,7 +149,6 @@ export function* etoSignInvestmentAgreementSaga(
     logger.info("Signing investment agreement was cancelled", e);
   }
 }
-
 
 export const txTransactionsSagasWatcher = function*(): Iterator<any> {
   yield fork(neuTakeLatest, "TRANSACTIONS_START_WITHDRAW_ETH", withdrawSaga);
@@ -167,9 +166,7 @@ export const txTransactionsSagasWatcher = function*(): Iterator<any> {
     actions.txTransactions.startInvestorPayoutRedistribute,
     investorPayoutRedistributeSaga,
   );
-  yield fork(neuTakeLatest, etoFlowActions.signInvestmentAgreement,
-    etoSignInvestmentAgreementSaga
-  );
+  yield fork(neuTakeLatest, etoFlowActions.signInvestmentAgreement, etoSignInvestmentAgreementSaga);
 
   // Add new transaction types here...
 };

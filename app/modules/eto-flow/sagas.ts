@@ -1,26 +1,26 @@
-import {effects} from "redux-saga";
-import {fork, put, select} from "redux-saga/effects";
+import { effects } from "redux-saga";
+import { fork, put, select } from "redux-saga/effects";
 
-import {EtoDocumentsMessage} from "../../components/translatedMessages/messages";
-import {createMessage} from "../../components/translatedMessages/utils";
-import {EJwtPermissions} from "../../config/constants";
-import {TGlobalDependencies} from "../../di/setupBindings";
-import {IHttpResponse} from "../../lib/api/client/IHttpClient";
+import { EtoDocumentsMessage } from "../../components/translatedMessages/messages";
+import { createMessage } from "../../components/translatedMessages/utils";
+import { EJwtPermissions } from "../../config/constants";
+import { TGlobalDependencies } from "../../di/setupBindings";
+import { IHttpResponse } from "../../lib/api/client/IHttpClient";
 import {
   EEtoState,
   TCompanyEtoData,
   TEtoSpecsData,
   TPartialEtoSpecData,
 } from "../../lib/api/eto/EtoApi.interfaces";
-import {IAppState} from "../../store";
-import {actions, TAction, TActionFromCreator} from "../actions";
-import {ensurePermissionsArePresentAndRunEffect} from "../auth/jwt/sagas";
-import {loadEtoContact} from "../public-etos/sagas";
-import {neuCall, neuTakeEvery, neuTakeLatest} from "../sagasUtils";
-import {selectIsNewPreEtoStartDateValid, selectIssuerCompany, selectIssuerEto} from "./selectors";
-import {bookBuildingStatsToCsvString, createCsvDataUri, downloadFile} from "./utils";
-import {ETOCommitment} from "../../lib/contracts/ETOCommitment";
-import {etoFlowActions} from "./actions";
+import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
+import { IAppState } from "../../store";
+import { actions, TAction, TActionFromCreator } from "../actions";
+import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
+import { loadEtoContact } from "../public-etos/sagas";
+import { neuCall, neuTakeEvery, neuTakeLatest } from "../sagasUtils";
+import { etoFlowActions } from "./actions";
+import { selectIsNewPreEtoStartDateValid, selectIssuerCompany, selectIssuerEto } from "./selectors";
+import { bookBuildingStatsToCsvString, createCsvDataUri, downloadFile } from "./utils";
 
 export function* loadIssuerEto({
   apiEtoService,
@@ -37,7 +37,7 @@ export function* loadIssuerEto({
       yield neuCall(loadEtoContact, eto);
     }
 
-    yield put(actions.publicEtos.setPublicEto({eto, company}));
+    yield put(actions.publicEtos.setPublicEto({ eto, company }));
 
     yield put(actions.etoFlow.setIssuerEtoPreviewCode(eto.previewCode));
   } catch (e) {
@@ -57,7 +57,7 @@ function* changeBookBuildingStatusEffect(
 }
 
 export function* changeBookBuildingStatus(
-  { notificationCenter, logger}: TGlobalDependencies,
+  { notificationCenter, logger }: TGlobalDependencies,
   action: TAction,
 ): any {
   if (action.type !== "ETO_FLOW_CHANGE_BOOK_BUILDING_STATES") return;
@@ -84,12 +84,14 @@ export function* changeBookBuildingStatus(
 }
 
 export function* downloadBookBuildingStats(
-  {apiEtoService, notificationCenter, logger}: TGlobalDependencies,
+  { apiEtoService, notificationCenter, logger }: TGlobalDependencies,
   action: TAction,
 ): any {
   if (action.type !== "ETO_FLOW_DOWNLOAD_BOOK_BUILDING_STATS") return;
   try {
-    const detailedStatsResponse: IHttpResponse<any> = yield apiEtoService.getDetailedBookBuildingStats();
+    const detailedStatsResponse: IHttpResponse<
+      any
+    > = yield apiEtoService.getDetailedBookBuildingStats();
 
     const dataAsString = yield bookBuildingStatsToCsvString(detailedStatsResponse.body);
 
@@ -117,7 +119,7 @@ function stripEtoDataOptionalFields(data: TPartialEtoSpecData): TPartialEtoSpecD
 }
 
 export function* saveEtoData(
-  {apiEtoService, notificationCenter, logger}: TGlobalDependencies,
+  { apiEtoService, notificationCenter, logger }: TGlobalDependencies,
   action: TAction,
 ): any {
   if (action.type !== "ETO_FLOW_SAVE_DATA_START") return;
@@ -158,7 +160,7 @@ export function* submitEtoDataEffect({
 }
 
 export function* submitEtoData(
-  {notificationCenter, logger}: TGlobalDependencies,
+  { notificationCenter, logger }: TGlobalDependencies,
   action: TAction,
 ): Iterator<any> {
   if (action.type !== "ETO_FLOW_SUBMIT_DATA_START") return;
@@ -193,17 +195,16 @@ export function* cleanupSetDateTX(): any {
 }
 
 export function* loadInvestmentAgreement(
-  {contractsService,}: TGlobalDependencies,
+  { contractsService }: TGlobalDependencies,
   action: TActionFromCreator<typeof actions.etoFlow.loadSignedInvestmentAgreement>,
 ): any {
-  // if (action.type !== etoFlowActions.loadSignedInvestmentAgreement.getType()) return;
-  const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(action.payload.etoId)
-  const url: string | null = yield  contract.signedInvestmentAgreementUrl
+  const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(
+    action.payload.etoId,
+  );
+  const url: string | null = yield contract.signedInvestmentAgreementUrl;
 
-  yield put(actions.etoFlow.setInvestmentAgreementHash(url !== "" ? url : null))
+  yield put(actions.etoFlow.setInvestmentAgreementHash(url !== "" ? url : null));
 }
-
-
 
 export function* etoFlowSagas(): any {
   yield fork(neuTakeEvery, "ETO_FLOW_LOAD_ISSUER_ETO", loadIssuerEto);

@@ -7,10 +7,12 @@ import { TTranslatedString } from "../../types";
 import { ETOAddDocuments } from "../eto/shared/EtoAddDocument";
 
 import * as styles from "./Document.module.scss";
+import { LoadingIndicator } from "./loading-indicator/LoadingIndicator";
 
 interface IDocumentProps {
   extension: string;
   blank?: boolean;
+  extraCss?: string;
 }
 
 interface IDocumentTileProps {
@@ -19,7 +21,7 @@ interface IDocumentTileProps {
   onlyDownload?: boolean;
   blank?: boolean;
   active?: boolean;
-  busy?:boolean;
+  busy?: boolean;
 }
 
 interface IUploadableDocumentTileProps {
@@ -28,8 +30,8 @@ interface IUploadableDocumentTileProps {
   typedFileName: TTranslatedString;
   isFileUploaded: boolean;
   downloadDocumentStart: (documentType: EEtoDocumentType) => void;
-  documentDownloadLinkInactive:boolean;
-  busy?:boolean
+  documentDownloadLinkInactive: boolean;
+  busy?: boolean;
 }
 
 interface IClickableDocumentTileProps {
@@ -37,7 +39,11 @@ interface IClickableDocumentTileProps {
   document: IEtoDocument;
 }
 
-export const Document: React.FunctionComponent<IDocumentProps> = ({ extension, blank }) => {
+export const Document: React.FunctionComponent<IDocumentProps> = ({
+  extension,
+  blank,
+  extraCss,
+}) => {
   const labelHeight = 24;
   const labelWidth = 50;
 
@@ -47,7 +53,7 @@ export const Document: React.FunctionComponent<IDocumentProps> = ({ extension, b
   return (
     <svg
       viewBox="0 0 61 73"
-      className={cn("document-icon", styles.document, !blank && computedExtension)}
+      className={cn("document-icon", styles.document, !blank && computedExtension, extraCss)}
     >
       <path
         className={styles.file}
@@ -70,16 +76,27 @@ export const DocumentTile: React.FunctionComponent<IDocumentProps & IDocumentTil
   blank,
   onlyDownload,
   active,
-  busy = false
+  busy = false,
 }) => {
   return (
-    <div className={cn(styles.tile, busy && styles.busy, !blank && styles.enabled, (active && styles.active), className)}>
-      <Document extension={extension} blank={blank} />
+    <div
+      className={cn(
+        styles.tile,
+        busy && styles.busy,
+        !blank && styles.enabled,
+        active && styles.active,
+        className,
+      )}
+    >
+      <LoadingIndicator className={busy ? styles.documentBusy : styles.documentNotBusy} />
+
+      <Document extension={extension} blank={blank} extraCss={busy && styles.documentIconBusy} />
       <p
         className={cn(
           styles.title,
           blank && styles.blankTitle,
           !onlyDownload && !active && styles.disabledTitle,
+          busy && styles.textBusy,
         )}
       >
         {title}
@@ -87,7 +104,9 @@ export const DocumentTile: React.FunctionComponent<IDocumentProps & IDocumentTil
       {!onlyDownload &&
         blank &&
         active && (
-          <p className={cn(styles.subTitle)}>Drag and drop or Click to upload high quality PDF</p>
+          <p className={cn(styles.subTitle, busy && styles.textBusy)}>
+            <FormattedMessage id="documents.drag-n-drop" />
+          </p>
         )}
     </div>
   );
@@ -101,16 +120,15 @@ export const ClickableDocumentTile: React.FunctionComponent<
       <button
         disabled={busy}
         className={styles.clickableArea}
-        onClick={() => {
-          generateTemplate(document);
-        }}
+        onClick={() => generateTemplate(document)}
       >
         <DocumentTile
           title={title}
           extension={extension}
           blank={false}
           onlyDownload={true}
-          busy={busy}/>
+          busy={busy}
+        />
       </button>
     </div>
   );
@@ -123,9 +141,9 @@ export const UploadableDocumentTile: React.FunctionComponent<IUploadableDocument
   isFileUploaded,
   downloadDocumentStart,
   documentDownloadLinkInactive,
-  busy
+  busy,
 }) => {
-  const linkDisabled = documentDownloadLinkInactive || busy
+  const linkDisabled = documentDownloadLinkInactive || busy;
 
   return (
     <div data-test-id={`form.name.${documentKey}`}>
@@ -145,7 +163,11 @@ export const UploadableDocumentTile: React.FunctionComponent<IUploadableDocument
           className={cn(styles.subTitleDownload, linkDisabled && styles.downloadLinkDisabled)}
           disabled={linkDisabled}
         >
-          <FormattedMessage id="documents.download-document" />
+          {linkDisabled ? (
+            <FormattedMessage id="documents.download-document-busy" />
+          ) : (
+            <FormattedMessage id="documents.download-document" />
+          )}
         </button>
       )}
     </div>

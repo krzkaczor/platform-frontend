@@ -1,3 +1,4 @@
+import * as cn from "classnames";
 import * as React from "react";
 import Dropzone from "react-dropzone";
 import { compose } from "redux";
@@ -33,8 +34,8 @@ export const ETOAddDocumentsComponent: React.FunctionComponent<IDispatchProps & 
       activeClassName={styles.invisible}
       acceptClassName={styles.invisible}
       rejectClassName={styles.invisible}
-      disabledClassName={styles.invisible}
-      className={styles.invisible}
+      disabledClassName={cn(styles.dropzoneDisabled, styles.invisible)}
+      className={cn(styles.dropzone, styles.invisible)}
       disabled={disabled}
     >
       {children}

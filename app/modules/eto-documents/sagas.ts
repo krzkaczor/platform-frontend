@@ -11,7 +11,7 @@ import {
   IEtoDocument,
   TEtoDocumentTemplates,
 } from "../../lib/api/eto/EtoFileApi.interfaces";
-import {actions, TAction, TActionFromCreator} from "../actions";
+import { actions, TAction, TActionFromCreator } from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { downloadLink } from "../immutable-file/utils";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
@@ -113,7 +113,7 @@ export function* downloadDocumentStart(
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FAILED_TO_DOWNLOAD_FILE),
     );
   } finally {
-    yield put(actions.etoDocuments.downloadDocumentFinish(action.payload.documentType))
+    yield put(actions.etoDocuments.downloadDocumentFinish(action.payload.documentType));
   }
 }
 
@@ -163,11 +163,6 @@ function* uploadEtoFileEffect(
 
   yield apiEtoFileService.uploadEtoDocument(file, documentType);
   notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_UPLOADED));
-  // if(documentType ===  EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){
-  //   yield put(actions.etoDocuments.loadFileDataStart());
-    // yield put(actions.etoFlow.setInvestmentAgreementHash(uploadResult.ipfsHash))
-    // yield put(actions.etoFlow.signInvestmentAgreement(etoId,uploadResult.ipfsHash))
-  // }
 }
 
 function* uploadEtoFile(
@@ -194,7 +189,7 @@ function* uploadEtoFile(
     }
   } finally {
     yield put(actions.etoDocuments.loadFileDataStart());
-    yield put(actions.etoDocuments.etoUploadDocumentFinish(documentType))
+    yield put(actions.etoDocuments.etoUploadDocumentFinish(documentType));
   }
 }
 
@@ -207,5 +202,9 @@ export function* etoDocumentsSagas(): any {
   yield fork(neuTakeEvery, "ETO_DOCUMENTS_GENERATE_TEMPLATE", generateDocumentFromTemplate);
   yield fork(neuTakeEvery, "ETO_DOCUMENTS_LOAD_FILE_DATA_START", loadEtoFileData);
   yield fork(neuTakeEvery, actions.etoDocuments.etoUploadDocumentStart.getType(), uploadEtoFile);
-  yield fork(neuTakeEvery, actions.etoDocuments.downloadDocumentStart.getType(), downloadDocumentStart);
+  yield fork(
+    neuTakeEvery,
+    actions.etoDocuments.downloadDocumentStart.getType(),
+    downloadDocumentStart,
+  );
 }

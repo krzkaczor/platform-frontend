@@ -1,4 +1,4 @@
-import {EEtoDocumentType, IEtoFiles} from "../../lib/api/eto/EtoFileApi.interfaces";
+import { EEtoDocumentType, IEtoFiles } from "../../lib/api/eto/EtoFileApi.interfaces";
 import { DeepReadonly } from "../../types";
 import { IEtoDocumentState } from "./reducer";
 
@@ -16,8 +16,10 @@ export const selectEtoDocumentData = (
   state: DeepReadonly<IEtoDocumentState>,
 ): DeepReadonly<IEtoFiles> => state.etoFileData;
 
-export const selectEtoDocumentsDownloading = (state: DeepReadonly<IEtoDocumentState>): {[key in EEtoDocumentType]?: boolean}=>
-  state.downloading;
+export const selectEtoDocumentsDownloading = (
+  state: DeepReadonly<IEtoDocumentState>,
+): { [key in EEtoDocumentType]?: boolean } => state.downloading;
 
-export const selectEtoDocumentsUploading = (state: DeepReadonly<IEtoDocumentState>): {[key in EEtoDocumentType]?:boolean}=>
-  state.uploading;
+export const selectEtoDocumentsUploading = (
+  state: DeepReadonly<IEtoDocumentState>,
+): { [key in EEtoDocumentType]?: boolean } => state.uploading;

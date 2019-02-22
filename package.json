@@ -45,7 +45,7 @@
     "test": "yarn lint && yarn test:browser && yarn test:node && yarn test:e2e",
     "test:coverage": "yarn test:coverage-no-e2e && yarn test:e2e",
     "test:coverage-no-e2e": "yarn lint && yarn test:browser-coverage && yarn test:node",
-    "test:fix": "yarn lint:fix && yarn test:browser && yarn test:node",
+    "test:fix": "yarn lint:fix && yarn test:browser && yarn test:node --max-old-space-size=8192",
     "codecov": "codecov",
     "generate:contracts": "node ./scripts/generate-contracts.js",
     "prepare": "git submodule update --init --recursive && patch-package && yarn generate:contracts",

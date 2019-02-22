@@ -5,5 +5,5 @@ export const selectAmountOfPendingTxs = (state: ITxMonitorState): number => {
 };
 
 export const selectAreTherePendingTxs = (state: ITxMonitorState): boolean => {
-  return !!(state.txs.pendingTransaction || state.txs.oooTransactions.length)
+  return !!(state.txs.pendingTransaction || state.txs.oooTransactions.length);
 };

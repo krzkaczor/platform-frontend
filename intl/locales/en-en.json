@@ -78,6 +78,8 @@
   "documents.agreement-and-prospectus-templates": "All Legal Document Templates",
   "documents.approved-prospectus-and-agreements-to-upload": "Approved and Signed Documents to Upload",
   "documents.download-document": "download",
+  "documents.download-document-busy": "working...",
+  "documents.drag-n-drop": "Drag and drop or Click to upload high quality PDF",
   "documents.generated-documents": "generated documents",
   "documents.legal-documents": "LEGAL DOCUMENTS",
   "documents.please-fill-the-eto-forms-in-order-to-generate-templates": "Please fill the ETO forms in order to generate templates",
