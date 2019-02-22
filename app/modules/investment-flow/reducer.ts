@@ -1,4 +1,3 @@
-import { cryptoRandomString } from "../../lib/dependencies/cryptoRandomString";
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 
@@ -21,17 +20,13 @@ export const investmentFlowReducer: AppReducer<IStateInvestmentFlow> = (
 ): DeepReadonly<IStateInvestmentFlow> => {
   switch (action.type) {
     case "INVESTMENT_FLOW_RESET":
-      return {
-        ...investmentFlowInitialState,
-        bankTransferReference: state.bankTransferReference,
-      };
+      return investmentFlowInitialState;
     case "INVESTMENT_FLOW_SELECT_INVESTMENT_TYPE":
       return {
         ...investmentFlowInitialState,
         etoId: state.etoId,
         activeInvestmentTypes: state.activeInvestmentTypes,
         investmentType: action.payload.type,
-        bankTransferReference: state.bankTransferReference,
       };
     case "INVESTMENT_FLOW_SET_ETO_ID":
       return {
@@ -58,33 +53,10 @@ export const investmentFlowReducer: AppReducer<IStateInvestmentFlow> = (
         ...state,
         isValidatedInput: action.payload.isValidated,
       };
-    case "INVESTMENT_FLOW_SET_BANK_TRANSFER_FLOW_STATE":
-      return {
-        ...state,
-        bankTransferFlowState: action.payload.state,
-      };
-    case "INVESTMENT_FLOW_TOGGLE_BANK_TRANSFER_GAS_STIPEND":
-      return {
-        ...state,
-        bankTransferGasStipend: !state.bankTransferGasStipend,
-      };
     case "INVESTMENT_FLOW_SET_ACTIVE_INVESTMENT_TYPES":
       return {
         ...state,
         ...action.payload,
-      };
-    case "INVESTMENT_FLOW_BANK_TRANSFER_CHANGE":
-      return {
-        ...state,
-        bankTransferFlowState: undefined,
-      };
-    case "GENERATE_BANK_TRANSFER_REFERENCE":
-      const bankTransferReference = btoa(cryptoRandomString(9))
-        .replace("=", "")
-        .toUpperCase();
-      return {
-        ...state,
-        bankTransferReference,
       };
   }
 

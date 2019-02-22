@@ -2,7 +2,12 @@ import { appRoutes } from "../../components/appRoutes";
 import { formatThousands } from "../../utils/Number.utils";
 import { withParams } from "../../utils/withParams";
 import { ISSUER_SETUP } from "../fixtures";
-import { assertRegister, confirmAccessModal, etoFixtureAddressByName } from "../utils";
+import {
+  assertRegister,
+  confirmAccessModal,
+  etoFixtureAddressByName,
+  goToDashboard,
+} from "../utils";
 import { fillForm } from "../utils/forms";
 import { tid } from "../utils/selectors";
 import { createAndLoginNewUser, logout, makeAuthenticatedCall } from "../utils/userHelpers";
@@ -53,29 +58,21 @@ describe("Eto campaigning state", () => {
           is_bookbuilding: false,
         }),
       }).then(() => {
-        let remainingSlots: number;
-        cy.visit(appRoutes.dashboard);
+        goToDashboard();
 
         cy.get(tid("eto-flow-start-bookbuilding")).awaitedClick();
 
-        // give it a chance to settle before logging out
-        cy.wait(5000);
         logout();
 
-        cy.reload();
-        cy.wait(1000);
         createAndLoginNewUser({
           type: "investor",
           kyc: "business",
         }).then(() => {
-          cy.wait(1000);
-          cy.reload();
-
           cy.visit(withParams(appRoutes.etoPublicViewById, { etoId: ETO_ID }));
 
-          cy.get(tid("eto-bookbuilding-remaining-slots")).then(
-            $element => (remainingSlots = Number($element.text())),
-          );
+          cy.get(tid("eto-bookbuilding-remaining-slots"))
+            .then($element => Number($element.text()))
+            .as("remainingSlots");
 
           fillForm({
             amount: PLEDGE_AMOUNT,
@@ -88,32 +85,20 @@ describe("Eto campaigning state", () => {
 
           confirmAccessModal();
 
-          cy.get(tid("campaigning-your-commitment")).then($element => {
-            cy.wrap($element).contains(`€${formatThousands(PLEDGE_AMOUNT)}`);
+          cy.get(tid("campaigning-your-commitment")).contains(`€${formatThousands(PLEDGE_AMOUNT)}`);
+          cy.get<number>("@remainingSlots").then(remainingSlots => {
+            // Remove one from remaining slots as it's first pledge
+            cy.get(tid("eto-bookbuilding-remaining-slots")).should("contain", remainingSlots - 1);
           });
-          cy.get(tid("eto-bookbuilding-remaining-slots")).then($element => {
-            const slots = Number($element.text());
-            const expectedSlots = remainingSlots - 1;
-
-            assert.equal(slots, expectedSlots, `Expect remaining slots to equal ${expectedSlots}`);
-            remainingSlots = slots;
-          });
-
-          // give it a chance to settle before logging out
-          cy.wait(5000);
 
           logout();
 
-          cy.reload();
-          cy.wait(1000);
           createAndLoginNewUser({
             type: "investor",
             kyc: "individual",
           }).then(() => {
-            cy.wait(1000);
-            cy.reload();
-
             cy.visit(withParams(appRoutes.etoPublicViewById, { etoId: ETO_ID }));
+
             fillForm({
               amount: CHANGED_AMOUNT,
               "eto-bookbuilding-back-now": { type: "submit" },
@@ -121,17 +106,12 @@ describe("Eto campaigning state", () => {
 
             confirmAccessModal();
 
-            cy.get(tid("campaigning-your-commitment")).then($element => {
-              cy.wrap($element).contains(`€${formatThousands(CHANGED_AMOUNT)}`);
-            });
-            cy.get(tid("eto-bookbuilding-remaining-slots")).then($element => {
-              const expectedSlots = remainingSlots - 1;
-
-              assert.equal(
-                Number($element.text()),
-                expectedSlots,
-                `Expect remaining slots to equal ${expectedSlots}`,
-              );
+            cy.get(tid("campaigning-your-commitment")).contains(
+              `€${formatThousands(CHANGED_AMOUNT)}`,
+            );
+            cy.get<number>("@remainingSlots").then(remainingSlots => {
+              // Remove two from remaining slots as it's second pledge
+              cy.get(tid("eto-bookbuilding-remaining-slots")).should("contain", remainingSlots - 2);
             });
           });
         });

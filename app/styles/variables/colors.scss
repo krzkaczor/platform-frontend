@@ -49,3 +49,9 @@ $neu-light-blue-grey: #d8e0eb;
 $neu-red: #ed0000;
 $neu-white-two: #fff;
 $neu-blue: #4a90e2;
+
+// Override colors that are used to generate classes like .text-warning, .bg-warning, .alert-warning and others
+// see https://getbootstrap.com/docs/4.0/getting-started/theming/#maps-and-loops
+$theme-colors:  (
+  "warning": $neu-bright-orange,
+);

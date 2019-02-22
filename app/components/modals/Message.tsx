@@ -1,6 +1,7 @@
+import * as cn from "classnames";
 import * as React from "react";
 
-import { TTranslatedString } from "../../../../types";
+import { TTranslatedString } from "../../types";
 
 import * as styles from "./Message.module.scss";
 
@@ -24,7 +25,7 @@ const Message: React.FunctionComponent<TProps> = ({
     <section className="text-center" data-test-id={dataTestId}>
       {image}
       {title && <h3 className={styles.title}>{title}</h3>}
-      {hint && <p className={styles.hint}>{hint}</p>}
+      {hint && <p className={cn(styles.text, "text-warning")}>{hint}</p>}
       {text && <p className={styles.text}>{text}</p>}
       {children}
     </section>

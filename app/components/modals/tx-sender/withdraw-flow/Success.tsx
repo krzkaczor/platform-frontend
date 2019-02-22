@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { ConfettiEthereum } from "../../../landing/parts/ConfettiEthereum";
+import { ConfettiEthereum } from "../../../shared/ethererum";
 import { EtherscanAddressLink } from "../../../shared/links";
 
 import * as styles from "./Success.module.scss";

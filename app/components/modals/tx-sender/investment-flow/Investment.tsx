@@ -57,7 +57,6 @@ import {
   formatEurTsd,
   formatVaryingDecimals,
   getInputErrorMessage,
-  getInvestmentTypeMessages,
 } from "./utils";
 
 import * as styles from "./Investment.module.scss";
@@ -89,7 +88,6 @@ interface IDispatchProps {
   changeEuroValue: (value: string) => void;
   changeEthValue: (value: string) => void;
   changeInvestmentType: (type: EInvestmentType) => void;
-  showBankTransferSummary: () => void;
   investEntireBalance: () => void;
 }
 
@@ -124,7 +122,6 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
   intl,
   investEntireBalance,
   investmentType,
-  isWalletBalanceKnown,
   minTicketEth,
   minTicketEur,
   maxTicketEur,
@@ -135,7 +132,6 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
   totalCostEth,
   totalCostEur,
   wallets,
-  isBankTransfer,
   hasPreviouslyInvested,
 }) => (
   <>
@@ -153,7 +149,6 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
           currentType={investmentType}
           onSelect={changeInvestmentType}
         />
-        <Col className={styles.walletInfo}>{getInvestmentTypeMessages(investmentType)}</Col>
       </Row>
       <Row>
         <Col>
@@ -213,12 +208,7 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
               "investment-flow.min-ticket-size",
             )} ${formatMoney(minTicketEth, 0, 4)} ETH`}
             value={formatVaryingDecimals(ethValue)}
-            className={cn(
-              "form-control",
-              styles.investInput,
-              isBankTransfer && styles.disabledInput,
-            )}
-            disabled={isBankTransfer}
+            className={cn("form-control", styles.investInput)}
             renderInput={props => (
               <MaskedInput
                 {...props}
@@ -233,19 +223,17 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
               />
             )}
           />
-          {isWalletBalanceKnown && (
-            <a
-              className={styles.investAll}
-              data-test-id="invest-modal-full-balance-btn"
-              href="#"
-              onClick={e => {
-                e.preventDefault();
-                investEntireBalance();
-              }}
-            >
-              <FormattedMessage id="investment-flow.invest-entire-balance" />
-            </a>
-          )}
+          <a
+            className={styles.investAll}
+            data-test-id="invest-modal-full-balance-btn"
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              investEntireBalance();
+            }}
+          >
+            <FormattedMessage id="investment-flow.invest-entire-balance" />
+          </a>
         </Col>
       </Row>
     </Container>
@@ -308,14 +296,14 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
             !gasCostEth.isZero() && (
               <div>
                 + <FormattedMessage id="investment-flow.estimated-gas-cost" />:{" "}
-                <span className={styles.orange} data-test-id="invest-modal-gas-cost">
+                <span className="text-warning" data-test-id="invest-modal-gas-cost">
                   {formatEur(gasCostEuro)} € ≈ ETH {formatEth(gasCostEth)}
                 </span>
               </div>
             )}
           <div>
             <FormattedMessage id="investment-flow.total" />:{" "}
-            <span className={styles.orange} data-test-id="invest-modal-total-cost">
+            <span className="text-warning" data-test-id="invest-modal-total-cost">
               {formatEurTsd(totalCostEur)} € ≈ ETH {formatEthTsd(totalCostEth)}
             </span>
           </div>
@@ -367,7 +355,6 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
     },
     dispatchToProps: dispatch => ({
       sendTransaction: () => dispatch(actions.txSender.txSenderAcceptDraft()),
-      showBankTransferSummary: () => dispatch(actions.investmentFlow.showBankTransferSummary()),
       changeEthValue: value =>
         dispatch(actions.investmentFlow.submitCurrencyValue(value as NumericString, EInvestmentCurrency.Ether)
         ),
@@ -395,7 +382,6 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
       const minTicketEur =  etoTicketSizes!.minTicketEurUlps;//formatEur(etoTicketSizes && etoTicketSizes.minTicketEurUlps) || "0";
       const maxTicketEur =  etoTicketSizes!.maxTicketEurUlps; //formatEur(etoTicketSizes && etoTicketSizes.maxTicketEurUlps) || "0";
       return {
-        isBankTransfer,
         minTicketEur,
         maxTicketEur,
         minTicketEth: minTicketEur!.mul(eurPriceEther),
@@ -408,12 +394,8 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
     },
   ),
   withHandlers<IStateProps & IDispatchProps & IWithProps, IHandlersProps>({
-    investNow: ({ investmentType, sendTransaction, showBankTransferSummary }) => () => {
-      if (investmentType !== EInvestmentType.BankTransfer) {
-        sendTransaction();
-      } else {
-        showBankTransferSummary();
-      }
+    investNow: ({ sendTransaction }) => () => {
+      sendTransaction();
     },
   }),
 )(InvestmentSelectionComponent);

@@ -2,11 +2,11 @@ import { Effect, fork, put, select } from "redux-saga/effects";
 
 import { getMessageTranslation, ToSMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
-import { SIGN_TOS } from "../../config/constants";
+import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import {IApiUser, IStateUser} from "../auth/interfaces";
 import { actions } from "../actions";
-import { ensurePermissionsArePresent } from "../auth/jwt/sagas";
+import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { selectCurrentAgreementHash } from "../auth/selectors";
 import { selectIsSmartContractInitDone } from "../init/selectors";
 import { neuCall, neuTakeEvery, neuTakeOnly } from "../sagasUtils";
@@ -38,24 +38,32 @@ export function* loadCurrentAgreement({
   }
 }
 
+function* handleAcceptCurrentAgreementEffect({ apiUserService }: TGlobalDependencies): any {
+  const currentAgreementHash: string = yield select(selectCurrentAgreementHash);
+
+  const user: IUser = yield apiUserService.setLatestAcceptedTos(currentAgreementHash);
+  yield put(actions.auth.setUser(user));
+}
+
 function* handleAcceptCurrentAgreement({
-  apiUserService,
   logger,
   notificationCenter,
 }: TGlobalDependencies): Iterator<any> {
   const currentAgreementHash: string = yield select(selectCurrentAgreementHash);
-  yield neuCall(
-    ensurePermissionsArePresent,
-    [SIGN_TOS],
-    createMessage(ToSMessage.TOS_ACCEPT_PERMISSION_TITLE),
-    createMessage(ToSMessage.TOS_ACCEPT_PERMISSION_TEXT),
-  );
   try {
+    yield neuCall(
+      ensurePermissionsArePresentAndRunEffect,
+      neuCall(handleAcceptCurrentAgreementEffect),
+      [EJwtPermissions.SIGN_TOS],
+      createMessage(ToSMessage.TOS_ACCEPT_PERMISSION_TITLE),
+      createMessage(ToSMessage.TOS_ACCEPT_PERMISSION_TEXT),
+    );
+
     const user: IApiUser = yield apiUserService.setLatestAcceptedTos(currentAgreementHash);
     yield put(actions.auth.setUser(user as IStateUser));
   } catch (e) {
     notificationCenter.error(createMessage(AuthMessage.AUTH_TOC_ACCEPT_ERROR));
-    logger.error("Could not accept Terms and Conditions", e);
+    logger.error(new Error("Could not accept Terms and Conditions"), e);
   }
 }
 

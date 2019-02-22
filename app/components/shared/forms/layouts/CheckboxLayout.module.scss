@@ -2,8 +2,14 @@ $indicator-size: 16px;
 
 .checkbox {
   cursor: pointer;
-  display: inline-flex;
-  vertical-align: bottom;
+
+  &.layout-inline {
+    display: inline-flex;
+  }
+
+  &.layout-block {
+    display: flex;
+  }
 
   :global(.form-group) & {
     align-items: start;
@@ -12,28 +18,26 @@ $indicator-size: 16px;
 }
 
 .input {
-
   // only hide checkbox on screen. In print, show the real checkbox, because of print display problems
   @media screen {
     @include sr-only;
   }
 
-  &[type="radio"]+.indicator {
-
+  &[type="radio"] + .indicator {
     &,
     &::after {
       border-radius: 50%;
     }
   }
 
-  &:checked+.indicator {
+  &:checked + .indicator {
     &::after {
       @include rect($indicator-size - 6px);
     }
   }
 
   &:required {
-    ~.label {
+    ~ .label {
       &::after {
         content: "*";
       }
@@ -79,6 +83,7 @@ $indicator-size: 16px;
   font-weight: normal;
   padding-left: px-to-rem(20px);
   padding-right: px-to-rem(20px);
+  text-align: left;
   text-transform: none;
   user-select: none;
 

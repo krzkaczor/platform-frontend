@@ -167,7 +167,7 @@ const people: Array<IPersonInfoProps> = [
     imageSrc: "landing/testimonials/people/zarabiaj_inaczej",
     fullName: "KAMIL JARZOMBEK",
     description: "Crypto Investor and Founder at Zarabiaj Inaczej",
-    link: "http://www.zarabiajinaczej.pl/",
+    link: "https://www.linkedin.com/in/kamil-jarzombek-b1649295/",
   },
 ];
 

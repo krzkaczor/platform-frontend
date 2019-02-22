@@ -141,8 +141,6 @@ $_active-color: lighten($_hover-color, 20%);
   }
 
   &-inline {
-    @include font-default;
-
     &:hover,
     &.is-active,
     &:focus {
@@ -172,6 +170,7 @@ $_active-color: lighten($_hover-color, 20%);
 
   // sizes
   &:global(.small) {
+    font-size: 80%;
     font-weight: $font-weight-medium;
 
     > .content {
@@ -228,6 +227,10 @@ $_active-color: lighten($_hover-color, 20%);
 
   &-green {
     color: $neu-seaweed;
+  }
+
+  &-blue {
+    color: $neu-blue;
   }
 
   // elements

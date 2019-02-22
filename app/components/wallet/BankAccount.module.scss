@@ -1,0 +1,14 @@
+.bank-details {
+  display: flex;
+  align-items: center;
+}
+
+.kyc-data {
+  @include font-label;
+}
+
+.icon {
+  @include rect(38px);
+
+  margin-right: 18px;
+}

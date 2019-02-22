@@ -3,9 +3,9 @@ import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../../../modules/actions";
 import { appConnect } from "../../../../store";
-import { ConfettiEthereum } from "../../../landing/parts/ConfettiEthereum";
 import { ButtonArrowRight } from "../../../shared/buttons";
-import { Message } from "../shared/Message";
+import { ConfettiEthereum } from "../../../shared/ethererum";
+import { Message } from "../../Message";
 
 interface IDispatchProps {
   goToWallet: () => void;

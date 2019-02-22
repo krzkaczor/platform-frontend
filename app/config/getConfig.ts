@@ -7,6 +7,11 @@ export interface IConfig {
   contractsAddresses: {
     universeContractAddress: string;
   };
+  bankTransferDetails: {
+    recipient: string;
+    iban: string;
+    bic: string;
+  };
 }
 
 export function getConfig(env: NodeJS.ProcessEnv): IConfig {
@@ -18,6 +23,11 @@ export function getConfig(env: NodeJS.ProcessEnv): IConfig {
     },
     contractsAddresses: {
       universeContractAddress: getRequiredEnv(env, "NF_UNIVERSE_CONTRACT_ADDRESS"),
+    },
+    bankTransferDetails: {
+      recipient: getRequiredEnv(env, "NF_BANK_TRANSFER_RECIPIENT"),
+      iban: getRequiredEnv(env, "NF_BANK_TRANSFER_IBAN"),
+      bic: getRequiredEnv(env, "NF_BANK_TRANSFER_BIC"),
     },
   };
 }

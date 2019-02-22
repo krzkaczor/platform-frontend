@@ -188,7 +188,7 @@ export const getWalletEthAmount = () => {
   goToWallet();
 
   return cy
-    .get(tid("wallet-balance.ether.balance-values-large-value"))
+    .get(tid("wallet-balance.ether.balance-values.large-value"))
     .then($element => parseAmount($element.text()));
 };
 
@@ -199,7 +199,7 @@ export const getWalletNEurAmount = () => {
   goToWallet();
 
   return cy
-    .get(tid("unlockedEuroWallet.balance-values-large-value"))
+    .get(tid("wallet-balance.neur.balance-values.large-value"))
     .then($element => parseAmount($element.text()));
 };
 

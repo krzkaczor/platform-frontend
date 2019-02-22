@@ -13,6 +13,7 @@ const kycInitialState: IKycState = {
   beneficialOwnerFilesLoading: {},
   beneficialOwnerFileUploading: {},
   claims: undefined,
+  bankAccount: undefined,
 };
 
 function appendIfExists<T>(array: ReadonlyArray<T>, item: T | undefined): ReadonlyArray<T> {
@@ -117,6 +118,11 @@ export const kycReducer: AppReducer<IKycState> = (
     // contract claims
     case "KYC_SET_CLAIMS":
       return { ...state, claims: action.payload.claims };
+    // api bank account
+    case actions.kyc.setBankAccountDetails.getType(): {
+      return { ...state, bankAccount: action.payload.bankAccount };
+    }
+
     default:
       return state;
   }

@@ -8,12 +8,6 @@
   &::placeholder {
     font-size: .9em;
   }
-
-  &.disabled-input {
-    &::placeholder {
-      color: $neu-silver;
-    }
-  }
 }
 
 .invest-all {
@@ -56,15 +50,4 @@
 
 .summary {
   text-align: center;
-}
-
-.error,
-.orange {
-  color: $neu-bright-orange;
-}
-
-.wallet-info {
-  strong {
-    color: $neu-bright-orange;
-  }
 }

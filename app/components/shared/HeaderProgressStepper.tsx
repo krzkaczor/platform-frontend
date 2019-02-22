@@ -25,7 +25,7 @@ export const HeaderProgressStepper: React.FunctionComponent<IProps> = props => (
     </Row>
     <Row className="mt-4 mb-4 text-center">
       <Col>
-        <h2 className={cn(styles.bold, props.warning && styles.warning, props.headerClassName)}>
+        <h2 className={cn(styles.bold, { "text-warning": props.warning }, props.headerClassName)}>
           {props.headerText}
         </h2>
         {props.descText && <p className="pt-3">{props.descText}</p>}

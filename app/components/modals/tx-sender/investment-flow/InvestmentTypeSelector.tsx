@@ -23,14 +23,7 @@ interface InEuroWallet {
   name: string;
   icon: string;
 }
-
-interface IBankTransfer {
-  type: EInvestmentType.BankTransfer;
-  name: string;
-  icon: string;
-}
-
-export type WalletSelectionData = IEthWallet | InEuroWallet | IBankTransfer;
+export type WalletSelectionData = IEthWallet | InEuroWallet;
 
 interface IProps {
   wallets: WalletSelectionData[];
@@ -68,9 +61,6 @@ const WalletBalanceValues: React.FunctionComponent<WalletSelectionData> = wallet
           </div>
         </>
       );
-
-    case EInvestmentType.BankTransfer:
-      return null;
   }
 };
 

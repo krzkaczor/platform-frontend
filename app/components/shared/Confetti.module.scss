@@ -1,12 +1,13 @@
 $size: 10em;
 
-$color-purple: #20e06e;
-$color-yellow: #ff6d00;
-$neu-red: #ff6e83;
-$color-cyan: #d5e20f;
 $animation-duration: 1.2s;
 
 $debug-animation-count: infinite; // infinite | 1
+
+$brink-pink: #ff6e83;
+$melrose: #bfa4ff;
+$yellow-orange: #ffb534;
+$malibu: #58cbfe;
 
 .wrapper {
   @include rect(100%, 2 * $size);
@@ -14,11 +15,13 @@ $debug-animation-count: infinite; // infinite | 1
   display: flex;
   justify-content: center;
   align-items: center;
+
+  position: relative;
 }
 
 .cannon {
-  position: relative;
-  left: -50%;
+  position: absolute;
+  left: 50%;
   top: 2em;
   height: 85%;
   width: 1px;
@@ -138,20 +141,50 @@ $debug-animation-count: infinite; // infinite | 1
       border-radius: 50%;
     }
 
-    &-color-1 {
-      background-color: $color-yellow;
-    }
+  }
+}
 
-    &-color-2 {
-      background-color: $color-purple;
-    }
+.theme-green {
+  .cannon {
+    .confetti {
+      &-color-1 {
+        background-color: $neu-bright-orange;
+      }
 
-    &-color-3 {
-      background-color: $neu-red;
-    }
+      &-color-2 {
+        background-color: $neu-seaweed;
+      }
 
-    &-color-4 {
-      background-color: $color-cyan;
+      &-color-3 {
+        background-color: $yellow-orange;
+      }
+
+      &-color-4 {
+        background-color: $neu-piss-yellow;
+      }
     }
   }
 }
+
+.theme-purple {
+  .cannon {
+    .confetti {
+      &-color-1 {
+        background-color: $neu-bright-orange;
+      }
+
+      &-color-2 {
+        background-color: $melrose;
+      }
+
+      &-color-3 {
+        background-color: $yellow-orange;
+      }
+
+      &-color-4 {
+        background-color: $malibu;
+      }
+    }
+  }
+}
+

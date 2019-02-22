@@ -36,7 +36,6 @@ storiesOf("Investment/Form", module)
         eurPriceEther={new BigNumber("0.123412341234123412341234")}
         investEntireBalance={() => {}}
         investmentType={EInvestmentType.InvestmentWallet}
-        isWalletBalanceKnown={true}
         minTicketEth={new BigNumber("12341234123412341234")}
         minTicketEur={new BigNumber("1234")}
         maxTicketEur={new BigNumber("123456")}
@@ -46,8 +45,6 @@ storiesOf("Investment/Form", module)
         totalCostEth={new BigNumber("1234141234123412341234")}
         totalCostEur={new BigNumber("123412341234123412341234")}
         sendTransaction={() => {}}
-        showBankTransferSummary={() => {}}
-        isBankTransfer={false}
         hasPreviouslyInvested={true}
       />
     </Container>

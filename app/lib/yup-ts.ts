@@ -19,9 +19,14 @@ export const onlyTrue = (message?: TTranslatedString) =>
   );
 
 export type TypeOf<T extends YTS<any>> = DeepReadonly<T["_T"]>;
-type TypeOfProps<P extends Dictionary<any>> = { [K in keyof P]: TypeOf<P[K]> };
 
 export type Schema<T> = ObjectYTS<T>;
+
+export function isYTS(schema: any): schema is Schema<any> {
+  return schema instanceof YTS;
+}
+
+type TypeOfProps<P extends Dictionary<any>> = { [K in keyof P]: TypeOf<P[K]> };
 
 class YTS<T> {
   _T!: T;

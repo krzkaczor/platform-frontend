@@ -7,7 +7,7 @@ import { EthereumAddress, EthereumAddressWithChecksum, EthereumNetworkId } from 
 export function makeEthereumAddressChecksummed(
   ethereumAddress: EthereumAddress,
 ): EthereumAddressWithChecksum {
-  return Eip55.encode(ethereumAddress) as EthereumAddressWithChecksum;
+  return toChecksumAddress(ethereumAddress) as EthereumAddressWithChecksum;
 }
 
 export function ethereumNetworkIdToNetworkName(networkId: EthereumNetworkId): string {
@@ -27,7 +27,7 @@ export function ethereumNetworkIdToNetworkName(networkId: EthereumNetworkId): st
   }
 }
 
-export const validateAddress = (value: string) => value && Web3Utils.isAddress(value.toUpperCase());
+export const validateAddress = (value: string) => value && isAddress(value.toUpperCase());
 
 export const doesUserHaveEnoughEther = (//fixme
   value: string,

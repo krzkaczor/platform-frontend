@@ -2,10 +2,10 @@ import * as React from "react";
 import { Col, Row } from "reactstrap";
 
 import { AcceptTosModal } from "../modals/accept-tos-modal/AcceptTosModal";
+import { BankTransferFlowModal } from "../modals/bank-transfer-flow/BankTransferFlow";
 import { DepositEthModal } from "../modals/DepositEthModal";
 import { DownloadTokenAgreementModal } from "../modals/download-token-agreements-modal/DownloadTokenAgreementModal";
 import { IcbmWalletBalanceModal } from "../modals/icbm-wallet-balance-modal/IcbmWalletBalanceModal";
-import { BankTransferFlowModal } from "../modals/tx-sender/investment-flow/BankTransferFlow";
 import { TxSenderModal } from "../modals/tx-sender/TxSender";
 import { NotificationWidget } from "../shared/notification-widget/NotificationWidget";
 import { Footer } from "./Footer";

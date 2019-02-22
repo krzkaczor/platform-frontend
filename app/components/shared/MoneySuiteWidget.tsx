@@ -33,7 +33,6 @@ export const MoneySuiteWidget: React.FunctionComponent<IMoneySuiteWidgetProps & 
   theme,
   size,
 }) => (
-  <>
     <div className={cn(styles.moneySuiteWidget, theme, size)}>
       <img className={styles.icon} src={icon} alt="" />
       <div>
@@ -52,5 +51,4 @@ export const MoneySuiteWidget: React.FunctionComponent<IMoneySuiteWidgetProps & 
         </div>
       </div>
     </div>
-  </>
 );

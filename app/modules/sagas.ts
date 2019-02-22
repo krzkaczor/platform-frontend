@@ -1,9 +1,9 @@
 import { effects } from "redux-saga";
 import { getContext } from "redux-saga/effects";
-import { termsOfServiceSagas } from "./terms-of-service-modal/sagas";
 
 import { TGlobalDependencies } from "../di/setupBindings";
 import { authSagas } from "./auth/sagas";
+import { bankTransferFlowSaga } from "./bank-transfer-flow/sagas";
 import { bookBuildingFlowSagas } from "./bookbuilding-flow/sagas";
 import { etoDocumentsSagas } from "./eto-documents/sagas";
 import { etoFlowSagas } from "./eto-flow/sagas";
@@ -20,6 +20,7 @@ import { routingSagas } from "./routing/sagas";
 import { formSingleFileUploadSagas } from "./shared/formSingleFileUpload/sagas";
 import { remoteFileSagas } from "./shared/remoteFile/sagas";
 import { tokenPriceSagas } from "./shared/tokenPrice/sagas";
+import { termsOfServiceSagas } from "./terms-of-service-modal/sagas";
 import { txMonitorSagas } from "./tx/monitor/sagas";
 import { txTransactionsSagasWatcher } from "./tx/transactions/sagas";
 import { txValidatorSagasWatcher } from "./tx/validator/sagas";
@@ -35,6 +36,7 @@ import { web3Sagas } from "./web3/sagas";
  */
 function* allSagas(): Iterator<effects.Effect> {
   yield effects.all([
+    effects.fork(bankTransferFlowSaga),
     effects.fork(termsOfServiceSagas),
     effects.fork(kycSagas),
     effects.fork(investorTicketsSagas),

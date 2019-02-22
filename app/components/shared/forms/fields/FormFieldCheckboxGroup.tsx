@@ -4,7 +4,7 @@ import * as React from "react";
 import { compose } from "recompose";
 
 import { TFormikConnect } from "../../../../types";
-import { CheckboxLayout } from "./FormFieldBoolean";
+import { CheckboxLayout } from "../layouts/CheckboxLayout";
 import { IFormField, withFormField } from "./utils";
 
 interface IFormFieldCheckboxGroupProps {

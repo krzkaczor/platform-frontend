@@ -99,7 +99,7 @@ const CampaigningActivatedInvestorApprovedWidgetLayout: React.FunctionComponent<
                 name="amount"
                 prefix="€"
                 maxLength={8}
-                type="number"
+                type="text"
               />
             </div>
             <div className={cn(styles.value, styles.backNow)}>

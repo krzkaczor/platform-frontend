@@ -196,7 +196,6 @@
     "connected-react-router": "^6.0.0",
     "crypto-random-string": "^1.0.0",
     "detect-browser": "^2.0.0",
-    "eip55": "^1.0.3",
     "eth-lightwallet": "https://github.com/Neufund/eth-lightwallet.git",
     "eth-sig-util": "^1.4.2",
     "ethereumjs-util": "^5.1.4",

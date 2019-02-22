@@ -100,6 +100,15 @@ storiesOf("buttons/default", module)
         green secondary disabled
       </Button>
       <br />
+      <br />
+      <Button theme="blue" layout={EButtonLayout.SECONDARY}>
+        blue secondary
+      </Button>
+      <br />
+      <Button theme="blue" layout={EButtonLayout.SECONDARY} disabled>
+        blue secondary disabled
+      </Button>
+      <br />
     </>
   ))
   .add("with size", () => (

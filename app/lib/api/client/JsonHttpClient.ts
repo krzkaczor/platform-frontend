@@ -8,8 +8,11 @@
  */
 
 import { injectable } from "inversify";
+import * as Yup from "yup";
+
 import { Dictionary } from "../../../types";
 import { toCamelCase } from "../../../utils/transformObjectKeys";
+import { isYTS, Schema } from "../../yup-ts";
 import { HttpClient, ResponseParsingError } from "./HttpClient";
 import { HttpMethod, IHttpRequestCommon, IHttpResponse } from "./IHttpClient";
 
@@ -30,8 +33,7 @@ export class JsonHttpClient extends HttpClient {
     method: HttpMethod,
     config: IHttpRequestCommon,
   ): Promise<IHttpResponse<T>> {
-    let response;
-    response = await this.makeRequest(fullUrl, method, config);
+    const response = await this.makeRequest(fullUrl, method, config);
 
     let responseJson: any = {};
 
@@ -44,12 +46,11 @@ export class JsonHttpClient extends HttpClient {
     let finalResponseJson: T = config.skipResponseParsing
       ? responseJson
       : toCamelCase(responseJson);
+
+    // we dont validate response on non success statuses
     if (config.responseSchema && response.ok && !config.skipResponseParsing) {
-      // we dont validate response on non success statuses
       try {
-        finalResponseJson = config.responseSchema.validateSync(toCamelCase(responseJson), {
-          stripUnknown: true,
-        }) as T;
+        finalResponseJson = this.validateResponseSchema(config.responseSchema, responseJson);
       } catch (e) {
         throw new ResponseParsingError(e.message);
       }
@@ -59,5 +60,13 @@ export class JsonHttpClient extends HttpClient {
       statusCode: response.status,
       body: finalResponseJson,
     };
+  }
+
+  private validateResponseSchema<T>(responseSchema: Yup.Schema<T> | Schema<T>, response: T): T {
+    const schema = isYTS(responseSchema) ? responseSchema.toYup() : responseSchema;
+
+    return schema.validateSync(toCamelCase(response), {
+      stripUnknown: true,
+    });
   }
 }

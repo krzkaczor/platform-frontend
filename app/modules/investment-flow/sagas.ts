@@ -46,7 +46,6 @@ import {
   selectInvestmentEtoId,
   selectInvestmentEurValueUlps,
   selectInvestmentType,
-  selectIsBankTransferModalOpened,
   selectIsICBMInvestment,
 } from "./selectors";
 import * as calculatedContributionInterfaces from "../investor-portfolio/interfaces/CalculatedContribution";
@@ -246,10 +245,7 @@ function* start(action: TAction): any {
 }
 
 export function* onInvestmentTxModalHide(): any {
-  const isModalOpen = yield select(selectIsBankTransferModalOpened);
-  if (!isModalOpen) {
-    yield put(actions.investmentFlow.resetInvestment());
-  }
+  yield put(actions.investmentFlow.resetInvestment());
 }
 
 function* getActiveInvestmentTypes(): any {
@@ -354,10 +350,7 @@ export function* investmentFlowSagas(): any {
   yield takeEvery("INVESTMENT_FLOW_SUBMIT_INVESTMENT_VALUE", processCurrencyValue);
   yield takeLatest("INVESTMENT_FLOW_VALIDATE_INPUTS", neuCall, validateAndCalculateInputs);
   yield takeEvery("INVESTMENT_FLOW_START", start);
-  yield takeEvery("INVESTMENT_FLOW_SHOW_BANK_TRANSFER_SUMMARY", showBankTransferSummary);
-  yield takeEvery("INVESTMENT_FLOW_SHOW_BANK_TRANSFER_DETAILS", showBankTransferDetails);
   yield takeEvery("TOKEN_PRICE_SAVE", recalculateCurrencies);
-  yield takeEvery("INVESTMENT_FLOW_BANK_TRANSFER_CHANGE", bankTransferChange);
   yield takeEvery("INVESTMENT_FLOW_SELECT_INVESTMENT_TYPE", resetTxDataAndValidations);
   yield takeEvery("INVESTMENT_FLOW_INVEST_ENTIRE_BALANCE", investEntireBalance);
   yield takeEvery("@@router/LOCATION_CHANGE", stop); // stop investment if some link is clicked

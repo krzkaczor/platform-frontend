@@ -82,26 +82,29 @@ export function* obtainJWT(
  * Saga to ensure all the needed permissions are present and still valid
  * on the current jwt
  */
-export function* ensurePermissionsArePresent(
+export function* ensurePermissionsArePresentAndRunEffect(
   { jwtStorage, logger }: TGlobalDependencies,
+  effect: Iterator<any>,
   permissions: Array<string> = [],
   title: TMessage,
   message: TMessage,
 ): Iterator<any> {
-  // check wether all permissions are present and still valid
   const jwt = jwtStorage.get();
+  // check wether all permissions are present and still valid
   if (jwt && hasValidPermissions(jwt, permissions)) {
+    yield effect;
     return;
   }
   // obtain a freshly signed token with missing permissions
   try {
     const obtainJwtEffect = neuCall(obtainJWT, permissions);
     yield call(accessWalletAndRunEffect, obtainJwtEffect, title, message);
+    yield effect;
   } catch (error) {
     if (error instanceof MessageSignCancelledError) {
       logger.info("Signing Cancelled");
     } else {
-      throw new Error("Message signing failed");
+      throw new Error(error);
     }
   }
 }

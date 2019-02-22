@@ -1,7 +1,7 @@
-import * as Eip55 from "eip55";
 import * as LightWalletProvider from "eth-lightwallet";
 import * as ethSig from "eth-sig-util";
 import { addHexPrefix, hashPersonalMessage, toBuffer } from "ethereumjs-util";
+import { toChecksumAddress } from "web3-utils";
 
 import { tid } from "../../../test/testUtils";
 import { promisify } from "../../utils/promisify";
@@ -113,7 +113,7 @@ export const createLightWalletWithKeyPair = async (
   const walletKey: any = await keyFromPassword(DEFAULT_PASSWORD);
   lightWalletInstance.generateNewAddress(walletKey, 1);
   let address = lightWalletInstance.getAddresses()[0];
-  address = Eip55.encode(address);
+  address = toChecksumAddress(address);
   const privateKey = lightWalletInstance.exportPrivateKey(address, walletKey);
 
   return { lightWalletInstance, salt, address, privateKey, walletKey };

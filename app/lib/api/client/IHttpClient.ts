@@ -1,12 +1,14 @@
 import * as Yup from "yup";
+
 import { Dictionary } from "../../../types";
+import { Schema } from "../../yup-ts";
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export interface IHttpRequestCommon {
   url: string;
   baseUrl?: string;
-  responseSchema?: Yup.Schema<any>;
+  responseSchema?: Yup.Schema<any> | Schema<any>;
   headers?: Dictionary<string>;
   body?: any;
   formData?: FormData;

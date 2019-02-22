@@ -8,7 +8,8 @@ import {
   IKycRequestState,
   TClaims
 } from "./interfaces";
-import { createAction, createSimpleAction } from "../actionsUtils";
+import { createAction, createActionFactory, createSimpleAction } from "../actionsUtils";
+import { TBankAccount, TClaims } from "./types";
 
 export const kycActions = {
   /**
@@ -205,4 +206,17 @@ export const kycActions = {
     }),
 
   kycSubmitBusinessRequest: () => createSimpleAction("KYC_SUBMIT_BUSINESS_REQUEST"),
+
+  /**
+   * Bank Account
+   */
+
+  // public actions
+  loadBankAccountDetails: createActionFactory("KYC_LOAD_BANK_ACCOUNT_DETAILS"),
+
+  // state mutations
+  setBankAccountDetails: createActionFactory(
+    "KYC_SET_BANK_ACCOUNT_DETAILS",
+    (bankAccount: TBankAccount) => ({ bankAccount }),
+  ),
 };

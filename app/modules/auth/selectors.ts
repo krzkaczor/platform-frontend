@@ -3,7 +3,7 @@ import { createSelector } from "reselect";
 import { ERequestStatus } from "../../modules/kyc/interfaces";
 import { EUserType, IStateUser } from "./interfaces";
 import { IAppState } from "../../store";
-import { selectKycRequestStatus } from "../kyc/selectors";
+import { selectIsUserVerifiedOnBlockchain, selectKycRequestStatus } from "../kyc/selectors";
 import { selectIsLightWallet } from "../web3/selectors";
 import { IStateAuth } from "./interfaces";
 
@@ -34,9 +34,18 @@ export const selectIsThereUnverifiedEmail = (state: IStateAuth): boolean =>
 export const selectDoesEmailExist = (state: IStateAuth): boolean =>
   selectIsThereUnverifiedEmail(state) || selectIsUserEmailVerified(state);
 
+/**
+ * Check if user has verified email and KYC
+ */
 export const selectIsUserVerified = (state: IAppState): boolean =>
   selectIsUserEmailVerified(state.auth) &&
   selectKycRequestStatus(state) === ERequestStatus.ACCEPTED;
+
+/**
+ * Check if user is verified by API and Contract
+ */
+export const selectIsUserFullyVerified = (state: IAppState): boolean =>
+  selectIsUserVerified(state) && selectIsUserVerifiedOnBlockchain(state);
 
 export const selectIsInvestor = (state: IAppState): boolean =>
   selectUserType(state) === EUserType.INVESTOR;

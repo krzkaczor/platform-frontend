@@ -49,7 +49,7 @@ export const selectIsICBMInvestment = (state: IAppState):boolean => {
 
 export const selectIsReadyToInvest = (state: IAppState):boolean => {
   const ethValue = selectInvestmentEthValueUlps(state);
-  const type = selectInvestmentType(state);
+
   return !!(
     ethValue &&
     !selectInvestmentErrorState(state) &&

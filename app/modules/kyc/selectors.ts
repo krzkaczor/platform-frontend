@@ -112,3 +112,9 @@ export const selectIsAccountFrozen:(state: IAppState) => boolean = createSelecto
 
   return false;
 });
+
+export const selectIsUserVerifiedOnBlockchain = (state: IAppState) =>
+  selectIsClaimsVerified(state) && !selectIsAccountFrozen(state);
+
+export const selectBankAccount = (state: IAppState): DeepReadonly<TBankAccount> | undefined =>
+  state.kyc.bankAccount;

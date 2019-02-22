@@ -1,18 +1,28 @@
 import * as cn from "classnames";
 import * as React from "react";
 
-import { SpinningEthereum } from "./SpinningEthereum";
+import { CommonHtmlProps } from "../../types";
 
-import { CommonHtmlProps } from "../../../types";
-import * as styles from "./ConfettiEthereum.module.scss";
+import * as styles from "./Confetti.module.scss";
 
-export const ConfettiEthereum: React.FunctionComponent<CommonHtmlProps> = ({
+export enum EConfettiTheme {
+  GREEN = styles.themeGreen,
+  PURPLE = styles.themePurple,
+}
+
+type TProps = {
+  theme?: EConfettiTheme;
+};
+
+export const Confetti: React.FunctionComponent<CommonHtmlProps & TProps> = ({
   className,
   style,
+  children,
+  theme,
 }) => {
   return (
-    <div className={cn([styles.wrapper, className])} style={style}>
-      <SpinningEthereum />
+    <div className={cn([styles.wrapper, className, theme])} style={style}>
+      {children}
       <div className={cn(styles.cannon)}>
         <div className={cn(styles.path, styles.pathSm, styles.pathAngleM2)}>
           <div className={cn(styles.confetti, styles.confettiFlake, styles.confettiColor3)} />
@@ -54,4 +64,8 @@ export const ConfettiEthereum: React.FunctionComponent<CommonHtmlProps> = ({
       </div>
     </div>
   );
+};
+
+Confetti.defaultProps = {
+  theme: EConfettiTheme.GREEN,
 };

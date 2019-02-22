@@ -18,13 +18,7 @@ export const investmentFlowActions = {
     createAction("INVESTMENT_FLOW_SUBMIT_INVESTMENT_VALUE", { value, currency }),
   investEntireBalance: () => createSimpleAction("INVESTMENT_FLOW_INVEST_ENTIRE_BALANCE"),
   validateInputs: () => createSimpleAction("INVESTMENT_FLOW_VALIDATE_INPUTS"),
-  showBankTransferDetails: () => createSimpleAction("INVESTMENT_FLOW_SHOW_BANK_TRANSFER_DETAILS"),
-  showBankTransferSummary: () => createSimpleAction("INVESTMENT_FLOW_SHOW_BANK_TRANSFER_SUMMARY"),
-  generateBankTransferReference: () => createSimpleAction("GENERATE_BANK_TRANSFER_REFERENCE"),
-  changeBankTransfer: (type: ETxSenderType) =>
-    createAction("INVESTMENT_FLOW_BANK_TRANSFER_CHANGE", { type }),
-  toggleBankTransferGasStipend: () =>
-    createSimpleAction("INVESTMENT_FLOW_TOGGLE_BANK_TRANSFER_GAS_STIPEND"),
+
   // state mutations
   setEtoId: (etoId: string) => createAction("INVESTMENT_FLOW_SET_ETO_ID", { etoId }),
   setEthValue: (value: NumericString | null) =>
@@ -35,8 +29,6 @@ export const investmentFlowActions = {
     createAction("INVESTMENT_FLOW_SET_INVESTMENT_ERROR_STATE", { errorState }),
   setIsInputValidated: (isValidated: boolean) =>
     createAction("INVESTMENT_FLOW_SET_IS_INPUT_VALIDATED", { isValidated }),
-  setBankTransferFlowState: (state: EBankTransferFlowState) =>
-    createAction("INVESTMENT_FLOW_SET_BANK_TRANSFER_FLOW_STATE", { state }),
   setActiveInvestmentTypes: (activeInvestmentTypes: EInvestmentType[]) =>
     createAction("INVESTMENT_FLOW_SET_ACTIVE_INVESTMENT_TYPES", { activeInvestmentTypes }),
 };
