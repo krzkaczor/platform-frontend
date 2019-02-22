@@ -1,11 +1,11 @@
 import * as cn from "classnames";
 import * as React from "react";
-import { FormattedMessage } from "react-intl-phraseapp";
-import { Redirect } from "react-router";
-import { branch, renderComponent, setDisplayName } from "recompose";
-import { compose } from "redux";
+import {FormattedMessage} from "react-intl-phraseapp";
+import {Redirect} from "react-router";
+import {branch, renderComponent, setDisplayName} from "recompose";
+import {compose} from "redux";
 
-import { EEtoState, EtoStateToCamelcase } from "../../lib/api/eto/EtoApi.interfaces";
+import {EEtoState, EtoStateToCamelcase} from "../../lib/api/eto/EtoApi.interfaces";
 import {
   EEtoDocumentType,
   IEtoDocument,
@@ -13,8 +13,8 @@ import {
   TEtoDocumentTemplates,
   TStateInfo,
 } from "../../lib/api/eto/EtoFileApi.interfaces";
-import { ignoredTemplates } from "../../lib/api/eto/EtoFileUtils";
-import { actions } from "../../modules/actions";
+import {ignoredTemplates} from "../../lib/api/eto/EtoFileUtils";
+import {actions} from "../../modules/actions";
 import {
   selectEtoDocumentData,
   selectEtoDocumentsDownloading,
@@ -30,25 +30,25 @@ import {
   selectIssuerEtoTemplates,
   selectShouldEtoDataLoad,
 } from "../../modules/eto-flow/selectors";
-import { selectPendingDownloads } from "../../modules/immutable-file/selectors";
-import { selectEtoOnChainStateById } from "../../modules/public-etos/selectors";
-import { EETOStateOnChain } from "../../modules/public-etos/types";
-import { selectAreTherePendingTxs } from "../../modules/tx/monitor/selectors";
-import { appConnect } from "../../store";
-import { DeepReadonly, TTranslatedString } from "../../types";
-import { onEnterAction } from "../../utils/OnEnterAction";
-import { withContainer } from "../../utils/withContainer";
-import { withMetaTags } from "../../utils/withMetaTags";
-import { appRoutes } from "../appRoutes";
-import { EtoFileIpfsModal } from "../eto/shared/EtoFileIpfsModal";
-import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
-import { ClickableDocumentTile, UploadableDocumentTile } from "../shared/Document";
-import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
-import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
-import { LoadingIndicator } from "../shared/loading-indicator";
-import { SectionHeader } from "../shared/SectionHeader";
-import { SingleColDocuments } from "../shared/SingleColDocumentWidget";
-import { getDocumentTitles } from "./utils";
+import {selectPendingDownloads} from "../../modules/immutable-file/selectors";
+import {selectEtoOnChainStateById} from "../../modules/public-etos/selectors";
+import {EETOStateOnChain} from "../../modules/public-etos/types";
+import {selectAreTherePendingTxs} from "../../modules/tx/monitor/selectors";
+import {appConnect} from "../../store";
+import {DeepReadonly, TTranslatedString} from "../../types";
+import {onEnterAction} from "../../utils/OnEnterAction";
+import {withContainer} from "../../utils/withContainer";
+import {withMetaTags} from "../../utils/withMetaTags";
+import {appRoutes} from "../appRoutes";
+import {EtoFileIpfsModal} from "../eto/shared/EtoFileIpfsModal";
+import {LayoutAuthorized} from "../layouts/LayoutAuthorized";
+import {ClickableDocumentTile, UploadableDocumentTile} from "../shared/Document";
+import {createErrorBoundary} from "../shared/errorBoundary/ErrorBoundary";
+import {ErrorBoundaryLayoutAuthorized} from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
+import {LoadingIndicator} from "../shared/loading-indicator";
+import {SectionHeader} from "../shared/SectionHeader";
+import {SingleColDocuments} from "../shared/SingleColDocumentWidget";
+import {getDocumentTitles} from "./utils";
 
 import * as styles from "./Documents.module.scss";
 
@@ -131,11 +131,14 @@ const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
   transactionPending,
 }) => {
   const canUploadInOnChainStates = (
+    etoState: EEtoState,
     documentKey: EEtoDocumentType,
     onChainState: EETOStateOnChain,
   ) =>
-    onChainState === EETOStateOnChain.Signing &&
-    documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT;
+    etoState === EEtoState.ON_CHAIN
+      ? onChainState === EETOStateOnChain.Signing &&
+       documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
+      : true
 
   const canUpload =
     stateInfo &&
@@ -143,7 +146,7 @@ const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
     stateInfo.canUploadInStates[EtoStateToCamelcase[etoState]].some(
       (fileName: string) => fileName === documentKey,
     ) &&
-    canUploadInOnChainStates(documentKey, onChainState);
+    canUploadInOnChainStates(etoState, documentKey, onChainState);
 
   const mayBeSignedNow = (documentKey: EEtoDocumentType, transactionPending: boolean) => {
     return documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
