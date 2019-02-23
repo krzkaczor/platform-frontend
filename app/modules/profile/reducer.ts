@@ -1,7 +1,7 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IProfile} from './interfaces'
 import { actions } from "../actions";
+import {IProfile} from './interfaces'
 
 
 const initialState: IProfile = {

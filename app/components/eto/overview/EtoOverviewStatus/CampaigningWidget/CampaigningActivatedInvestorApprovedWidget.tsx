@@ -7,17 +7,17 @@ import {
   withStateHandlers,
 } from "recompose";
 
+import BigNumber from "bignumber.js";
 import { actions } from "../../../../../modules/actions";
+import {blToStateConversionSpec, IBlPledge} from "../../../../../modules/bookbuilding-flow/interfaces/Pledge";
 import { appConnect } from "../../../../../store";
 import { ECurrency } from "../../../../shared/Money";
+import {convert} from "../../../utils";
 import {
   CampaigningActivatedInvestorApprovedWidgetLayout,
   CampaigningFormState,
   ICampaigningActivatedInvestorWidgetLayoutProps,
 } from "./CampaigningActivatedInvestorApprovedWidgetLayout";
-import {IBlPledge, blToStateConversionSpec} from "../../../../../modules/bookbuilding-flow/interfaces/Pledge";
-import {convert} from "../../../utils";
-import BigNumber from "bignumber.js";
 
 export interface IExternalProps {
   etoId: string;

@@ -2,11 +2,11 @@ import BigNumber from "bignumber.js";
 
 import { ECurrency } from "../../components/shared/Money";
 import { Q18 } from "../../config/constants";
-import {  IStateTokenDisbursal } from "./interfaces/TokenDisbursal";
+import {NumericString} from "../../types";
+import {TContribution} from "../contracts/interfaces";
 import { IBlCalculatedContribution, } from "./interfaces/CalculatedContribution";
 import {IBlInvestorTicket} from './interfaces/InvestorTicket'
-import {TContribution} from "../contracts/interfaces";
-import {NumericString} from "../../types";
+import {  IStateTokenDisbursal } from "./interfaces/TokenDisbursal";
 
 export const convertToCalculatedContribution = ([
   isWhitelisted,

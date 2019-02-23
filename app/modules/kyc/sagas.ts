@@ -17,7 +17,7 @@ import {
   IKycIndividualData,
   IKycLegalRepresentative,
   IKycRequestState,
-  TKycBankAccount
+  IApiKycBankAccountDetails
 } from "./interfaces";
 import { IStateUser } from "../auth/interfaces";
 import { IdentityRegistry } from "../../lib/contracts/IdentityRegistry";
@@ -592,7 +592,7 @@ function* loadBankAccountDetails({
   notificationCenter,
 }: TGlobalDependencies): Iterator<any> {
   try {
-    const result: TKycBankAccount = yield apiKycService.getBankAccount();
+    const result: IApiKycBankAccountDetails = yield apiKycService.getBankAccount();
 
     yield put(
       actions.kyc.setBankAccountDetails({

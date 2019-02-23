@@ -18,8 +18,8 @@ import {ECurrency, ECurrencySymbol, Money} from "../../../shared/Money";
 import {InfoList} from "../../tx-sender/shared/InfoList";
 import {InfoRow} from "../../tx-sender/shared/InfoRow";
 
-import * as styles from "../../tx-sender/investment-flow/Summary.module.scss";
 import BigNumber from "bignumber.js";
+import * as styles from "../../tx-sender/investment-flow/Summary.module.scss";
 
 interface IStateProps {
   referenceCode: string | null;

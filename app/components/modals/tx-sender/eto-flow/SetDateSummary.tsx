@@ -5,12 +5,12 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Container, Row } from "reactstrap";
 import { compose, setDisplayName } from "recompose";
 
+import { actions } from "../../../../modules/actions";
+import { selectPlatformTermsConstants } from "../../../../modules/contracts/selectors";
 import {
   EEtoDocumentType,
   immutableDocumentNames,
 } from "../../../../modules/eto-documents/interfaces";
-import { actions } from "../../../../modules/actions";
-import { selectPlatformTermsConstants } from "../../../../modules/contracts/selectors";
 import {
   selectIssuerEtoWithCompanyAndContract,
   selectNewPreEtoStartDate,

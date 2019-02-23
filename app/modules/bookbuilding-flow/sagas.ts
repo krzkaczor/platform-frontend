@@ -25,14 +25,14 @@ import * as bookbuildingStatInterfaces from "./interfaces/BookbuildingStats";
 export function* saveMyPledgeEffect(
   { apiEtoPledgeService }: TGlobalDependencies,
   etoId: string,
-  pledge: IPledge,
+  pledge: pledgeInterfaces.IStatePledge,
 ): any {
-  const pledgeResult: IHttpResponse<IPledge> = yield apiEtoPledgeService.saveMyPledge(
+  const pledgeResult: IHttpResponse<pledgeInterfaces.IApiPledge> = yield apiEtoPledgeService.saveMyPledge(
     etoId,
-    pledge,
+    convert(pledge, pledgeInterfaces.stateToApiConversionSpec),
   );
 
-  yield put(actions.bookBuilding.setPledge(etoId, pledgeResult.body));
+  yield put(actions.bookBuilding.setPledge(etoId, convert(pledgeResult.body, pledgeInterfaces.apiToStateConversionSpec)));
   yield put(actions.bookBuilding.loadBookBuildingStats(etoId));
 }
 
@@ -52,17 +52,6 @@ export function* saveMyPledge(
       createMessage(BookbuildingFlowMessage.PLEDGE_FLOW_CONFIRM_PLEDGE),
       createMessage(BookbuildingFlowMessage.PLEDGE_FLOW_PLEDGE_DESCRIPTION),
     );
-
-    const etoId = action.payload.etoId;
-    const pledge:pledgeInterfaces.IStatePledge = action.payload.pledge;
-
-    const pledgeResult: IHttpResponse<pledgeInterfaces.IApiPledge> = yield apiEtoPledgeService.saveMyPledge(
-      etoId,
-      convert(pledge, pledgeInterfaces.stateToApiConversionSpec),
-    );
-
-    yield put(actions.bookBuilding.setPledge(etoId, convert(pledgeResult.body, pledgeInterfaces.apiToStateConversionSpec)));
-    yield put(actions.bookBuilding.loadBookBuildingStats(etoId));
   } catch (e) {
     notificationCenter.error(
       createMessage(BookbuildingFlowMessage.PLEDGE_FLOW_FAILED_TO_SAVE_PLEDGE),

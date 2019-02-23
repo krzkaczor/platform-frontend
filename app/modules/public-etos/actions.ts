@@ -1,10 +1,10 @@
-import {IEtoDocument, EEtoDocumentType} from '../eto-documents/interfaces'
 import { Dictionary } from "../../types";
 import { createActionFactory } from "../actionsUtils";
+import {EEtoDocumentType, IEtoDocument} from '../eto-documents/interfaces'
+import {IStateCompanyEtoData} from '../eto-flow/interfaces/CompanyEtoData';
+import { IStatePublicEtoData} from "../eto-flow/interfaces/PublicEtoData";
 import { IStateEtoContractData,  } from "./interfaces/EtoContractData";
 import { IStateEtoTokenData } from "./interfaces/EtoTokenData";
-import { IStatePublicEtoData} from "../eto-flow/interfaces/PublicEtoData";
-import {IStateCompanyEtoData} from '../eto-flow/interfaces/CompanyEtoData';
 
 export const etoActions = {
   // public actions

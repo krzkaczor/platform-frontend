@@ -1,18 +1,18 @@
-import {EEtoState} from "./interfaces/interfaces";
-import {TEtoDocumentTemplates} from "../eto-documents/interfaces";
-import {ERequestStatus} from "../kyc/interfaces";
+import BigNumber from "bignumber.js";
 import {IAppState} from "../../store";
+import {DeepPartial} from "../../types";
 import {selectIsUserEmailVerified} from "../auth/selectors";
 import {selectPlatformTermsConstants} from "../contracts/selectors";
+import {TEtoDocumentTemplates} from "../eto-documents/interfaces";
 import {selectEtoDocumentLoading} from "../eto-documents/selectors";
+import {ERequestStatus} from "../kyc/interfaces";
 import {selectKycRequestStatus} from "../kyc/selectors";
-import {selectEtoWithCompanyAndContract, selectPublicEto} from "../public-etos/selectors";
 import {EETOStateOnChain, TBlEtoWithCompanyAndContract} from "../public-etos/interfaces/interfaces";
-import {isValidEtoStartDate} from "./utils";
-import {DeepPartial} from "../../types";
+import {selectEtoWithCompanyAndContract, selectPublicEto} from "../public-etos/selectors";
 import {IBlCompanyEtoData} from "./interfaces/CompanyEtoData";
+import {EEtoState} from "./interfaces/interfaces";
 import {IBlPublicEtoData} from "./interfaces/PublicEtoData";
-import BigNumber from "bignumber.js";
+import {isValidEtoStartDate} from "./utils";
 
 export const selectIssuerEtoPreviewCode = (state: IAppState): string | undefined => state.etoFlow.etoPreviewCode;
 

@@ -2,8 +2,8 @@ import * as React from "react";
 import Dropzone from "react-dropzone";
 import { compose } from "redux";
 
-import { EEtoDocumentType } from "../../../modules/eto-documents/interfaces";
 import { actions } from "../../../modules/actions";
+import { EEtoDocumentType } from "../../../modules/eto-documents/interfaces";
 import { appConnect } from "../../../store";
 
 import * as styles from "./EtoAddDocument.module.scss";

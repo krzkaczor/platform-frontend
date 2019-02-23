@@ -1,8 +1,8 @@
 import BigNumber from "bignumber.js";
 
-import { TClaims } from "./interfaces";
+import { IStateClaims } from "./interfaces";
 
-export function deserializeClaims(claims: string): TClaims {
+export function deserializeClaims(claims: string): IStateClaims {
   const claimsN = new BigNumber(claims, 16);
 
   const isVerified = claimsN.mod(2).eq(1);

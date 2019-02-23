@@ -4,16 +4,16 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Container, Modal, Row } from "reactstrap";
 import { compose } from "recompose";
 
+import { actions } from "../../../modules/actions";
 import {
   EEtoDocumentType,
   IEtoDocument,
   immutableDocumentNames,
 } from "../../../modules/eto-documents/interfaces";
 import { IImmutableFileId } from "../../../modules/immutable-file/interfaces";
-import { actions } from "../../../modules/actions";
 import { selectIsPendingDownload } from "../../../modules/immutable-file/selectors";
-import { selectEtoWithCompanyAndContractById } from "../../../modules/public-etos/selectors";
 import { TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";
+import { selectEtoWithCompanyAndContractById } from "../../../modules/public-etos/selectors";
 import { appConnect } from "../../../store";
 import { getDocumentTitles } from "../../documents/utils";
 import {

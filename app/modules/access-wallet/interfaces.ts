@@ -1,5 +1,5 @@
-import {DeepReadonly} from "../../types";
 import {TMessage} from "../../components/translatedMessages/utils";
+import {DeepReadonly} from "../../types";
 
 export interface IStateSignMessageModal {
   isModalOpen: boolean;

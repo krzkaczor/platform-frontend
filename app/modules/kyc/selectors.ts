@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 
 import { IAppState } from "../../store";
 import { DeepReadonly } from "../../types";
-import { IKycState, EKycRequestType, ERequestStatus, ERequestOutsourcedStatus } from "./interfaces";
+import {EKycRequestType, ERequestOutsourcedStatus, ERequestStatus, IKycState, IStateBankAccount} from "./interfaces";
 
 export const selectKycRequestStatus = (state: IAppState): ERequestStatus | undefined => {
   const userKycType = selectKycRequestType(state.kyc);
@@ -116,5 +116,5 @@ export const selectIsAccountFrozen:(state: IAppState) => boolean = createSelecto
 export const selectIsUserVerifiedOnBlockchain = (state: IAppState) =>
   selectIsClaimsVerified(state) && !selectIsAccountFrozen(state);
 
-export const selectBankAccount = (state: IAppState): DeepReadonly<TBankAccount> | undefined =>
+export const selectBankAccount = (state: IAppState): DeepReadonly<IStateBankAccount> | undefined =>
   state.kyc.bankAccount;

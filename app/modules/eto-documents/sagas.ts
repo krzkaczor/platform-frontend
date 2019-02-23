@@ -178,14 +178,6 @@ function* uploadEtoFile(
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_UPLOAD_DOCUMENT_TITLE),
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_UPLOAD_DOCUMENT_DESCRIPTION),
     );
-
-    const matchingDocument:IEtoDocument = yield neuCall(getDocumentOfTypePromise, documentType);
-    if (matchingDocument) {
-      yield apiEtoFileService.deleteSpecificEtoDocument(matchingDocument.ipfsHash);
-    }
-
-    yield apiEtoFileService.uploadEtoDocument(file, documentType);
-    notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_UPLOADED));
   } catch (e) {
     if (e instanceof FileAlreadyExists) {
       notificationCenter.error(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_EXISTS));

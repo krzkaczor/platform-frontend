@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { UnlockedETHWallet } from "./UnlockedETHWallet";
+import BigNumber from "bignumber.js";
 
 storiesOf("Unlocked ETH Wallet", module)
   .add("empty", () => (
@@ -8,9 +9,9 @@ storiesOf("Unlocked ETH Wallet", module)
       depositEth={() => {}}
       withdrawEth={() => {}}
       address="0x"
-      ethAmount={"0"}
-      ethEuroAmount={"0"}
-      totalEuroAmount={"0"}
+      ethAmount={new BigNumber("0")}
+      ethEuroAmount={new BigNumber("0")}
+      totalEuroAmount={new BigNumber("0")}
     />
   ))
   .add("not empty", () => (
@@ -18,8 +19,8 @@ storiesOf("Unlocked ETH Wallet", module)
       depositEth={() => {}}
       withdrawEth={() => {}}
       address="0x"
-      ethAmount={"1"}
-      ethEuroAmount={"1"}
-      totalEuroAmount={"1"}
+      ethAmount={new BigNumber("1")}
+      ethEuroAmount={new BigNumber("1")}
+      totalEuroAmount={new BigNumber("1")}
     />
   ));

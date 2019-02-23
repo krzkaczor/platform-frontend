@@ -1,3 +1,4 @@
+import { createAction, createActionFactory, createSimpleAction } from "../actionsUtils";
 import {
   EKycBusinessType,
   IKycBeneficialOwner,
@@ -5,11 +6,9 @@ import {
   IKycFileInfo,
   IKycIndividualData,
   IKycLegalRepresentative,
-  IKycRequestState,
-  TClaims
+  IKycRequestState, IStateBankAccount,
+  IStateClaims
 } from "./interfaces";
-import { createAction, createActionFactory, createSimpleAction } from "../actionsUtils";
-import { TBankAccount, TClaims } from "./types";
 
 export const kycActions = {
   /**
@@ -27,7 +26,7 @@ export const kycActions = {
    * Contract Claims
    */
   kycLoadClaims: () => createSimpleAction("KYC_LOAD_CLAIMS"),
-  kycSetClaims: (claims: TClaims) => createAction("KYC_SET_CLAIMS", { claims }),
+  kycSetClaims: (claims: IStateClaims) => createAction("KYC_SET_CLAIMS", { claims }),
 
   /**
    * Individual
@@ -217,6 +216,6 @@ export const kycActions = {
   // state mutations
   setBankAccountDetails: createActionFactory(
     "KYC_SET_BANK_ACCOUNT_DETAILS",
-    (bankAccount: TBankAccount) => ({ bankAccount }),
+    (bankAccount: IStateBankAccount) => ({ bankAccount }),
   ),
 };

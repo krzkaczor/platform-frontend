@@ -34,11 +34,9 @@ import {
   selectLockedEuroTokenBalance,
 } from "../wallet/selectors";
 import {
-  EBankTransferFlowState,
   EInvestmentCurrency,
   EInvestmentErrorState,
   EInvestmentType,
-  IStateInvestmentFlow,
 } from "./interfaces";
 import {
   selectCurrencyByInvestmentType,
@@ -315,25 +313,6 @@ function* recalculateCurrencies(): any {
   } else if (eurVal) {
     yield computeAndSetCurrencies(eurVal, curr);
   }
-}
-
-function* showBankTransferDetails(): any {
-  const state: IStateInvestmentFlow = yield select((s: IAppState) => s.investmentFlow);
-  if (state.investmentType !== EInvestmentType.BankTransfer) return;
-  yield put(actions.investmentFlow.setBankTransferFlowState(EBankTransferFlowState.Details));
-  yield put(actions.txSender.txSenderHideModal());
-}
-
-function* showBankTransferSummary(): any {
-  const state: IStateInvestmentFlow = yield select((s: IAppState) => s.investmentFlow);
-  if (state.investmentType !== EInvestmentType.BankTransfer) return;
-  yield put(actions.investmentFlow.setBankTransferFlowState(EBankTransferFlowState.Summary));
-  yield put(actions.txSender.txSenderHideModal());
-}
-
-function* bankTransferChange(action: TAction): any {
-  if (action.type !== "INVESTMENT_FLOW_BANK_TRANSFER_CHANGE") return;
-  yield put(actions.txSender.txSenderChange(action.payload.type));
 }
 
 function* resetTxDataAndValidations(): any {

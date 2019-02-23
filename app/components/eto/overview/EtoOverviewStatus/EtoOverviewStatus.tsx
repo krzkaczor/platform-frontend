@@ -7,18 +7,18 @@ import { Link } from "react-router-dom";
 import { compose } from "recompose";
 
 import { CounterWidget, TagsWidget } from ".";
-import { EEtoDocumentType } from "../../../../modules/eto-documents/interfaces";
 import { getShareAndTokenPrice } from "../../../../lib/api/eto/EtoUtils";
 import { selectIsAuthorized } from "../../../../modules/auth/selectors";
+import { EEtoDocumentType } from "../../../../modules/eto-documents/interfaces";
 import {
   selectInitialMaxCapExceeded,
   selectIsEligibleToPreEto,
 } from "../../../../modules/investor-portfolio/selectors";
-import { selectEtoOnChainStateById } from "../../../../modules/public-etos/selectors";
 import {
   EETOStateOnChain,
   TBlEtoWithCompanyAndContract,
 } from "../../../../modules/public-etos/interfaces/interfaces";
+import { selectEtoOnChainStateById } from "../../../../modules/public-etos/selectors";
 import { routingActions } from "../../../../modules/routing/actions";
 import { appConnect } from "../../../../store";
 import { CommonHtmlProps } from "../../../../types";
@@ -37,8 +37,8 @@ import { InvestmentWidget } from "./InvestmentWidget";
 import { RegisterNowWidget } from "./RegisterNowWidget";
 import { TokenSymbolWidget } from "./TokenSymbolWidget";
 
-import * as styles from "./EtoOverviewStatus.module.scss";
 import BigNumber from "bignumber.js";
+import * as styles from "./EtoOverviewStatus.module.scss";
 
 interface IExternalProps {
   eto: TBlEtoWithCompanyAndContract;

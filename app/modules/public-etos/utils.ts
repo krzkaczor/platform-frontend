@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
-import { EEtoState } from "../eto-flow/interfaces/interfaces";
 import {NumericString, Overwrite} from "../../types";
+import { EEtoState } from "../eto-flow/interfaces/interfaces";
 import {
   EETOStateOnChain,
   TBlEtoWithCompanyAndContract,

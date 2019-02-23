@@ -1,8 +1,8 @@
 import {Dictionary} from "../../../types";
-import * as investorTicketInterfaces from "./InvestorTicket";
 import * as calculatedContributionInterfaces from './CalculatedContribution'
-import * as tokenDisbursalInterfaces from './TokenDisbursal'
 import * as incomingPayoutsInterfaces from "./IncomingPayouts";
+import * as investorTicketInterfaces from "./InvestorTicket";
+import * as tokenDisbursalInterfaces from './TokenDisbursal'
 
 export interface IStateInvestorTickets {
   investorEtoTickets: Dictionary<investorTicketInterfaces.IStateInvestorTicket | undefined>;

@@ -30,8 +30,8 @@ import {
   selectHasInvestorTicket,
   selectNeuRewardUlpsByEtoId,
 } from "../../../../modules/investor-portfolio/selectors";
-import { selectEtoWithCompanyAndContractById } from "../../../../modules/public-etos/selectors";
 import { TBlEtoWithCompanyAndContract } from "../../../../modules/public-etos/interfaces/interfaces";
+import { selectEtoWithCompanyAndContractById } from "../../../../modules/public-etos/selectors";
 import {
   selectEtherPriceEur,
   selectEurPriceEther,
@@ -59,8 +59,8 @@ import {
   getInputErrorMessage,
 } from "./utils";
 
-import * as styles from "./Investment.module.scss";
 import {NumericString} from "../../../../types";
+import * as styles from "./Investment.module.scss";
 
 interface IStateProps {
   eto: TBlEtoWithCompanyAndContract;
@@ -99,7 +99,6 @@ interface IWithProps {
   maxTicketEur: BigNumber;
   totalCostEth: BigNumber;
   totalCostEur: BigNumber;
-  isBankTransfer: boolean;
 }
 
 interface IHandlersProps {

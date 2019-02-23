@@ -1,7 +1,9 @@
 import BigNumber from "bignumber.js";
 import * as Yup from "yup";
 
-import {  EtoEquityTokenInfoValidator,
+import {IApiDetailedBookbuildingStats} from "../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
+import {  EtoCompanyInformationValidator,
+  EtoEquityTokenInfoValidator,
   EtoInvestmentTermsValidator,
   EtoKeyIndividualsValidator,
   EtoLegalInformationValidator,
@@ -9,11 +11,9 @@ import {  EtoEquityTokenInfoValidator,
   EtoPitchValidator,
   EtoRiskAssessmentValidator,
   EtoTermsValidator,
-  EtoCompanyInformationValidator,
   EtoVotingRightsValidator,
   GeneralEtoDataValidator
 } from './validators'
-import {IApiDetailedBookbuildingStats} from "../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
 
 function getErrorsNumber(validator: Yup.Schema<any>, data?: any): number {
   try {

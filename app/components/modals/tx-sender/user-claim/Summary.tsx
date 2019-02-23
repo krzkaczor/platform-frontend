@@ -4,22 +4,22 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Container, Row } from "reactstrap";
 
+import { actions } from "../../../../modules/actions";
 import {
   EEtoDocumentType,
   IEtoDocument,
   immutableDocumentNames,
 } from "../../../../modules/eto-documents/interfaces";
 import { IImmutableFileId } from '../../../../modules/immutable-file/interfaces';
-import { IBlTxData } from "../../../../modules/web3/interfaces";
-import { actions } from "../../../../modules/actions";
 import { selectIsPendingDownload } from "../../../../modules/immutable-file/selectors";
-import { selectMyInvestorTicketByEtoId } from "../../../../modules/investor-portfolio/selectors";
 import { TBlETOWithInvestorTicket } from "../../../../modules/investor-portfolio/interfaces/interfaces";
+import { selectMyInvestorTicketByEtoId } from "../../../../modules/investor-portfolio/selectors";
 import {
   selectTxGasCostEthUlps,
   selectTxSummaryAdditionalData,
   selectTxSummaryData,
 } from "../../../../modules/tx/sender/selectors";
+import { IBlTxData } from "../../../../modules/web3/interfaces";
 import { appConnect } from "../../../../store";
 import { getDocumentTitles } from "../../../documents/utils";
 import { ButtonIcon } from "../../../shared/buttons";

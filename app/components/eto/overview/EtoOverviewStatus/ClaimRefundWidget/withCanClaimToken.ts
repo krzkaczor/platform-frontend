@@ -1,13 +1,13 @@
 import { compose, withProps } from "recompose";
 
-import { EUserType } from "../../../../../modules/auth/interfaces";
 import { actions } from "../../../../../modules/actions";
+import { EUserType } from "../../../../../modules/auth/interfaces";
 import { selectUserType } from "../../../../../modules/auth/selectors";
+import { IBlInvestorTicket } from "../../../../../modules/investor-portfolio/interfaces/InvestorTicket";
 import {
   selectHasInvestorTicket,
   selectInvestorTicket,
 } from "../../../../../modules/investor-portfolio/selectors";
-import { IBlInvestorTicket } from "../../../../../modules/investor-portfolio/interfaces/InvestorTicket";
 import { EETOStateOnChain } from "../../../../../modules/public-etos/interfaces/interfaces";
 import { appConnect } from "../../../../../store";
 import { Omit } from "../../../../../types";

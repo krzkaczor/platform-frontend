@@ -46,6 +46,7 @@ storiesOf("Investment/Form", module)
         totalCostEur={new BigNumber("123412341234123412341234")}
         sendTransaction={() => {}}
         hasPreviouslyInvested={true}
+        isWalletBalanceKnown={false}
       />
     </Container>
   ))
@@ -78,8 +79,6 @@ storiesOf("Investment/Form", module)
         totalCostEth={new BigNumber("1234141234123412341234")}
         totalCostEur={new BigNumber("123412341234123412341234")}
         sendTransaction={() => {}}
-        showBankTransferSummary={() => {}}
-        isBankTransfer={true}
       />
     </Container>
   ));

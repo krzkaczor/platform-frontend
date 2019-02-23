@@ -1,10 +1,10 @@
 import { Dictionary } from "../../types";
 import { createAction, createActionFactory } from "../actionsUtils";
-import { IStateCalculatedContribution, } from "./interfaces/CalculatedContribution";
-import { IStateTokenDisbursal } from "./interfaces/TokenDisbursal";
-import {IStateInvestorTicket} from './interfaces/InvestorTicket'
 import {IStatePublicEtoData} from "../eto-flow/interfaces/PublicEtoData";
+import { IStateCalculatedContribution, } from "./interfaces/CalculatedContribution";
 import {IStateIncomingPayoutsData} from "./interfaces/IncomingPayouts";
+import {IStateInvestorTicket} from './interfaces/InvestorTicket'
+import { IStateTokenDisbursal } from "./interfaces/TokenDisbursal";
 
 export const investorEtoTicketActions = {
   // public actions

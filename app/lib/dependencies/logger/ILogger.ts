@@ -1,5 +1,5 @@
-import { EWalletType } from "../../../modules/web3/interfaces";
 import { EUserType } from "../../../modules/auth/interfaces";
+import { EWalletType } from "../../../modules/web3/interfaces";
 
 export type TUser = { id: string; type: EUserType; walletType: EWalletType };
 export type LogArg = string | object;

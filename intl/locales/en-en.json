@@ -943,6 +943,7 @@
   "shared-component.to-human-readable-form.thousand.one": "thousand",
   "shared-component.to-human-readable-form.thousand.other": "thousand",
   "shared-component.uploaded-files.title": "Uploaded files",
+  "shared-component.wallet-balance.explanation": "",
   "shared-component.wallet-balance.title.account-address": "Account address:",
   "shared-component.wallet-balance.title.account-balance": "Account balance:",
   "shared-component.wallet-icbm.already-upgraded-message": "Congratulations! You have successfully enabled your ICBM wallet, which you may now use to invest in opportunities on the platform. Below you can see your available balance. Go to your dashboard to view available investment opportunities.",

@@ -2,19 +2,19 @@ import BigNumber from "bignumber.js";
 import { isArray } from "lodash/fp";
 import { createSelector } from "reselect";
 
+import {convert} from "../../components/eto/utils";
 import { Q18 } from "../../config/constants";
 import { getShareAndTokenPrice } from "../../lib/api/eto/EtoUtils";
 import { IAppState } from "../../store";
-import { selectPublicEtoById, selectPublicEtos, selectTokenData } from "../public-etos/selectors";
 import { EETOStateOnChain } from "../public-etos/interfaces/interfaces";
+import {IStatePublicEtos} from "../public-etos/interfaces/PublicEto";
+import { selectPublicEtoById, selectPublicEtos, selectTokenData } from "../public-etos/selectors";
 import { isOnChain } from "../public-etos/utils";
 import { selectLockedWalletConnected } from "../wallet/selectors";
-import {TBlETOWithInvestorTicket, TBlETOWithTokenData} from "./interfaces/interfaces";
 import {IBlCalculatedContribution} from "./interfaces/CalculatedContribution";
+import {TBlETOWithInvestorTicket, TBlETOWithTokenData} from "./interfaces/interfaces";
 import * as investorTicketsInterfaces from "./interfaces/InvestorTickets";
-import {convert} from "../../components/eto/utils";
 import {IBlTokenDisbursal} from "./interfaces/TokenDisbursal";
-import {IStatePublicEtos} from "../public-etos/interfaces/PublicEto";
 
 const selectInvestorTicketsState = (state: IAppState):investorTicketsInterfaces.IBlInvestorTickets =>
   convert(state.investorTickets, investorTicketsInterfaces.stateToBlConversionSpec);

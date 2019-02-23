@@ -9,8 +9,8 @@ import { CheckboxLayout, Form, FormInput, InputSize } from "../../../../shared/f
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../../../../shared/Money";
 import { Tooltip } from "../../../../shared/Tooltip";
 
-import * as styles from "../EtoOverviewStatus.module.scss";
 import BigNumber from "bignumber.js";
+import * as styles from "../EtoOverviewStatus.module.scss";
 
 export enum CampaigningFormState {
   VIEW,

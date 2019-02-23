@@ -1,14 +1,14 @@
 import { inject, injectable } from "inversify";
 
 import { symbols } from "../../../di/symbols";
-import { withParams } from "../../../utils/withParams";
-import { IHttpClient, IHttpResponse } from "../client/IHttpClient";
-import {DeepPartial} from "../../../types";
-import {IApiPublicEtoData} from "../../../modules/eto-flow/interfaces/PublicEtoData";
-import {IApiCompanyEtoData} from "../../../modules/eto-flow/interfaces/CompanyEtoData";
-import {TApiGeneralEtoData} from "../../../modules/eto-flow/interfaces/interfaces";
 import {IApiBookBuildingStats} from "../../../modules/bookbuilding-flow/interfaces/BookbuildingStats";
 import {IApiDetailedBookbuildingStats} from "../../../modules/bookbuilding-flow/interfaces/DetailedBookbuildingStats";
+import {IApiCompanyEtoData} from "../../../modules/eto-flow/interfaces/CompanyEtoData";
+import {TApiGeneralEtoData} from "../../../modules/eto-flow/interfaces/interfaces";
+import {IApiPublicEtoData} from "../../../modules/eto-flow/interfaces/PublicEtoData";
+import {DeepPartial} from "../../../types";
+import { withParams } from "../../../utils/withParams";
+import { IHttpClient, IHttpResponse } from "../client/IHttpClient";
 
 const BASE_PATH = "/api/eto-listing/";
 const COMPANIES_ME_DATA_PATH = "/companies/me";

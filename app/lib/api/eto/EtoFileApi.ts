@@ -2,14 +2,14 @@ import { inject, injectable } from "inversify";
 
 import { Dictionary } from "lodash";
 import { symbols } from "../../../di/symbols";
-import { IHttpClient, IHttpResponse } from "../client/IHttpClient";
-import { withParams } from "../../../utils/withParams";
 import {
   EEtoDocumentType,
   IEtoDocument,
   TEtoDocumentTemplates,
   TStateInfo
 } from "../../../modules/eto-documents/interfaces";
+import { withParams } from "../../../utils/withParams";
+import { IHttpClient, IHttpResponse } from "../client/IHttpClient";
 
 const BASE_PATH = "/api/eto-listing/etos";
 // Issuer endpoints

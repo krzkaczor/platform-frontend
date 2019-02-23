@@ -1,9 +1,10 @@
 import BigNumber from "bignumber.js";
 
-import { IAppState } from "../../../store";
-import { ETxSenderState, EValidationState, ETxSenderType } from "./interfaces";
-import * as txDataInterfaces from "../../../modules/web3/interfaces";
 import {convert} from "../../../components/eto/utils";
+import * as txDataInterfaces from "../../../modules/web3/interfaces";
+import { IAppState } from "../../../store";
+import { ETxSenderType } from "../interfaces";
+import { ETxSenderState, EValidationState } from "./interfaces";
 
 export const selectTxSenderModalOpened = (state: IAppState) =>
   state.txSender.state !== ETxSenderState.UNINITIALIZED;

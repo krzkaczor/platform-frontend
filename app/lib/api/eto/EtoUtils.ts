@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
-import {TBlEtoWithCompanyAndContract} from "../../../modules/public-etos/interfaces/interfaces";
 import {IBlPublicEtoData} from "../../../modules/eto-flow/interfaces/PublicEtoData";
+import {TBlEtoWithCompanyAndContract} from "../../../modules/public-etos/interfaces/interfaces";
 
 export const getInvestmentAmount = (eto:
   Partial<{

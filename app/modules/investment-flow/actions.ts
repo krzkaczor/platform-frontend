@@ -1,12 +1,10 @@
+import {NumericString} from "../../types";
 import { createAction, createSimpleAction } from "../actionsUtils";
-import { ETxSenderType } from "../tx/interfaces";
 import {
-  EBankTransferFlowState,
   EInvestmentCurrency,
   EInvestmentErrorState,
   EInvestmentType,
 } from "./interfaces";
-import {NumericString} from "../../types";
 
 export const investmentFlowActions = {
   // public actions

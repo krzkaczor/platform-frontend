@@ -1,8 +1,8 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
+import BigNumber from "bignumber.js";
 
 import { CommonHtmlProps } from "../../../types";
-import { isZero } from "../../../utils/Number.utils";
 import { AccountAddress } from "../../shared/AccountAddress";
 import { AccountBalance } from "../../shared/AccountBalance";
 import { ECurrency } from "../../shared/Money";
@@ -15,9 +15,9 @@ interface IUnlockedETHWallet {
   depositEth: () => void;
   withdrawEth: () => void;
   address: string;
-  ethAmount: string;
-  ethEuroAmount: string;
-  totalEuroAmount: string;
+  ethAmount: BigNumber;
+  ethEuroAmount: BigNumber;
+  totalEuroAmount: BigNumber;
 }
 
 export const UnlockedETHWallet: React.SFC<IUnlockedETHWallet & CommonHtmlProps> = ({
@@ -60,7 +60,7 @@ export const UnlockedETHWallet: React.SFC<IUnlockedETHWallet & CommonHtmlProps> 
             {
               name: <FormattedMessage id="shared-component.account-balance.withdraw" />,
               onClick: withdrawEth,
-              disabled: process.env.NF_WITHDRAW_ENABLED !== "1" || isZero(ethAmount),
+              disabled: process.env.NF_WITHDRAW_ENABLED !== "1" || ethAmount.isZero(),
               "data-test-id": "wallet.eth.withdraw.button",
             },
             {

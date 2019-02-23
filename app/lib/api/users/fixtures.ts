@@ -1,5 +1,5 @@
-import { TWalletMetadata } from "../../persistence/WalletMetadataObjectStorage";
 import { EUserType } from "../../../modules/auth/interfaces";
+import { TWalletMetadata } from "../../persistence/WalletMetadataObjectStorage";
 
 export const getDummyUser = (walletMetadata: TWalletMetadata) => ({
   userId: "user-id",

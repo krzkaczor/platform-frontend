@@ -1,6 +1,6 @@
-import {IBlInvestorTicket, IStateInvestorTicket} from './InvestorTicket'
-import {TBlEtoWithCompanyAndContract, TStateEtoWithCompanyAndContract} from "../../public-etos/interfaces/interfaces";
 import {IBlEtoTokenData} from "../../public-etos/interfaces/EtoTokenData";
+import {TBlEtoWithCompanyAndContract, TStateEtoWithCompanyAndContract} from "../../public-etos/interfaces/interfaces";
+import {IBlInvestorTicket, IStateInvestorTicket} from './InvestorTicket'
 
 
 export type TStateETOWithInvestorTicket = TStateEtoWithCompanyAndContract & {

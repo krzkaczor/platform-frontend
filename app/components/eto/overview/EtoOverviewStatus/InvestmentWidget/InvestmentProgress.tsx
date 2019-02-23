@@ -13,9 +13,9 @@ import {
   TProgressBarProps,
 } from "../../../../shared/PercentageIndicatorBar";
 
+import BigNumber from "bignumber.js";
 import { TTranslatedString } from "../../../../../types";
 import * as styles from "./InvestmentProgress.module.scss";
-import BigNumber from "bignumber.js";
 
 type TProps = {
   eto: TBlEtoWithCompanyAndContract;

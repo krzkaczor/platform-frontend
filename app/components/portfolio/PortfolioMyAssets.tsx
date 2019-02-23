@@ -1,15 +1,15 @@
+import BigNumber from "bignumber.js";
 import * as cn from "classnames";
 import { isEqual } from "lodash/fp";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
-import BigNumber from "bignumber.js";
 import { compose, lifecycle, withState } from "recompose";
 
 import { externalRoutes } from "../../config/externalRoutes";
 import { actions } from "../../modules/actions";
-import { selectMyAssetsWithTokenData } from "../../modules/investor-portfolio/selectors";
 import { TBlETOWithTokenData } from "../../modules/investor-portfolio/interfaces/interfaces";
+import { selectMyAssetsWithTokenData } from "../../modules/investor-portfolio/selectors";
 import { selectNeuPriceEur } from "../../modules/shared/tokenPrice/selectors";
 import { selectNeuBalance } from "../../modules/wallet/selectors";
 import { appConnect } from "../../store";

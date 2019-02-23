@@ -1,6 +1,5 @@
-import * as Eip55 from "eip55";
-import * as Web3Utils from "web3-utils";
 import BigNumber from "bignumber.js";
+import { isAddress, toChecksumAddress } from "web3-utils";
 
 import { EthereumAddress, EthereumAddressWithChecksum, EthereumNetworkId } from "../../types";
 

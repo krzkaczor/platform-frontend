@@ -3,9 +3,9 @@ import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { setDisplayName, withProps } from "recompose";
 import { compose } from "redux";
 
-import {IBlPledge} from "../../../../../modules/bookbuilding-flow/interfaces/Pledge";
 import { actions } from "../../../../../modules/actions";
 import { selectIsInvestor, selectIsVerifiedInvestor } from "../../../../../modules/auth/selectors";
+import {IBlPledge} from "../../../../../modules/bookbuilding-flow/interfaces/Pledge";
 import {
   selectBookbuildingStats,
   selectMyPledge,
@@ -18,11 +18,11 @@ import { CounterWidget } from "../index";
 import { Message } from "../Message";
 import { CampaigningActivatedInvestorApprovedWidget } from "./CampaigningActivatedInvestorApprovedWidget";
 
+import BigNumber from "bignumber.js";
 import { appRoutes } from "../../../../appRoutes";
 import { ButtonLink } from "../../../../shared/buttons";
 import { Tooltip } from "../../../../shared/Tooltip";
 import * as styles from "../EtoOverviewStatus.module.scss";
-import BigNumber from "bignumber.js";
 
 export interface IExternalProps {
   etoId: string;

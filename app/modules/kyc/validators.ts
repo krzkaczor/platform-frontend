@@ -7,6 +7,7 @@ import {
   personBirthDate,
   restrictedCountry
 } from "../../lib/api/util/schemaHelpers";
+import * as YupTS from "../../lib/yup-ts";
 
 export const KycPersonValidator = Yup.object().shape({
   firstName: Yup.string(),
@@ -60,3 +61,8 @@ export const KycRequestStateValidator = Yup.object().shape({
 });
 
 export const KycLegalRepresentativeValidator = KycPersonValidator;
+
+export const KycBankAccountValidator = YupTS.object({
+  bankAccountNumberLast4: YupTS.string(),
+  holderName: YupTS.string(),
+});

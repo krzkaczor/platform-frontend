@@ -2,12 +2,6 @@ import { BigNumber } from "bignumber.js";
 import { createStore, Store } from "redux";
 
 import { IConfig } from "../app/config/getConfig";
-import { EEtoState } from "../app/modules/eto-flow/interfaces/interfaces";
-import {
-  IBlCompanyEtoData,
-  IApiCompanyEtoData,
-  IStateCompanyEtoData
-} from "../app/modules/eto-flow/interfaces/CompanyEtoData";
 import {
   EEtoDocumentLanguage,
   EEtoDocumentType,
@@ -16,9 +10,15 @@ import {
   TEtoFormType,
 } from "../app/modules/eto-documents/interfaces";
 import {
+  IApiCompanyEtoData,
+  IBlCompanyEtoData,
+  IStateCompanyEtoData
+} from "../app/modules/eto-flow/interfaces/CompanyEtoData";
+import { EEtoState } from "../app/modules/eto-flow/interfaces/interfaces";
+import {
   EETOStateOnChain,
-  TBlEtoWithCompanyAndContract,
   TApiEtoWithCompanyAndContract,
+  TBlEtoWithCompanyAndContract,
   TStateEtoWithCompanyAndContract
 } from "../app/modules/public-etos/interfaces/interfaces";
 import {EthereumAddress, EthereumAddressWithChecksum, EthereumNetworkId, NumericString} from "../app/types";

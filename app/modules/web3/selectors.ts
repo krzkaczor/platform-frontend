@@ -6,7 +6,7 @@ import { createSelector } from "reselect";
 import {ILightWalletMetadata, TWalletMetadata} from "../../lib/persistence/WalletMetadataObjectStorage";
 import { IAppState } from "../../store";
 import { EthereumAddress } from "../../types";
-import { IConnectedWeb3State, IWalletPrivateData, IWeb3State, EWalletSubType, EWalletType } from "./interfaces";
+import { EWalletSubType, EWalletType, IConnectedWeb3State, IWalletPrivateData, IWeb3State } from "./interfaces";
 import { makeEthereumAddressChecksummed } from "./utils";
 
 export const selectConnectedWeb3State = (state: IWeb3State): IConnectedWeb3State => {

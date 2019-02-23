@@ -31,7 +31,6 @@ import { BrowserWalletConnector } from "../lib/web3/BrowserWallet";
 import { ContractsService } from "../lib/web3/ContractsService";
 import { LedgerWalletConnector } from "../lib/web3/LedgerWallet";
 import { LightWalletConnector, LightWalletUtil } from "../lib/web3/LightWallet";
-import { IEthereumNetworkConfig } from "../modules/web3/interfaces";
 import {
   web3BatchFactory,
   Web3BatchFactoryType,
@@ -39,6 +38,7 @@ import {
   Web3FactoryType,
 } from "../lib/web3/Web3Batch";
 import { Web3Manager } from "../lib/web3/Web3Manager";
+import { IEthereumNetworkConfig } from "../modules/web3/interfaces";
 import {
   AsyncIntervalSchedulerFactory,
   AsyncIntervalSchedulerFactoryType,

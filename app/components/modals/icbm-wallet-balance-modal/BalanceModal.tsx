@@ -7,10 +7,10 @@ import { HighlightedField } from "../../shared/HighlightedField";
 import { ECurrency, Money } from "../../shared/Money";
 import { SectionHeader } from "../../shared/SectionHeader";
 
+import BigNumber from "bignumber.js";
 import * as iconEth from "../../../assets/img/eth_icon.svg";
 import * as iconNeu from "../../../assets/img/neu_icon.svg";
 import * as styles from "./IcbmWalletBalanceModal.module.scss";
-import BigNumber from "bignumber.js";
 
 interface IBalanceModal {
   isVerificationFullyDone: boolean;

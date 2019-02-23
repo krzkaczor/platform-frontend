@@ -1,9 +1,8 @@
+import BigNumber from "bignumber.js";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Container, Row } from "reactstrap";
-import BigNumber from "bignumber.js";
 
-import { IBlTxData } from "../../../../modules/web3/interfaces";
 import { actions } from "../../../../modules/actions";
 import { ETokenType } from "../../../../modules/tx/interfaces";
 import {
@@ -11,6 +10,7 @@ import {
   selectTxSummaryAdditionalData,
   selectTxSummaryData,
 } from "../../../../modules/tx/sender/selectors";
+import { IBlTxData } from "../../../../modules/web3/interfaces";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
 import { DocumentTemplateButton } from "../../../shared/DocumentLink";

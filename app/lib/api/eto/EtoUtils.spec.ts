@@ -1,7 +1,7 @@
 import { expect } from "chai";
 
-import { getInvestmentAmount, getShareAndTokenPrice } from "./EtoUtils";
 import BigNumber from "bignumber.js";
+import { getInvestmentAmount, getShareAndTokenPrice } from "./EtoUtils";
 
 describe("EtoUtils", () => {
   describe("getShareAndTokenPrice", () => {

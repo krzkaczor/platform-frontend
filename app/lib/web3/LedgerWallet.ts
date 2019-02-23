@@ -1,18 +1,18 @@
+import { inject, injectable } from "inversify";
 import ledgerWalletProvider from "ledger-wallet-provider";
+import { delay } from "redux-saga";
 import * as semver from "semver";
 import * as Web3 from "web3";
 import * as Web3ProviderEngine from "web3-provider-engine";
 // tslint:disable-next-line
 import * as RpcSubprovider from "web3-provider-engine/subproviders/rpc";
-import { inject, injectable } from "inversify";
-import { delay } from "redux-saga";
 
 import { symbols } from "../../di/symbols";
 import { EWalletSubType, EWalletType } from "../../modules/web3/interfaces";
+import { IEthereumNetworkConfig } from "../../modules/web3/interfaces";
 import { EthereumAddress, EthereumNetworkId } from "../../types";
 import { ILedgerWalletMetadata } from "../persistence/WalletMetadataObjectStorage";
 import { IPersonalWallet, SignerType } from "./PersonalWeb3";
-import { IEthereumNetworkConfig } from "../../modules/web3/interfaces";
 import { Web3Adapter } from "./Web3Adapter";
 import { SignerRejectConfirmationError, SignerTimeoutError } from "./Web3Manager";
 

@@ -5,19 +5,19 @@ import { Col } from "reactstrap";
 import { branch, compose, renderComponent } from "recompose";
 
 import { actions } from "../../modules/actions";
+import { TBlEtoWithCompanyAndContract } from "../../modules/public-etos/interfaces/interfaces";
 import {
   selectEtoWidgetError,
   selectEtoWithCompanyAndContract,
 } from "../../modules/public-etos/selectors";
-import { TBlEtoWithCompanyAndContract } from "../../modules/public-etos/interfaces/interfaces";
 import { appConnect } from "../../store";
 import { onEnterAction } from "../../utils/OnEnterAction";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { LoadingIndicator } from "../shared/loading-indicator";
 import { EtoOverviewStatus } from "./overview/EtoOverviewStatus";
 
-import * as styles from "./overview/EtoOverviewStatus/EtoOverviewStatus.module.scss";
 import {IStatePublicEtos} from "../../modules/public-etos/interfaces/PublicEto";
+import * as styles from "./overview/EtoOverviewStatus/EtoOverviewStatus.module.scss";
 
 interface IStateProps {
   eto?: TBlEtoWithCompanyAndContract;

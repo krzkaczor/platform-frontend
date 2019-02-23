@@ -38,9 +38,9 @@ import {
 import * as neuIcon from "../../../../assets/img/neu_icon.svg";
 import * as info from "../../../../assets/img/notifications/info.svg";
 import * as tokenIcon from "../../../../assets/img/token_icon.svg";
-import * as styles from "./Summary.module.scss";
-import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import {EEtoDocumentType} from "../../../../modules/eto-documents/interfaces";
+import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
+import * as styles from "./Summary.module.scss";
 
 
 interface IStateProps {

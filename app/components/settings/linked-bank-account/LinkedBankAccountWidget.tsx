@@ -5,7 +5,7 @@ import { actions } from "../../../modules/actions";
 import { EBankTransferType } from "../../../modules/bank-transfer-flow/reducer";
 import { selectIsBankAccountVerified } from "../../../modules/bank-transfer-flow/selectors";
 import { selectBankAccount } from "../../../modules/kyc/selectors";
-import { TBankAccount } from "../../../modules/kyc/types";
+import { IStateBankAccount } from "../../../modules/kyc/interfaces";
 import { appConnect } from "../../../store";
 import { DeepReadonly } from "../../../types";
 import { Button, ButtonSize, EButtonLayout } from "../../shared/buttons";
@@ -21,7 +21,7 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  bankAccount?: DeepReadonly<TBankAccount>;
+  bankAccount?: DeepReadonly<IStateBankAccount>;
   isVerified: boolean;
 }
 

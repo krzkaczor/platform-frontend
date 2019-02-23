@@ -1,6 +1,6 @@
+import BigNumber from "bignumber.js";
 import {ECurrency} from "../../../components/shared/Money";
 import {NumericString} from "../../../types";
-import BigNumber from "bignumber.js";
 import {bigNumberToNumericString, numericStringToBigNumber} from "../../../utils/numericStringUtils";
 
 export interface IStateTokenDisbursal {

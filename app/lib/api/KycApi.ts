@@ -10,8 +10,8 @@ import {
   IKycIndividualData,
   IKycLegalRepresentative,
   IKycRequestState,
-  KycBankAccountSchema,
 } from "../../modules/kyc/interfaces";
+import {KycBankAccountValidator} from "../../modules/kyc/validators";
 import {
   KycFileInfoValidator, //FIXME need special validators for api
   KycIndividualDataValidator,
@@ -280,7 +280,7 @@ export class KycApi {
     const response = await this.httpClient.get<IKycRequestState>({
       baseUrl: BASE_PATH,
       url: BANK_ACCOUNT_PATH,
-      responseSchema: KycBankAccountSchema,
+      responseSchema: KycBankAccountValidator,
       allowedStatusCodes: [404],
     });
 

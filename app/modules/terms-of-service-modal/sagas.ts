@@ -41,15 +41,14 @@ export function* loadCurrentAgreement({
 function* handleAcceptCurrentAgreementEffect({ apiUserService }: TGlobalDependencies): any {
   const currentAgreementHash: string = yield select(selectCurrentAgreementHash);
 
-  const user: IUser = yield apiUserService.setLatestAcceptedTos(currentAgreementHash);
-  yield put(actions.auth.setUser(user));
+  const user: IApiUser = yield apiUserService.setLatestAcceptedTos(currentAgreementHash);
+  yield put(actions.auth.setUser(user as IStateUser));
 }
 
 function* handleAcceptCurrentAgreement({
   logger,
   notificationCenter,
 }: TGlobalDependencies): Iterator<any> {
-  const currentAgreementHash: string = yield select(selectCurrentAgreementHash);
   try {
     yield neuCall(
       ensurePermissionsArePresentAndRunEffect,
@@ -59,8 +58,7 @@ function* handleAcceptCurrentAgreement({
       createMessage(ToSMessage.TOS_ACCEPT_PERMISSION_TEXT),
     );
 
-    const user: IApiUser = yield apiUserService.setLatestAcceptedTos(currentAgreementHash);
-    yield put(actions.auth.setUser(user as IStateUser));
+
   } catch (e) {
     notificationCenter.error(createMessage(AuthMessage.AUTH_TOC_ACCEPT_ERROR));
     logger.error(new Error("Could not accept Terms and Conditions"), e);

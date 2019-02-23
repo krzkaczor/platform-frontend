@@ -1,12 +1,12 @@
 import { find } from "lodash/fp";
 
-import { IAppState } from "../../store";
-import {
-  EETOStateOnChain, TBlEtoWithCompanyAndContract, stateToBlConversionSpec,
-} from "./interfaces/interfaces";
-import * as publicEtoDataInterfaces from "../eto-flow/interfaces/PublicEtoData";
 import {convert} from "../../components/eto/utils";
+import { IAppState } from "../../store";
+import * as publicEtoDataInterfaces from "../eto-flow/interfaces/PublicEtoData";
 import * as tokenDataInterfaces from "./interfaces/EtoTokenData";
+import {
+  EETOStateOnChain, stateToBlConversionSpec, TBlEtoWithCompanyAndContract,
+} from "./interfaces/interfaces";
 import * as publicEtosInterfaces from "./interfaces/PublicEto";
 import {IStatePublicEtos} from "./interfaces/PublicEto";
 

@@ -92,19 +92,6 @@ export function getInputErrorMessage(
   }
 }
 
-export function getInvestmentTypeMessages(type?: EInvestmentType): React.ReactNode {
-  switch (type) {
-    case EInvestmentType.BankTransfer:
-      return (
-        <FormattedHTMLMessage
-          id="investment-flow.bank-transfer-info-message"
-          tagName="p"
-          values={{ href: `${externalRoutes.neufundSupport}/home` }}
-        />
-      );
-  }
-}
-
 /**
  * @deprecated Use Money component
  */

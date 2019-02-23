@@ -1,7 +1,8 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import * as YupTS from "../../lib/yup-ts";
+import {StringSchema} from "yup";
+import {NumberSchema} from "yup";
 import {
   MIN_COMPANY_SHARES,
   MIN_EXISTING_COMPANY_SHARES,
@@ -15,8 +16,7 @@ import {
   WHITELIST_DURATION_DAYS
 } from "../../config/constants";
 import {dateSchema, percentage} from "../../lib/api/util/schemaHelpers";
-import {StringSchema} from "yup";
-import {NumberSchema} from "yup";
+import * as YupTS from "../../lib/yup-ts";
 
 
 const tagsValidator = YupTS.string();

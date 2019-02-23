@@ -2,8 +2,8 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../modules/actions";
-import { selectEtoWithCompanyAndContractById } from "../../modules/public-etos/selectors";
 import { EETOStateOnChain, TBlEtoWithCompanyAndContract } from "../../modules/public-etos/interfaces/interfaces";
+import { selectEtoWithCompanyAndContractById } from "../../modules/public-etos/selectors";
 import { appConnect } from "../../store";
 import { InvestmentProgress } from "../eto/overview/EtoOverviewStatus/InvestmentWidget/InvestmentProgress";
 import { Button, ButtonSize, EButtonLayout } from "../shared/buttons";

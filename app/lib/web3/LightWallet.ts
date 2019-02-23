@@ -11,8 +11,8 @@ import * as Web3ProviderEngine from "web3-provider-engine";
 import * as HookedWalletSubprovider from "web3-provider-engine/subproviders/hooked-wallet";
 // tslint:disable-next-line
 import * as RpcSubprovider from "web3-provider-engine/subproviders/rpc";
-import { IPersonalWallet, SignerType } from "./PersonalWeb3";
 import { IEthereumNetworkConfig, IRawTxData } from "../../modules/web3/interfaces";
+import { IPersonalWallet, SignerType } from "./PersonalWeb3";
 
 import { symbols } from "../../di/symbols";
 import { EWalletSubType, EWalletType } from "../../modules/web3/interfaces";

@@ -15,8 +15,8 @@ import { ECurrency, Money } from "../../../shared/Money";
 import { SectionHeader } from "../../../shared/SectionHeader";
 import { Message } from "../../Message";
 
-import * as bankVaultIcon from "../../../../assets/img/bank-transfer/bankvault.svg";
 import BigNumber from "bignumber.js";
+import * as bankVaultIcon from "../../../../assets/img/bank-transfer/bankvault.svg";
 
 export enum EBankTransferInitState {
   INFO,

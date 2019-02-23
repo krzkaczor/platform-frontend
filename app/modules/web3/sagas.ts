@@ -5,16 +5,16 @@ import { Web3Message } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { LIGHT_WALLET_PASSWORD_CACHE_TIME } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
-import { EUserType } from "../auth/interfaces";
 import { TWalletMetadata } from "../../lib/persistence/WalletMetadataObjectStorage";
 import { LightWallet, LightWalletWrongPassword } from "../../lib/web3/LightWallet";
 import { EWeb3ManagerEvents } from "../../lib/web3/Web3Manager";
 import { IAppState } from "../../store";
 import { actions, TAction } from "../actions";
+import { EUserType } from "../auth/interfaces";
 import { selectUserType } from "../auth/selectors";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
-import { selectWalletType } from "./selectors";
 import { EWalletType } from "./interfaces";
+import { selectWalletType } from "./selectors";
 
 let lockWalletTask: Task | undefined;
 

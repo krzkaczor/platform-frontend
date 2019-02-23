@@ -1,8 +1,8 @@
+import BigNumber from "bignumber.js";
 import { findLast, floor } from "lodash";
 import * as React from "react";
 import { FormattedPlural } from "react-intl";
 import { FormattedMessage } from "react-intl-phraseapp";
-import BigNumber from "bignumber.js";
 
 type TExternalProps = {
   number: BigNumber;

@@ -1,10 +1,10 @@
 import { inject, injectable } from "inversify";
 
 import { symbols } from "../../di/symbols";
+import {IImmutableFileId} from "../../modules/immutable-file/interfaces";
 import {} from "../../utils/transformObjectKeys";
 import { IHttpClient, IHttpResponse } from "./client/IHttpClient";
 import { FileDescriptionValidator, TFileDescription, TFileType } from "./FileStorage.interfaces";
-import {IImmutableFileId} from "../../modules/immutable-file/interfaces";
 
 const BASE_PATH = "/api/immutable-storage";
 const DOWNLOAD_DOCUMENT_PATH = "/download/";

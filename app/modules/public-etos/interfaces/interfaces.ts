@@ -1,5 +1,5 @@
-import * as publicEtoInterfaces from "../../eto-flow/interfaces/PublicEtoData";
 import * as companyEtoData from "../../eto-flow/interfaces/CompanyEtoData";
+import * as publicEtoInterfaces from "../../eto-flow/interfaces/PublicEtoData";
 import * as contractDataInterfaces from "./EtoContractData";
 
 export type TApiPublicEtoData =

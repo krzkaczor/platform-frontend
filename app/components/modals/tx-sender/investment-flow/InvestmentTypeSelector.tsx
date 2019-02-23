@@ -1,7 +1,7 @@
+import BigNumber from "bignumber.js";
 import * as cn from "classnames";
 import * as React from "react";
 import { Col, FormGroup } from "reactstrap";
-import BigNumber from "bignumber.js";
 
 import { EInvestmentType } from "../../../../modules/investment-flow/interfaces";
 import { ECurrency, Money } from "../../../shared/Money";

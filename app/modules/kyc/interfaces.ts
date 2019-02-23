@@ -39,7 +39,10 @@ export interface IKycState {
   beneficialOwnerFiles: { [id: string]: IKycFileInfo[] };
 
   // contract claims
-  claims: TClaims | undefined;
+  claims?: IStateClaims;
+
+  // api bank details
+  bankAccount?: IStateBankAccount;
 }
 
 export interface IKycRequestState {
@@ -47,6 +50,11 @@ export interface IKycRequestState {
   outsourcedStatus?: ERequestOutsourcedStatus;
   redirectUrl?: string;
 }
+//
+// baseUrl: BASE_PATH,
+//   url: BANK_ACCOUNT_PATH,
+//   responseSchema: KycBankAccountValidator,
+//   allowedStatusCodes: [404],
 
 export interface IKycLegalRepresentative extends IKycPerson {}
 
@@ -127,9 +135,27 @@ export interface IKycRequestState {
   redirectUrl?: string;
 }
 
-export type TClaims = {
+export type IStateClaims = {
   isVerified: boolean;
   isSophisticatedInvestor: boolean;
   hasBankAccount: boolean;
   isAccountFrozen: boolean;
 };
+
+
+export interface IStateBankAccountDetails {
+  bankAccountNumberLast4: string,
+  holderName: string,
+}
+
+export interface IApiKycBankAccountDetails {
+  bankAccountNumberLast4: string,
+  holderName: string,
+}
+
+export type IStateBankAccount =
+  | {
+  hasBankAccount: true;
+  details: IStateBankAccountDetails;
+}
+  | { hasBankAccount: false };

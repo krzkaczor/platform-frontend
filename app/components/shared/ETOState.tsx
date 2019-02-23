@@ -3,8 +3,8 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { EEtoState } from "../../modules/eto-flow/interfaces/interfaces";
-import { selectEtoWithCompanyAndContract } from "../../modules/public-etos/selectors";
 import { EETOStateOnChain, TBlEtoWithCompanyAndContract } from "../../modules/public-etos/interfaces/interfaces";
+import { selectEtoWithCompanyAndContract } from "../../modules/public-etos/selectors";
 import { appConnect } from "../../store";
 
 import * as styles from "./ETOState.module.scss";

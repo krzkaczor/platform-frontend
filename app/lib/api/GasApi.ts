@@ -3,8 +3,8 @@ import * as Web3Utils from "web3-utils";
 import * as YupTS from "../yup-ts";
 
 import { symbols } from "../../di/symbols";
-import { IHttpClient, IHttpResponse } from "./client/IHttpClient";
 import {IApiGasModel} from "../../modules/gas/interfaces";
+import { IHttpClient, IHttpResponse } from "./client/IHttpClient";
 
 const BASE_PATH = "/api/gas/";
 const GET_GAS_PATH = "/gas";

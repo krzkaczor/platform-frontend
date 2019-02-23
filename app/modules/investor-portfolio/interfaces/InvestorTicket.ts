@@ -1,6 +1,6 @@
+import BigNumber from "bignumber.js";
 import {NumericString} from "../../../types";
 import {bigNumberToNumericString, numericStringToBigNumber} from "../../../utils/numericStringUtils";
-import BigNumber from "bignumber.js";
 
 export interface IStateInvestorTicket {
   equivEurUlps: NumericString;

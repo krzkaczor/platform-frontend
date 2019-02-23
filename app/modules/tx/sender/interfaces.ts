@@ -1,4 +1,4 @@
-import { IStateTxData} from "../../../modules/web3/interfaces";
+import { IStateTxData} from "../../web3/interfaces";
 import {ETxSenderType} from "../interfaces";
 
 export enum ETransactionErrorType {

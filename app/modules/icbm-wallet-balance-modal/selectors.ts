@@ -1,12 +1,12 @@
 import BigNumber from "bignumber.js";
 
-import { DeepReadonly } from "../../types";
+import {convert} from "../../components/eto/utils";
 import { IAppState } from "../../store";
+import { DeepReadonly } from "../../types";
 import {
   IStateIcbmWalletBalanceModal,
   TWalletMigrationSteps
 } from "./interfaces/intefaces";
-import {convert} from "../../components/eto/utils";
 import * as walletMigrationDataInterfaces from './interfaces/WalletMigrationData'
 
 // ICBM Wallet Selectors

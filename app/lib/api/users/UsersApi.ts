@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify";
 
 import { symbols } from "../../../di/symbols";
+import {IApiEmailStatus, IApiUser, IApiUserInput, IVerifyEmailUser} from "../../../modules/auth/interfaces";
 import { EWalletSubType, EWalletType } from "../../../modules/web3/interfaces";
 import { ILogger } from "../../dependencies/logger";
 import { IHttpClient } from "../client/IHttpClient";
@@ -11,7 +12,6 @@ import {
   TxWithMetadataListValidator,
   UserValidator,
 } from "./interfaces";
-import {IApiUser, IApiEmailStatus, IApiUserInput, IVerifyEmailUser} from "../../../modules/auth/interfaces";
 
 const USER_API_ROOT = "/api/user";
 const OOO_TRANSACTION_TYPE = "mempool";

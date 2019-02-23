@@ -2,9 +2,8 @@ import BigNumber from "bignumber.js";
 import * as moment from "moment";
 
 import { IAppState } from "../../store";
-import { selectIsAccountFrozen, selectIsClaimsVerified } from "../kyc/selectors";
-import { selectEtoOnChainStateById } from "../public-etos/selectors";
 import { EETOStateOnChain } from "../public-etos/interfaces/interfaces";
+import { selectEtoOnChainStateById } from "../public-etos/selectors";
 import { EValidationState } from "../tx/sender/interfaces";
 import { selectTxValidationState } from "../tx/sender/selectors";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
@@ -47,7 +46,8 @@ export const selectIsICBMInvestment = (state: IAppState):boolean => {
   return type === EInvestmentType.ICBMEth || type === EInvestmentType.ICBMnEuro;
 };
 
-export const selectIsReadyToInvest = (state: IAppState):boolean => {
+
+export const selectIsReadyToInvest = (state: IAppState) => {
   const ethValue = selectInvestmentEthValueUlps(state);
 
   return !!(
@@ -55,11 +55,10 @@ export const selectIsReadyToInvest = (state: IAppState):boolean => {
     !selectInvestmentErrorState(state) &&
     selectIsInvestmentInputValidated(state) &&
     ethValue.comparedTo(0) > 0 &&
-    (type !== EInvestmentType.BankTransfer
-      ? selectTxValidationState(state) === EValidationState.VALIDATION_OK
-      : true)
+    selectTxValidationState(state) === EValidationState.VALIDATION_OK
   );
 };
+
 
 export const selectCurrencyByInvestmentType = (state: IAppState):EInvestmentCurrency => {
   const type = selectInvestmentType(state);
@@ -67,11 +66,6 @@ export const selectCurrencyByInvestmentType = (state: IAppState):EInvestmentCurr
     ? EInvestmentCurrency.Ether
     : EInvestmentCurrency.Euro;
 };
-
-export const selectIsBankTransferModalOpened = (state: IAppState):boolean =>
-  selectInvestmentType(state) === EInvestmentType.BankTransfer &&
-  !!selectBankTransferFlowState(state) &&
-  selectIsReadyToInvest(state);
 
 export const selectBankTransferReferenceCode = (state: IAppState):string | null => {
   const addressHex = selectEthereumAddressWithChecksum(state);
@@ -99,17 +93,3 @@ export const selectBankTransferReferenceCode = (state: IAppState):string | null 
     return null
   }
 };
-
-export const GAS_STIPEND_PRICE:BigNumber = new BigNumber(10);
-
-export const selectBankTransferAmount = (state: IAppState):BigNumber | null => {
-  const eur = selectInvestmentEurValueUlps(state);
-  if(eur) {
-    return selectIsBankTransferGasStipend(state) ? GAS_STIPEND_PRICE.add(eur) : eur;
-  } else {
-    return null
-  }
-};
-
-export const selectIsAllowedToInvest = (state: IAppState):boolean =>
-  selectIsClaimsVerified(state) && !selectIsAccountFrozen(state);

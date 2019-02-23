@@ -16,6 +16,11 @@ type TAction = {
 
 interface IProps {
   actions?: TAction[];
+  withdrawDisabled?: boolean;
+  transferDisabled?: boolean;
+  dataTestId?: string;
+  onWithdrawClick?:()=>void;
+  onDepositClick?:()=>void;
 }
 
 export const AccountBalance: React.FunctionComponent<

@@ -5,6 +5,7 @@ import * as Web3 from "web3";
 import { EventEmitter } from "events";
 import { symbols } from "../../di/symbols";
 import { calculateGasLimitWithOverhead, encodeTransaction } from "../../modules/tx/utils";
+import { IEthereumNetworkConfig } from "../../modules/web3/interfaces";
 import {EthereumNetworkId, NumericString} from "../../types";
 import {
   AsyncIntervalScheduler,
@@ -14,7 +15,6 @@ import { promiseTimeout } from "../../utils/promiseTimeout";
 import { ILogger } from "../dependencies/logger";
 import { LightWallet } from "./LightWallet";
 import { IPersonalWallet } from "./PersonalWeb3";
-import { IEthereumNetworkConfig } from "../../modules/web3/interfaces";
 import { Web3Adapter } from "./Web3Adapter";
 import { Web3FactoryType } from "./Web3Batch";
 

@@ -1,14 +1,14 @@
 import * as React from "react";
-import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
+import BigNumber from "bignumber.js";
 
+import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { externalRoutes } from "../../../config/externalRoutes";
 import { CommonHtmlProps } from "../../../types";
-import { isZero } from "../../../utils/Number.utils";
 import { AccountBalance } from "../../shared/AccountBalance";
 import { ECurrency } from "../../shared/Money";
 import { VerifiedBankAccount } from "../VerifiedBankAccount";
-import { WalletBalanceContainer } from "./WalletBalance";
 
+import { WalletBalanceContainer } from "./WalletBalance";
 import * as neuroIcon from "../../../assets/img/nEUR_icon.svg";
 import * as styles from "./WalletBalance.module.scss";
 
@@ -16,8 +16,8 @@ interface IUnlockedNEURWallet {
   onPurchase: () => void;
   onRedeem: () => void;
   onVerify: () => void;
-  neuroAmount: string;
-  neuroEuroAmount: string;
+  neuroAmount: BigNumber;
+  neuroEuroAmount: BigNumber;
   isBankFlowEnabled: boolean;
 }
 
@@ -69,7 +69,7 @@ export const UnlockedNEURWallet: React.FunctionComponent<IUnlockedNEURWallet & C
                 {
                   name: <FormattedMessage id="components.wallet.start.neur-wallet.redeem" />,
                   onClick: onRedeem,
-                  disabled: !isBankFlowEnabled || isZero(neuroAmount),
+                  disabled: !isBankFlowEnabled || neuroAmount.isZero(),
                 },
               ]
             : undefined

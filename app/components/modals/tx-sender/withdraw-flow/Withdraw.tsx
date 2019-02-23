@@ -6,13 +6,13 @@ import { Col, Container, Row } from "reactstrap";
 import { compose, withHandlers } from "recompose";
 import { NumberSchema } from "yup";
 
-import * as web3Interfaces from "../../../../modules/web3/interfaces";
 import * as YupTS from "../../../../lib/yup-ts";
 import { actions } from "../../../../modules/actions";
 import { ETxSenderType, IDraftType } from "../../../../modules/tx/interfaces";
 import { EValidationState } from "../../../../modules/tx/sender/interfaces";
 import { selectTxValidationState } from "../../../../modules/tx/sender/selectors";
 import { selectMaxAvailableEther } from "../../../../modules/wallet/selectors";
+import * as web3Interfaces from "../../../../modules/web3/interfaces";
 import { doesUserHaveEnoughEther, validateAddress } from "../../../../modules/web3/utils";
 import { appConnect } from "../../../../store";
 import { IIntlProps, injectIntlHelpers } from "../../../../utils/injectIntlHelpers";
@@ -22,8 +22,8 @@ import { Form, FormField } from "../../../shared/forms";
 import { ValidationErrorMessage } from "../shared/ValidationErrorMessage";
 
 import {NumericString, OmitKeys} from "../../../../types";
-import * as styles from "./Withdraw.module.scss";
 import {convert} from "../../../eto/utils";
+import * as styles from "./Withdraw.module.scss";
 
 interface IStateProps {
   maxEther: BigNumber;

@@ -1,10 +1,10 @@
 import {mapValues} from 'lodash/fp';
 
-import * as publicEtoDataInterfaces from "../../eto-flow/interfaces/PublicEtoData";
+import {convert} from "../../../components/eto/utils";
 import * as companyEtoDataInterfaces from "../../eto-flow/interfaces/CompanyEtoData";
+import * as publicEtoDataInterfaces from "../../eto-flow/interfaces/PublicEtoData";
 import * as etoContractData from "./EtoContractData";
 import * as etoTokenData from "./EtoTokenData";
-import {convert} from "../../../components/eto/utils";
 
 export interface IStatePublicEtos {
   publicEtos: { [previewCode: string]: publicEtoDataInterfaces.IStatePublicEtoData | undefined };
