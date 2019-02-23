@@ -1,17 +1,17 @@
 import { Effect, fork, put, select } from "redux-saga/effects";
 
 import { getMessageTranslation, ToSMessage } from "../../components/translatedMessages/messages";
+import { AuthMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
-import {IApiUser, IStateUser} from "../auth/interfaces";
 import { actions } from "../actions";
+import {IApiUser, IStateUser} from "../auth/interfaces";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { selectCurrentAgreementHash } from "../auth/selectors";
+import { EInitType } from "../init/interfaces";
 import { selectIsSmartContractInitDone } from "../init/selectors";
 import { neuCall, neuTakeEvery, neuTakeOnly } from "../sagasUtils";
-import { AuthMessage } from "../../components/translatedMessages/messages";
-import { EInitType } from "../init/interfaces";
 
 /**
  * Handle ToS / agreement

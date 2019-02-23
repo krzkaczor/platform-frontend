@@ -3,11 +3,11 @@ import { put, select } from "redux-saga/effects";
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ETOCommitment } from "../../../../lib/contracts/ETOCommitment";
 import {IStateTxData} from "../../../../modules/web3/interfaces";
+import {NumericString} from "../../../../types";
 import { actions } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
-import {NumericString} from "../../../../types";
 
 export function* generateGetClaimTransaction(
   { contractsService, web3Manager }: TGlobalDependencies,

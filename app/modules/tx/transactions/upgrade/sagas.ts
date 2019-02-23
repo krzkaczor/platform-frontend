@@ -1,8 +1,8 @@
 import { addHexPrefix } from "ethereumjs-util";
 import { put, select } from "redux-saga/effects";
 
+import BigNumber from "bignumber.js";
 import { TGlobalDependencies } from "../../../../di/setupBindings";
-import {IStateTxData} from "../../../web3/interfaces";
 import {EthereumAddress, NumericString} from "../../../../types";
 import { actions } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
@@ -11,9 +11,9 @@ import {
   selectIsEtherUpgradeTargetSet,
   selectIsEuroUpgradeTargetSet,
 } from "../../../wallet/selectors";
+import {IStateTxData} from "../../../web3/interfaces";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { ETokenType } from "../../interfaces";
-import BigNumber from "bignumber.js";
 
 export function* generateEuroUpgradeTransaction({
   contractsService,

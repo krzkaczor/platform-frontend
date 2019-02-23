@@ -1,9 +1,11 @@
 import BigNumber from "bignumber.js";
 import { put, select, take } from "redux-saga/effects";
 
+import {convert} from "../../../../components/eto/utils";
 import { Q18 } from "../../../../config/constants";
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import * as txInterfaces from "../../../../modules/web3/interfaces";
+import {NumericString} from "../../../../types";
 import {actions, TActionFromCreator} from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
@@ -11,8 +13,6 @@ import { selectEtherTokenBalanceAsBigNumber } from "../../../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { IStateWithdrawDraftType } from "../../interfaces";
 import { calculateGasLimitWithOverhead, EMPTY_DATA } from "../../utils";
-import {NumericString} from "../../../../types";
-import {convert} from "../../../../components/eto/utils";
 
 const SIMPLE_WITHDRAW_TRANSACTION = new BigNumber("21000");
 

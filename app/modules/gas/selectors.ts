@@ -1,9 +1,9 @@
 import BigNumber from "bignumber.js";
 
-import { calculateGasPriceWithOverhead } from "../tx/utils";
-import { IAppState } from "../../store";
-import * as gasModelInterfaces from "./interfaces";
 import {convert} from "../../components/eto/utils";
+import { IAppState } from "../../store";
+import { calculateGasPriceWithOverhead } from "../tx/utils";
+import * as gasModelInterfaces from "./interfaces";
 
 export const selectIsGasPriceAlreadyLoaded = (state: IAppState): boolean =>
   !state.gas.loading && !!state.gas.gasPrice;

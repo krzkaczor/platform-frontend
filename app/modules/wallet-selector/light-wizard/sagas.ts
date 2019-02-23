@@ -10,7 +10,6 @@ import {
 import { createMessage } from "../../../components/translatedMessages/utils";
 import { EJwtPermissions } from "../../../config/constants";
 import { TGlobalDependencies } from "../../../di/setupBindings";
-import { IStateUser, IApiUserInput } from "../../auth/interfaces";
 import { EmailAlreadyExists, UserNotExisting } from "../../../lib/api/users/UsersApi";
 import {
   ILightWalletMetadata,
@@ -27,6 +26,7 @@ import { IAppState } from "../../../store";
 import { invariant } from "../../../utils/invariant";
 import { connectLightWallet } from "../../access-wallet/sagas";
 import { actions, TAction } from "../../actions";
+import { IApiUserInput, IStateUser } from "../../auth/interfaces";
 import { obtainJWT } from "../../auth/jwt/sagas";
 import {
   createUser,
@@ -38,12 +38,12 @@ import {
 } from "../../auth/user/sagas";
 import { displayInfoModalSaga } from "../../generic-modal/sagas";
 import { neuCall, neuTakeEvery } from "../../sagasUtils";
+import { EWalletSubType, EWalletType } from "../../web3/interfaces";
 import {
   selectIsUnlocked,
   selectLightWalletFromQueryString,
   selectPreviousConnectedWallet,
 } from "../../web3/selectors";
-import { EWalletSubType, EWalletType } from "../../web3/interfaces";
 import { selectUrlUserType } from "../selectors";
 import { mapLightWalletErrorToErrorMessage } from "./errors";
 

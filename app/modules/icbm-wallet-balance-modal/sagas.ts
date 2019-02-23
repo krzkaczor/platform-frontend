@@ -6,17 +6,17 @@ import { call, fork, put, select } from "redux-saga/effects";
 import { IcbmWalletMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
+import {NumericString} from "../../types";
 import { actions, TAction, TActionFromCreator } from "../actions";
 import { downloadLink } from "../immutable-file/utils";
 import { neuCall, neuTakeEvery, neuTakeUntil } from "../sagasUtils";
 import { ETokenType } from "../tx/interfaces";
+import {IStateLockedWallet, IStateWalletData} from "../wallet/interfaces";
 import { loadWalletDataAsync } from "../wallet/sagas";
 import { selectLockedWalletConnected } from "../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
-import { selectIcbmModalIsFirstTransactionDone, selectIcbmWalletEthAddress } from "./selectors";
-import {IStateLockedWallet, IStateWalletData} from "../wallet/interfaces";
 import {IStateWalletMigrationData} from "./interfaces/WalletMigrationData";
-import {NumericString} from "../../types";
+import { selectIcbmModalIsFirstTransactionDone, selectIcbmWalletEthAddress } from "./selectors";
 
 const BLOCK_MINING_TIME_DELAY = 12000;
 class IcbmWalletError extends Error {}

@@ -2,26 +2,30 @@ import BigNumber from "bignumber.js";
 import { delay } from "redux-saga";
 import { put, select, take, takeEvery, takeLatest } from "redux-saga/effects";
 
+import {convert} from "../../components/eto/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import * as txInterfaces from "../../modules/web3/interfaces";
 import { IAppState } from "../../store";
+import {NumericString} from "../../types";
 import { compareBigNumbers } from "../../utils/BigNumberUtils";
 import { isLessThanNHours } from "../../utils/Date.utils";
 import { extractNumber } from "../../utils/StringUtils";
 import { actions, TAction } from "../actions";
+import * as publicEtoDataInterfaces from "../eto-flow/interfaces/PublicEtoData";
+import * as calculatedContributionInterfaces from "../investor-portfolio/interfaces/CalculatedContribution";
 import { loadComputedContributionFromContract } from "../investor-portfolio/sagas";
 import {
   selectCalculatedContribution,
   selectCalculatedEtoTicketSizesUlpsById,
   selectIsWhitelisted,
 } from "../investor-portfolio/selectors";
+import { EETOStateOnChain } from "../public-etos/interfaces/interfaces";
 import {
   selectEtoOnChainStateById,
   selectEtoWithCompanyAndContractById,
   selectPublicEtoById,
 } from "../public-etos/selectors";
-import { EETOStateOnChain } from "../public-etos/interfaces/interfaces";
 import { neuCall } from "../sagasUtils";
 import { selectEtherPriceEur, selectEurPriceEther } from "../shared/tokenPrice/selectors";
 import { ETxSenderType } from "../tx/interfaces";
@@ -46,10 +50,6 @@ import {
   selectInvestmentType,
   selectIsICBMInvestment,
 } from "./selectors";
-import * as calculatedContributionInterfaces from "../investor-portfolio/interfaces/CalculatedContribution";
-import {NumericString} from "../../types";
-import {convert} from "../../components/eto/utils";
-import * as publicEtoDataInterfaces from "../eto-flow/interfaces/PublicEtoData";
 
 // default: 3 days
 const HOURS_TO_DISABLE_BANK_TRANSFER = parseInt(

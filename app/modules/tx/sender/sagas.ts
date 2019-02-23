@@ -6,7 +6,6 @@ import { TPendingTxs, TxWithMetadata } from "../../../lib/api/users/interfaces";
 import { BrowserWalletError } from "../../../lib/web3/BrowserWallet";
 import { LedgerContractsDisabledError, LedgerError } from "../../../lib/web3/LedgerWallet";
 import { LightError } from "../../../lib/web3/LightWallet";
-import { IBlTxData } from "../../../modules/web3/interfaces";
 import {
   InvalidChangeIdError,
   InvalidRlpDataError,
@@ -17,6 +16,7 @@ import {
   UnknownEthNodeError,
 } from "../../../lib/web3/Web3Adapter";
 import { SignerError, SignerRejectConfirmationError } from "../../../lib/web3/Web3Manager";
+import { IBlTxData } from "../../../modules/web3/interfaces";
 import { IAppState } from "../../../store";
 import { connectWallet } from "../../access-wallet/sagas";
 import { actions } from "../../actions";

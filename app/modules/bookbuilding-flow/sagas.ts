@@ -1,5 +1,6 @@
 import { fork, put } from "redux-saga/effects";
 
+import {convert} from "../../components/eto/utils";
 import { BookbuildingFlowMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { BOOKBUILDING_WATCHER_DELAY, EJwtPermissions } from "../../config/constants";
@@ -18,9 +19,8 @@ import {
   UNWATCH_BOOKBUILDING_FLOW_STATS,
   WATCH_BOOKBUILDING_FLOW_STATS,
 } from "./actions";
-import * as pledgeInterfaces from "./interfaces/Pledge";
-import {convert} from "../../components/eto/utils";
 import * as bookbuildingStatInterfaces from "./interfaces/BookbuildingStats";
+import * as pledgeInterfaces from "./interfaces/Pledge";
 
 export function* saveMyPledgeEffect(
   { apiEtoPledgeService }: TGlobalDependencies,

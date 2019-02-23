@@ -3,11 +3,11 @@ import { put, select, takeLatest } from "redux-saga/effects";
 
 import { Q18 } from "../../../config/constants";
 import { TGlobalDependencies } from "../../../di/setupBindings";
+import {NumericString} from "../../../types";
 import { actions } from "../../actions";
 import { selectIsSmartContractInitDone } from "../../init/selectors";
 import { neuCall } from "../../sagasUtils";
 import { IStateTokenPriceData } from "./interfaces";
-import {NumericString} from "../../../types";
 
 const TOKEN_PRICE_MONITOR_DELAY = 120000;
 const TOKEN_PRICE_MONITOR_SHORT_DELAY = 1000;

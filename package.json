@@ -22,7 +22,7 @@
     "ganache": "./scripts/ganache-cli.sh",
     "format": "prettier --list-different '**/*.{ts,tsx,js,json,md,gql}'",
     "format:fix": "NODE_OPTIONS=--max_old_space_size=9192 prettier --write '**/*.{ts,tsx,js,json,md,gql}'",
-    "tslint:app": "NODE_OPTIONS=--max_old_space_size=9192 tslint --project . --format stylish",
+    "tslint:app": "NODE_OPTIONS=--max_old_space_size=14192 tslint --project . --format stylish",
     "tslint": "yarn tslint:app",
     "tslint:fix": "concurrently -p \"[{name}]\" -n \"APP,SPEC\" -c \"bgGreen.bold,bgCyan.bold\" \"yarn tslint:app --fix\"",
     "tsc": "tsc --noEmit --project .",

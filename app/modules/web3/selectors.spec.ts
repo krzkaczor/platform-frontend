@@ -6,7 +6,7 @@ import {
   getDummyLedgerWalletMetadata,
   getDummyLightWalletMetadata,
 } from "./fixtures";
-import { IWeb3State, EWalletSubType, EWalletType } from "./interfaces";
+import { EWalletSubType, EWalletType, IWeb3State } from "./interfaces";
 import {
   selectActivationCodeFromQueryString,
   selectIsExternalWallet,

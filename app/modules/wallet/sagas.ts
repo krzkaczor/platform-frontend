@@ -2,13 +2,13 @@ import * as promiseAll from "promise-all";
 import { delay } from "redux-saga";
 import { fork, put, select, take } from "redux-saga/effects";
 
-import { selectIsSmartContractInitDone } from "../init/selectors";
-import { EInitType } from "../init/interfaces";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { ICBMLockedAccount } from "../../lib/contracts/ICBMLockedAccount";
 import { LockedAccount } from "../../lib/contracts/LockedAccount";
 import {EthereumAddress, NumericString} from "../../types";
 import { actions } from "../actions";
+import { EInitType } from "../init/interfaces";
+import { selectIsSmartContractInitDone } from "../init/selectors";
 import { neuCall, neuTakeEvery, neuTakeOnly, neuTakeUntil } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
 import { IStateLockedWallet, IStateWalletData} from "./interfaces";

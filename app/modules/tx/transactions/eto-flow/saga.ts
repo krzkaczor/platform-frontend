@@ -4,6 +4,7 @@ import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ETOCommitment } from "../../../../lib/contracts/ETOCommitment";
 import { IStateTxData} from "../../../../modules/web3/interfaces";
 import { IAppState } from "../../../../store";
+import {NumericString} from "../../../../types";
 import { actions } from "../../../actions";
 import {
   selectIsNewPreEtoStartDateValid,
@@ -13,7 +14,6 @@ import {
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
-import {NumericString} from "../../../../types";
 
 export function* generateSetStartDateTransaction({
   contractsService,

@@ -3,13 +3,13 @@ import {dummyEthereumAddress} from "../../../test/fixtures";
 import {actions} from "../actions";
 import {web3Actions} from "./actions";
 import {
+  EWalletSubType, EWalletType, IConnectedWeb3State, IDisconnectedWeb3State,
+  IWeb3State,
+} from "./interfaces";
+import {
   web3InitialState,
   web3Reducer,
 } from "./reducer";
-import {
-  EWalletSubType, EWalletType, IWeb3State, IConnectedWeb3State,
-  IDisconnectedWeb3State,
-} from "./interfaces";
 
 describe("Web3 > reducer", () => {
   it("should act on NEW_PERSONAL_WALLET_PLUGGED action", () => {

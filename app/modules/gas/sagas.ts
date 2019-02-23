@@ -1,11 +1,11 @@
 import { fork, put } from "redux-saga/effects";
 
+import {convert} from "../../components/eto/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { IHttpResponse } from "../../lib/api/client/IHttpClient";
 import { actions } from "../actions";
 import { neuTakeEvery } from "../sagasUtils";
 import * as gasModelInterfaces from './interfaces'
-import {convert} from "../../components/eto/utils";
 
 function* ensureGasApiDataSaga({ gasApi, logger }: TGlobalDependencies): any {
   try {

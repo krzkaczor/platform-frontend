@@ -1,21 +1,21 @@
 import { call, put, select } from "redux-saga/effects";
+import { EJwtPermissions } from "../../../config/constants";
 import { TGlobalDependencies } from "../../../di/setupBindings";
-import {EUserType, IApiUser, IApiUserInput} from "../interfaces";
 import { UserNotExisting } from "../../../lib/api/users/UsersApi";
 import { REGISTRATION_LOGIN_DONE } from "../../../lib/persistence/UserStorage";
 import { SignerRejectConfirmationError } from "../../../lib/web3/Web3Manager";
+import { SignerTimeoutError, SignerUnknownError } from "../../../lib/web3/Web3Manager";
 import { IAppState } from "../../../store";
 import { actions } from "../../actions";
 import { loadKycRequestData } from "../../kyc/sagas";
 import { selectRedirectURLFromQueryString } from "../../routing/selectors";
 import { neuCall } from "../../sagasUtils";
 import { selectUrlUserType } from "../../wallet-selector/selectors";
-import { loadPreviousWallet } from "../../web3/sagas";
 import { EWalletSubType, EWalletType } from "../../web3/interfaces";
+import { loadPreviousWallet } from "../../web3/sagas";
+import {EUserType, IApiUser, IApiUserInput} from "../interfaces";
 import { obtainJWT } from "../jwt/sagas";
 import { selectUserType } from "../selectors";
-import { SignerTimeoutError, SignerUnknownError } from "../../../lib/web3/Web3Manager";
-import { EJwtPermissions } from "../../../config/constants";
 
 export function* signInUser({
   walletStorage,

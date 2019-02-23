@@ -2,33 +2,33 @@ import BigNumber from "bignumber.js";
 import { filter, map } from "lodash/fp";
 import { all, fork, put, select } from "redux-saga/effects";
 
+import {convert} from "../../components/eto/utils";
 import { ECurrency } from "../../components/shared/Money";
 import { InvestorPortfolioMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
-import { IStateUser } from "../auth/interfaces";
 import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import { promisify } from "../../lib/contracts/typechain-runtime";
 import { IAppState } from "../../store";
 import { EthereumAddress } from "../../types";
+import {bigNumberToNumericString} from "../../utils/numericStringUtils";
 import { actions, TAction } from "../actions";
+import { IStateUser } from "../auth/interfaces";
 import { selectUser } from "../auth/selectors";
+import {TContribution} from "../contracts/interfaces";
+import {IStateCompanyEtoData} from "../eto-flow/interfaces/CompanyEtoData";
+import {EEtoState} from "../eto-flow/interfaces/interfaces";
+import {IStatePublicEtoData} from "../eto-flow/interfaces/PublicEtoData";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
+import * as calculatedContributionInterfaces from "./interfaces/CalculatedContribution";
+import * as investorTicketInterfaces from "./interfaces/InvestorTicket";
 import { IStateTokenDisbursal } from "./interfaces/TokenDisbursal";
 import {
   convertToCalculatedContribution,
   convertToInvestorTicket,
   convertToTokenDisbursal,
 } from "./utils";
-import * as calculatedContributionInterfaces from "./interfaces/CalculatedContribution";
-import * as investorTicketInterfaces from "./interfaces/InvestorTicket";
-import {convert} from "../../components/eto/utils";
-import {EEtoState} from "../eto-flow/interfaces/interfaces";
-import {IStatePublicEtoData} from "../eto-flow/interfaces/PublicEtoData";
-import {IStateCompanyEtoData} from "../eto-flow/interfaces/CompanyEtoData";
-import {TContribution} from "../contracts/interfaces";
-import {bigNumberToNumericString} from "../../utils/numericStringUtils";
 
 export function* loadInvestorTickets({ logger }: TGlobalDependencies, action: TAction): any {
   if (action.type !== "INVESTOR_TICKET_ETOS_LOAD") return;

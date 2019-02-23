@@ -1,15 +1,15 @@
+import BigNumber from "bignumber.js";
 import { fork, put, select } from "redux-saga/effects";
 import { TGlobalDependencies } from "../../../di/setupBindings";
-import {IBlTxData} from "../../web3/interfaces";
 import { NotEnoughEtherForGasError } from "../../../lib/web3/Web3Adapter";
 import { actions, TAction } from "../../actions";
 import { neuCall, neuTakeEvery } from "../../sagasUtils";
 import { selectEtherBalance } from "../../wallet/selectors";
+import {IBlTxData} from "../../web3/interfaces";
 import { ETxSenderType } from "../interfaces";
 import { EValidationState } from "../sender/interfaces";
 import { generateInvestmentTransaction } from "../transactions/investment/sagas";
 import { generateEthWithdrawTransaction } from "../transactions/withdraw/sagas";
-import BigNumber from "bignumber.js";
 
 export function* txValidateSaga({ logger }: TGlobalDependencies, action: TAction): any {
   if (action.type !== "TX_SENDER_VALIDATE_DRAFT") return;

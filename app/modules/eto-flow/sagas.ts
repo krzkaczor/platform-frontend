@@ -1,24 +1,24 @@
 import { effects } from "redux-saga";
 import { fork, put, select } from "redux-saga/effects";
 
+import {convert} from "../../components/eto/utils";
 import { EtoDocumentsMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { IHttpResponse } from "../../lib/api/client/IHttpClient";
 import { IAppState } from "../../store";
+import {DeepPartial} from "../../types";
 import { actions, TAction } from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
+import {IApiDetailedBookbuildingStats} from "../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
 import { loadEtoContract } from "../public-etos/sagas";
 import { neuCall, neuTakeEvery, neuTakeLatest } from "../sagasUtils";
+import * as companyEtoDataInterfaces from "./interfaces/CompanyEtoData";
+import {EEtoState} from "./interfaces/interfaces";
+import * as publicEtoInterfaces from './interfaces/PublicEtoData';
 import { selectIsNewPreEtoStartDateValid, selectIssuerCompany, selectIssuerEto } from "./selectors";
 import { bookBuildingStatsToCsvString, createCsvDataUri, downloadFile } from "./utils";
-import * as companyEtoDataInterfaces from "./interfaces/CompanyEtoData";
-import * as publicEtoInterfaces from './interfaces/PublicEtoData';
-import {convert} from "../../components/eto/utils";
-import {EEtoState} from "./interfaces/interfaces";
-import {DeepPartial} from "../../types";
-import {IApiDetailedBookbuildingStats} from "../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
 
 export function* loadIssuerEto({
   apiEtoService,

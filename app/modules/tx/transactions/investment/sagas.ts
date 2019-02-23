@@ -5,13 +5,13 @@ import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ContractsService } from "../../../../lib/web3/ContractsService";
 import { IBlTxData } from "../../../../modules/web3/interfaces";
 import { IAppState } from "../../../../store";
+import { actions } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
+import { EInvestmentType } from "../../../investment-flow/interfaces";
 import { selectPublicEtoById } from "../../../public-etos/selectors";
+import { selectEtherTokenBalance } from "../../../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { calculateGasLimitWithOverhead } from "../../utils";
-import { actions } from "../../../actions";
-import { EInvestmentType } from "../../../investment-flow/interfaces";
-import { selectEtherTokenBalance } from "../../../wallet/selectors";
 
 export const INVESTMENT_GAS_AMOUNT = new BigNumber("600000");
 

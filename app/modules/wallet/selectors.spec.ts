@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { Q18 } from "../../config/constants";
 import { IAppState } from "../../store";
+import {NumericString} from "../../types";
 import {
   selectICBMLockedEuroTotalAmount,
   selectLiquidEuroTotalAmount,
@@ -12,7 +13,6 @@ import {
   selectTotalEuroBalance,
   selectTotalEuroTokenBalance,
 } from "./selectors";
-import {NumericString} from "../../types";
 
 describe("Wallet > selectors", () => {
   it("should calculate total value correctly", () => {

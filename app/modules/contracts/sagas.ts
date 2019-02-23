@@ -1,9 +1,9 @@
 import { all, put } from "redux-saga/effects";
 
+import {convert} from "../../components/eto/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { actions } from "../actions";
 import * as platformTermsConstantsInterfaces from './interfaces'
-import {convert} from "../../components/eto/utils";
 
 export async function initializeContracts({
   contractsService,

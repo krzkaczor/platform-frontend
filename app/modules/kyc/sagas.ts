@@ -7,28 +7,28 @@ import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { IHttpResponse } from "../../lib/api/client/IHttpClient";
 import { BankAccountNotFound } from "../../lib/api/KycApi";
-import {
-  EKycRequestType,
-  ERequestOutsourcedStatus,
-  ERequestStatus,
-  IKycBeneficialOwner,
-  IKycBusinessData,
-  IKycFileInfo,
-  IKycIndividualData,
-  IKycLegalRepresentative,
-  IKycRequestState,
-  IApiKycBankAccountDetails
-} from "./interfaces";
-import { IStateUser } from "../auth/interfaces";
 import { IdentityRegistry } from "../../lib/contracts/IdentityRegistry";
 import { IAppAction, IAppState } from "../../store";
 import { actions, TAction } from "../actions";
+import { IStateUser } from "../auth/interfaces";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { selectUser } from "../auth/selectors";
 import { displayErrorModalSaga } from "../generic-modal/sagas";
 import { EInitType } from "../init/interfaces";
 import { selectIsSmartContractInitDone } from "../init/selectors";
 import { neuCall, neuTakeEvery, neuTakeOnly } from "../sagasUtils";
+import {
+  EKycRequestType,
+  ERequestOutsourcedStatus,
+  ERequestStatus,
+  IApiKycBankAccountDetails,
+  IKycBeneficialOwner,
+  IKycBusinessData,
+  IKycFileInfo,
+  IKycIndividualData,
+  IKycLegalRepresentative,
+  IKycRequestState
+} from "./interfaces";
 import {
   selectCombinedBeneficialOwnerOwnership,
   selectKycRequestOutsourcedStatus,

@@ -4,34 +4,34 @@ import { compose, keyBy, map, omit } from "lodash/fp";
 import { delay } from "redux-saga";
 import { all, fork, put, race, select } from "redux-saga/effects";
 
+import {convert} from "../../components/eto/utils";
 import { PublicEtosMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { IHttpResponse } from "../../lib/api/client/IHttpClient";
-import { EUserType } from "../auth/interfaces";
 import { EtherToken } from "../../lib/contracts/EtherToken";
 import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import { EuroToken } from "../../lib/contracts/EuroToken";
 import { IAppState } from "../../store";
 import { Dictionary} from "../../types";
 import { actions, TActionFromCreator } from "../actions";
+import { EUserType } from "../auth/interfaces";
 import { selectUserType } from "../auth/selectors";
+import {IEtoDocument, immutableDocumentNames} from "../eto-documents/interfaces";
+import * as companyEtoDataInterfaces from "../eto-flow/interfaces/CompanyEtoData";
+import {EEtoState} from "../eto-flow/interfaces/interfaces";
+import * as publicEtoInterfaces from '../eto-flow/interfaces/PublicEtoData'
 import { selectMyAssets } from "../investor-portfolio/selectors";
 import { neuCall, neuFork, neuTakeEvery, neuTakeUntil } from "../sagasUtils";
 import { etoInProgressPoolingDelay, etoNormalPoolingDelay } from "./constants";
 import { InvalidETOStateError } from "./errors";
+import {EETOStateOnChain, TApiPublicEtoData, TStateEtoWithCompanyAndContract} from "./interfaces/interfaces";
 import {
   selectEtoOnChainNextStateStartDate,
   selectEtoWithCompanyAndContract,
   selectPublicEtoById,
 } from "./selectors";
-import {EETOStateOnChain, TApiPublicEtoData, TStateEtoWithCompanyAndContract} from "./interfaces/interfaces";
-import * as publicEtoInterfaces from '../eto-flow/interfaces/PublicEtoData'
-import * as companyEtoDataInterfaces from "../eto-flow/interfaces/CompanyEtoData";
-import {convert} from "../../components/eto/utils";
 import {convertToEtoTotalInvestment, convertToStateStartDate} from "./utils";
-import {EEtoState} from "../eto-flow/interfaces/interfaces";
-import {IEtoDocument, immutableDocumentNames} from "../eto-documents/interfaces";
 
 export function* loadEtoPreview(
   { apiEtoService, notificationCenter, logger }: TGlobalDependencies,
