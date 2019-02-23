@@ -109,13 +109,13 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
           companyLogo={{
             alt: brandName,
             srcSet: {
-              "1x": companyLogo as string,
+              "1x": companyLogo,
             },
           }}
           companyBanner={{
             alt: brandName,
             srcSet: {
-              "1x": companyBanner as string,
+              "1x": companyBanner,
             },
           }}
           tags={categories}
@@ -447,7 +447,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                                   ],
                                   labels: (useOfCapitalList || []).map(
                                     d => d && d.description,
-                                  ) as string[],
+                                  ),
                                 }}
                               />
                             </Col>

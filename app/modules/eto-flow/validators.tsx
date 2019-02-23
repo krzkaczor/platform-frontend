@@ -1,8 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import {StringSchema} from "yup";
-import {NumberSchema} from "yup";
+import {NumberSchema, StringSchema} from "yup";
 import {
   MIN_COMPANY_SHARES,
   MIN_EXISTING_COMPANY_SHARES,
@@ -230,12 +229,6 @@ export const EtoTermsValidator = YupTS.object({
   ),
   additionalTerms: YupTS.string().optional(),
 });
-
-// const EtoFounderValidator = YupTS.object({
-//   fullName: YupTS.string(),
-//   role: YupTS.string(),
-//   bio: YupTS.string(),
-// });
 
 export const GeneralEtoDataValidator = YupTS.object({
   ...EtoTermsValidator.shape,

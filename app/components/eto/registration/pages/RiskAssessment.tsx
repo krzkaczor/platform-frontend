@@ -31,7 +31,7 @@ interface IDispatchProps {
 type IProps = IStateProps & IDispatchProps & FormikProps<DeepPartial<companyEtoDataInterfaces.IBlCompanyEtoData>>;
 
 const EtoRegistrationRiskAssessmentComponent = (props: IProps) => {
-  console.log("EtoRegistrationRiskAssessmentComponent",(props as any).browser) //FIXME
+
   return (
     <EtoFormBase title="Risk Assessment" validator={EtoRiskAssessmentValidator.toYup()}>
       <Section>

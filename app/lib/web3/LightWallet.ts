@@ -11,11 +11,10 @@ import * as Web3ProviderEngine from "web3-provider-engine";
 import * as HookedWalletSubprovider from "web3-provider-engine/subproviders/hooked-wallet";
 // tslint:disable-next-line
 import * as RpcSubprovider from "web3-provider-engine/subproviders/rpc";
-import { IEthereumNetworkConfig, IRawTxData } from "../../modules/web3/interfaces";
 import { IPersonalWallet, SignerType } from "./PersonalWeb3";
 
 import { symbols } from "../../di/symbols";
-import { EWalletSubType, EWalletType } from "../../modules/web3/interfaces";
+import { EWalletSubType, EWalletType, IEthereumNetworkConfig, IRawTxData } from "../../modules/web3/interfaces";
 import { EthereumAddress } from "../../types";
 import { promisify } from "../../utils/promisify";
 import { ILightWalletMetadata } from "../persistence/WalletMetadataObjectStorage";

@@ -1,7 +1,6 @@
 import { Effect, fork, put, select } from "redux-saga/effects";
 
-import { getMessageTranslation, ToSMessage } from "../../components/translatedMessages/messages";
-import { AuthMessage } from "../../components/translatedMessages/messages";
+import { AuthMessage, getMessageTranslation, ToSMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";

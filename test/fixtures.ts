@@ -1453,7 +1453,7 @@ export const testCompanyState: IStateCompanyEtoData = {
     },
   ],
   companyOneliner: "Equity Fundraising on Blockchain",
-  companyShares: "40859" as NumericString as NumericString as NumericString,
+  companyShares: "40859" as NumericString,
   companySlideshare: {
     title: "",
     url: "",
@@ -1517,7 +1517,7 @@ export const testCompanyState: IStateCompanyEtoData = {
       },
     ],
   },
-  lastFundingSizeEur: "8000000" as NumericString as NumericString,
+  lastFundingSizeEur: "8000000" as NumericString,
   keyQuoteFounder:
     "'Neufunds ETOs are changing the space by offering direct, transparent and, most importantly, legally binding investment rounds on the blockchain, which is an attractive proposition to both companies and investors. - Frank Thelen, Freigeist VC'",
   legalForm: "Company Legal Form",
@@ -1620,23 +1620,23 @@ export const testCompanyState: IStateCompanyEtoData = {
   shareholders: [
     {
       fullName: "Miau Capital GmbH",
-      shares: "14000" as NumericString as NumericString,
+      shares: "14000" as NumericString,
     },
     {
       fullName: "Rudolfix Software Insights UG",
-      shares: "14000" as NumericString as NumericString,
+      shares: "14000" as NumericString,
     },
     {
       fullName: "Triotor Beteiligungs GmbH",
-      shares: "2000" as NumericString as NumericString,
+      shares: "2000" as NumericString,
     },
     {
       fullName: "Atlantic Labs",
-      shares: "5000" as NumericString as NumericString,
+      shares: "5000" as NumericString,
     },
     {
       fullName: "Freigeist Capital I",
-      shares: "5500" as NumericString as NumericString,
+      shares: "5500" as NumericString,
     },
   ],
   socialChannels: [

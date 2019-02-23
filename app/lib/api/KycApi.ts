@@ -11,12 +11,12 @@ import {
   IKycLegalRepresentative,
   IKycRequestState,
 } from "../../modules/kyc/interfaces";
-import {KycBankAccountValidator} from "../../modules/kyc/validators";
 import {
   KycFileInfoValidator, //FIXME need special validators for api
   KycIndividualDataValidator,
   KycLegalRepresentativeValidator,
   KycRequestStateValidator,
+  KycBankAccountValidator
 } from "../../modules/kyc/validators"
 
 const BASE_PATH = "/api/kyc/";

@@ -1,10 +1,10 @@
 import { call, put, select } from "redux-saga/effects";
+
 import { EJwtPermissions } from "../../../config/constants";
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { UserNotExisting } from "../../../lib/api/users/UsersApi";
 import { REGISTRATION_LOGIN_DONE } from "../../../lib/persistence/UserStorage";
-import { SignerRejectConfirmationError } from "../../../lib/web3/Web3Manager";
-import { SignerTimeoutError, SignerUnknownError } from "../../../lib/web3/Web3Manager";
+import { SignerRejectConfirmationError, SignerTimeoutError, SignerUnknownError } from "../../../lib/web3/Web3Manager";
 import { IAppState } from "../../../store";
 import { actions } from "../../actions";
 import { loadKycRequestData } from "../../kyc/sagas";

@@ -2,41 +2,6 @@ import * as Yup from "yup";
 import { EWalletSubType, EWalletType } from "../../../modules/web3/interfaces";
 import * as YupTS from "../../yup-ts";
 
-// export enum EUserType {
-//   INVESTOR = "investor",
-//   ISSUER = "issuer",
-// }
-//
-// export interface IUser {
-//   userId: string;
-//   backupCodesVerified?: boolean;
-//   latestAcceptedTosIpfs?: string;
-//   language?: string;
-//   unverifiedEmail?: string;
-//   verifiedEmail?: string;
-//   type: EUserType;
-//   walletType: EWalletType;
-//   walletSubtype: EWalletSubType;
-// }
-
-// export interface IEmailStatus {
-//   isAvailable: boolean;
-// }
-//
-// export interface IUserInput {
-//   newEmail?: string;
-//   salt?: string;
-//   language?: string;
-//   backupCodesVerified?: boolean;
-//   type: EUserType;
-//   walletType: EWalletType;
-//   walletSubtype: EWalletSubType;
-// }
-//
-// export interface IVerifyEmailUser {
-//   verificationCode: string;
-// }
-
 export const UserValidator = Yup.object()
   .shape({
     userId: Yup.string().required(),

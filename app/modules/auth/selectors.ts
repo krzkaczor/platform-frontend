@@ -1,11 +1,10 @@
 import { createSelector } from "reselect";
 
-import { ERequestStatus } from "../../modules/kyc/interfaces";
+import { ERequestStatus } from "../kyc/interfaces";
 import { IAppState } from "../../store";
 import { selectIsUserVerifiedOnBlockchain, selectKycRequestStatus } from "../kyc/selectors";
 import { selectIsLightWallet } from "../web3/selectors";
-import { EUserType, IStateUser } from "./interfaces";
-import { IStateAuth } from "./interfaces";
+import { EUserType, IStateUser,IStateAuth } from "./interfaces";
 
 export const selectIsAuthorized = (state: IStateAuth): boolean => !!(state.jwt && state.user);
 export const selectUserType = (state: IAppState): EUserType | undefined =>

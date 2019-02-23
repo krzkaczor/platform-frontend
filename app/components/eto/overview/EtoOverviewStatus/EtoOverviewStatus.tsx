@@ -204,9 +204,9 @@ const EtoOverviewStatusLayout: React.FunctionComponent<
   );
   const showPublicDiscount = Boolean(!showWhitelistDiscount && eto.publicDiscountFraction);
   if (showWhitelistDiscount) {
-    tokenPrice = applyDiscountToPrice(tokenPrice, eto.whitelistDiscountFraction!);
+    tokenPrice = applyDiscountToPrice(tokenPrice, eto.whitelistDiscountFraction);
   } else if (showPublicDiscount) {
-    tokenPrice = applyDiscountToPrice(tokenPrice, eto.publicDiscountFraction!);
+    tokenPrice = applyDiscountToPrice(tokenPrice, eto.publicDiscountFraction);
   }
 
   return (

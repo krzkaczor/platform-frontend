@@ -8,8 +8,7 @@ import * as Web3ProviderEngine from "web3-provider-engine";
 import * as RpcSubprovider from "web3-provider-engine/subproviders/rpc";
 
 import { symbols } from "../../di/symbols";
-import { EWalletSubType, EWalletType } from "../../modules/web3/interfaces";
-import { IEthereumNetworkConfig } from "../../modules/web3/interfaces";
+import { EWalletSubType, EWalletType, IEthereumNetworkConfig } from "../../modules/web3/interfaces";
 import { EthereumAddress, EthereumNetworkId } from "../../types";
 import { ILedgerWalletMetadata } from "../persistence/WalletMetadataObjectStorage";
 import { IPersonalWallet, SignerType } from "./PersonalWeb3";

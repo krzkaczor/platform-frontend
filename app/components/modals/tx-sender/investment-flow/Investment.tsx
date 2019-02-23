@@ -59,7 +59,7 @@ import {
   getInputErrorMessage,
 } from "./utils";
 
-import {NumericString} from "../../../../types";
+import { NumericString } from "../../../../types";
 import * as styles from "./Investment.module.scss";
 
 interface IStateProps {
@@ -138,7 +138,7 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
       <Row className="mt-0">
         <Col>
           <Heading>
-            <FormattedMessage id="investment-flow.select-wallet-and-currency" />
+            <FormattedMessage id="investment-flow.select-wallet-and-currency"/>
           </Heading>
         </Col>
       </Row>
@@ -152,14 +152,14 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
       <Row>
         <Col>
           <Heading>
-            <FormattedMessage id="investment-flow.calculate-investment" />
+            <FormattedMessage id="investment-flow.calculate-investment"/>
           </Heading>
         </Col>
       </Row>
       <Row>
         <Col>
           <p>
-            <FormattedMessage id="investment-flow.amount-to-invest" />
+            <FormattedMessage id="investment-flow.amount-to-invest"/>
           </p>
         </Col>
       </Row>
@@ -231,7 +231,7 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
               investEntireBalance();
             }}
           >
-            <FormattedMessage id="investment-flow.invest-entire-balance" />
+            <FormattedMessage id="investment-flow.invest-entire-balance"/>
           </a>
         </Col>
       </Row>
@@ -241,7 +241,7 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
         <Row>
           <Col>
             <p className="mb-0">
-              <FormattedMessage id="investment-flow.you-will-receive" />
+              <FormattedMessage id="investment-flow.you-will-receive"/>
             </p>
           </Col>
         </Row>
@@ -249,26 +249,26 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
           <Col>
             <FormGroup>
               <Label>
-                <FormattedMessage id="investment-flow.equity-tokens" />
+                <FormattedMessage id="investment-flow.equity-tokens"/>
               </Label>
               <InfoAlert>
                 {(showTokens &&
                   equityTokenCount &&
                   `${formatThousands(equityTokenCount.toString())} ${eto.equityTokenSymbol}`) ||
-                  "\xA0" /* non breaking space*/}
+                "\xA0" /* non breaking space*/}
               </InfoAlert>
             </FormGroup>
           </Col>
-          <Col sm="1" />
+          <Col sm="1"/>
           <Col>
             <FormGroup>
               <Label>
-                <FormattedMessage id="investment-flow.estimated-neu-tokens" />
+                <FormattedMessage id="investment-flow.estimated-neu-tokens"/>
               </Label>
               <InfoAlert data-test-id="invest-modal.est-neu-tokens">
                 {(showTokens &&
-                  neuReward && <Money value={neuReward} currency={ECurrency.NEU} />) ||
-                  "\xA0"}
+                  neuReward && <Money value={neuReward} currency={ECurrency.NEU}/>) ||
+                "\xA0"}
               </InfoAlert>
             </FormGroup>
           </Col>
@@ -277,10 +277,10 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
           <Row>
             <Col>
               <p className="mb-0 mt-0">
-                <FormattedMessage id="investment-flow.you-already-invested" />
-                <br />
+                <FormattedMessage id="investment-flow.you-already-invested"/>
+                <br/>
                 <Link to={appRoutes.portfolio}>
-                  <FormattedMessage id="investment-flow.see-your-portfolio-for-details" />
+                  <FormattedMessage id="investment-flow.see-your-portfolio-for-details"/>
                 </Link>
               </p>
             </Col>
@@ -292,16 +292,16 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
       <Row>
         <Col className={styles.summary}>
           {gasCostEth &&
-            !gasCostEth.isZero() && (
-              <div>
-                + <FormattedMessage id="investment-flow.estimated-gas-cost" />:{" "}
-                <span className="text-warning" data-test-id="invest-modal-gas-cost">
+          !gasCostEth.isZero() && (
+            <div>
+              + <FormattedMessage id="investment-flow.estimated-gas-cost"/>:{" "}
+              <span className="text-warning" data-test-id="invest-modal-gas-cost">
                   {formatEur(gasCostEuro)} € ≈ ETH {formatEth(gasCostEth)}
                 </span>
-              </div>
-            )}
+            </div>
+          )}
           <div>
-            <FormattedMessage id="investment-flow.total" />:{" "}
+            <FormattedMessage id="investment-flow.total"/>:{" "}
             <span className="text-warning" data-test-id="invest-modal-total-cost">
               {formatEurTsd(totalCostEur)} € ≈ ETH {formatEthTsd(totalCostEth)}
             </span>
@@ -316,7 +316,7 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
           disabled={!readyToInvest}
           data-test-id="invest-modal-invest-now-button"
         >
-          <FormattedMessage id="investment-flow.invest-now" />
+          <FormattedMessage id="investment-flow.invest-now"/>
         </Button>
       </Row>
     </Container>
@@ -329,24 +329,24 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
     stateToProps: state => {
       const etoId = selectInvestmentEtoId(state);
       const eur = selectInvestmentEurValueUlps(state);
-      if(etoId && eur){
+      if (etoId && eur) {
         return {
           eto: selectEtoWithCompanyAndContractById(state, etoId)!,
           etherPriceEur: selectEtherPriceEur(state),
           eurPriceEther: selectEurPriceEther(state),
           euroValue: eur,
-          ethValue: selectInvestmentEthValueUlps(state),
+          ethValue: selectInvestmentEthValueUlps(state)!,
           errorState: selectInvestmentErrorState(state),
           gasCostEth: selectTxGasCostEthUlps(state),
           investmentType: selectInvestmentType(state),
           wallets: createWallets(state),
           neuReward: selectNeuRewardUlpsByEtoId(state, etoId),
           equityTokenCount: selectEquityTokenCountByEtoId(state, etoId),
-          showTokens: !!(eur && selectIsInvestmentInputValidated(state)),
+          showTokens: selectIsInvestmentInputValidated(state),
           readyToInvest: selectIsReadyToInvest(state),
           etoTicketSizes: selectCalculatedEtoTicketSizesUlpsById(state, etoId),
           hasPreviouslyInvested: selectHasInvestorTicket(state, etoId),
-        } as IStateProps
+        }
       } else {
         throw new Error("incomplete data")
       }
@@ -378,12 +378,12 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
       const isBankTransfer = investmentType === EInvestmentType.BankTransfer;
       const gasCostEther = isBankTransfer || !ethValue ? new BigNumber("0") : gasCostEth;
       const gasCostEuro = gasCostEther.mul(etherPriceEur);
-      const minTicketEur =  etoTicketSizes!.minTicketEurUlps;//formatEur(etoTicketSizes && etoTicketSizes.minTicketEurUlps) || "0";
-      const maxTicketEur =  etoTicketSizes!.maxTicketEurUlps; //formatEur(etoTicketSizes && etoTicketSizes.maxTicketEurUlps) || "0";
+      const minTicketEur = etoTicketSizes!.minTicketEurUlps;
+      const maxTicketEur = etoTicketSizes!.maxTicketEurUlps;
       return {
         minTicketEur,
         maxTicketEur,
-        minTicketEth: minTicketEur!.mul(eurPriceEther),
+        minTicketEth: minTicketEur.mul(eurPriceEther),
         gasCostEuro,
         gasCostEth: gasCostEther,
         totalCostEth: gasCostEther.add(ethValue || new BigNumber("0")),

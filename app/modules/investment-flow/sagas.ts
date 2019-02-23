@@ -143,7 +143,7 @@ function calculateInvestmentError(state: IAppState): EInvestmentErrorState | und
     const wallet = state.wallet.data;
     const contribs:calculatedContributionInterfaces.IBlCalculatedContribution | undefined =
       selectCalculatedContribution(state, investmentFlow.etoId);
-    const ticketSizes = selectCalculatedEtoTicketSizesUlpsById(state, investmentFlow.etoId); //{bignumber, bignumber}
+    const ticketSizes = selectCalculatedEtoTicketSizesUlpsById(state, investmentFlow.etoId);
 
     if (!contribs || !euroValue || !etherValue || !wallet || !ticketSizes) return;
 
@@ -250,8 +250,8 @@ function* getActiveInvestmentTypes(): any {
   const state: IAppState = yield select();
   const etoId = selectInvestmentEtoId(state);
   if(etoId){
-    const eto = etoId && selectEtoWithCompanyAndContractById(state, etoId);//null
-    const etoState = etoId && selectEtoOnChainStateById(state, etoId);//null
+    const eto = selectEtoWithCompanyAndContractById(state, etoId);
+    const etoState = selectEtoOnChainStateById(state, etoId);
 
     let activeTypes: EInvestmentType[] = [
       EInvestmentType.InvestmentWallet,

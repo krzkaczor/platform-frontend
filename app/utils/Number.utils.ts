@@ -20,12 +20,12 @@ export function formatThousands(value?: BigNumber | string | null): string {
   }
   const splitByDot = value.split(".");
 
-  invariant(splitByDot.length <= 2, "Can't format this number: " + value);
+  invariant(splitByDot.length <= 2, `Can't format this number: ${value}`);
 
   const formattedBeforeDot = splitByDot[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
   if (splitByDot.length === 2) {
-    return formattedBeforeDot + "." + splitByDot[1];
+    return `${formattedBeforeDot}.${splitByDot[1]}`;
   }
   return formattedBeforeDot;
 }
@@ -33,7 +33,6 @@ export function formatThousands(value?: BigNumber | string | null): string {
 //FIXME find out what it does and rename it to be understandable
 export function convertToBigInt(value: string, currencyDecimals?: number): BigNumber {
   const q = currencyDecimals ? new BigNumber(10).pow(currencyDecimals) : Q18;
-  // const moneyInWei = q.mul(value);
   return q.mul(value);
 }
 

@@ -8,7 +8,6 @@ import {
   EETOStateOnChain, stateToBlConversionSpec, TBlEtoWithCompanyAndContract,
 } from "./interfaces/interfaces";
 import * as publicEtosInterfaces from "./interfaces/PublicEto";
-import {IStatePublicEtos} from "./interfaces/PublicEto";
 
 const selectPublicEtosState = (state: IAppState):publicEtosInterfaces.IBlPublicEtos =>
   convert(state.publicEtos, publicEtosInterfaces.stateToBlConversionSpec);
@@ -113,7 +112,7 @@ export const selectEtoOnChainNextStateStartDate = (
   return undefined;
 };
 
-export const selectEtoWidgetError = (state: IStatePublicEtos): boolean | undefined => {
+export const selectEtoWidgetError = (state: publicEtosInterfaces.IStatePublicEtos): boolean | undefined => {
   return state.etoWidgetError;
 };
 
@@ -126,7 +125,7 @@ export const selectEtoOnChainStateById = (
 };
 
 export const selectTokenData = (
-  state: IStatePublicEtos,
+  state: publicEtosInterfaces.IStatePublicEtos,
   previewCode: string,
 ): tokenDataInterfaces.IBlEtoTokenData | undefined => {
   const tokenData = state.tokenData[previewCode];

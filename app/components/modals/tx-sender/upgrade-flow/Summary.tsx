@@ -55,7 +55,7 @@ export const UpgradeSummaryComponent: React.FunctionComponent<TComponentProps> =
 
           <InfoRow
             caption={<FormattedMessage id="upgrade-flow.value" />}
-            value={<Money currency={ECurrency.ETH} value={txData.value!} />}
+            value={<Money currency={ECurrency.ETH} value={txData.value} />}
           />
 
           <InfoRow
