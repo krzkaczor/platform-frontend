@@ -7,6 +7,9 @@ interface ITableHeaderProps {
   mobileActionName?: string;
 }
 
+/**
+ * @deprecated Use NewTable. Remove when we get rid of all usages.
+ */
 export const TableHeader: React.FunctionComponent<ITableHeaderProps> = ({
   children,
   mobileAction,

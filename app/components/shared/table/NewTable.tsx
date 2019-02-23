@@ -2,8 +2,8 @@ import * as cn from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TDataTestId, TTranslatedString } from "../../types";
-import { Panel } from "./Panel";
+import { TDataTestId, TTranslatedString } from "../../../types";
+import { Panel } from "../Panel";
 
 import * as styles from "./NewTable.module.scss";
 
@@ -85,7 +85,7 @@ const NewTable: React.FunctionComponent<TProps> = ({
 
   return (
     <Panel className={styles.panel}>
-      <div className={cn(styles.tableWrapper, className, keepRhythm && "keep-rhythm")}>
+      <div className={cn(styles.tableWrapper, className, { "keep-rhythm": keepRhythm })}>
         <table className={styles.table}>
           <thead className={styles.header}>
             <tr>

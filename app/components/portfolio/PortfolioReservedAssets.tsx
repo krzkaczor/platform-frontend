@@ -12,9 +12,9 @@ import { withParams } from "../../utils/withParams";
 import { appRoutes } from "../appRoutes";
 import { EProjectStatusSize, ETOState } from "../shared/ETOState";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../shared/Money";
-import { ENewTableCellLayout, NewTable, NewTableRow } from "../shared/NewTable";
 import { NumberFormat } from "../shared/NumberFormat";
 import { SectionHeader } from "../shared/SectionHeader";
+import { ENewTableCellLayout, NewTable, NewTableRow } from "../shared/table";
 import { PortfolioAssetAction } from "./PortfolioAssetAction";
 
 import * as neuIcon from "../../assets/img/neu_icon.svg";

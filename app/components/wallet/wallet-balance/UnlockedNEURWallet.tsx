@@ -59,7 +59,7 @@ export const UnlockedNEURWallet: React.FunctionComponent<IUnlockedNEURWallet & C
         value={neuroEuroAmount}
         data-test-id="wallet-balance.neur"
         actions={
-          process.env.NEURO_WITHDRAW_ENABLED === "1"
+          process.env.NF_NEURO_WITHDRAW_ENABLED === "1"
             ? [
                 {
                   name: <FormattedMessage id="components.wallet.start.neur-wallet.purchase" />,

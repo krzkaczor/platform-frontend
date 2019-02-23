@@ -11,9 +11,9 @@ import { CommonHtmlProps } from "../../types";
 import { Button, ButtonSize, EButtonLayout } from "../shared/buttons";
 import { LoadingIndicator } from "../shared/loading-indicator";
 import { ECurrency, ETheme, Money, selectCurrencyCode } from "../shared/Money";
-import { NewTable, NewTableRow } from "../shared/NewTable";
 import { Panel } from "../shared/Panel";
 import { SectionHeader } from "../shared/SectionHeader";
+import { NewTable, NewTableRow } from "../shared/table";
 
 import * as ethIcon from "../../assets/img/eth_icon.svg";
 import * as neuIcon from "../../assets/img/neu_icon.svg";

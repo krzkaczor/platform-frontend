@@ -3,8 +3,10 @@
 
   &:not(:global(.keep-rhythm)) {
     .cell {
-      &:last-of-type {
-        text-align: end;
+      &:not(.cell--placeholder) {
+        &:last-of-type {
+          text-align: end;
+        }
       }
     }
   }
@@ -53,7 +55,7 @@
     vertical-align: bottom;
   }
 
-  &-placeholder {
+  &--placeholder {
     text-align: center;
   }
 }

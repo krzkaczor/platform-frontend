@@ -9,6 +9,9 @@ export interface ITableCell {
   mobileDescription?: string;
 }
 
+/**
+ * @deprecated Use NewTable. Remove when we get rid of all usages.
+ */
 export const TableCell: React.FunctionComponent<ITableCell> = ({
   narrow,
   decorate,
