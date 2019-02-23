@@ -1,5 +1,5 @@
 import { createAction, createSimpleAction } from "../actionsUtils";
-import {IEtoFilesState, IEtoDocument, EEtoDocumentType} from "./interfaces";
+import {EEtoDocumentType, IEtoDocument, IEtoFilesState} from "./interfaces";
 
 export const etoDocumentsActions = {
   loadFileDataStart: () => createSimpleAction("ETO_DOCUMENTS_LOAD_FILE_DATA_START"),

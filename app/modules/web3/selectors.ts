@@ -77,7 +77,7 @@ export const selectCurrentLightWalletSalt = (state: IAppState): string | undefin
   (state.web3.connected &&
     state.web3.wallet &&
     state.web3.wallet.walletType === EWalletType.LIGHT &&
-    (state.web3.wallet.salt) ||
+    state.web3.wallet.salt) ||
   undefined;
 
 export const selectIsUnlocked = (state: IWeb3State): boolean => {
@@ -92,7 +92,7 @@ export const selectPreviousLightWalletEmail = (state: IWeb3State): string | unde
   undefined;
 
 export const selectPreviousLightWalletSalt = (state: IAppState): string | undefined =>
-  (!state.connected &&
+  (!state.web3.connected &&
     state.web3.previousConnectedWallet &&
     state.web3.previousConnectedWallet.walletType === EWalletType.LIGHT &&
     state.web3.previousConnectedWallet.salt) ||

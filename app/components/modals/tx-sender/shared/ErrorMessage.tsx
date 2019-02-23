@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { ETransactionErrorType } from "../../../../modules/tx/sender/interfaces";
-import { Message } from "./Message";
+import { Message } from "../../Message";
 
 import * as failedImg from "../../../../assets/img/ether_fail.svg";
 import * as styles from "./ErrorMessage.module.scss";

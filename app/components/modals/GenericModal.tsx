@@ -4,12 +4,12 @@ import { Modal, Row } from "reactstrap";
 import { compose, setDisplayName, withHandlers } from "recompose";
 
 import { actions } from "../../modules/actions";
+import {IBlGenericModalObject} from "../../modules/generic-modal/interfaces";
 import {
   selectGenericModalComponent,
   selectGenericModalIsOpen,
   selectGenericModalObj,
 } from "../../modules/generic-modal/selectors";
-import {IBlGenericModalObject} from "../../modules/generic-modal/interfaces";
 import { appConnect, AppDispatch } from "../../store";
 import { DeepReadonly } from "../../types";
 import { Button } from "../shared/buttons";

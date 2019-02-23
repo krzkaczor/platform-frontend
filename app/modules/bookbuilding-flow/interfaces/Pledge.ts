@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
-import {NumericString} from "../../../types";
 import {ECurrency} from "../../../components/shared/Money";
+import {NumericString} from "../../../types";
 import {
   bigNumberToNumericString,
   numberToNumericString,

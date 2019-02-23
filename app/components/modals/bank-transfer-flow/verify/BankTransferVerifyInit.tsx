@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { branch, compose, renderComponent, StateHandler, withStateHandlers } from "recompose";
+import {branch, compose, renderComponent, StateHandler, withStateHandlers} from "recompose";
 
 import { externalRoutes } from "../../../../config/externalRoutes";
 import * as YupTS from "../../../../lib/yup-ts";
@@ -16,6 +16,7 @@ import { SectionHeader } from "../../../shared/SectionHeader";
 import { Message } from "../../Message";
 
 import * as bankVaultIcon from "../../../../assets/img/bank-transfer/bankvault.svg";
+import BigNumber from "bignumber.js";
 
 export enum EBankTransferInitState {
   INFO,
@@ -23,7 +24,11 @@ export enum EBankTransferInitState {
 }
 
 interface IStateProps {
-  minEuroUlps: string;
+  minEuroUlps: BigNumber | null;
+}
+
+interface IComponentProps {
+  minEuroUlps: BigNumber;
 }
 
 interface IDispatchProps {
@@ -39,7 +44,7 @@ type ILocalStateUpdater = {
   goToAgreement: StateHandler<ILocalState>;
 };
 
-type IProps = IStateProps & IDispatchProps & ILocalStateUpdater;
+type IProps = IComponentProps & IDispatchProps & ILocalStateUpdater;
 
 const AgreementScheme = YupTS.object({
   quintessenceTosApproved: YupTS.onlyTrue(),
@@ -171,6 +176,7 @@ const BankTransferVerifyInit = compose<IProps, {}>(
       }),
     },
   ),
+  branch<IStateProps>(props => props.minEuroUlps === null, () => {throw new Error("incomplete data")}), //fixme
   branch<ILocalState>(
     props => props.state === EBankTransferInitState.INFO,
     renderComponent(BankTransferVerifyInfoLayout),

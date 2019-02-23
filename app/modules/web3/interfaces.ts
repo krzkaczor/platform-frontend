@@ -1,5 +1,5 @@
-import {TWalletMetadata} from "../../lib/persistence/WalletMetadataObjectStorage";
 import BigNumber from "bignumber.js";
+import {TWalletMetadata} from "../../lib/persistence/WalletMetadataObjectStorage";
 import {NumericString} from "../../types";
 import {bigNumberToNumericString, numericStringToBigNumber} from "../../utils/numericStringUtils";
 

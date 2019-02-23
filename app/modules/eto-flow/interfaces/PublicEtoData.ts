@@ -1,12 +1,12 @@
+import BigNumber from "bignumber.js";
 import {NumericString} from "../../../types";
-import {TEtoDocumentTemplates} from "../../eto-documents/interfaces";
 import {
   bigNumberToNumber,
   bigNumberToNumericString,
   numberToNumericString,
   numericStringToBigNumber
 } from "../../../utils/numericStringUtils";
-import BigNumber from "bignumber.js";
+import {TEtoDocumentTemplates} from "../../eto-documents/interfaces";
 import {EEtoState} from "./interfaces";
 
 export interface IStatePublicEtoData {

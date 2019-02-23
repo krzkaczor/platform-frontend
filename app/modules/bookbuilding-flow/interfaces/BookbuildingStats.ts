@@ -1,5 +1,5 @@
-import {NumericString} from "../../../types";
 import BigNumber from "bignumber.js";
+import {NumericString} from "../../../types";
 import {numberToNumericString, numericStringToBigNumber} from "../../../utils/numericStringUtils";
 
 export interface IStateBookBuildingStats {

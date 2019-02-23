@@ -1,21 +1,21 @@
 import BigNumber from "bignumber.js";
 
+import {convertInArray} from "../../../components/eto/utils";
 import {NumericString} from "../../../types";
-import * as etoCapitalListInterfaces from "./EtoCapitalList";
-import * as shareholderDataInterfaces from "./ShareholderData";
-import * as keyIndividualInterfaces from "./KeyIndividual";
-import * as companySlideshareInterfaces from './CompanySlideshare'
-import * as socialChannelInterfaces from "./SocialChannel";
-import * as companyVideoInterfaces from "./CompanyVideo";
-import * as companyNewsInterfaces from "./CompanyNews";
-import * as companyMarketingLinks from "./CompanyMarketingLinks";
 import {
   bigNumberToNumber, bigNumberToNumericString,
   numberToNumericString,
   numericStringToBigNumber,
   numericStringToNumber
 } from "../../../utils/numericStringUtils";
-import {convertInArray} from "../../../components/eto/utils";
+import * as companyMarketingLinks from "./CompanyMarketingLinks";
+import * as companyNewsInterfaces from "./CompanyNews";
+import * as companySlideshareInterfaces from './CompanySlideshare'
+import * as companyVideoInterfaces from "./CompanyVideo";
+import * as etoCapitalListInterfaces from "./EtoCapitalList";
+import * as keyIndividualInterfaces from "./KeyIndividual";
+import * as shareholderDataInterfaces from "./ShareholderData";
+import * as socialChannelInterfaces from "./SocialChannel";
 
 export interface IStateCompanyEtoData {
   companyId: string;

@@ -1,5 +1,5 @@
-import {IStateUser, EUserType} from "./interfaces";
 import { createAction, createSimpleAction } from "../actionsUtils";
+import {EUserType, IStateUser} from "./interfaces";
 
 export const authActions = {
   loadJWT: (jwt: string) => createAction("AUTH_LOAD_JWT", { jwt }),

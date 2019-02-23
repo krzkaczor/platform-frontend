@@ -1,6 +1,6 @@
-import { TStateGeneralEtoData } from "./interfaces/interfaces";
-import { createAction, createSimpleAction, createActionFactory} from "../actionsUtils";
 import {DeepPartial} from "../../types";
+import { createAction, createActionFactory, createSimpleAction} from "../actionsUtils";
+import { TStateGeneralEtoData } from "./interfaces/interfaces";
 
 export const etoFlowActions = {
   loadIssuerEto: () => createSimpleAction("ETO_FLOW_LOAD_ISSUER_ETO"),

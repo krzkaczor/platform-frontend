@@ -1,4 +1,4 @@
-import { cloneDeep, flow, get, set, isFunction } from "lodash";
+import { cloneDeep, flow, get, isFunction, set } from "lodash";
 
 import BigNumber from "bignumber.js";
 

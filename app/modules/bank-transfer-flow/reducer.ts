@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 import { actions } from "../actions";
@@ -21,15 +22,15 @@ export enum EBankTransferType {
 export interface IBankTransferState {
   state: EBankTransferFlowState;
   type: EBankTransferType | undefined;
-  minEuroUlps: string;
-  reference: string;
+  minEuroUlps: BigNumber | null;
+  reference: string | null;
 }
 
 export const bankTransferInitialState: IBankTransferState = {
   state: EBankTransferFlowState.UNINITIALIZED,
   type: undefined,
-  minEuroUlps: "",
-  reference: "",
+  minEuroUlps: null,
+  reference: null,
 };
 
 export const bankTransferFlowReducer: AppReducer<IBankTransferState> = (

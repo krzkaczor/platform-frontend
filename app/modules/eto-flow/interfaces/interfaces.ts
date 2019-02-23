@@ -1,6 +1,6 @@
-import {IApiPublicEtoData, IStatePublicEtoData} from './PublicEtoData';
-import {IApiCompanyEtoData, IStateCompanyEtoData} from "./CompanyEtoData";
 import {IStateDetailedBookbuildingStats} from "../../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
+import {IApiCompanyEtoData, IStateCompanyEtoData} from "./CompanyEtoData";
+import {IApiPublicEtoData, IStatePublicEtoData} from './PublicEtoData';
 
 export interface IEtoFlowState {
   etoPreviewCode?: string;
