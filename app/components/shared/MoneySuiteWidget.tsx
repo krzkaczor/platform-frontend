@@ -5,8 +5,8 @@ import { TDataTestId } from "../../types";
 import { makeTid } from "../../utils/tidUtils";
 import { ECurrency, Money } from "./Money";
 
-import * as styles from "./MoneySuiteWidget.module.scss";
 import BigNumber from "bignumber.js";
+import * as styles from "./MoneySuiteWidget.module.scss";
 
 export type TTheme = "light";
 export type TSize = "large";

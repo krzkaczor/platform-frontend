@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { RouterState } from "connected-react-router";
-import { dummyEthereumAddress } from "../../../test/fixtures";
+import { dummyEthereumAddress } from "../../../test/fixtures/fixtures";
 import {
   getDummyBrowserWalletMetadata,
   getDummyLedgerWalletMetadata,

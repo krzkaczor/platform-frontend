@@ -3,7 +3,8 @@ import * as moment from "moment";
 import * as React from "react";
 import BigNumber from "bignumber.js";
 
-import {testEtoBl, testEtoState} from "../../../../../test/fixtures";
+import {testEtoState} from "../../../../../test/fixtures/testEtoState";
+import {testEtoBl} from "../../../../../test/fixtures/testEtoBl";
 import {
   EETOStateOnChain, TBlEtoWithCompanyAndContract,
   TStateEtoWithCompanyAndContract,

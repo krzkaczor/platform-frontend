@@ -2,16 +2,16 @@ import * as React from "react";
 import { compose } from "recompose";
 
 import { actions } from "../../../modules/actions";
+import { TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";
+import {IStatePublicEtos} from "../../../modules/public-etos/interfaces/PublicEto";
 import {
   selectEtoWidgetError,
   selectEtoWithCompanyAndContractById,
 } from "../../../modules/public-etos/selectors";
-import { TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";
 import { appConnect } from "../../../store";
 import { onEnterAction } from "../../../utils/OnEnterAction";
 import { withParams } from "../../../utils/withParams";
 import { appRoutes } from "../../appRoutes";
-import {IStatePublicEtos} from "../../../modules/public-etos/interfaces/PublicEto";
 
 interface IStateProps {
   eto?: TBlEtoWithCompanyAndContract;

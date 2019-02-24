@@ -4,7 +4,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import { spy } from "sinon";
 
 import { createMount } from "../../test/createMount";
-import { createDummyStore } from "../../test/fixtures";
+import { createDummyStore } from "../../test/fixtures/fixtures";
 import { onEnterAction } from "./OnEnterAction";
 
 describe("onEnterAction", () => {

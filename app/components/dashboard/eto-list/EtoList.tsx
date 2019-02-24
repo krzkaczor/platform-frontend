@@ -5,8 +5,8 @@ import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
 import { actions } from "../../../modules/actions";
-import { selectPublicEtos } from "../../../modules/public-etos/selectors";
 import { TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";
+import { selectPublicEtos } from "../../../modules/public-etos/selectors";
 import { appConnect } from "../../../store";
 import { onEnterAction } from "../../../utils/OnEnterAction";
 import { EtoOverviewStatus } from "../../eto/overview/EtoOverviewStatus";

@@ -32,7 +32,7 @@ import { DeepPartial } from "../app/types";
 import { dummyIntl } from "../app/utils/injectIntlHelpers.fixtures";
 import { InversifyProvider } from "../app/utils/InversifyProvider";
 import { LolexClockAsync } from "../typings/lolex";
-import { dummyConfig } from "./fixtures";
+import { dummyConfig } from "./fixtures/fixtures";
 import { createSpyMiddleware } from "./reduxSpyMiddleware";
 import { createMock, tid } from "./testUtils";
 

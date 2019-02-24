@@ -1,8 +1,7 @@
-import {NumberSchema} from "yup";
-import { FormattedMessage } from "react-intl-phraseapp";
 import * as React from "react";
+import { FormattedMessage } from "react-intl-phraseapp";
+import {NumberSchema} from "yup";
 
-import * as YupTS from "../../lib/yup-ts";
 import {
   PlatformTerms,
   PUBLIC_DURATION_DAYS,
@@ -10,6 +9,7 @@ import {
   SIGNING_DURATION_DAYS,
   WHITELIST_DURATION_DAYS
 } from "../../config/constants";
+import * as YupTS from "../../lib/yup-ts";
 
 export const EtoTermsValidator = YupTS.object({
   currencies: YupTS.array(YupTS.string()),

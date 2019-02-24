@@ -1,5 +1,5 @@
-import * as React from "react";
 import BigNumber from "bignumber.js";
+import * as React from "react";
 
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { externalRoutes } from "../../../config/externalRoutes";
@@ -8,8 +8,8 @@ import { AccountBalance } from "../../shared/AccountBalance";
 import { ECurrency } from "../../shared/Money";
 import { VerifiedBankAccount } from "../VerifiedBankAccount";
 
-import { WalletBalanceContainer } from "./WalletBalance";
 import * as neuroIcon from "../../../assets/img/nEUR_icon.svg";
+import { WalletBalanceContainer } from "./WalletBalance";
 import * as styles from "./WalletBalance.module.scss";
 
 interface IUnlockedNEURWallet {

@@ -2,8 +2,8 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col } from "reactstrap";
 
-import { EEtoState, EEtoFormTypes } from "../../../modules/eto-flow/interfaces/interfaces";
 import { etoFormIsReadonly } from "../../../lib/api/eto/EtoApiUtils";
+import { EEtoFormTypes, EEtoState } from "../../../modules/eto-flow/interfaces/interfaces";
 import {
   selectIsGeneralEtoLoading,
   selectIssuerCompany,

@@ -2,7 +2,8 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { Container } from "reactstrap";
 
-import { testCompanyBl, testEtoBl } from "../../../../test/fixtures";
+import { testCompanyBl } from "../../../../test/fixtures/testCompanyBl";
+import { testEtoBl } from "../../../../test/fixtures/testEtoBl";
 import { withStore } from "../../../utils/storeDecorator";
 import { EtoView } from "./EtoView";
 

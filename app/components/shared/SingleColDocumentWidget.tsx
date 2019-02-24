@@ -2,9 +2,9 @@ import * as React from "react";
 import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
+import { actions } from "../../modules/actions";
 import { IEtoDocument, immutableDocumentNames } from "../../modules/eto-documents/interfaces";
 import { IImmutableFileId } from "../../modules/immutable-file/interfaces";
-import { actions } from "../../modules/actions";
 import { appConnect } from "../../store";
 import { TTranslatedString } from "../../types";
 import { getDocumentTemplateTitles } from "../documents/utils";

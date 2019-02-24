@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import BigNumber from "bignumber.js";
 
-import { testEtoBl } from "../../../../test/fixtures";
+import { testEtoBl } from "../../../../test/fixtures/testEtoBl";
 import { TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";
 import { EtoInvestmentTermsWidgetLayout } from "./EtoInvestmentTermsWidget";
 

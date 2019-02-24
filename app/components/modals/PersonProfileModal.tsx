@@ -2,11 +2,11 @@ import * as React from "react";
 import {Modal} from "reactstrap";
 
 import {actions} from "../../modules/actions";
+import {IBlPersonProfileModalObject} from '../../modules/person-profile-modal/interfaces'
 import {
   selectIsOpen,
   selectPersonProfileModalObj,
 } from "../../modules/person-profile-modal/reducer";
-import {IBlPersonProfileModalObject} from '../../modules/person-profile-modal/interfaces'
 import {appConnect} from "../../store";
 import {DeepReadonly} from "../../types";
 import {ExternalLink} from "../shared/links";

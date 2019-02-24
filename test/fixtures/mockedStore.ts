@@ -1,4 +1,4 @@
-import { testEtoApi } from "../fixtures";
+import { testEtoApi } from "./testEtoApi";
 
 export const mockedStore = {
   web3: {

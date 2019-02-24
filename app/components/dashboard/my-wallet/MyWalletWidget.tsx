@@ -26,11 +26,11 @@ import { Panel } from "../../shared/Panel";
 import { Tooltip } from "../../shared/Tooltip";
 import { WarningAlert } from "../../shared/WarningAlert";
 
+import BigNumber from "bignumber.js";
 import * as ethIcon from "../../../assets/img/eth_icon.svg";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as moneyIcon from "../../../assets/img/nEUR_icon.svg";
 import * as styles from "./MyWalletWidget.module.scss";
-import BigNumber from "bignumber.js";
 
 type StateProps = {
   isLoading: boolean;

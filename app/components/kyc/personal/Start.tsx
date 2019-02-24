@@ -4,9 +4,9 @@ import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
+import { actions } from "../../../modules/actions";
 import {IKycIndividualData} from "../../../modules/kyc/interfaces";
 import {  KycIndividualDataValidator} from "../../../modules/kyc/validators";
-import { actions } from "../../../modules/actions";
 import { appConnect } from "../../../store";
 import { injectIntlHelpers } from "../../../utils/injectIntlHelpers";
 import { onEnterAction } from "../../../utils/OnEnterAction";

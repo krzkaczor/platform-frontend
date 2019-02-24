@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
-import { EUserType } from "../../../../modules/auth/interfaces";
 import { actions } from "../../../../modules/actions";
+import { EUserType } from "../../../../modules/auth/interfaces";
 import { selectUrlUserType } from "../../../../modules/wallet-selector/selectors";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";

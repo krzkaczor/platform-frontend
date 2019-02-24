@@ -2,8 +2,8 @@ import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "redux";
 
-import { EKycRequestType } from "../../../modules/kyc/interfaces";
 import { actions } from "../../../modules/actions";
+import { EKycRequestType } from "../../../modules/kyc/interfaces";
 import { appConnect } from "../../../store";
 import { Button } from "../../shared/buttons";
 import { KycPanel } from "../KycPanel";

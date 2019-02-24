@@ -4,19 +4,19 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
-import * as companyEtoDataInterfaces from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { actions } from "../../../../modules/actions";
-import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
+import * as companyEtoDataInterfaces from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
+import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
+import {EtoRiskAssessmentValidator} from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
+import {DeepPartial} from "../../../../types";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { FormFieldBoolean, FormTextArea } from "../../../shared/forms";
+import {convert} from "../../utils";
 import { EtoFormBase } from "../EtoFormBase";
 import { Section } from "../Shared";
 import * as styles from "../Shared.module.scss";
-import {DeepPartial} from "../../../../types";
-import {convert} from "../../utils";
-import {EtoRiskAssessmentValidator} from "../../../../modules/eto-flow/validators";
 
 interface IStateProps {
   loadingData: boolean;

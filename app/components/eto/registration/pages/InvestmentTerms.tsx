@@ -5,14 +5,14 @@ import { Col, Row } from "reactstrap";
 import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
-import {EtoInvestmentTermsValidator} from "../../../../modules/eto-flow/validators";
-import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import { etoFormIsReadonly } from "../../../../lib/api/eto/EtoApiUtils";
 import { getInvestmentAmount, getShareAndTokenPrice } from "../../../../lib/api/eto/EtoUtils";
 import { actions } from "../../../../modules/actions";
-import { selectIssuerEto, selectIssuerEtoState } from "../../../../modules/eto-flow/selectors";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
+import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
+import { selectIssuerEto, selectIssuerEtoState } from "../../../../modules/eto-flow/selectors";
 import { etoInvestmentTermsProgressOptions } from "../../../../modules/eto-flow/utils";
+import {EtoInvestmentTermsValidator} from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
 import {TTranslatedString} from "../../../../types";
 import { formatMoney } from "../../../../utils/Money.utils";
@@ -32,8 +32,8 @@ import {
 import { EtoFormBase } from "../EtoFormBase";
 import { Section } from "../Shared";
 
-import * as styles from "../Shared.module.scss";
 import BigNumber from "bignumber.js";
+import * as styles from "../Shared.module.scss";
 
 interface IExternalProps {
   readonly: boolean;

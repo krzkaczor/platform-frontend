@@ -2,8 +2,8 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 
-import { selectConnectedWeb3State } from "../../modules/web3/selectors";
 import { EWalletType } from "../../modules/web3/interfaces";
+import { selectConnectedWeb3State } from "../../modules/web3/selectors";
 import { appConnect } from "../../store";
 
 import * as ledgerConfirm from "../../assets/img/wallet_selector/ledger_confirm.svg";

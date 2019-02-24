@@ -1,10 +1,10 @@
 import { branch, compose, renderComponent } from "recompose";
 
-import { EUserType } from "../../modules/auth/interfaces";
 import { actions } from "../../modules/actions";
+import { EUserType } from "../../modules/auth/interfaces";
 import { selectUserType } from "../../modules/auth/selectors";
-import { selectEtoWithCompanyAndContractById } from "../../modules/public-etos/selectors";
 import { TBlEtoWithCompanyAndContract } from "../../modules/public-etos/interfaces/interfaces";
+import { selectEtoWithCompanyAndContractById } from "../../modules/public-etos/selectors";
 import { appConnect } from "../../store";
 import { onEnterAction } from "../../utils/OnEnterAction";
 import { withContainer } from "../../utils/withContainer";

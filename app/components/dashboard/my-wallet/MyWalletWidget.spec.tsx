@@ -4,8 +4,8 @@ import * as React from "react";
 
 import { MyWalletWidgetComponentBody } from "./MyWalletWidget";
 
-import { tid } from "../../../../test/testUtils";
 import BigNumber from "bignumber.js";
+import { tid } from "../../../../test/testUtils";
 
 describe("<MyWalletWidget />", () => {
   let initialEnvVar: any;

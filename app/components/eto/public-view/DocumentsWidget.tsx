@@ -3,10 +3,10 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "recompose";
 
-import { IBlCompanyEtoData } from "../../../modules/eto-flow/interfaces/CompanyEtoData";
-import { IEtoDocument, TEtoDocumentTemplates } from "../../../modules/eto-documents/interfaces";
 import { ignoredDocuments, ignoredTemplates } from "../../../lib/api/eto/EtoFileUtils";
 import { actions } from "../../../modules/actions";
+import { IEtoDocument, TEtoDocumentTemplates } from "../../../modules/eto-documents/interfaces";
+import { IBlCompanyEtoData } from "../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { appConnect } from "../../../store";
 import { CommonHtmlProps } from "../../../types";
 import { getDocumentTitles } from "../../documents/utils";

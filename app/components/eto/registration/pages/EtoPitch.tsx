@@ -4,11 +4,11 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
-import {EtoPitchValidator} from "../../../../modules/eto-flow/validators";
-import {IBlCompanyEtoData} from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { actions } from "../../../../modules/actions";
-import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
+import {IBlCompanyEtoData} from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
+import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
+import {EtoPitchValidator} from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { ArrayOfKeyValueFields, FormTextArea } from "../../../shared/forms";

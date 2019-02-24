@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { expectSaga } from "redux-saga-test-plan";
 
-import { dummyEthereumAddress, dummyNetworkId } from "../../../../test/fixtures";
+import { dummyEthereumAddress, dummyNetworkId } from "../../../../test/fixtures/fixtures";
 import { createMock } from "../../../../test/testUtils";
 import { BrowserWalletErrorMessage } from "../../../components/translatedMessages/messages";
 import { createMessage } from "../../../components/translatedMessages/utils";

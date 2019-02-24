@@ -3,10 +3,10 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
-import { EKycRequestType, ERequestStatus } from "../../modules/kyc/interfaces";
-import { EUserType } from "../../modules/auth/interfaces";
 import { actions } from "../../modules/actions";
+import { EUserType } from "../../modules/auth/interfaces";
 import { selectUserType } from "../../modules/auth/selectors";
+import { EKycRequestType, ERequestStatus } from "../../modules/kyc/interfaces";
 import { selectKycRequestStatus, selectKycRequestType } from "../../modules/kyc/selectors";
 import {
   selectIcbmWalletConnected,

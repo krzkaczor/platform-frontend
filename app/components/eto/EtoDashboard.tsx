@@ -3,10 +3,9 @@ import { FormattedHTMLMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
-import { EEtoState } from "../../modules/eto-flow/interfaces/interfaces";
-import { ERequestStatus } from "../../modules/kyc/interfaces";
 import { actions } from "../../modules/actions";
 import { selectBackupCodesVerified, selectVerifiedUserEmail } from "../../modules/auth/selectors";
+import { EEtoState } from "../../modules/eto-flow/interfaces/interfaces";
 import {
   selectCanEnableBookBuilding,
   selectCombinedEtoCompanyData,
@@ -18,6 +17,7 @@ import {
   selectShouldEtoDataLoad,
 } from "../../modules/eto-flow/selectors";
 import { calculateGeneralEtoData } from "../../modules/eto-flow/utils";
+import { ERequestStatus } from "../../modules/kyc/interfaces";
 import { selectKycRequestStatus } from "../../modules/kyc/selectors";
 import { selectIsLightWallet } from "../../modules/web3/selectors";
 import { appConnect } from "../../store";

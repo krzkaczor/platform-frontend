@@ -17,8 +17,8 @@ import { WarningAlert } from "../../shared/WarningAlert";
 import { IncomingPayoutWidget } from "../incoming-payout/IncomingPayoutWidget";
 import { MyNeuWidget } from "./MyNeuWidget";
 
-import * as styles from "./MyPortfolioWidget.module.scss";
 import BigNumber from "bignumber.js";
+import * as styles from "./MyPortfolioWidget.module.scss";
 
 type TOwnProps = CommonHtmlProps;
 

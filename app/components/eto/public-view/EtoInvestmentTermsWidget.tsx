@@ -2,8 +2,8 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "recompose";
 
-import { IEtoDocument } from "../../../modules/eto-documents/interfaces";
 import { actions } from "../../../modules/actions";
+import { IEtoDocument } from "../../../modules/eto-documents/interfaces";
 import { TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";
 import { appConnect } from "../../../store";
 import { TDataTestId, TTranslatedString } from "../../../types";

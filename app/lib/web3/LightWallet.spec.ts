@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { dummyEthereumAddress } from "../../../test/fixtures";
+import { dummyEthereumAddress } from "../../../test/fixtures/fixtures";
 import { createMock } from "../../../test/testUtils";
 import { IVault, LightWallet } from "./LightWallet";
 import { Web3Adapter } from "./Web3Adapter";

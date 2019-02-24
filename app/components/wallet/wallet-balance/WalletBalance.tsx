@@ -1,6 +1,6 @@
+import BigNumber from "bignumber.js";
 import * as cn from "classnames";
 import * as React from "react";
-import BigNumber from "bignumber.js";
 
 import { CommonHtmlProps } from "../../../types";
 import { LoadingIndicator } from "../../shared/loading-indicator";

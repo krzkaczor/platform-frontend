@@ -1,9 +1,9 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
+import BigNumber from "bignumber.js";
 import { Q18 } from "../../../config/constants";
 import { MyPortfolioWidgetComponent } from "./MyPortfolioWidget";
-import BigNumber from "bignumber.js";
 
 storiesOf("MyPortfolioWidget", module)
   .add("loading", () => (

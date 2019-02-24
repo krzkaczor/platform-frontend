@@ -1,4 +1,4 @@
-import { dummyEthereumAddress } from "../../../test/fixtures";
+import { dummyEthereumAddress } from "../../../test/fixtures/fixtures";
 import {
   IBrowserWalletMetadata,
   ILedgerWalletMetadata,

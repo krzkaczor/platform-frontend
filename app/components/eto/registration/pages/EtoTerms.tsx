@@ -5,12 +5,12 @@ import { Col, Row } from "reactstrap";
 import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
-import { EtoTermsValidator} from "../../../../modules/public-etos/validators";
-import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import { etoFormIsReadonly } from "../../../../lib/api/eto/EtoApiUtils";
 import { actions } from "../../../../modules/actions";
-import { selectIssuerEto, selectIssuerEtoState } from "../../../../modules/eto-flow/selectors";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
+import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
+import { selectIssuerEto, selectIssuerEtoState } from "../../../../modules/eto-flow/selectors";
+import { EtoTermsValidator} from "../../../../modules/public-etos/validators";
 import { appConnect } from "../../../../store";
 import {DeepPartial, TTranslatedString} from "../../../../types";
 import { Button, EButtonLayout } from "../../../shared/buttons";

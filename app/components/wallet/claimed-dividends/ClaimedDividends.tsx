@@ -1,7 +1,7 @@
+import BigNumber from "bignumber.js";
 import * as cn from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import BigNumber from "bignumber.js";
 
 import { CommonHtmlProps } from "../../../types";
 import { Button, EButtonLayout } from "../../shared/buttons";

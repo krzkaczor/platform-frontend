@@ -3,8 +3,8 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "redux";
 
-import { IBlBookBuildingStats } from "../../../../modules/bookbuilding-flow/interfaces/BookbuildingStats";
 import { actions } from "../../../../modules/actions";
+import { IBlBookBuildingStats } from "../../../../modules/bookbuilding-flow/interfaces/BookbuildingStats";
 import { selectBookbuildingStats } from "../../../../modules/bookbuilding-flow/selectors";
 import {
   selectCanEnableBookBuilding,
@@ -25,8 +25,8 @@ import { LoadingIndicator } from "../../../shared/loading-indicator";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../../../shared/Money";
 import { Panel } from "../../../shared/Panel";
 
-import * as styles from "../../EtoContentWidget.module.scss";
 import BigNumber from "bignumber.js";
+import * as styles from "../../EtoContentWidget.module.scss";
 
 interface IDispatchProps {
   startBookBuilding: (etoId: string) => void;

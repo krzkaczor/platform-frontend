@@ -4,22 +4,22 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
-import {EtoEquityTokenInfoValidator} from "../../../../modules/eto-flow/validators"
-import * as publicEtoDataInterfaces from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import { etoFormIsReadonly } from "../../../../lib/api/eto/EtoApiUtils";
 import { actions } from "../../../../modules/actions";
-import { selectIssuerEto, selectIssuerEtoState } from "../../../../modules/eto-flow/selectors";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
+import * as publicEtoDataInterfaces from "../../../../modules/eto-flow/interfaces/PublicEtoData";
+import { selectIssuerEto, selectIssuerEtoState } from "../../../../modules/eto-flow/selectors";
+import {EtoEquityTokenInfoValidator} from "../../../../modules/eto-flow/validators"
 import { appConnect } from "../../../../store";
+import {DeepPartial} from "../../../../types";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { FormField } from "../../../shared/forms";
 import { FormFieldLabel } from "../../../shared/forms/fields/FormFieldLabel";
 import { FormSingleFileUpload } from "../../../shared/forms/fields/FormSingleFileUpload";
+import {convert} from "../../utils";
 import { EtoFormBase } from "../EtoFormBase";
 import { Section } from "../Shared";
 import * as styles from "../Shared.module.scss";
-import {DeepPartial} from "../../../../types";
-import {convert} from "../../utils";
 
 interface IExternalProps {
   readonly: boolean;

@@ -4,13 +4,13 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
+import { actions } from "../../../modules/actions";
 import {
   EKycRequestType,
   IKycBusinessData,
   IKycFileInfo,
 } from "../../../modules/kyc/interfaces";
 import {KycBusinessDataValidator} from "../../../modules/kyc/validators";
-import { actions } from "../../../modules/actions";
 import { appConnect } from "../../../store";
 import { IIntlProps, injectIntlHelpers } from "../../../utils/injectIntlHelpers";
 import { onEnterAction } from "../../../utils/OnEnterAction";

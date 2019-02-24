@@ -5,7 +5,8 @@ import { Redirect } from "react-router";
 import { branch, renderComponent, setDisplayName } from "recompose";
 import { compose } from "redux";
 
-import { EEtoState, EtoStateToCamelcase } from "../../modules/eto-flow/interfaces/interfaces";
+import { ignoredTemplates } from "../../lib/api/eto/EtoFileUtils";
+import { actions } from "../../modules/actions";
 import {
   EEtoDocumentType,
   IEtoDocument,
@@ -13,12 +14,11 @@ import {
   TEtoDocumentTemplates,
   TStateInfo,
 } from "../../modules/eto-documents/interfaces";
-import { ignoredTemplates } from "../../lib/api/eto/EtoFileUtils";
-import { actions } from "../../modules/actions";
 import {
   selectEtoDocumentData,
   selectEtoDocumentLoading,
 } from "../../modules/eto-documents/selectors";
+import { EEtoState, EtoStateToCamelcase } from "../../modules/eto-flow/interfaces/interfaces";
 import {
   selectIssuerEtoDocuments,
   selectIssuerEtoIsRetail,

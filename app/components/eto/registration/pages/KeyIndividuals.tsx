@@ -5,11 +5,12 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
-import {IBlKeyIndividual} from "../../../../modules/eto-flow/interfaces/KeyIndividual";
-import {EtoKeyIndividualsValidator} from "../../../../modules/eto-flow/validators";
-import {IBlCompanyEtoData} from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { actions } from "../../../../modules/actions";
+import {IBlCompanyEtoData} from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
+import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
+import {IBlKeyIndividual} from "../../../../modules/eto-flow/interfaces/KeyIndividual";
 import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
+import {EtoKeyIndividualsValidator} from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
 import {DeepPartial, TFormikConnect, TTranslatedString} from "../../../../types";
 import { getFieldSchema, isRequired } from "../../../../utils/yupUtils";
@@ -21,7 +22,6 @@ import { FormSection } from "../../../shared/forms/FormSection";
 import { SOCIAL_PROFILES_PERSON, SocialProfilesEditor } from "../../../shared/SocialProfilesEditor";
 import { EtoFormBase } from "../EtoFormBase";
 import { Section } from "../Shared";
-import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
 
 import * as closeIcon from "../../../../assets/img/inline_icons/round_close.svg";
 import * as plusIcon from "../../../../assets/img/inline_icons/round_plus.svg";

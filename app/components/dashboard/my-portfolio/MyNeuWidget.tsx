@@ -8,10 +8,10 @@ import { ButtonLink, EButtonLayout } from "../../shared/buttons";
 import { ECurrency } from "../../shared/Money";
 import { MoneySuiteWidget } from "../../shared/MoneySuiteWidget";
 
+import BigNumber from "bignumber.js";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as icon from "../../../assets/img/neu_icon.svg";
 import * as styles from "./MyNeuWidget.module.scss";
-import BigNumber from "bignumber.js";
 
 interface IProps {
   balanceNeu: BigNumber;

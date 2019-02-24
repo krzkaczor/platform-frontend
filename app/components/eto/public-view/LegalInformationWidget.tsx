@@ -10,9 +10,9 @@ import { Panel } from "../../shared/Panel";
 import { FUNDING_ROUNDS } from "../registration/pages/LegalInformation";
 import { CHART_COLORS } from "../shared/EtoView";
 
-import * as styles from "./LegalInformationWidget.module.scss";
 import BigNumber from "bignumber.js";
 import {IBlShareholderData} from "../../../modules/eto-flow/interfaces/ShareholderData";
+import * as styles from "./LegalInformationWidget.module.scss";
 
 interface IProps {
   companyData: IBlCompanyEtoData;

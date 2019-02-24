@@ -3,8 +3,8 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "recompose";
 
 import { selectIsBankAccountVerified } from "../../modules/bank-transfer-flow/selectors";
-import { selectBankAccount } from "../../modules/kyc/selectors";
 import { IStateBankAccount } from "../../modules/kyc/interfaces";
+import { selectBankAccount } from "../../modules/kyc/selectors";
 import { appConnect } from "../../store";
 import { DeepReadonly } from "../../types";
 import { Button, ButtonSize, EButtonLayout } from "../shared/buttons";

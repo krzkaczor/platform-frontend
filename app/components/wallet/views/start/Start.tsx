@@ -3,6 +3,7 @@ import { Col, Row } from "reactstrap";
 import { branch, renderComponent } from "recompose";
 import { compose } from "redux";
 
+import BigNumber from "bignumber.js";
 import { actions } from "../../../../modules/actions";
 import { EBankTransferType } from "../../../../modules/bank-transfer-flow/reducer";
 import { selectIsBankFlowEnabled } from "../../../../modules/bank-transfer-flow/selectors";
@@ -37,7 +38,6 @@ import { LockedWallet } from "../../wallet-balance/LockedWallet";
 import { UnlockedETHWallet } from "../../wallet-balance/UnlockedETHWallet";
 import { UnlockedNEURWallet } from "../../wallet-balance/UnlockedNEURWallet";
 import { IWalletValues } from "../../wallet-balance/WalletBalance";
-import BigNumber from "bignumber.js";
 
 const transactions: any[] = [];
 

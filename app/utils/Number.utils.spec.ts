@@ -1,6 +1,6 @@
+import BigNumber from "bignumber.js";
 import { expect } from "chai";
 import { convertToBigInt, formatThousands, isZero, normalize } from "./Number.utils";
-import BigNumber from "bignumber.js";
 
 describe("NumberUtils", () => {
   describe("formatThousands", () => {

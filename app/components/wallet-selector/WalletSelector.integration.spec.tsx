@@ -2,7 +2,7 @@ import { BigNumber } from "bignumber.js";
 import { expect } from "chai";
 
 import { createMount } from "../../../test/createMount";
-import { dummyEthereumAddress, dummyNetworkId } from "../../../test/fixtures";
+import { dummyEthereumAddress, dummyNetworkId } from "../../../test/fixtures/fixtures";
 import {
   createIntegrationTestsSetup,
   setupFakeClock,
