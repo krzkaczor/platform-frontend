@@ -12,4 +12,3 @@ export interface IBlSocialChannel {
   type: string;
   url: string;
 }
-

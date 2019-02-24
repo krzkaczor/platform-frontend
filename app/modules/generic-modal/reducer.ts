@@ -1,6 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IStateGenericModal} from './interfaces'
+import { IStateGenericModal } from "./interfaces";
 
 const initialState: IStateGenericModal = {
   isOpen: false,
@@ -29,4 +29,3 @@ export const genericModalReducer: AppReducer<IStateGenericModal> = (
 
   return state;
 };
-

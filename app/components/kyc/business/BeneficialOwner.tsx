@@ -10,7 +10,7 @@ import {
   IKycBeneficialOwner,
   IKycFileInfo,
 } from "../../../modules/kyc/interfaces";
-import {KycBeneficialOwnerValidator} from "../../../modules/kyc/validators";
+import { KycBeneficialOwnerValidator } from "../../../modules/kyc/validators";
 import { appConnect } from "../../../store";
 import { injectIntlHelpers } from "../../../utils/injectIntlHelpers";
 import { AccordionElement } from "../../shared/Accordion";

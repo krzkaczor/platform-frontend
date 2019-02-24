@@ -3,7 +3,7 @@ import * as Web3Utils from "web3-utils";
 import * as YupTS from "../yup-ts";
 
 import { symbols } from "../../di/symbols";
-import {IApiGasModel} from "../../modules/gas/interfaces";
+import { IApiGasModel } from "../../modules/gas/interfaces";
 import { IHttpClient, IHttpResponse } from "./client/IHttpClient";
 
 const BASE_PATH = "/api/gas/";

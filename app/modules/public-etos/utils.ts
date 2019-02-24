@@ -1,13 +1,13 @@
 import BigNumber from "bignumber.js";
 
-import {NumericString, Overwrite} from "../../types";
+import { NumericString, Overwrite } from "../../types";
 import { EEtoState } from "../eto-flow/interfaces/interfaces";
 import {
   EETOStateOnChain,
   TBlEtoWithCompanyAndContract,
   TEtoStartOfStates,
 } from "./interfaces/interfaces";
-import {IStateEtoTotalInvestment} from "./interfaces/TotalInvestment";
+import { IStateEtoTotalInvestment } from "./interfaces/TotalInvestment";
 
 export const convertToEtoTotalInvestment = (
   [totalEquivEurUlps, totalTokensInt, totalInvestors]: [BigNumber, BigNumber, BigNumber],
@@ -16,8 +16,8 @@ export const convertToEtoTotalInvestment = (
 ): IStateEtoTotalInvestment => ({
   totalEquivEurUlps: totalEquivEurUlps.toString() as NumericString,
   totalTokensInt: totalTokensInt.toString() as NumericString,
-  totalInvestors: totalInvestors.toString()as NumericString,
-  euroTokenBalance: euroTokenBalance.toString()as NumericString,
+  totalInvestors: totalInvestors.toString() as NumericString,
+  euroTokenBalance: euroTokenBalance.toString() as NumericString,
   etherTokenBalance: etherTokenBalance.toString() as NumericString,
 });
 

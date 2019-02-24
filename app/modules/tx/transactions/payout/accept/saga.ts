@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import { all, put, select } from "redux-saga/effects";
 
-import {convert} from "../../../../../components/eto/utils";
+import { convert } from "../../../../../components/eto/utils";
 import { ECurrency } from "../../../../../components/shared/Money";
 import { TGlobalDependencies } from "../../../../../di/setupBindings";
 import { invariant } from "../../../../../utils/invariant";
@@ -109,10 +109,14 @@ export function* startInvestorPayoutAcceptGenerator(
     generatePayoutAcceptTokenTransaction,
     tokensDisbursals,
   );
-  yield put(actions.txSender.setTransactionData(convert(generatedTxDetails, web3Interfaces.blToStateConversionSpec)));
+  yield put(
+    actions.txSender.setTransactionData(
+      convert(generatedTxDetails, web3Interfaces.blToStateConversionSpec),
+    ),
+  );
   yield put(
     actions.txSender.txSenderContinueToSummary({
-      txData: convert(generatedTxDetails,web3Interfaces.blToStateConversionSpec),
+      txData: convert(generatedTxDetails, web3Interfaces.blToStateConversionSpec),
       additionalData: convert(tokensDisbursals, tokenDisbursalInterfaces.blToStateConversionSpec),
     }),
   );

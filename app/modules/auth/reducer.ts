@@ -1,6 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IStateAuth } from './interfaces'
+import { IStateAuth } from "./interfaces";
 
 const authInitialState: IStateAuth = {};
 

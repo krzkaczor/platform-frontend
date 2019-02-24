@@ -1,15 +1,15 @@
-import {expect} from "chai";
-import {dummyEthereumAddress} from "../../../test/fixtures/fixtures";
-import {actions} from "../actions";
-import {web3Actions} from "./actions";
+import { expect } from "chai";
+import { dummyEthereumAddress } from "../../../test/fixtures/fixtures";
+import { actions } from "../actions";
+import { web3Actions } from "./actions";
 import {
-  EWalletSubType, EWalletType, IConnectedWeb3State, IDisconnectedWeb3State,
+  EWalletSubType,
+  EWalletType,
+  IConnectedWeb3State,
+  IDisconnectedWeb3State,
   IWeb3State,
 } from "./interfaces";
-import {
-  web3InitialState,
-  web3Reducer,
-} from "./reducer";
+import { web3InitialState, web3Reducer } from "./reducer";
 
 describe("Web3 > reducer", () => {
   it("should act on NEW_PERSONAL_WALLET_PLUGGED action", () => {

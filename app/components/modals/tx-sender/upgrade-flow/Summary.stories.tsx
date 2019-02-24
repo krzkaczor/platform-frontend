@@ -1,9 +1,9 @@
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
 import BigNumber from "bignumber.js";
+import * as React from "react";
 
-import { IBlTxData } from "../../../../modules/web3/interfaces";
 import { ETokenType } from "../../../../modules/tx/interfaces";
+import { IBlTxData } from "../../../../modules/web3/interfaces";
 import { withModalBody } from "../../../../utils/storybookHelpers";
 import { UpgradeSummaryComponent } from "./Summary";
 

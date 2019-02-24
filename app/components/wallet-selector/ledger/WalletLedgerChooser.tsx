@@ -2,10 +2,8 @@ import * as React from "react";
 import { compose } from "redux";
 
 import { actions } from "../../../modules/actions";
-import {
-  ILedgerAccount,
-} from "../../../modules/wallet-selector/ledger-wizard/interfaces";
-import {selectHasPreviousPage} from "../../../modules/wallet-selector/ledger-wizard/reducer";
+import { ILedgerAccount } from "../../../modules/wallet-selector/ledger-wizard/interfaces";
+import { selectHasPreviousPage } from "../../../modules/wallet-selector/ledger-wizard/reducer";
 import { appConnect } from "../../../store";
 import { onEnterAction } from "../../../utils/OnEnterAction";
 import { withActionWatcher } from "../../../utils/withActionWatcher";

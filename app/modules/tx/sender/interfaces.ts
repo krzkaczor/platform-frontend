@@ -1,5 +1,5 @@
-import { IStateTxData} from "../../web3/interfaces";
-import {ETxSenderType} from "../interfaces";
+import { IStateTxData } from "../../web3/interfaces";
+import { ETxSenderType } from "../interfaces";
 
 export enum ETransactionErrorType {
   NOT_ENOUGH_ETHER_FOR_GAS = "not_enough_ether_for_gas",

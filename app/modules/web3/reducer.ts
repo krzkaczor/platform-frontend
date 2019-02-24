@@ -1,5 +1,5 @@
 import { AppReducer } from "../../store";
-import {IWeb3State} from './interfaces';
+import { IWeb3State } from "./interfaces";
 
 export const web3InitialState: IWeb3State = {
   connected: false,

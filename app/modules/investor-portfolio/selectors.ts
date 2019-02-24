@@ -2,21 +2,22 @@ import BigNumber from "bignumber.js";
 import { isArray } from "lodash/fp";
 import { createSelector } from "reselect";
 
-import {convert} from "../../components/eto/utils";
+import { convert } from "../../components/eto/utils";
 import { Q18 } from "../../config/constants";
 import { getShareAndTokenPrice } from "../../lib/api/eto/EtoUtils";
 import { IAppState } from "../../store";
 import { EETOStateOnChain } from "../public-etos/interfaces/interfaces";
-import {IStatePublicEtos} from "../public-etos/interfaces/PublicEto";
 import { selectPublicEtoById, selectPublicEtos, selectTokenData } from "../public-etos/selectors";
 import { isOnChain } from "../public-etos/utils";
 import { selectLockedWalletConnected } from "../wallet/selectors";
-import {IBlCalculatedContribution} from "./interfaces/CalculatedContribution";
-import {TBlETOWithInvestorTicket, TBlETOWithTokenData} from "./interfaces/interfaces";
+import { IBlCalculatedContribution } from "./interfaces/CalculatedContribution";
+import { TBlETOWithInvestorTicket, TBlETOWithTokenData } from "./interfaces/interfaces";
 import * as investorTicketsInterfaces from "./interfaces/InvestorTickets";
-import {IBlTokenDisbursal} from "./interfaces/TokenDisbursal";
+import { IBlTokenDisbursal } from "./interfaces/TokenDisbursal";
 
-const selectInvestorTicketsState = (state: IAppState):investorTicketsInterfaces.IBlInvestorTickets =>
+const selectInvestorTicketsState = (
+  state: IAppState,
+): investorTicketsInterfaces.IBlInvestorTickets =>
   convert(state.investorTickets, investorTicketsInterfaces.stateToBlConversionSpec);
 
 export const selectInvestorTicket = (state: IAppState, etoId: string) => {
@@ -32,7 +33,7 @@ export const selectHasInvestorTicket = (state: IAppState, etoId: string) => {
 
   if (investmentTicket) {
     // equivEurUlps is set to zero when investor didn't invest
-    return !(new BigNumber(investmentTicket.equivEurUlps).isZero());
+    return !new BigNumber(investmentTicket.equivEurUlps).isZero();
   }
 
   return false;
@@ -92,7 +93,10 @@ export const selectMyInvestorTicketByEtoId = (
   return undefined;
 };
 
-export const selectCalculatedContribution = (state: IAppState, etoId: string):IBlCalculatedContribution | undefined => {
+export const selectCalculatedContribution = (
+  state: IAppState,
+  etoId: string,
+): IBlCalculatedContribution | undefined => {
   const investorState = selectInvestorTicketsState(state);
 
   return (
@@ -118,14 +122,18 @@ export const selectInitialMaxCapExceeded = (state: IAppState, etoId: string): bo
   return initialCalculatedContribution.maxCapExceeded;
 };
 
-export const selectEquityTokenCountByEtoId = (state: IAppState, etoId: string):BigNumber | undefined => {
+export const selectEquityTokenCountByEtoId = (
+  state: IAppState,
+  etoId: string,
+): BigNumber | undefined => {
   const contrib = selectCalculatedContribution(state, etoId);
   return contrib && contrib.equityTokenInt;
 };
 
-export const selectCalculatedEtoTicketSizesUlpsById = (state: IAppState, etoId: string):
-  {minTicketEurUlps: BigNumber,maxTicketEurUlps: BigNumber} | undefined =>
-{
+export const selectCalculatedEtoTicketSizesUlpsById = (
+  state: IAppState,
+  etoId: string,
+): { minTicketEurUlps: BigNumber; maxTicketEurUlps: BigNumber } | undefined => {
   const eto = selectPublicEtoById(state, etoId);
   const contrib = selectCalculatedContribution(state, etoId);
   const investorTicket = selectInvestorTicket(state, etoId);
@@ -149,17 +157,20 @@ export const selectCalculatedEtoTicketSizesUlpsById = (state: IAppState, etoId: 
   }
 };
 
-export const selectNeuRewardUlpsByEtoId = (state: IAppState, etoId: string):BigNumber | undefined => {
+export const selectNeuRewardUlpsByEtoId = (
+  state: IAppState,
+  etoId: string,
+): BigNumber | undefined => {
   const contrib = selectCalculatedContribution(state, etoId);
   return contrib && contrib.neuRewardUlps;
 };
 
-export const selectIsWhitelisted = (state: IAppState, etoId: string):boolean => {
+export const selectIsWhitelisted = (state: IAppState, etoId: string): boolean => {
   const contrib = selectCalculatedContribution(state, etoId);
   return !!contrib && contrib.isWhitelisted;
 };
 
-export const selectIsEligibleToPreEto = (state: IAppState, etoId: string):boolean => {
+export const selectIsEligibleToPreEto = (state: IAppState, etoId: string): boolean => {
   const isLockedWalletConnected = selectLockedWalletConnected(state);
   const isWhitelisted = selectIsWhitelisted(state, etoId);
   return isLockedWalletConnected || isWhitelisted;
@@ -168,20 +179,25 @@ export const selectIsEligibleToPreEto = (state: IAppState, etoId: string):boolea
 /**
  * Selects tokens disbursal with `amountToBeClaimed` greater than zero
  */
-export const selectTokensDisbursal:(state: IAppState)=>IBlTokenDisbursal[] = createSelector(selectInvestorTicketsState, investorTickets => {
-  let res:IBlTokenDisbursal[] = [];
-  if (isArray(investorTickets.tokensDisbursal)) {
-    res = investorTickets.tokensDisbursal.filter(d => !d.amountToBeClaimed.isZero());
-  }
-  return res
-});
+export const selectTokensDisbursal: (state: IAppState) => IBlTokenDisbursal[] = createSelector(
+  selectInvestorTicketsState,
+  investorTickets => {
+    let res: IBlTokenDisbursal[] = [];
+    if (isArray(investorTickets.tokensDisbursal)) {
+      res = investorTickets.tokensDisbursal.filter(d => !d.amountToBeClaimed.isZero());
+    }
+    return res;
+  },
+);
 
-export const selectMyAssetsWithTokenData = (state: IAppState): TBlETOWithTokenData[] | undefined => {
+export const selectMyAssetsWithTokenData = (
+  state: IAppState,
+): TBlETOWithTokenData[] | undefined => {
   const myAsssets = selectMyAssets(state);
   if (myAsssets) {
     return myAsssets.map((asset: TBlETOWithInvestorTicket) => ({
       ...asset,
-      tokenData: selectTokenData(state.publicEtos as IStatePublicEtos, asset.previewCode)!,
+      tokenData: selectTokenData(state.publicEtos, asset.previewCode)!,
     }));
   }
 

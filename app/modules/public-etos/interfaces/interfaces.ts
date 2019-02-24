@@ -2,9 +2,9 @@ import * as companyEtoData from "../../eto-flow/interfaces/CompanyEtoData";
 import * as publicEtoInterfaces from "../../eto-flow/interfaces/PublicEtoData";
 import * as contractDataInterfaces from "./EtoContractData";
 
-export type TApiPublicEtoData =
-  publicEtoInterfaces.IApiPublicEtoData & { company: companyEtoData.IApiCompanyEtoData };
-
+export type TApiPublicEtoData = publicEtoInterfaces.IApiPublicEtoData & {
+  company: companyEtoData.IApiCompanyEtoData;
+};
 
 export type TEtoStartOfStates = Record<EETOStateOnChain, Date | undefined>;
 
@@ -19,28 +19,25 @@ export enum EETOStateOnChain {
   Refund = 6, // Terminal state
 }
 
-export type TStateEtoWithCompanyAndContract =
-  publicEtoInterfaces.IStatePublicEtoData & {
-    // contract is undefined when ETO is not on blockchain
-    contract?: contractDataInterfaces.IStateEtoContractData;
-    company: companyEtoData.IStateCompanyEtoData;
-  }
+export type TStateEtoWithCompanyAndContract = publicEtoInterfaces.IStatePublicEtoData & {
+  // contract is undefined when ETO is not on blockchain
+  contract?: contractDataInterfaces.IStateEtoContractData;
+  company: companyEtoData.IStateCompanyEtoData;
+};
 
-export type TBlEtoWithCompanyAndContract =
-  publicEtoInterfaces.IBlPublicEtoData & {
+export type TBlEtoWithCompanyAndContract = publicEtoInterfaces.IBlPublicEtoData & {
   // contract is undefined when ETO is not on blockchain
   contract?: contractDataInterfaces.IBlEtoContractData;
   company: companyEtoData.IBlCompanyEtoData;
-}
+};
 
-export type TApiEtoWithCompanyAndContract =
-  publicEtoInterfaces.IApiPublicEtoData & {
+export type TApiEtoWithCompanyAndContract = publicEtoInterfaces.IApiPublicEtoData & {
   // contract is undefined when ETO is not on blockchain
   contract?: contractDataInterfaces.IApiEtoContractData;
   company: companyEtoData.IApiCompanyEtoData;
-}
+};
 
 export const stateToBlConversionSpec = {
   ...publicEtoInterfaces.stateToBlConversionSpec,
-  company: companyEtoData.stateToBlConversionSpec
+  company: companyEtoData.stateToBlConversionSpec,
 };

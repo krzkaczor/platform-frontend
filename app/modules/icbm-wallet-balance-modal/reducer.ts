@@ -1,6 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IStateIcbmWalletBalanceModal} from './interfaces/intefaces'
+import { IStateIcbmWalletBalanceModal } from "./interfaces/intefaces";
 
 const initialState: IStateIcbmWalletBalanceModal = {
   isOpen: false,
@@ -9,7 +9,7 @@ const initialState: IStateIcbmWalletBalanceModal = {
   firstTransactionDone: false,
   secondTransactionDone: false,
   currentMigrationStep: 1,
-  walletMigrationData:[]
+  walletMigrationData: [],
 };
 
 export const icbmWalletBalanceModalReducer: AppReducer<IStateIcbmWalletBalanceModal> = (

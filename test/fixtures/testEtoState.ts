@@ -1,7 +1,10 @@
-import { EETOStateOnChain, TStateEtoWithCompanyAndContract } from "../../app/modules/public-etos/interfaces/interfaces";
-import { NumericString } from "../../app/types";
-import { EEtoState } from "../../app/modules/eto-flow/interfaces/interfaces";
 import { EEtoDocumentLanguage, EEtoDocumentType } from "../../app/modules/eto-documents/interfaces";
+import { EEtoState } from "../../app/modules/eto-flow/interfaces/interfaces";
+import {
+  EETOStateOnChain,
+  TStateEtoWithCompanyAndContract,
+} from "../../app/modules/public-etos/interfaces/interfaces";
+import { NumericString } from "../../app/types";
 import { etoDocuments } from "./fixtures";
 import { testCompanyState } from "./testCompanyState";
 

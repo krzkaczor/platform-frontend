@@ -1,5 +1,5 @@
-import {DeepReadonly} from "../../types";
-import { IBlGenericModalObject, IStateGenericModal} from "./interfaces";
+import { DeepReadonly } from "../../types";
+import { IBlGenericModalObject, IStateGenericModal } from "./interfaces";
 
 export const selectGenericModalIsOpen = (state: DeepReadonly<IStateGenericModal>): boolean =>
   state.isOpen;

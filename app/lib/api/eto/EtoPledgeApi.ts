@@ -1,10 +1,9 @@
 import { inject, injectable } from "inversify";
 
 import { symbols } from "../../../di/symbols";
-import {IApiPledge} from "../../../modules/bookbuilding-flow/interfaces/Pledge";
+import { IApiPledge } from "../../../modules/bookbuilding-flow/interfaces/Pledge";
 import { withParams } from "../../../utils/withParams";
 import { IHttpClient, IHttpResponse } from "../client/IHttpClient";
-
 
 const BASE_PATH = "/api/eto-listing/";
 const MY_PLEDGE_PATH = "/etos/:etoId/pledges/me";

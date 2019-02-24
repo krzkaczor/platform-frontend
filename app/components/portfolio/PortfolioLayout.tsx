@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {TBlETOWithInvestorTicket} from "../../modules/investor-portfolio/interfaces/interfaces";
+import { TBlETOWithInvestorTicket } from "../../modules/investor-portfolio/interfaces/interfaces";
 import { IBlTokenDisbursal } from "../../modules/investor-portfolio/interfaces/TokenDisbursal";
 import { AssetPortfolio } from "./AssetPortfolio";
 import { PortfolioMyAssets } from "./PortfolioMyAssets";

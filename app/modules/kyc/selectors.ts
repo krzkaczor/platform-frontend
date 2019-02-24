@@ -2,7 +2,13 @@ import { createSelector } from "reselect";
 
 import { IAppState } from "../../store";
 import { DeepReadonly } from "../../types";
-import {EKycRequestType, ERequestOutsourcedStatus, ERequestStatus, IKycState, IStateBankAccount} from "./interfaces";
+import {
+  EKycRequestType,
+  ERequestOutsourcedStatus,
+  ERequestStatus,
+  IKycState,
+  IStateBankAccount,
+} from "./interfaces";
 
 export const selectKycRequestStatus = (state: IAppState): ERequestStatus | undefined => {
   const userKycType = selectKycRequestType(state.kyc);
@@ -81,7 +87,7 @@ export const selectWidgetLoading = (state: DeepReadonly<IKycState>): boolean =>
 export const selectWidgetError = (state: DeepReadonly<IKycState>): string | undefined =>
   state.individualRequestError || state.businessRequestError;
 
-export const selectIndividualClientName = (state: DeepReadonly<IKycState>):string | undefined => {
+export const selectIndividualClientName = (state: DeepReadonly<IKycState>): string | undefined => {
   const data = state.individualData;
   if (data) {
     return [data.firstName, data.lastName].filter(Boolean).join(" ");
@@ -97,21 +103,27 @@ export const selectClientCountry = (state: DeepReadonly<IKycState>) =>
 
 export const selectClaims = (state: IAppState) => state.kyc.claims;
 
-export const selectIsClaimsVerified:(state: IAppState) => boolean = createSelector(selectClaims, claims => {
-  if (claims) {
-    return claims.isVerified;
-  }
+export const selectIsClaimsVerified: (state: IAppState) => boolean = createSelector(
+  selectClaims,
+  claims => {
+    if (claims) {
+      return claims.isVerified;
+    }
 
-  return false;
-});
+    return false;
+  },
+);
 
-export const selectIsAccountFrozen:(state: IAppState) => boolean = createSelector(selectClaims, claims => {
-  if (claims) {
-    return claims.isAccountFrozen;
-  }
+export const selectIsAccountFrozen: (state: IAppState) => boolean = createSelector(
+  selectClaims,
+  claims => {
+    if (claims) {
+      return claims.isAccountFrozen;
+    }
 
-  return false;
-});
+    return false;
+  },
+);
 
 export const selectIsUserVerifiedOnBlockchain = (state: IAppState) =>
   selectIsClaimsVerified(state) && !selectIsAccountFrozen(state);

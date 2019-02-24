@@ -6,8 +6,9 @@ import {
   IKycFileInfo,
   IKycIndividualData,
   IKycLegalRepresentative,
-  IKycRequestState, IStateBankAccount,
-  IStateClaims
+  IKycRequestState,
+  IStateBankAccount,
+  IStateClaims,
 } from "./interfaces";
 
 export const kycActions = {

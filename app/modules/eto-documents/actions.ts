@@ -1,9 +1,10 @@
 import { createAction, createSimpleAction } from "../actionsUtils";
-import {EEtoDocumentType, IEtoDocument, IEtoFilesState} from "./interfaces";
+import { EEtoDocumentType, IEtoDocument, IEtoFilesState } from "./interfaces";
 
 export const etoDocumentsActions = {
   loadFileDataStart: () => createSimpleAction("ETO_DOCUMENTS_LOAD_FILE_DATA_START"),
-  loadEtoFileData: (data: IEtoFilesState) => createAction("ETO_DOCUMENTS_LOAD_ETO_FILE_DATA", { data }),
+  loadEtoFileData: (data: IEtoFilesState) =>
+    createAction("ETO_DOCUMENTS_LOAD_ETO_FILE_DATA", { data }),
   generateTemplate: (document: IEtoDocument) =>
     createAction("ETO_DOCUMENTS_GENERATE_TEMPLATE", { document }),
   generateTemplateByEtoId: (document: IEtoDocument, etoId: string) =>

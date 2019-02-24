@@ -1,8 +1,8 @@
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 
-import {TWalletMigrationSteps} from "../../../modules/icbm-wallet-balance-modal/interfaces/intefaces";
-import {IBlWalletMigrationData} from "../../../modules/icbm-wallet-balance-modal/interfaces/WalletMigrationData";
+import { TWalletMigrationSteps } from "../../../modules/icbm-wallet-balance-modal/interfaces/intefaces";
+import { IBlWalletMigrationData } from "../../../modules/icbm-wallet-balance-modal/interfaces/WalletMigrationData";
 import { myEtherWalletUrl } from "../../../utils/myEtherWallet";
 import { ButtonArrowRight } from "../../shared/buttons";
 import { ConfettiEthereum, SpinningEthereum } from "../../shared/ethererum";

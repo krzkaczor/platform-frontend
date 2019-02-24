@@ -6,13 +6,13 @@ import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
 import { actions } from "../../../../modules/actions";
-import {IBlCompanyEtoData} from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
+import { IBlCompanyEtoData } from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
-import {IBlKeyIndividual} from "../../../../modules/eto-flow/interfaces/KeyIndividual";
+import { IBlKeyIndividual } from "../../../../modules/eto-flow/interfaces/KeyIndividual";
 import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
-import {EtoKeyIndividualsValidator} from "../../../../modules/eto-flow/validators";
+import { EtoKeyIndividualsValidator } from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
-import {DeepPartial, TFormikConnect, TTranslatedString} from "../../../../types";
+import { DeepPartial, TFormikConnect, TTranslatedString } from "../../../../types";
 import { getFieldSchema, isRequired } from "../../../../utils/yupUtils";
 import { Button, ButtonIcon, EButtonLayout } from "../../../shared/buttons";
 import { FormField, FormTextArea } from "../../../shared/forms";
@@ -179,7 +179,7 @@ class KeyIndividualsGroupLayout extends React.Component<IKeyIndividualsGroup & T
   }
 }
 
-const KeyIndividualsGroup = connect<IKeyIndividualsGroup, {members: IBlKeyIndividual[]}>(
+const KeyIndividualsGroup = connect<IKeyIndividualsGroup, { members: IBlKeyIndividual[] }>(
   KeyIndividualsGroupLayout,
 );
 

@@ -1,6 +1,6 @@
-import {IStateDetailedBookbuildingStats} from "../../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
-import {IApiCompanyEtoData, IStateCompanyEtoData} from "./CompanyEtoData";
-import {IApiPublicEtoData, IStatePublicEtoData} from './PublicEtoData';
+import { IStateDetailedBookbuildingStats } from "../../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
+import { IApiCompanyEtoData, IStateCompanyEtoData } from "./CompanyEtoData";
+import { IApiPublicEtoData, IStatePublicEtoData } from "./PublicEtoData";
 
 export interface IEtoFlowState {
   etoPreviewCode?: string;
@@ -19,7 +19,6 @@ export type TApiGeneralEtoData = {
   etoData: IApiPublicEtoData;
   companyData: IApiCompanyEtoData;
 };
-
 
 export enum EEtoFormTypes {
   CompanyInformation = "companyInformation",

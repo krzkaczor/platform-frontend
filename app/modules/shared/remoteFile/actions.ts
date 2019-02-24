@@ -1,5 +1,5 @@
 import { createAction } from "../../actionsUtils";
-import {IFileDescriptionState} from './interfaces';
+import { IFileDescriptionState } from "./interfaces";
 
 export const remoteFileActions = {
   getRemoteFile: (

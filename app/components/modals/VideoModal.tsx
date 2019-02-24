@@ -2,11 +2,8 @@ import * as React from "react";
 import { Modal } from "reactstrap";
 
 import { actions } from "../../modules/actions";
-import {IBlVideoModalData} from "../../modules/video-modal/interfaces";
-import {
-  selectVideoModalIsOpen,
-  selectVideoModalObj,
-} from "../../modules/video-modal/reducer";
+import { IBlVideoModalData } from "../../modules/video-modal/interfaces";
+import { selectVideoModalIsOpen, selectVideoModalObj } from "../../modules/video-modal/reducer";
 import { appConnect } from "../../store";
 import { Proportion } from "../shared/Proportion";
 

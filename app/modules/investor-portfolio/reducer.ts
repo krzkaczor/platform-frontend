@@ -1,7 +1,7 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 import { actions } from "../actions";
-import {IStateInvestorTickets} from './interfaces/InvestorTickets'
+import { IStateInvestorTickets } from "./interfaces/InvestorTickets";
 
 export const etoFlowInitialState: IStateInvestorTickets = {
   calculatedContributions: {},

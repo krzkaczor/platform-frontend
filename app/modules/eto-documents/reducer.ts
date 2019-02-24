@@ -1,7 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IStateEtoDocuments} from './interfaces'
-
+import { IStateEtoDocuments } from "./interfaces";
 
 export const etoFlowInitialState: IStateEtoDocuments = {
   loading: false,

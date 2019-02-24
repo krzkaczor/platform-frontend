@@ -1,6 +1,6 @@
 import { createAction } from "../actionsUtils";
-import {IStateBookBuildingStats} from "./interfaces/BookbuildingStats";
-import {IStatePledge} from './interfaces/Pledge';
+import { IStateBookBuildingStats } from "./interfaces/BookbuildingStats";
+import { IStatePledge } from "./interfaces/Pledge";
 
 export const LOAD_BOOKBUILDING_FLOW_STATS = "LOAD_BOOKBUILDING_FLOW_STATS";
 export const WATCH_BOOKBUILDING_FLOW_STATS = "WATCH_BOOKBUILDING_FLOW_STATS";

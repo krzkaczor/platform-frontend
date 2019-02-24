@@ -31,7 +31,7 @@ import {
   IKycIndividualData,
   IKycLegalRepresentative,
 } from "../../../modules/kyc/interfaces";
-import {KycLegalRepresentativeValidator} from "../../../modules/kyc/validators";
+import { KycLegalRepresentativeValidator } from "../../../modules/kyc/validators";
 import { IIntlProps, injectIntlHelpers } from "../../../utils/injectIntlHelpers";
 import { onEnterAction } from "../../../utils/OnEnterAction";
 import { Button } from "../../shared/buttons";
@@ -204,7 +204,9 @@ export const KycLegalRepresentativeComponent = ({
   intl: { formatIntlMessage },
   ...props
 }: IProps & IIntlProps) => {
-  const lrDataValid = !!props.legalRepresentative && KycLegalRepresentativeValidator.isValidSync(props.legalRepresentative);
+  const lrDataValid =
+    !!props.legalRepresentative &&
+    KycLegalRepresentativeValidator.isValidSync(props.legalRepresentative);
   return (
     <KycPanel
       title={<FormattedMessage id="kyc.panel.business-verification" />}

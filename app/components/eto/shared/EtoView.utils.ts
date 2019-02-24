@@ -1,4 +1,4 @@
-import {IBlKeyIndividual} from "../../../modules/eto-flow/interfaces/KeyIndividual";
+import { IBlKeyIndividual } from "../../../modules/eto-flow/interfaces/KeyIndividual";
 
 export const selectActiveCarouselTab = (elements: any[]): number => {
   for (let element in elements) {
@@ -17,8 +17,8 @@ export const selectActiveCarouselTab = (elements: any[]): number => {
 };
 
 export const areThereIndividuals = (
-  individuals: {members: IBlKeyIndividual[]} | undefined,
-): individuals is {members: IBlKeyIndividual[]} => {
+  individuals: { members: IBlKeyIndividual[] } | undefined,
+): individuals is { members: IBlKeyIndividual[] } => {
   return (
     !!individuals &&
     !!individuals.members &&

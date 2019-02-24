@@ -1,5 +1,8 @@
-import {NumericString} from "../../../types";
-import {bigNumberToNumericString, numericStringToBigNumber} from "../../../utils/numericStringUtils";
+import { NumericString } from "../../../types";
+import {
+  bigNumberToNumericString,
+  numericStringToBigNumber,
+} from "../../../utils/numericStringUtils";
 
 export interface IStateIncomingPayoutsData {
   euroTokenIncomingPayoutValue: NumericString;
@@ -23,17 +26,16 @@ export interface IBlIncomingPayouts {
   payoutDone: boolean;
 }
 
-
 export const stateToBlConversionSpec = {
   data: {
     euroTokenIncomingPayoutValue: numericStringToBigNumber(),
-    etherTokenIncomingPayoutValue: numericStringToBigNumber()
-  }
-}
+    etherTokenIncomingPayoutValue: numericStringToBigNumber(),
+  },
+};
 
 export const blToStateConversionSpec = {
   data: {
     euroTokenIncomingPayoutValue: bigNumberToNumericString(),
-    etherTokenIncomingPayoutValue: bigNumberToNumericString()
-  }
-}
+    etherTokenIncomingPayoutValue: bigNumberToNumericString(),
+  },
+};

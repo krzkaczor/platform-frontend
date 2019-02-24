@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
 import BigNumber from "bignumber.js";
+import * as React from "react";
 
 import { testEtoBl } from "../../../../test/fixtures/testEtoBl";
 import { TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";

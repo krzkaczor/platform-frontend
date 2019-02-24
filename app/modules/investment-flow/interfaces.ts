@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 
-import {NumericString} from "../../types";
+import { NumericString } from "../../types";
 
 export enum EInvestmentType {
   InvestmentWallet = "INVESTMENT_WALLET",

@@ -1,9 +1,9 @@
 import { all, put } from "redux-saga/effects";
 
-import {convert} from "../../components/eto/utils";
+import { convert } from "../../components/eto/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { actions } from "../actions";
-import * as platformTermsConstantsInterfaces from './interfaces'
+import * as platformTermsConstantsInterfaces from "./interfaces";
 
 export async function initializeContracts({
   contractsService,
@@ -35,5 +35,9 @@ export function* populatePlatformTermsConstants({ contractsService }: TGlobalDep
     MAX_CLAIM_DURATION: contract.MAX_CLAIM_DURATION,
   });
 
-  yield put(actions.contracts.setPlatformTermConstants(convert(terms,platformTermsConstantsInterfaces.apiToStateConversionSpec)));
+  yield put(
+    actions.contracts.setPlatformTermConstants(
+      convert(terms, platformTermsConstantsInterfaces.apiToStateConversionSpec),
+    ),
+  );
 }

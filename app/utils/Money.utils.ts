@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js";
 export function formatMoney(
   value: BigNumber,
   currencyDecimals: number,
-  decimalPlaces?: number
+  decimalPlaces?: number,
 ): string {
   const moneyInPrimaryBase = value.div(new BigNumber(10).pow(currencyDecimals));
   return decimalPlaces !== undefined

@@ -1,6 +1,6 @@
 import { AppReducer } from "../../store";
 
-import {IStateWallet} from './interfaces'
+import { IStateWallet } from "./interfaces";
 
 const walletInitialState: IStateWallet = {
   loading: true,

@@ -1,20 +1,20 @@
 import BigNumber from "bignumber.js";
-import {NumericString} from "../../../types";
+import { NumericString } from "../../../types";
 import {
   bigNumberToNumber,
   bigNumberToNumericString,
   numberToNumericString,
-  numericStringToBigNumber
+  numericStringToBigNumber,
 } from "../../../utils/numericStringUtils";
-import {TEtoDocumentTemplates} from "../../eto-documents/interfaces";
-import {EEtoState} from "./interfaces";
+import { TEtoDocumentTemplates } from "../../eto-documents/interfaces";
+import { EEtoState } from "./interfaces";
 
 export interface IStatePublicEtoData {
-  currencies: Array<string>;//fixme should be an enum?
-  prospectusLanguage: string,
-  minTicketEur:NumericString;
+  currencies: Array<string>; //fixme should be an enum?
+  prospectusLanguage: string;
+  minTicketEur: NumericString;
   maxTicketEur: NumericString;
-  enableTransferOnSuccess: boolean,
+  enableTransferOnSuccess: boolean;
   notUnderCrowdfundingRegulations: boolean;
   allowRetailInvestors: boolean;
   whitelistDurationDays: number;
@@ -56,14 +56,12 @@ export interface IStatePublicEtoData {
   canEnableBookbuilding: boolean;
 }
 
-
-
 export interface IApiPublicEtoData {
-  currencies: Array<string>;//fixme should be an enum?
-  prospectusLanguage: string,
-  minTicketEur:number;
+  currencies: Array<string>; //fixme should be an enum?
+  prospectusLanguage: string;
+  minTicketEur: number;
   maxTicketEur: number;
-  enableTransferOnSuccess: boolean,
+  enableTransferOnSuccess: boolean;
   notUnderCrowdfundingRegulations: boolean;
   allowRetailInvestors: boolean;
   whitelistDurationDays: number;
@@ -72,7 +70,7 @@ export interface IApiPublicEtoData {
   additionalTerms?: string;
 
   equityTokenName: string;
-  equityTokenSymbol:string;
+  equityTokenSymbol: string;
   equityTokenImage: string;
 
   nominee: string;
@@ -83,9 +81,9 @@ export interface IApiPublicEtoData {
   shareNominalValueEur: number;
   preMoneyValuationEur: number;
   existingCompanyShares: number;
-  authorizedCapitalShares:number;
+  authorizedCapitalShares: number;
   newSharesToIssue: number;
-  minimumNewSharesToIssue:number;
+  minimumNewSharesToIssue: number;
   newSharesToIssueInWhitelist: number;
   whitelistDiscountFraction: number;
   publicDiscountFraction: number;
@@ -106,11 +104,11 @@ export interface IApiPublicEtoData {
 }
 
 export interface IBlPublicEtoData {
-  currencies: Array<string>;//fixme should be an enum?
-  prospectusLanguage: string,
-  minTicketEur:BigNumber;
+  currencies: Array<string>; //fixme should be an enum?
+  prospectusLanguage: string;
+  minTicketEur: BigNumber;
   maxTicketEur: BigNumber;
-  enableTransferOnSuccess: boolean,
+  enableTransferOnSuccess: boolean;
   notUnderCrowdfundingRegulations: boolean;
   allowRetailInvestors: boolean;
   whitelistDurationDays: number;
@@ -152,11 +150,10 @@ export interface IBlPublicEtoData {
   canEnableBookbuilding: boolean;
 }
 
-
 export const apiToStateConversionSpec = {
-  minTicketEur:numberToNumericString(),
+  minTicketEur: numberToNumericString(),
   maxTicketEur: numberToNumericString(),
-  liquidationPreferenceMultiplier:numberToNumericString(),
+  liquidationPreferenceMultiplier: numberToNumericString(),
   equityTokensPerShare: numberToNumericString(),
   shareNominalValueEur: numberToNumericString(),
   preMoneyValuationEur: numberToNumericString(),
@@ -172,9 +169,9 @@ export const apiToStateConversionSpec = {
 };
 
 export const stateToBlConversionSpec = {
-  minTicketEur:numericStringToBigNumber(),
+  minTicketEur: numericStringToBigNumber(),
   maxTicketEur: numericStringToBigNumber(),
-  liquidationPreferenceMultiplier:numericStringToBigNumber(),
+  liquidationPreferenceMultiplier: numericStringToBigNumber(),
   equityTokensPerShare: numericStringToBigNumber(),
   shareNominalValueEur: numericStringToBigNumber(),
   preMoneyValuationEur: numericStringToBigNumber(),
@@ -190,9 +187,9 @@ export const stateToBlConversionSpec = {
 };
 
 export const blToApiConversionSpec = {
-  minTicketEur:bigNumberToNumber(),
+  minTicketEur: bigNumberToNumber(),
   maxTicketEur: bigNumberToNumber(),
-  liquidationPreferenceMultiplier:bigNumberToNumber(),
+  liquidationPreferenceMultiplier: bigNumberToNumber(),
   equityTokensPerShare: bigNumberToNumber(),
   shareNominalValueEur: bigNumberToNumber(),
   preMoneyValuationEur: bigNumberToNumber(),
@@ -208,9 +205,9 @@ export const blToApiConversionSpec = {
 };
 
 export const blToStateConversionSpec = {
-  minTicketEur:bigNumberToNumericString(),
+  minTicketEur: bigNumberToNumericString(),
   maxTicketEur: bigNumberToNumericString(),
-  liquidationPreferenceMultiplier:bigNumberToNumericString(),
+  liquidationPreferenceMultiplier: bigNumberToNumericString(),
   equityTokensPerShare: bigNumberToNumericString(),
   shareNominalValueEur: bigNumberToNumericString(),
   preMoneyValuationEur: bigNumberToNumericString(),
@@ -224,4 +221,3 @@ export const blToStateConversionSpec = {
   newSharesToIssueInFixedSlots: bigNumberToNumericString(),
   fixedSlotsMaximumDiscountFraction: bigNumberToNumericString(),
 };
-

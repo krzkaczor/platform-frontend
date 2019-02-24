@@ -1,17 +1,17 @@
 import BigNumber from "bignumber.js";
 import { put, select, take } from "redux-saga/effects";
 
-import {convert} from "../../../../../components/eto/utils";
+import { convert } from "../../../../../components/eto/utils";
 import { ECurrency } from "../../../../../components/shared/Money";
 import { TGlobalDependencies } from "../../../../../di/setupBindings";
 import { invariant } from "../../../../../utils/invariant";
 import { actions } from "../../../../actions";
 import { selectIsVerifiedInvestor } from "../../../../auth/selectors";
 import { selectStandardGasPriceWithOverHead } from "../../../../gas/selectors";
-import * as tokenDisbursalInterfaces  from "../../../../investor-portfolio/interfaces/TokenDisbursal";
+import * as tokenDisbursalInterfaces from "../../../../investor-portfolio/interfaces/TokenDisbursal";
 import { neuCall } from "../../../../sagasUtils";
 import { getTokenAddress } from "../../../../shared/sagas";
-import * as web3Interfaces  from "../../../../web3/interfaces";
+import * as web3Interfaces from "../../../../web3/interfaces";
 import { selectEthereumAddressWithChecksum } from "../../../../web3/selectors";
 
 // Use highest possible solidity uint256 to redistribute all disbursals for token
@@ -69,7 +69,11 @@ export function* startInvestorPayoutRedistributionGenerator(
     generatePayoutRedistributeTransaction,
     tokenDisbursals,
   );
-  yield put(actions.txSender.setTransactionData(convert(generatedTxDetails, web3Interfaces.blToStateConversionSpec)));
+  yield put(
+    actions.txSender.setTransactionData(
+      convert(generatedTxDetails, web3Interfaces.blToStateConversionSpec),
+    ),
+  );
   yield put(
     actions.txSender.txSenderContinueToSummary({
       txData: convert(generatedTxDetails, web3Interfaces.blToStateConversionSpec),

@@ -21,8 +21,8 @@ import { SpinningEthereum } from "../../../shared/ethererum";
 import { Form, FormField } from "../../../shared/forms";
 import { ValidationErrorMessage } from "../shared/ValidationErrorMessage";
 
-import {NumericString, OmitKeys} from "../../../../types";
-import {convert} from "../../../eto/utils";
+import { NumericString, OmitKeys } from "../../../../types";
+import { convert } from "../../../eto/utils";
 import * as styles from "./Withdraw.module.scss";
 
 interface IStateProps {
@@ -150,7 +150,10 @@ const Withdraw = compose<TProps & IIntlProps, {}>(
       validationState: selectTxValidationState(state),
     }),
     dispatchToProps: d => ({
-      onAccept: (tx: IFormikProps) => d(actions.txSender.txSenderAcceptDraft(convert(tx, web3Interfaces.blToStateConversionSpec))),
+      onAccept: (tx: IFormikProps) =>
+        d(
+          actions.txSender.txSenderAcceptDraft(convert(tx, web3Interfaces.blToStateConversionSpec)),
+        ),
       onValidate: (txDraft: IDraftType) => d(actions.txValidator.txSenderValidateDraft(txDraft)),
     }),
   }),

@@ -6,7 +6,7 @@ export interface IStateKeyIndividual {
   image: string;
   description: string;
   website: string;
-  socialChannels: socialChannelInterfaces.IStateSocialChannel[]
+  socialChannels: socialChannelInterfaces.IStateSocialChannel[];
 }
 
 export interface IApiKeyIndividual {
@@ -15,7 +15,7 @@ export interface IApiKeyIndividual {
   image: string;
   description: string;
   website: string;
-  socialChannels: socialChannelInterfaces.IApiSocialChannel[]
+  socialChannels: socialChannelInterfaces.IApiSocialChannel[];
 }
 
 export interface IBlKeyIndividual {
@@ -24,5 +24,5 @@ export interface IBlKeyIndividual {
   image: string;
   description: string;
   website: string;
-  socialChannels: socialChannelInterfaces.IBlSocialChannel[]
+  socialChannels: socialChannelInterfaces.IBlSocialChannel[];
 }

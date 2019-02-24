@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
 import BigNumber from "bignumber.js";
+import * as React from "react";
 
 import { withStore } from "../../utils/storeDecorator";
 import { ECurrency } from "../shared/Money";

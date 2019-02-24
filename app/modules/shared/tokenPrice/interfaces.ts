@@ -1,4 +1,4 @@
-import {NumericString} from "../../../types";
+import { NumericString } from "../../../types";
 
 export interface IStateTokenPrice {
   loading: boolean;

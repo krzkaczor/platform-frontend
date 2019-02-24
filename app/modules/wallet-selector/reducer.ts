@@ -1,5 +1,5 @@
 import { AppReducer } from "../../store";
-import {IWalletSelectorState} from './interfaces';
+import { IWalletSelectorState } from "./interfaces";
 
 const walletSelectorInitialState: IWalletSelectorState = {
   isMessageSigning: false,

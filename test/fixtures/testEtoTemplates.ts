@@ -2,7 +2,7 @@ import {
   EEtoDocumentLanguage,
   EEtoDocumentType,
   TEtoDocumentTemplates,
-  TEtoFormType
+  TEtoFormType,
 } from "../../app/modules/eto-documents/interfaces";
 
 export const etoTemplates: TEtoDocumentTemplates = {

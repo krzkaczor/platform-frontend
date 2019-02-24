@@ -1,5 +1,5 @@
 import { AppReducer } from "../../store";
-import {IUserAgentState} from './interfaces'
+import { IUserAgentState } from "./interfaces";
 
 const userAgentInitialState: IUserAgentState = {
   name: "unknown",

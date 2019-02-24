@@ -5,7 +5,7 @@ import {
   isUsCitizen,
   percentage,
   personBirthDate,
-  restrictedCountry
+  restrictedCountry,
 } from "../../lib/api/util/schemaHelpers";
 import * as YupTS from "../../lib/yup-ts";
 

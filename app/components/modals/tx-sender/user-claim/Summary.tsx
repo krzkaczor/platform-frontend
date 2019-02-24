@@ -10,7 +10,7 @@ import {
   IEtoDocument,
   immutableDocumentNames,
 } from "../../../../modules/eto-documents/interfaces";
-import { IImmutableFileId } from '../../../../modules/immutable-file/interfaces';
+import { IImmutableFileId } from "../../../../modules/immutable-file/interfaces";
 import { selectIsPendingDownload } from "../../../../modules/immutable-file/selectors";
 import { TBlETOWithInvestorTicket } from "../../../../modules/investor-portfolio/interfaces/interfaces";
 import { selectMyInvestorTicketByEtoId } from "../../../../modules/investor-portfolio/selectors";

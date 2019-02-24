@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
-import {NumericString} from "../../types";
-import {numberToNumericString, numericStringToBigNumber} from "../../utils/numericStringUtils";
+import { NumericString } from "../../types";
+import { numberToNumericString, numericStringToBigNumber } from "../../utils/numericStringUtils";
 
 export interface IGasState {
   loading: boolean;

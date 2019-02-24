@@ -1,6 +1,6 @@
 import { TMessage } from "../../components/translatedMessages/utils";
 import { createActionFactory } from "../actionsUtils";
-import {IImmutableFileId} from './interfaces'
+import { IImmutableFileId } from "./interfaces";
 
 export const immutableStorageActions = {
   downloadImmutableFile: createActionFactory(

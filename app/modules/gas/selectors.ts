@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 
-import {convert} from "../../components/eto/utils";
+import { convert } from "../../components/eto/utils";
 import { IAppState } from "../../store";
 import { calculateGasPriceWithOverhead } from "../tx/utils";
 import * as gasModelInterfaces from "./interfaces";
@@ -17,8 +17,10 @@ export const selectGasPrice = (state: IAppState): gasModelInterfaces.IBlGasModel
 export const selectStandardGasPrice = (state: IAppState): BigNumber => {
   return state.gas.gasPrice && state.gas.gasPrice.standard
     ? new BigNumber(state.gas.gasPrice.standard)
-    : new BigNumber( "0");
+    : new BigNumber("0");
 };
 
 export const selectStandardGasPriceWithOverHead = (state: IAppState): BigNumber =>
-  state.gas.gasPrice && calculateGasPriceWithOverhead(new BigNumber(state.gas.gasPrice.standard)) || new BigNumber("0");
+  (state.gas.gasPrice &&
+    calculateGasPriceWithOverhead(new BigNumber(state.gas.gasPrice.standard))) ||
+  new BigNumber("0");

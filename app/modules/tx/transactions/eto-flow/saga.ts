@@ -2,9 +2,9 @@ import { put, select } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ETOCommitment } from "../../../../lib/contracts/ETOCommitment";
-import { IStateTxData} from "../../../../modules/web3/interfaces";
+import { IStateTxData } from "../../../../modules/web3/interfaces";
 import { IAppState } from "../../../../store";
-import {NumericString} from "../../../../types";
+import { NumericString } from "../../../../types";
 import { actions } from "../../../actions";
 import {
   selectIsNewPreEtoStartDateValid,

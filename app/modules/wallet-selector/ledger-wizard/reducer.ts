@@ -1,6 +1,6 @@
 import { AppReducer } from "../../../store";
 import { DeepReadonly } from "../../../types";
-import {ILedgerWizardState} from './interfaces';
+import { ILedgerWizardState } from "./interfaces";
 
 export const DEFAULT_DERIVATION_PATH_PREFIX = "44'/60'/0'/";
 export const DEFAULT_LEDGER_ACCOUNTS_PER_PAGE = 10;

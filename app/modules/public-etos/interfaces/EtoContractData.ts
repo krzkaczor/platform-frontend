@@ -1,5 +1,5 @@
-import {EETOStateOnChain, TEtoStartOfStates} from "./interfaces";
-import * as totalInvestmentInterfaces from './TotalInvestment'
+import { EETOStateOnChain, TEtoStartOfStates } from "./interfaces";
+import * as totalInvestmentInterfaces from "./TotalInvestment";
 
 export interface IStateEtoContractData {
   timedState: EETOStateOnChain;
@@ -29,5 +29,5 @@ export interface IApiEtoContractData {
 }
 
 export const stateToBlConversionSpec = {
-  totalInvestment: totalInvestmentInterfaces.stateToBlConversionSpec
-}
+  totalInvestment: totalInvestmentInterfaces.stateToBlConversionSpec,
+};

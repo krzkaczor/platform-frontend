@@ -1,18 +1,18 @@
 //companyNews
 export interface IStateCompanyNews {
-  title:string;
+  title: string;
   url: string;
   publication: string;
 }
 
 export interface IApiCompanyNews {
-  title:string;
+  title: string;
   url: string;
   publication: string;
 }
 
 export interface IBlCompanyNews {
-  title:string;
+  title: string;
   url: string;
   publication: string;
 }

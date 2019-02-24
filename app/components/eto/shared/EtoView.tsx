@@ -5,7 +5,10 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 
 import { externalRoutes } from "../../../config/externalRoutes";
-import { EETOStateOnChain, TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";
+import {
+  EETOStateOnChain,
+  TBlEtoWithCompanyAndContract,
+} from "../../../modules/public-etos/interfaces/interfaces";
 import { isOnChain } from "../../../modules/public-etos/utils";
 import { withMetaTags } from "../../../utils/withMetaTags";
 import { withParams } from "../../../utils/withParams";
@@ -445,9 +448,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                                       ),
                                     },
                                   ],
-                                  labels: (useOfCapitalList || []).map(
-                                    d => d && d.description,
-                                  ),
+                                  labels: (useOfCapitalList || []).map(d => d && d.description),
                                 }}
                               />
                             </Col>

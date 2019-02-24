@@ -142,20 +142,19 @@ export type IStateClaims = {
   isAccountFrozen: boolean;
 };
 
-
 export interface IStateBankAccountDetails {
-  bankAccountNumberLast4: string,
-  holderName: string,
+  bankAccountNumberLast4: string;
+  holderName: string;
 }
 
 export interface IApiKycBankAccountDetails {
-  bankAccountNumberLast4: string,
-  holderName: string,
+  bankAccountNumberLast4: string;
+  holderName: string;
 }
 
 export type IStateBankAccount =
   | {
-  hasBankAccount: true;
-  details: IStateBankAccountDetails;
-}
+      hasBankAccount: true;
+      details: IStateBankAccountDetails;
+    }
   | { hasBankAccount: false };

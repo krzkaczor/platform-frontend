@@ -1,4 +1,4 @@
-import {IEtoSocialProfile} from "../../components/shared/SocialProfilesList";
+import { IEtoSocialProfile } from "../../components/shared/SocialProfilesList";
 
 export interface IStatePersonProfileModal {
   isOpen: boolean;
@@ -9,7 +9,6 @@ export interface IBlPersonProfileModal {
   isOpen: boolean;
   personProfileModalObj?: IBlPersonProfileModalObject;
 }
-
 
 export interface IStatePersonProfileModalObject {
   image: string;

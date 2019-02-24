@@ -5,10 +5,10 @@ import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
 import { actions } from "../../../../modules/actions";
-import {IBlCompanyEtoData} from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
+import { IBlCompanyEtoData } from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
 import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
-import {EtoLegalInformationValidator} from "../../../../modules/eto-flow/validators";
+import { EtoLegalInformationValidator } from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
 import { TTranslatedString } from "../../../../types";
 import { Button, EButtonLayout } from "../../../shared/buttons";
@@ -70,7 +70,10 @@ const NUMBER_OF_EMPLOYEES = {
   ">1000": ">1000",
 };
 
-type IProps = IExternalProps & IStateProps & IDispatchProps & FormikProps<Partial<IBlCompanyEtoData>>;
+type IProps = IExternalProps &
+  IStateProps &
+  IDispatchProps &
+  FormikProps<Partial<IBlCompanyEtoData>>;
 
 //Some fields in LegalInformation are always readonly because this data ist set during KYC process
 const EtoRegistrationLegalInformationComponent = ({ savingData }: IProps) => {

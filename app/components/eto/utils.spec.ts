@@ -130,7 +130,7 @@ describe("convertToPrecision", () => {
     const float = "2.3456";
     const badData = "blabla";
     const expectedResult = "2.35";
-    expect((convertToPrecision(2)(float))).equal(expectedResult);
+    expect(convertToPrecision(2)(float)).equal(expectedResult);
     expect(convertToPrecision(2)(badData)).is.undefined;
   });
 });

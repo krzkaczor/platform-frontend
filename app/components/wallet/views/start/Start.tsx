@@ -122,7 +122,11 @@ export const WalletStartComponent: React.FunctionComponent<TProps> = ({
     {process.env.NF_WALLET_MY_PROCEEDS_VISIBLE === "1" && (
       <Row>
         <Col className="my-4">
-          <ClaimedDividends className="h-100" totalEurValue={new BigNumber("0")} recentPayouts={transactions} />
+          <ClaimedDividends
+            className="h-100"
+            totalEurValue={new BigNumber("0")}
+            recentPayouts={transactions}
+          />
         </Col>
       </Row>
     )}

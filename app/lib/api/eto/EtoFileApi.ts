@@ -6,7 +6,7 @@ import {
   EEtoDocumentType,
   IEtoDocument,
   TEtoDocumentTemplates,
-  TStateInfo
+  TStateInfo,
 } from "../../../modules/eto-documents/interfaces";
 import { withParams } from "../../../utils/withParams";
 import { IHttpClient, IHttpResponse } from "../client/IHttpClient";

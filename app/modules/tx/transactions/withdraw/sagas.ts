@@ -1,12 +1,12 @@
 import BigNumber from "bignumber.js";
 import { put, select, take } from "redux-saga/effects";
 
-import {convert} from "../../../../components/eto/utils";
+import { convert } from "../../../../components/eto/utils";
 import { Q18 } from "../../../../config/constants";
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import * as txInterfaces from "../../../../modules/web3/interfaces";
-import {NumericString} from "../../../../types";
-import {actions, TActionFromCreator} from "../../../actions";
+import { NumericString } from "../../../../types";
+import { actions, TActionFromCreator } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
 import { selectEtherTokenBalanceAsBigNumber } from "../../../wallet/selectors";
@@ -25,7 +25,7 @@ export function* generateEthWithdrawTransaction(
 
   const etherTokenBalance: BigNumber = yield select(selectEtherTokenBalanceAsBigNumber);
   const from: string = yield select(selectEthereumAddressWithChecksum);
-  const gasPriceWithOverhead:BigNumber = yield select(selectStandardGasPriceWithOverHead);
+  const gasPriceWithOverhead: BigNumber = yield select(selectStandardGasPriceWithOverHead);
   const weiValue = Q18.mul(value);
 
   if (etherTokenBalance.isZero()) {
@@ -49,7 +49,7 @@ export function* generateEthWithdrawTransaction(
       to: contractsService.etherToken.address,
       from,
       data: txInput,
-      value: (difference.comparedTo(0) > 0 ? difference : new BigNumber("0")),
+      value: difference.comparedTo(0) > 0 ? difference : new BigNumber("0"),
       gasPrice: gasPriceWithOverhead,
     };
     const estimatedGasWithOverhead = yield web3Manager.estimateGasWithOverhead(txDetails);
@@ -65,8 +65,15 @@ export function* ethWithdrawFlow(_: TGlobalDependencies): any {
   if (!action.payload.txDraftData) return;
 
   const txDataFromUser = action.payload.txDraftData;
-  const generatedTxDetails:txInterfaces.IBlTxData = yield neuCall(generateEthWithdrawTransaction, txDataFromUser);
-  yield put(actions.txSender.setTransactionData(convert(generatedTxDetails, txInterfaces.stateToBlConversionSpec)));
+  const generatedTxDetails: txInterfaces.IBlTxData = yield neuCall(
+    generateEthWithdrawTransaction,
+    txDataFromUser,
+  );
+  yield put(
+    actions.txSender.setTransactionData(
+      convert(generatedTxDetails, txInterfaces.stateToBlConversionSpec),
+    ),
+  );
   yield put(
     actions.txSender.txSenderContinueToSummary({
       txData: {

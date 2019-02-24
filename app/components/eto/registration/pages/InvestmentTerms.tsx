@@ -9,12 +9,12 @@ import { etoFormIsReadonly } from "../../../../lib/api/eto/EtoApiUtils";
 import { getInvestmentAmount, getShareAndTokenPrice } from "../../../../lib/api/eto/EtoUtils";
 import { actions } from "../../../../modules/actions";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
-import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
+import { IBlPublicEtoData } from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import { selectIssuerEto, selectIssuerEtoState } from "../../../../modules/eto-flow/selectors";
 import { etoInvestmentTermsProgressOptions } from "../../../../modules/eto-flow/utils";
-import {EtoInvestmentTermsValidator} from "../../../../modules/eto-flow/validators";
+import { EtoInvestmentTermsValidator } from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
-import {TTranslatedString} from "../../../../types";
+import { TTranslatedString } from "../../../../types";
 import { formatMoney } from "../../../../utils/Money.utils";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { FormField } from "../../../shared/forms";
@@ -49,7 +49,10 @@ interface IDispatchProps {
   saveData: (values: Partial<IBlPublicEtoData>) => void;
 }
 
-type IProps = IExternalProps & IStateProps & IDispatchProps & FormikProps<Partial<IBlPublicEtoData>>;
+type IProps = IExternalProps &
+  IStateProps &
+  IDispatchProps &
+  FormikProps<Partial<IBlPublicEtoData>>;
 
 const EtoInvestmentTermsComponent: React.FunctionComponent<IProps> = ({
   stateValues,
@@ -57,16 +60,19 @@ const EtoInvestmentTermsComponent: React.FunctionComponent<IProps> = ({
   readonly,
 }) => {
   const existingCompanyShares = stateValues.existingCompanyShares || new BigNumber(1);
-  const newSharesToIssue = stateValues.newSharesToIssue !== undefined ? stateValues.newSharesToIssue : new BigNumber(1);
+  const newSharesToIssue =
+    stateValues.newSharesToIssue !== undefined ? stateValues.newSharesToIssue : new BigNumber(1);
   const equityTokensPerShare = stateValues.equityTokensPerShare || new BigNumber(1);
   const minimumNewSharesToIssue = stateValues.minimumNewSharesToIssue || new BigNumber(0);
 
   const computedMaxNumberOfTokens = newSharesToIssue.mul(equityTokensPerShare);
   const computedMinNumberOfTokens = minimumNewSharesToIssue.mul(equityTokensPerShare);
-  const computedMaxCapPercent = (newSharesToIssue.div(existingCompanyShares)).mul(100);
-  const computedMinCapPercent = (minimumNewSharesToIssue.div(existingCompanyShares)).mul(100);
+  const computedMaxCapPercent = newSharesToIssue.div(existingCompanyShares).mul(100);
+  const computedMinCapPercent = minimumNewSharesToIssue.div(existingCompanyShares).mul(100);
 
-  const { minInvestmentAmount, maxInvestmentAmount } = getInvestmentAmount(stateValues as IBlPublicEtoData); //fixme
+  const { minInvestmentAmount, maxInvestmentAmount } = getInvestmentAmount(
+    stateValues as IBlPublicEtoData,
+  ); //fixme
   const { sharePrice, tokenPrice } = getShareAndTokenPrice(stateValues as IBlPublicEtoData); //fixme
 
   return (

@@ -1,7 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IBlPersonProfileModalObject, IStatePersonProfileModal} from './interfaces'
-
+import { IBlPersonProfileModalObject, IStatePersonProfileModal } from "./interfaces";
 
 const initialState: IStatePersonProfileModal = {
   isOpen: false,
@@ -34,4 +33,6 @@ export const selectIsOpen = (state: DeepReadonly<IStatePersonProfileModal>): boo
 export const selectPersonProfileModalObj = (
   state: DeepReadonly<IStatePersonProfileModal>,
 ): IBlPersonProfileModalObject | undefined =>
-  state.personProfileModalObj ? state.personProfileModalObj as IBlPersonProfileModalObject : undefined;
+  state.personProfileModalObj
+    ? (state.personProfileModalObj as IBlPersonProfileModalObject)
+    : undefined;

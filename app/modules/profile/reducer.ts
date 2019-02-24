@@ -1,8 +1,7 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 import { actions } from "../actions";
-import {IProfile} from './interfaces'
-
+import { IProfile } from "./interfaces";
 
 const initialState: IProfile = {
   isEmailTemporaryCancelled: false,

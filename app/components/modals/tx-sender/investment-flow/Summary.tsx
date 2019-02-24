@@ -38,10 +38,9 @@ import {
 import * as neuIcon from "../../../../assets/img/neu_icon.svg";
 import * as info from "../../../../assets/img/notifications/info.svg";
 import * as tokenIcon from "../../../../assets/img/token_icon.svg";
-import {EEtoDocumentType} from "../../../../modules/eto-documents/interfaces";
-import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
+import { EEtoDocumentType } from "../../../../modules/eto-documents/interfaces";
+import { IBlPublicEtoData } from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import * as styles from "./Summary.module.scss";
-
 
 interface IStateProps {
   companyName: string;
@@ -109,13 +108,11 @@ const InvestmentSummaryComponent: React.FunctionComponent<IProps> = ({
   const investment = `€ ${formatEurTsd(investmentEur)} ≈ ${formatEthTsd(investmentEth)} ETH`;
   const total = `€ ${formatEurTsd(totalCostEur)} ≈ ${formatEthTsd(totalCostEth)} ETH`;
 
-  const actualTokenPrice = investmentEur && equityTokens && getActualTokenPriceEur(investmentEur, equityTokens);
+  const actualTokenPrice =
+    investmentEur && equityTokens && getActualTokenPriceEur(investmentEur, equityTokens);
 
   const { tokenPrice: fullTokenPrice } = getShareAndTokenPrice(eto);
-  const formattedTokenPrice = `€ ${formatSummaryTokenPrice(
-    fullTokenPrice,
-    actualTokenPrice,
-  )}`;
+  const formattedTokenPrice = `€ ${formatSummaryTokenPrice(fullTokenPrice, actualTokenPrice)}`;
 
   return (
     <Container className={styles.container}>
@@ -197,7 +194,7 @@ const InvestmentSummary = compose<IProps, {}>(
       const etoId = selectInvestmentEtoId(state);
       // eto and computed values are guaranteed to be present at investment summary state
       const eto = etoId ? selectEtoWithCompanyAndContractById(state, etoId) : null;
-      if(eto) {
+      if (eto) {
         return {
           eto,
           companyName: eto.company.name,
@@ -211,7 +208,7 @@ const InvestmentSummary = compose<IProps, {}>(
           isIcbm: selectIsICBMInvestment(state),
         };
       } else {
-        throw new Error('bla') //fixme
+        throw new Error("bla"); //fixme
       }
     },
     dispatchToProps: d => ({

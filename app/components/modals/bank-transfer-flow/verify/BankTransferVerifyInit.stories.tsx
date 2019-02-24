@@ -2,12 +2,12 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
+import BigNumber from "bignumber.js";
 import { withModalBody } from "../../../../utils/storybookHelpers";
 import {
   BankTransferVerifyAgreementLayout,
   BankTransferVerifyInfoLayout,
 } from "./BankTransferVerifyInit";
-import BigNumber from "bignumber.js";
 
 const props = {
   goToSummary: action("goToSummary"),

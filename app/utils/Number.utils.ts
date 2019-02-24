@@ -15,8 +15,8 @@ export function isZero(value: string): boolean {
  */
 export function formatThousands(value?: BigNumber | string | null): string {
   if (!value) return "";
-  if (typeof value !== 'string'){
-    value = value.toString(10)
+  if (typeof value !== "string") {
+    value = value.toString(10);
   }
   const splitByDot = value.split(".");
 
@@ -57,7 +57,11 @@ function normalizeValue(options: TNormalizeOptions, value: BigNumber): BigNumber
 
   return (
     // ((maxAllowed - minAllowed) * (value - options.min)) / (options.max - options.min) + minAllowed
-    ((maxAllowed.minus(minAllowed)).mul(value.minus(options.min))).div(options.max.minus(options.min)).add(minAllowed)
+    maxAllowed
+      .minus(minAllowed)
+      .mul(value.minus(options.min))
+      .div(options.max.minus(options.min))
+      .add(minAllowed)
   );
 }
 

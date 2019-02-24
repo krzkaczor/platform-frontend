@@ -4,7 +4,7 @@ import { IAppState } from "../../store";
 import { ERequestStatus } from "../kyc/interfaces";
 import { selectIsUserVerifiedOnBlockchain, selectKycRequestStatus } from "../kyc/selectors";
 import { selectIsLightWallet } from "../web3/selectors";
-import { EUserType, IStateAuth,IStateUser } from "./interfaces";
+import { EUserType, IStateAuth, IStateUser } from "./interfaces";
 
 export const selectIsAuthorized = (state: IStateAuth): boolean => !!(state.jwt && state.user);
 export const selectUserType = (state: IAppState): EUserType | undefined =>
@@ -49,10 +49,9 @@ export const selectIsUserFullyVerified = (state: IAppState): boolean =>
 export const selectIsInvestor = (state: IAppState): boolean =>
   selectUserType(state) === EUserType.INVESTOR;
 
-export const selectIsVerifiedInvestor:(state:IAppState)=>boolean =
-  createSelector(
-    selectIsInvestor,
-    selectIsUserVerified,
+export const selectIsVerifiedInvestor: (state: IAppState) => boolean = createSelector(
+  selectIsInvestor,
+  selectIsUserVerified,
   (isInvestor, isUserVerified) => isInvestor && isUserVerified,
 );
 
@@ -71,5 +70,5 @@ export const selectIsLatestAgreementAccepted = (state: IAppState): boolean =>
     state.auth.user.latestAcceptedTosIpfs === state.auth.currentAgreementHash
   );
 
-export const selectIsLatestAgreementLoaded = (state: IAppState):boolean =>
+export const selectIsLatestAgreementLoaded = (state: IAppState): boolean =>
   !!state.auth.currentAgreementHash;

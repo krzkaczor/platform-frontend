@@ -1,8 +1,8 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
-import { BookBuildingWidgetComponent } from "./BookBuildingWidget";
 import BigNumber from "bignumber.js";
+import { BookBuildingWidgetComponent } from "./BookBuildingWidget";
 
 const data = {
   startBookBuilding: () => {},
@@ -32,7 +32,10 @@ storiesOf("BookBuildingWidget", module)
     const testData = {
       ...data,
       bookBuildingEnabled: true,
-      bookBuildingStats: { investorsCount: new BigNumber(2), pledgedAmount: new BigNumber(12545874) },
+      bookBuildingStats: {
+        investorsCount: new BigNumber(2),
+        pledgedAmount: new BigNumber(12545874),
+      },
     };
     return <BookBuildingWidgetComponent {...testData} />;
   })
@@ -40,7 +43,10 @@ storiesOf("BookBuildingWidget", module)
     const testData = {
       ...data,
       bookBuildingEnabled: false,
-      bookBuildingStats: { investorsCount: new BigNumber(2), pledgedAmount: new BigNumber(1595848) },
+      bookBuildingStats: {
+        investorsCount: new BigNumber(2),
+        pledgedAmount: new BigNumber(1595848),
+      },
     };
     return <BookBuildingWidgetComponent {...testData} />;
   });

@@ -1,6 +1,9 @@
 import { expect } from "chai";
 import { spy } from "sinon";
-import { dummyEthereumAddress, dummyEthereumAddressWithChecksum } from "../../../test/fixtures/fixtures";
+import {
+  dummyEthereumAddress,
+  dummyEthereumAddressWithChecksum,
+} from "../../../test/fixtures/fixtures";
 import { createMock } from "../../../test/testUtils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { SignatureAuthApi } from "../../lib/api/SignatureAuthApi";

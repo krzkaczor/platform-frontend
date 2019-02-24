@@ -2,6 +2,7 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { Container } from "reactstrap";
 
+import BigNumber from "bignumber.js";
 import {
   EInvestmentErrorState,
   EInvestmentType,
@@ -11,7 +12,6 @@ import { injectIntlHelpers } from "../../../../utils/injectIntlHelpers";
 import { withModalBody } from "../../../../utils/storybookHelpers";
 import { InvestmentSelectionComponent } from "./Investment";
 import { wallets } from "./InvestmentTypeSelector.stories";
-import BigNumber from "bignumber.js";
 
 const Investment = injectIntlHelpers(InvestmentSelectionComponent);
 

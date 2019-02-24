@@ -5,7 +5,7 @@ import { Col, Row } from "reactstrap";
 import { branch, compose, renderComponent } from "recompose";
 
 import { actions } from "../../modules/actions";
-import * as tokenDisbursalInterfaces  from "../../modules/investor-portfolio/interfaces/TokenDisbursal";
+import * as tokenDisbursalInterfaces from "../../modules/investor-portfolio/interfaces/TokenDisbursal";
 import { appConnect } from "../../store";
 import { CommonHtmlProps } from "../../types";
 import { Button, ButtonSize, EButtonLayout } from "../shared/buttons";
@@ -18,7 +18,7 @@ import { NewTable, NewTableRow } from "../shared/table";
 import * as ethIcon from "../../assets/img/eth_icon.svg";
 import * as neuIcon from "../../assets/img/neu_icon.svg";
 import * as nEurIcon from "../../assets/img/nEUR_icon.svg";
-import {convert, convertInArray} from "../eto/utils";
+import { convert, convertInArray } from "../eto/utils";
 
 interface IExternalProps {
   tokensDisbursal: ReadonlyArray<tokenDisbursalInterfaces.IBlTokenDisbursal> | undefined;
@@ -33,7 +33,9 @@ interface ILayoutProps {
 interface IDispatchToProps {
   redistributePayout: (tokenDisbursal: tokenDisbursalInterfaces.IBlTokenDisbursal) => void;
   acceptPayout: (tokenDisbursal: tokenDisbursalInterfaces.IBlTokenDisbursal) => void;
-  acceptCombinedPayout: (tokensDisbursal: ReadonlyArray<tokenDisbursalInterfaces.IBlTokenDisbursal>) => void;
+  acceptCombinedPayout: (
+    tokensDisbursal: ReadonlyArray<tokenDisbursalInterfaces.IBlTokenDisbursal>,
+  ) => void;
 }
 
 // TODO: move as a reusable component
@@ -189,11 +191,25 @@ const AssetPortfolio = compose<ILayoutProps & IDispatchToProps, IExternalProps>(
   appConnect<{}, IDispatchToProps>({
     dispatchToProps: dispatch => ({
       redistributePayout: (tokenDisbursal: tokenDisbursalInterfaces.IBlTokenDisbursal) =>
-        dispatch(actions.txTransactions.startInvestorPayoutRedistribute(convert(tokenDisbursal, tokenDisbursalInterfaces.blToStateConversionSpec))),
+        dispatch(
+          actions.txTransactions.startInvestorPayoutRedistribute(
+            convert(tokenDisbursal, tokenDisbursalInterfaces.blToStateConversionSpec),
+          ),
+        ),
       acceptPayout: (tokenDisbursal: tokenDisbursalInterfaces.IBlTokenDisbursal) =>
-        dispatch(actions.txTransactions.startInvestorPayoutAccept([convert(tokenDisbursal, tokenDisbursalInterfaces.blToStateConversionSpec)])),
-      acceptCombinedPayout: (tokensDisbursal: ReadonlyArray<tokenDisbursalInterfaces.IBlTokenDisbursal>) =>
-        dispatch(actions.txTransactions.startInvestorPayoutAccept(convertInArray(tokenDisbursalInterfaces.blToStateConversionSpec)(tokensDisbursal))),
+        dispatch(
+          actions.txTransactions.startInvestorPayoutAccept([
+            convert(tokenDisbursal, tokenDisbursalInterfaces.blToStateConversionSpec),
+          ]),
+        ),
+      acceptCombinedPayout: (
+        tokensDisbursal: ReadonlyArray<tokenDisbursalInterfaces.IBlTokenDisbursal>,
+      ) =>
+        dispatch(
+          actions.txTransactions.startInvestorPayoutAccept(
+            convertInArray(tokenDisbursalInterfaces.blToStateConversionSpec)(tokensDisbursal),
+          ),
+        ),
     }),
   }),
   // Loading

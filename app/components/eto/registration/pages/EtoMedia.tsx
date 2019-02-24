@@ -6,10 +6,10 @@ import { compose } from "redux";
 
 import { actions } from "../../../../modules/actions";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
-import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
+import { IBlPublicEtoData } from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
 import { etoMediaProgressOptions } from "../../../../modules/eto-flow/utils";
-import {EtoMediaValidator} from "../../../../modules/eto-flow/validators";
+import { EtoMediaValidator } from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { FormField, FormFieldBoolean } from "../../../shared/forms";

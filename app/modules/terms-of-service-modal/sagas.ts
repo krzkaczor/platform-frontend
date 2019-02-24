@@ -1,11 +1,15 @@
 import { Effect, fork, put, select } from "redux-saga/effects";
 
-import { AuthMessage, getMessageTranslation, ToSMessage } from "../../components/translatedMessages/messages";
+import {
+  AuthMessage,
+  getMessageTranslation,
+  ToSMessage,
+} from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { actions } from "../actions";
-import {IApiUser, IStateUser} from "../auth/interfaces";
+import { IApiUser, IStateUser } from "../auth/interfaces";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { selectCurrentAgreementHash } from "../auth/selectors";
 import { EInitType } from "../init/interfaces";
@@ -56,8 +60,6 @@ function* handleAcceptCurrentAgreement({
       createMessage(ToSMessage.TOS_ACCEPT_PERMISSION_TITLE),
       createMessage(ToSMessage.TOS_ACCEPT_PERMISSION_TEXT),
     );
-
-
   } catch (e) {
     notificationCenter.error(createMessage(AuthMessage.AUTH_TOC_ACCEPT_ERROR));
     logger.error(new Error("Could not accept Terms and Conditions"), e);

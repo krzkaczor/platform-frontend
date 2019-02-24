@@ -1,9 +1,9 @@
 import { Dictionary } from "../../types";
 import { createActionFactory } from "../actionsUtils";
-import {EEtoDocumentType, IEtoDocument} from '../eto-documents/interfaces'
-import {IStateCompanyEtoData} from '../eto-flow/interfaces/CompanyEtoData';
-import { IStatePublicEtoData} from "../eto-flow/interfaces/PublicEtoData";
-import { IStateEtoContractData,  } from "./interfaces/EtoContractData";
+import { EEtoDocumentType, IEtoDocument } from "../eto-documents/interfaces";
+import { IStateCompanyEtoData } from "../eto-flow/interfaces/CompanyEtoData";
+import { IStatePublicEtoData } from "../eto-flow/interfaces/PublicEtoData";
+import { IStateEtoContractData } from "./interfaces/EtoContractData";
 import { IStateEtoTokenData } from "./interfaces/EtoTokenData";
 
 export const etoActions = {
@@ -51,7 +51,10 @@ export const etoActions = {
   ),
   setPublicEto: createActionFactory(
     "PUBLIC_ETOS_SET_PUBLIC_ETO",
-    ({ eto, company }: { eto: IStatePublicEtoData; company: IStateCompanyEtoData }) => ({ eto, company }),
+    ({ eto, company }: { eto: IStatePublicEtoData; company: IStateCompanyEtoData }) => ({
+      eto,
+      company,
+    }),
   ),
   setEtosDisplayOrder: createActionFactory("PUBLIC_ETOS_SET_DISPLAY_ORDER", (order: string[]) => ({
     order,

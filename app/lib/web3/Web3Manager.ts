@@ -6,7 +6,7 @@ import { EventEmitter } from "events";
 import { symbols } from "../../di/symbols";
 import { calculateGasLimitWithOverhead, encodeTransaction } from "../../modules/tx/utils";
 import { IEthereumNetworkConfig } from "../../modules/web3/interfaces";
-import {EthereumNetworkId, NumericString} from "../../types";
+import { EthereumNetworkId, NumericString } from "../../types";
 import {
   AsyncIntervalScheduler,
   AsyncIntervalSchedulerFactoryType,

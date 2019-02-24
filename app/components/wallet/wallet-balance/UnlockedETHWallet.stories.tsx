@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react";
+import BigNumber from "bignumber.js";
 import * as React from "react";
 import { UnlockedETHWallet } from "./UnlockedETHWallet";
-import BigNumber from "bignumber.js";
 
 storiesOf("Unlocked ETH Wallet", module)
   .add("empty", () => (

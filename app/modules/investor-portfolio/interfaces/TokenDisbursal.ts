@@ -1,7 +1,10 @@
 import BigNumber from "bignumber.js";
-import {ECurrency} from "../../../components/shared/Money";
-import {NumericString} from "../../../types";
-import {bigNumberToNumericString, numericStringToBigNumber} from "../../../utils/numericStringUtils";
+import { ECurrency } from "../../../components/shared/Money";
+import { NumericString } from "../../../types";
+import {
+  bigNumberToNumericString,
+  numericStringToBigNumber,
+} from "../../../utils/numericStringUtils";
 
 export interface IStateTokenDisbursal {
   currency: ECurrency;
@@ -19,10 +22,10 @@ export interface IBlTokenDisbursal {
 
 export const stateToBlConversionSpec = {
   amountToBeClaimed: numericStringToBigNumber(),
-  totalDisbursedAmount: numericStringToBigNumber()
+  totalDisbursedAmount: numericStringToBigNumber(),
 };
 
 export const blToStateConversionSpec = {
   amountToBeClaimed: bigNumberToNumericString(),
-  totalDisbursedAmount: bigNumberToNumericString()
+  totalDisbursedAmount: bigNumberToNumericString(),
 };

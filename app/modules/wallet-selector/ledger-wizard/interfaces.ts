@@ -1,4 +1,4 @@
-import {TMessage} from "../../../components/translatedMessages/utils";
+import { TMessage } from "../../../components/translatedMessages/utils";
 
 export interface ILedgerAccount {
   address: string;

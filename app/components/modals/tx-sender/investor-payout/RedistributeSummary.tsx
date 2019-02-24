@@ -48,7 +48,9 @@ const InvestorRedistributePayoutSummaryLayout: React.FunctionComponent<TComponen
           caption={
             <FormattedMessage id="investor-payout.redistribute.summary.total-redistributed" />
           }
-          value={<Money value={tokenDisbursal.amountToBeClaimed} currency={tokenDisbursal.currency} />}
+          value={
+            <Money value={tokenDisbursal.amountToBeClaimed} currency={tokenDisbursal.currency} />
+          }
         />
       </InfoList>
       <section className="text-center">

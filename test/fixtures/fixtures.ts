@@ -7,7 +7,7 @@ import {
   TEtoDocumentTemplates,
   TEtoFormType,
 } from "../../app/modules/eto-documents/interfaces";
-import {EthereumAddress, EthereumAddressWithChecksum, EthereumNetworkId} from "../../app/types";
+import { EthereumAddress, EthereumAddressWithChecksum, EthereumNetworkId } from "../../app/types";
 
 export const dummyConfig: IConfig = {
   ethereumNetwork: {

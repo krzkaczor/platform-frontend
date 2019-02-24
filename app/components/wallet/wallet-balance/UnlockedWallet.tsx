@@ -49,9 +49,7 @@ export const UnlockedWallet: React.FunctionComponent<IUnlockedWallet> = ({
           currencyTotal={ECurrency.EUR}
           largeNumber={data.neuroAmount}
           value={data.neuroEuroAmount}
-          withdrawDisabled={
-            process.env.NEURO_WITHDRAW_ENABLED !== "1" || data.ethAmount.isZero()
-          }
+          withdrawDisabled={process.env.NEURO_WITHDRAW_ENABLED !== "1" || data.ethAmount.isZero()}
           transferDisabled={process.env.NEURO_WITHDRAW_ENABLED !== "1"}
           dataTestId="unlockedEuroWallet"
           // TODO: add nEuro withdraw
@@ -69,9 +67,7 @@ export const UnlockedWallet: React.FunctionComponent<IUnlockedWallet> = ({
           onWithdrawClick={withdrawEth}
           dataTestId="wallet-balance.ether"
           onDepositClick={depositEth}
-          withdrawDisabled={
-            process.env.NF_WITHDRAW_ENABLED !== "1" || data.ethAmount.isZero()
-          }
+          withdrawDisabled={process.env.NF_WITHDRAW_ENABLED !== "1" || data.ethAmount.isZero()}
           transferDisabled={process.env.NF_WITHDRAW_ENABLED !== "1"}
         />
       </section>

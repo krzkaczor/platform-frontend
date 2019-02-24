@@ -1,5 +1,5 @@
 import { AppReducer } from "../../../store";
-import {IStateTokenPrice} from './interfaces'
+import { IStateTokenPrice } from "./interfaces";
 
 const walletInitialState: IStateTokenPrice = {
   loading: true,

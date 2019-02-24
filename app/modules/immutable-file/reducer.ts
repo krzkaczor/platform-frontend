@@ -1,7 +1,7 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 import { actions } from "../actions";
-import {IImmutableStorageState} from './interfaces'
+import { IImmutableStorageState } from "./interfaces";
 
 export const immutableStorageInitialState: IImmutableStorageState = {
   pendingDownloads: {},

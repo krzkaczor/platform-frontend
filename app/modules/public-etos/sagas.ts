@@ -4,7 +4,7 @@ import { compose, keyBy, map, omit } from "lodash/fp";
 import { delay } from "redux-saga";
 import { all, fork, put, race, select } from "redux-saga/effects";
 
-import {convert} from "../../components/eto/utils";
+import { convert } from "../../components/eto/utils";
 import { PublicEtosMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
@@ -13,25 +13,29 @@ import { EtherToken } from "../../lib/contracts/EtherToken";
 import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import { EuroToken } from "../../lib/contracts/EuroToken";
 import { IAppState } from "../../store";
-import { Dictionary} from "../../types";
+import { Dictionary } from "../../types";
 import { actions, TActionFromCreator } from "../actions";
 import { EUserType } from "../auth/interfaces";
 import { selectUserType } from "../auth/selectors";
-import {IEtoDocument, immutableDocumentNames} from "../eto-documents/interfaces";
+import { IEtoDocument, immutableDocumentNames } from "../eto-documents/interfaces";
 import * as companyEtoDataInterfaces from "../eto-flow/interfaces/CompanyEtoData";
-import {EEtoState} from "../eto-flow/interfaces/interfaces";
-import * as publicEtoInterfaces from '../eto-flow/interfaces/PublicEtoData'
+import { EEtoState } from "../eto-flow/interfaces/interfaces";
+import * as publicEtoInterfaces from "../eto-flow/interfaces/PublicEtoData";
 import { selectMyAssets } from "../investor-portfolio/selectors";
 import { neuCall, neuFork, neuTakeEvery, neuTakeUntil } from "../sagasUtils";
 import { etoInProgressPoolingDelay, etoNormalPoolingDelay } from "./constants";
 import { InvalidETOStateError } from "./errors";
-import {EETOStateOnChain, TApiPublicEtoData, TStateEtoWithCompanyAndContract} from "./interfaces/interfaces";
+import {
+  EETOStateOnChain,
+  TApiPublicEtoData,
+  TStateEtoWithCompanyAndContract,
+} from "./interfaces/interfaces";
 import {
   selectEtoOnChainNextStateStartDate,
   selectEtoWithCompanyAndContract,
   selectPublicEtoById,
 } from "./selectors";
-import {convertToEtoTotalInvestment, convertToStateStartDate} from "./utils";
+import { convertToEtoTotalInvestment, convertToStateStartDate } from "./utils";
 
 export function* loadEtoPreview(
   { apiEtoService, notificationCenter, logger }: TGlobalDependencies,
@@ -40,20 +44,24 @@ export function* loadEtoPreview(
   const previewCode = action.payload.previewCode;
 
   try {
-    const etoResponse: IHttpResponse<publicEtoInterfaces.IApiPublicEtoData> = yield apiEtoService.getEtoPreview(
-      previewCode,
+    const etoResponse: IHttpResponse<
+      publicEtoInterfaces.IApiPublicEtoData
+    > = yield apiEtoService.getEtoPreview(previewCode);
+    const eto: publicEtoInterfaces.IStatePublicEtoData = convert(
+      etoResponse.body,
+      publicEtoInterfaces.apiToStateConversionSpec,
     );
-    const eto:publicEtoInterfaces.IStatePublicEtoData = convert(etoResponse.body, publicEtoInterfaces.apiToStateConversionSpec);
 
-    const companyResponse: IHttpResponse<companyEtoDataInterfaces.IApiCompanyEtoData> = yield apiEtoService.getCompanyById(
-      eto.companyId,
+    const companyResponse: IHttpResponse<
+      companyEtoDataInterfaces.IApiCompanyEtoData
+    > = yield apiEtoService.getCompanyById(eto.companyId);
+    const company: companyEtoDataInterfaces.IStateCompanyEtoData = convert(
+      companyResponse.body,
+      companyEtoDataInterfaces.apiToStateConversionSpec,
     );
-    const company:companyEtoDataInterfaces.IStateCompanyEtoData = convert(companyResponse.body, companyEtoDataInterfaces.apiToStateConversionSpec);
 
     // Load contract data if eto is already on blockchain
     if (eto.state === EEtoState.ON_CHAIN) {
-
-
       // load investor tickets
       const userType: EUserType | undefined = yield select((state: IAppState) =>
         selectUserType(state),
@@ -87,13 +95,21 @@ export function* loadEto(
   try {
     const etoId = action.payload.etoId;
 
-    const etoResponse: IHttpResponse<publicEtoInterfaces.IApiPublicEtoData> = yield apiEtoService.getEto(etoId);
-    const eto:publicEtoInterfaces.IStatePublicEtoData = convert(etoResponse.body,publicEtoInterfaces.apiToStateConversionSpec);
-
-    const companyResponse: IHttpResponse<companyEtoDataInterfaces.IApiCompanyEtoData> = yield apiEtoService.getCompanyById(
-      eto.companyId,
+    const etoResponse: IHttpResponse<
+      publicEtoInterfaces.IApiPublicEtoData
+    > = yield apiEtoService.getEto(etoId);
+    const eto: publicEtoInterfaces.IStatePublicEtoData = convert(
+      etoResponse.body,
+      publicEtoInterfaces.apiToStateConversionSpec,
     );
-    const company:companyEtoDataInterfaces.IStateCompanyEtoData = convert(companyResponse.body, companyEtoDataInterfaces.apiToStateConversionSpec);
+
+    const companyResponse: IHttpResponse<
+      companyEtoDataInterfaces.IApiCompanyEtoData
+    > = yield apiEtoService.getCompanyById(eto.companyId);
+    const company: companyEtoDataInterfaces.IStateCompanyEtoData = convert(
+      companyResponse.body,
+      companyEtoDataInterfaces.apiToStateConversionSpec,
+    );
 
     // Load contract data if eto is already on blockchain
     if (eto.state === EEtoState.ON_CHAIN) {
@@ -268,18 +284,22 @@ function* loadEtos({ apiEtoService, logger }: TGlobalDependencies): any {
     const etosResponse: IHttpResponse<TApiPublicEtoData[]> = yield apiEtoService.getEtos();
     const etos = etosResponse.body;
 
-    const companies = compose(
+    const companies = (compose(
       keyBy((eto: TApiPublicEtoData) => eto.companyId),
       map((eto: TApiPublicEtoData) => eto.company),
-      map((company:companyEtoDataInterfaces.IApiCompanyEtoData) => convert(company, companyEtoDataInterfaces.apiToStateConversionSpec))
-    )(etos as any) as unknown as Dictionary<companyEtoDataInterfaces.IStateCompanyEtoData>;
+      map((company: companyEtoDataInterfaces.IApiCompanyEtoData) =>
+        convert(company, companyEtoDataInterfaces.apiToStateConversionSpec),
+      ),
+    )(etos as any) as unknown) as Dictionary<companyEtoDataInterfaces.IStateCompanyEtoData>;
 
-    const etosByPreviewCode:Dictionary<publicEtoInterfaces.IStatePublicEtoData> = compose(
+    const etosByPreviewCode: Dictionary<publicEtoInterfaces.IStatePublicEtoData> = compose(
       keyBy((eto: publicEtoInterfaces.IStatePublicEtoData) => eto.previewCode),
       // remove company prop from eto
       // it's saved separately for consistency with other endpoints
       map(omit("company")),
-      map((eto:publicEtoInterfaces.IApiPublicEtoData) => convert(eto, publicEtoInterfaces.apiToStateConversionSpec)),
+      map((eto: publicEtoInterfaces.IApiPublicEtoData) =>
+        convert(eto, publicEtoInterfaces.apiToStateConversionSpec),
+      ),
     )(etos);
 
     const order = etosResponse.body.map(eto => eto.previewCode);

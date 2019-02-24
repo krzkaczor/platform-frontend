@@ -2,8 +2,8 @@ import { filter, findIndex, isNil, omitBy } from "lodash";
 
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {actions} from "../actions";
-import {IKycState} from './interfaces'
+import { actions } from "../actions";
+import { IKycState } from "./interfaces";
 
 const kycInitialState: IKycState = {
   individualFiles: [],

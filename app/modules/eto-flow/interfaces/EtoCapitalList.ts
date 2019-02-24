@@ -1,11 +1,12 @@
 import BigNumber from "bignumber.js";
 
-import {NumericString} from "../../../types";
+import { NumericString } from "../../../types";
 import {
-  bigNumberToNumber, bigNumberToNumericString,
+  bigNumberToNumber,
+  bigNumberToNumericString,
   numberToNumericString,
   numericStringToBigNumber,
-  numericStringToNumber
+  numericStringToNumber,
 } from "../../../utils/numericStringUtils";
 
 export interface IStateEtoCapitalList {
@@ -24,21 +25,21 @@ export interface IBlEtoCapitalList {
 }
 
 export const apiToStateConversionSpec = {
-  percent: numberToNumericString()
+  percent: numberToNumericString(),
 };
 
 export const stateToBlConversionSpec = {
-  percent: numericStringToBigNumber()
+  percent: numericStringToBigNumber(),
 };
 
 export const blToApiConversionSpec = {
-  percent: bigNumberToNumber()
+  percent: bigNumberToNumber(),
 };
 
 export const stateToApiConversionSpec = {
-  percent: numericStringToNumber()
+  percent: numericStringToNumber(),
 };
 
 export const blToStateConversionSpec = {
-  percent: bigNumberToNumericString()
+  percent: bigNumberToNumericString(),
 };

@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
-import {TWalletMetadata} from "../../lib/persistence/WalletMetadataObjectStorage";
-import {NumericString} from "../../types";
-import {bigNumberToNumericString, numericStringToBigNumber} from "../../utils/numericStringUtils";
+import { TWalletMetadata } from "../../lib/persistence/WalletMetadataObjectStorage";
+import { NumericString } from "../../types";
+import { bigNumberToNumericString, numericStringToBigNumber } from "../../utils/numericStringUtils";
 
 export interface IDisconnectedWeb3State {
   connected: false;
@@ -70,13 +70,13 @@ export interface IApiTxData {
 export const stateToBlConversionSpec = {
   value: numericStringToBigNumber(),
   gas: numericStringToBigNumber(),
-  gasPrice: numericStringToBigNumber()
+  gasPrice: numericStringToBigNumber(),
 };
 
 export const blToStateConversionSpec = {
   value: bigNumberToNumericString(),
   gas: bigNumberToNumericString(),
-  gasPrice: bigNumberToNumericString()
+  gasPrice: bigNumberToNumericString(),
 };
 
 export interface IRawTxData extends IApiTxData {

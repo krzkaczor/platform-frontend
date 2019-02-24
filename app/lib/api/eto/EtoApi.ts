@@ -1,12 +1,12 @@
 import { inject, injectable } from "inversify";
 
 import { symbols } from "../../../di/symbols";
-import {IApiBookBuildingStats} from "../../../modules/bookbuilding-flow/interfaces/BookbuildingStats";
-import {IApiDetailedBookbuildingStats} from "../../../modules/bookbuilding-flow/interfaces/DetailedBookbuildingStats";
-import {IApiCompanyEtoData} from "../../../modules/eto-flow/interfaces/CompanyEtoData";
-import {TApiGeneralEtoData} from "../../../modules/eto-flow/interfaces/interfaces";
-import {IApiPublicEtoData} from "../../../modules/eto-flow/interfaces/PublicEtoData";
-import {DeepPartial} from "../../../types";
+import { IApiBookBuildingStats } from "../../../modules/bookbuilding-flow/interfaces/BookbuildingStats";
+import { IApiDetailedBookbuildingStats } from "../../../modules/bookbuilding-flow/interfaces/DetailedBookbuildingStats";
+import { IApiCompanyEtoData } from "../../../modules/eto-flow/interfaces/CompanyEtoData";
+import { TApiGeneralEtoData } from "../../../modules/eto-flow/interfaces/interfaces";
+import { IApiPublicEtoData } from "../../../modules/eto-flow/interfaces/PublicEtoData";
+import { DeepPartial } from "../../../types";
 import { withParams } from "../../../utils/withParams";
 import { IHttpClient, IHttpResponse } from "../client/IHttpClient";
 
@@ -40,7 +40,9 @@ export class EtoApi {
     });
   }
 
-  public async putMyEto(data: DeepPartial<IApiPublicEtoData>): Promise<IHttpResponse<DeepPartial<IApiPublicEtoData>>> {
+  public async putMyEto(
+    data: DeepPartial<IApiPublicEtoData>,
+  ): Promise<IHttpResponse<DeepPartial<IApiPublicEtoData>>> {
     return await this.authorizedHttpClient.put<DeepPartial<IApiPublicEtoData>>({
       baseUrl: BASE_PATH,
       url: ETO_DATA_PATH,
@@ -48,7 +50,9 @@ export class EtoApi {
     });
   }
 
-  public async getEtoPreview(previewCode: string): Promise<IHttpResponse<DeepPartial<IApiCompanyEtoData>>> {
+  public async getEtoPreview(
+    previewCode: string,
+  ): Promise<IHttpResponse<DeepPartial<IApiCompanyEtoData>>> {
     return await this.httpClient.get<DeepPartial<IApiCompanyEtoData>>({
       baseUrl: BASE_PATH,
       url: withParams(ETO_PREVIEW_PATH, { previewCode }),
@@ -69,7 +73,9 @@ export class EtoApi {
     });
   }
 
-  public async getCompanyById(companyId: string): Promise<IHttpResponse<DeepPartial<IApiCompanyEtoData>>> {
+  public async getCompanyById(
+    companyId: string,
+  ): Promise<IHttpResponse<DeepPartial<IApiCompanyEtoData>>> {
     return await this.httpClient.get<DeepPartial<IApiCompanyEtoData>>({
       baseUrl: BASE_PATH,
       url: COMPANIES_DATA_PATH + companyId,

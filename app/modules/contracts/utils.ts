@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import { mapValues } from "lodash";
 
-import {NumericString} from "../../types";
+import { NumericString } from "../../types";
 
 export function numericValuesToString<T extends { [P in keyof T]: string | BigNumber }>(
   entity: T,

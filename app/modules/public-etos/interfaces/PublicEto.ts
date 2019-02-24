@@ -1,6 +1,6 @@
-import {mapValues} from 'lodash/fp';
+import { mapValues } from "lodash/fp";
 
-import {convert} from "../../../components/eto/utils";
+import { convert } from "../../../components/eto/utils";
 import * as companyEtoDataInterfaces from "../../eto-flow/interfaces/CompanyEtoData";
 import * as publicEtoDataInterfaces from "../../eto-flow/interfaces/PublicEtoData";
 import * as etoContractData from "./EtoContractData";

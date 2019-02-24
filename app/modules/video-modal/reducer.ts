@@ -1,6 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IStateVideoModal, IStateVideoModalData} from './interfaces'
+import { IStateVideoModal, IStateVideoModalData } from "./interfaces";
 
 const initialState: IStateVideoModal = {
   isOpen: false,

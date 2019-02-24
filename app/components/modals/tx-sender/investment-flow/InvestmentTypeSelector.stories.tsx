@@ -1,8 +1,8 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
+import BigNumber from "bignumber.js";
 import * as React from "react";
 import { Container } from "reactstrap";
-import BigNumber from "bignumber.js";
 
 import { EInvestmentType } from "../../../../modules/investment-flow/interfaces";
 import { withModalBody } from "../../../../utils/storybookHelpers";

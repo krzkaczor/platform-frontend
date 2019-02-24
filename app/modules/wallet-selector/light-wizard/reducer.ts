@@ -1,5 +1,5 @@
 import { AppReducer } from "../../../store";
-import {ILightWalletWizardState} from './interfaces'
+import { ILightWalletWizardState } from "./interfaces";
 
 export const lightWalletWizardInitialState: ILightWalletWizardState = { isLoading: false };
 

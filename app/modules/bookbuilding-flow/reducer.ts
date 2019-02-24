@@ -1,8 +1,7 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 import { SET_BOOKBUILDING_FLOW_STATS, SET_PLEDGE } from "./actions";
-import { IStateBookbuildingFLow } from './interfaces/interfaces'
-
+import { IStateBookbuildingFLow } from "./interfaces/interfaces";
 
 export const bookBuildingFlow: IStateBookbuildingFLow = {
   bookbuildingStats: {},

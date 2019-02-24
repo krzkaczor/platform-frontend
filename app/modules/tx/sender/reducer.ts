@@ -1,5 +1,5 @@
 import { AppReducer } from "../../../store";
-import {ETxSenderState, IStateTxSender} from './interfaces'
+import { ETxSenderState, IStateTxSender } from "./interfaces";
 
 const initialState: IStateTxSender = {
   state: ETxSenderState.UNINITIALIZED,

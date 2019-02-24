@@ -8,11 +8,11 @@ import { compose } from "redux";
 import { etoFormIsReadonly } from "../../../../lib/api/eto/EtoApiUtils";
 import { actions } from "../../../../modules/actions";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
-import {IBlPublicEtoData} from "../../../../modules/eto-flow/interfaces/PublicEtoData";
+import { IBlPublicEtoData } from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import { selectIssuerEto, selectIssuerEtoState } from "../../../../modules/eto-flow/selectors";
-import { EtoTermsValidator} from "../../../../modules/public-etos/validators";
+import { EtoTermsValidator } from "../../../../modules/public-etos/validators";
 import { appConnect } from "../../../../store";
-import {DeepPartial, TTranslatedString} from "../../../../types";
+import { DeepPartial, TTranslatedString } from "../../../../types";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import {
   FormField,
@@ -47,7 +47,10 @@ interface IDispatchProps {
   saveData: (values: DeepPartial<IBlPublicEtoData>) => void;
 }
 
-type IProps = IExternalProps & IStateProps & IDispatchProps & FormikProps<DeepPartial<IBlPublicEtoData>>;
+type IProps = IExternalProps &
+  IStateProps &
+  IDispatchProps &
+  FormikProps<DeepPartial<IBlPublicEtoData>>;
 
 interface ICurrencies {
   [key: string]: string;

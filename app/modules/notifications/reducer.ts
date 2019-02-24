@@ -3,7 +3,7 @@ import { DeepReadonly } from "../../types";
 import { actions } from "../actions";
 import { routingActions } from "../routing/actions";
 import { notificationActions } from "./actions";
-import {ENotificationText, ENotificationType, INotificationsState} from './interfaces'
+import { ENotificationText, ENotificationType, INotificationsState } from "./interfaces";
 
 export const notificationsInitState: INotificationsState = {
   notifications: [],

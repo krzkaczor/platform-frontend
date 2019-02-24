@@ -5,13 +5,13 @@ import { fork, put, select, take } from "redux-saga/effects";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { ICBMLockedAccount } from "../../lib/contracts/ICBMLockedAccount";
 import { LockedAccount } from "../../lib/contracts/LockedAccount";
-import {EthereumAddress, NumericString} from "../../types";
+import { EthereumAddress, NumericString } from "../../types";
 import { actions } from "../actions";
 import { EInitType } from "../init/interfaces";
 import { selectIsSmartContractInitDone } from "../init/selectors";
 import { neuCall, neuTakeEvery, neuTakeOnly, neuTakeUntil } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
-import { IStateLockedWallet, IStateWalletData} from "./interfaces";
+import { IStateLockedWallet, IStateWalletData } from "./interfaces";
 
 const WALLET_DATA_FETCHING_INTERVAL = 12000;
 
@@ -44,8 +44,8 @@ async function loadICBMWallet(
   } else {
     // todo: may be removed when contracts deployed on production
     return {
-      LockedBalance: "0"  as NumericString,
-      neumarksDue: "0"  as NumericString,
+      LockedBalance: "0" as NumericString,
+      neumarksDue: "0" as NumericString,
       unlockDate: "0" as NumericString,
     };
   }
@@ -63,10 +63,18 @@ export async function loadWalletDataAsync(
       etherTokenLockedWallet: loadICBMWallet(ethAddress, contractsService.etherLock),
       etherTokenUpgradeTarget: contractsService.icbmEtherLock.currentMigrationTarget,
       euroTokenUpgradeTarget: contractsService.icbmEuroLock.currentMigrationTarget,
-      etherTokenBalance: contractsService.etherToken.balanceOf(ethAddress).then(v => v.toString() as NumericString),
-      euroTokenBalance: contractsService.euroToken.balanceOf(ethAddress).then(v => v.toString() as NumericString),
-      etherBalance: web3Manager.internalWeb3Adapter.getBalance(ethAddress).then(v => v.toString() as NumericString),
-      neuBalance: contractsService.neumark.balanceOf(ethAddress).then(v => v.toString() as NumericString),
+      etherTokenBalance: contractsService.etherToken
+        .balanceOf(ethAddress)
+        .then(v => v.toString() as NumericString),
+      euroTokenBalance: contractsService.euroToken
+        .balanceOf(ethAddress)
+        .then(v => v.toString() as NumericString),
+      etherBalance: web3Manager.internalWeb3Adapter
+        .getBalance(ethAddress)
+        .then(v => v.toString() as NumericString),
+      neuBalance: contractsService.neumark
+        .balanceOf(ethAddress)
+        .then(v => v.toString() as NumericString),
     })),
   };
 }

@@ -2,11 +2,11 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
+import BigNumber from "bignumber.js";
 import {
   CampaigningActivatedInvestorApprovedWidgetLayout,
   CampaigningFormState,
 } from "./CampaigningActivatedInvestorApprovedWidgetLayout";
-import BigNumber from "bignumber.js";
 
 storiesOf("ETO/CampaigningActivatedInvestorApprovedWidgetLayout", module)
   .add("default", () => (

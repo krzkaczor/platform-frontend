@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import {TPendingTxs} from "../../lib/api/users/interfaces";
+import { TPendingTxs } from "../../lib/api/users/interfaces";
 
 export interface IStateWithdrawDraftType {
   type: ETxSenderType.WITHDRAW;

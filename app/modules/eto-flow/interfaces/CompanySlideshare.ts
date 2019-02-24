@@ -1,14 +1,14 @@
 export interface IStateCompanySlideshare {
-  title:string;
+  title: string;
   url: string;
 }
 
 export interface IApiCompanySlideshare {
-  title:string;
+  title: string;
   url: string;
 }
 
 export interface IBlCompanySlideshare {
-  title:string;
+  title: string;
   url: string;
 }

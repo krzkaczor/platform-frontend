@@ -1,5 +1,5 @@
-import BigNumber from "bignumber.js";
 import { storiesOf } from "@storybook/react";
+import BigNumber from "bignumber.js";
 import * as React from "react";
 
 import { LockedWallet } from "./LockedWallet";

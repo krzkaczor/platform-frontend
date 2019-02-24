@@ -5,7 +5,7 @@ import { compose } from "redux";
 
 import { actions } from "../../../../../modules/actions";
 import { selectIsInvestor, selectIsVerifiedInvestor } from "../../../../../modules/auth/selectors";
-import {IBlPledge} from "../../../../../modules/bookbuilding-flow/interfaces/Pledge";
+import { IBlPledge } from "../../../../../modules/bookbuilding-flow/interfaces/Pledge";
 import {
   selectBookbuildingStats,
   selectMyPledge,
@@ -54,7 +54,9 @@ interface IWithProps {
   isWaitingForNextStateToStart: boolean;
 }
 
-const CampaigningActivatedWidgetComponent: React.FunctionComponent<IWithProps & IComponentProps & IStateProps> = ({
+const CampaigningActivatedWidgetComponent: React.FunctionComponent<
+  IWithProps & IComponentProps & IStateProps
+> = ({
   investorsLimit,
   pledgedAmount,
   investorsCount,
@@ -116,7 +118,9 @@ const CampaigningActivatedWidgetComponent: React.FunctionComponent<IWithProps & 
             </span>
             <span className={styles.value}>
               <span data-test-id="eto-bookbuilding-remaining-slots">
-                {investorsCount !== null ? investorsLimit.minus(investorsCount).toString() : investorsLimit.toString()}
+                {investorsCount !== null
+                  ? investorsLimit.minus(investorsCount).toString()
+                  : investorsLimit.toString()}
               </span>{" "}
               out of {investorsLimit} slots remaining
               {/* TODO: Move to translations once the format is stable */}
@@ -183,7 +187,9 @@ const CampaigningActivatedWidgetComponent: React.FunctionComponent<IWithProps & 
   );
 };
 
-const CampaigningActivatedWidget = compose<React.FunctionComponent<IExternalProps & IComponentProps>>(
+const CampaigningActivatedWidget = compose<
+  React.FunctionComponent<IExternalProps & IComponentProps>
+>(
   appConnect<IStateProps, {}, IExternalProps>({
     stateToProps: (state, props) => {
       const stats = selectBookbuildingStats(state, props.etoId);

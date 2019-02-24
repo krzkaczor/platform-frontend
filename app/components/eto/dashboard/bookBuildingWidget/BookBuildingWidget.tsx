@@ -79,7 +79,10 @@ const BookBuildingStats = ({ bookBuildingStats, maxPledges, downloadCSV }: IBook
         {maxPledges !== null ? (
           <FormattedMessage
             id="settings.book-building-stats-widget.number-of-pledges"
-            values={{ pledges: bookBuildingStats.investorsCount.toNumber(), maxPledges: maxPledges.toNumber() }}
+            values={{
+              pledges: bookBuildingStats.investorsCount.toNumber(),
+              maxPledges: maxPledges.toNumber(),
+            }}
           />
         ) : null}
       </span>

@@ -1,14 +1,15 @@
 import { Dictionary } from "../../types";
 import { createAction, createActionFactory } from "../actionsUtils";
-import {IStatePublicEtoData} from "../eto-flow/interfaces/PublicEtoData";
-import { IStateCalculatedContribution, } from "./interfaces/CalculatedContribution";
-import {IStateIncomingPayoutsData} from "./interfaces/IncomingPayouts";
-import {IStateInvestorTicket} from './interfaces/InvestorTicket'
+import { IStatePublicEtoData } from "../eto-flow/interfaces/PublicEtoData";
+import { IStateCalculatedContribution } from "./interfaces/CalculatedContribution";
+import { IStateIncomingPayoutsData } from "./interfaces/IncomingPayouts";
+import { IStateInvestorTicket } from "./interfaces/InvestorTicket";
 import { IStateTokenDisbursal } from "./interfaces/TokenDisbursal";
 
 export const investorEtoTicketActions = {
   // public actions
-  loadEtoInvestorTicket: (eto: IStatePublicEtoData) => createAction("INVESTOR_TICKET_LOAD", { eto }),
+  loadEtoInvestorTicket: (eto: IStatePublicEtoData) =>
+    createAction("INVESTOR_TICKET_LOAD", { eto }),
   loadInvestorTickets: (etos: Dictionary<IStatePublicEtoData>) =>
     createAction("INVESTOR_TICKET_ETOS_LOAD", { etos }),
   claim: (etoId: string) => createAction("INVESTOR_TICKET_CLAIM", { etoId }),

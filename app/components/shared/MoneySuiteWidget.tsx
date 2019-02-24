@@ -33,22 +33,22 @@ export const MoneySuiteWidget: React.FunctionComponent<IMoneySuiteWidgetProps & 
   theme,
   size,
 }) => (
-    <div className={cn(styles.moneySuiteWidget, theme, size)}>
-      <img className={styles.icon} src={icon} alt="" />
-      <div>
-        <div className={styles.money} data-test-id={makeTid(dataTestId, "-large-value")}>
-          <Money value={largeNumber} currency={currency} />
-        </div>
-        <div className={styles.totalMoney} data-test-id={makeTid(dataTestId, "-value")}>
-          = <Money value={value} currency={currencyTotal} />
-          {percentage && (
-            <span className={`${percentage.gt(0) ? styles.green : styles.red}`}>
-              {" "}
-              ({percentage.toString(10)}
-              %)
-            </span>
-          )}
-        </div>
+  <div className={cn(styles.moneySuiteWidget, theme, size)}>
+    <img className={styles.icon} src={icon} alt="" />
+    <div>
+      <div className={styles.money} data-test-id={makeTid(dataTestId, "-large-value")}>
+        <Money value={largeNumber} currency={currency} />
+      </div>
+      <div className={styles.totalMoney} data-test-id={makeTid(dataTestId, "-value")}>
+        = <Money value={value} currency={currencyTotal} />
+        {percentage && (
+          <span className={`${percentage.gt(0) ? styles.green : styles.red}`}>
+            {" "}
+            ({percentage.toString(10)}
+            %)
+          </span>
+        )}
       </div>
     </div>
+  </div>
 );

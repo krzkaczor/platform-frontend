@@ -3,7 +3,7 @@ import { put, select, takeLatest } from "redux-saga/effects";
 
 import { Q18 } from "../../../config/constants";
 import { TGlobalDependencies } from "../../../di/setupBindings";
-import {NumericString} from "../../../types";
+import { NumericString } from "../../../types";
 import { actions } from "../../actions";
 import { selectIsSmartContractInitDone } from "../../init/selectors";
 import { neuCall } from "../../sagasUtils";
@@ -28,14 +28,12 @@ export async function loadTokenPriceDataAsync({
         contractsService.etherToken.address,
       ],
     )
-    .then(r =>
-      ({
-          etherPriceEur: r[0][0].div(Q18).toString() as NumericString,
-          neuPriceEur: r[0][1].div(Q18).toString() as NumericString,
-          eurPriceEther: r[0][2].div(Q18).toString() as NumericString,
-          priceOutdated: false
-        })
-    )
+    .then(r => ({
+      etherPriceEur: r[0][0].div(Q18).toString() as NumericString,
+      neuPriceEur: r[0][1].div(Q18).toString() as NumericString,
+      eurPriceEther: r[0][2].div(Q18).toString() as NumericString,
+      priceOutdated: false,
+    }));
 }
 
 function* tokenPriceMonitor({ logger }: TGlobalDependencies): any {

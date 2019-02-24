@@ -1,7 +1,12 @@
 import { inject, injectable } from "inversify";
 
 import { symbols } from "../../../di/symbols";
-import {IApiEmailStatus, IApiUser, IApiUserInput, IVerifyEmailUser} from "../../../modules/auth/interfaces";
+import {
+  IApiEmailStatus,
+  IApiUser,
+  IApiUserInput,
+  IVerifyEmailUser,
+} from "../../../modules/auth/interfaces";
 import { EWalletSubType, EWalletType } from "../../../modules/web3/interfaces";
 import { ILogger } from "../../dependencies/logger";
 import { IHttpClient } from "../client/IHttpClient";

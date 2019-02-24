@@ -1,13 +1,13 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import {NumberSchema} from "yup";
+import { NumberSchema } from "yup";
 
 import {
   PlatformTerms,
   PUBLIC_DURATION_DAYS,
   Q18,
   SIGNING_DURATION_DAYS,
-  WHITELIST_DURATION_DAYS
+  WHITELIST_DURATION_DAYS,
 } from "../../config/constants";
 import * as YupTS from "../../lib/yup-ts";
 
@@ -20,9 +20,9 @@ export const EtoTermsValidator = YupTS.object({
     return v.min(minTicketEur, (
       <FormattedMessage
         id="eto.form.section.eto-terms.minimum-ticket-size.error.less-than-accepted"
-    values={{ value: minTicketEur }}
-    />
-  ) as any);
+        values={{ value: minTicketEur }}
+      />
+    ) as any);
   }),
   maxTicketEur: YupTS.number()
     .optional()
@@ -49,4 +49,3 @@ export const EtoTermsValidator = YupTS.object({
   ),
   additionalTerms: YupTS.string().optional(),
 });
-

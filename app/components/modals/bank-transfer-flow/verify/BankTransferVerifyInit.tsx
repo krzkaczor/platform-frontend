@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import {branch, compose, renderComponent, StateHandler, withStateHandlers} from "recompose";
+import { branch, compose, renderComponent, StateHandler, withStateHandlers } from "recompose";
 
 import { externalRoutes } from "../../../../config/externalRoutes";
 import * as YupTS from "../../../../lib/yup-ts";
@@ -176,7 +176,12 @@ const BankTransferVerifyInit = compose<IProps, {}>(
       }),
     },
   ),
-  branch<IStateProps>(props => props.minEuroUlps === null, () => {throw new Error("incomplete data")}), //fixme
+  branch<IStateProps>(
+    props => props.minEuroUlps === null,
+    () => {
+      throw new Error("incomplete data");
+    },
+  ), //fixme
   branch<ILocalState>(
     props => props.state === EBankTransferInitState.INFO,
     renderComponent(BankTransferVerifyInfoLayout),

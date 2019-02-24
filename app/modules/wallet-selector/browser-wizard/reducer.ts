@@ -1,5 +1,5 @@
 import { AppReducer } from "../../../store";
-import {IBrowserWalletWizardState} from './interfaces';
+import { IBrowserWalletWizardState } from "./interfaces";
 
 export const browserWalletWizardInitialState: IBrowserWalletWizardState = {
   isLoading: true,

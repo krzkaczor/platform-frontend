@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import {NumberSchema, StringSchema} from "yup";
+import { NumberSchema, StringSchema } from "yup";
 import {
   MIN_COMPANY_SHARES,
   MIN_EXISTING_COMPANY_SHARES,
@@ -10,13 +10,14 @@ import {
   MIN_SHARE_NOMINAL_VALUE_EUR,
   NEW_SHARES_TO_ISSUE_IN_FIXED_SLOTS,
   NEW_SHARES_TO_ISSUE_IN_WHITELIST,
-  PlatformTerms, PUBLIC_DURATION_DAYS,
-  Q18, SIGNING_DURATION_DAYS,
-  WHITELIST_DURATION_DAYS
+  PlatformTerms,
+  PUBLIC_DURATION_DAYS,
+  Q18,
+  SIGNING_DURATION_DAYS,
+  WHITELIST_DURATION_DAYS,
 } from "../../config/constants";
-import {dateSchema, percentage} from "../../lib/api/util/schemaHelpers";
+import { dateSchema, percentage } from "../../lib/api/util/schemaHelpers";
 import * as YupTS from "../../lib/yup-ts";
-
 
 const tagsValidator = YupTS.string();
 

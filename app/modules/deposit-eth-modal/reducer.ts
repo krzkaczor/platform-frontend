@@ -1,6 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IDepositEthModalState} from './interfaces'
+import { IDepositEthModalState } from "./interfaces";
 
 const initialState: IDepositEthModalState = {
   isOpen: false,

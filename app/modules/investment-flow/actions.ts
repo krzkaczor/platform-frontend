@@ -1,10 +1,6 @@
-import {NumericString} from "../../types";
+import { NumericString } from "../../types";
 import { createAction, createSimpleAction } from "../actionsUtils";
-import {
-  EInvestmentCurrency,
-  EInvestmentErrorState,
-  EInvestmentType,
-} from "./interfaces";
+import { EInvestmentCurrency, EInvestmentErrorState, EInvestmentType } from "./interfaces";
 
 export const investmentFlowActions = {
   // public actions

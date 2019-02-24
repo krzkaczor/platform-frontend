@@ -5,7 +5,7 @@ import { NotEnoughEtherForGasError } from "../../../lib/web3/Web3Adapter";
 import { actions, TAction } from "../../actions";
 import { neuCall, neuTakeEvery } from "../../sagasUtils";
 import { selectEtherBalance } from "../../wallet/selectors";
-import {IBlTxData} from "../../web3/interfaces";
+import { IBlTxData } from "../../web3/interfaces";
 import { ETxSenderType } from "../interfaces";
 import { EValidationState } from "../sender/interfaces";
 import { generateInvestmentTransaction } from "../transactions/investment/sagas";
@@ -16,7 +16,7 @@ export function* txValidateSaga({ logger }: TGlobalDependencies, action: TAction
   // reset validation
   yield put(actions.txValidator.setValidationState());
 
-  let validationGenerator:any;
+  let validationGenerator: any;
   switch (action.payload.type) {
     case ETxSenderType.WITHDRAW:
       validationGenerator = generateEthWithdrawTransaction;
@@ -33,7 +33,7 @@ export function* txValidateSaga({ logger }: TGlobalDependencies, action: TAction
     yield validateGas(generatedTxDetails);
     yield put(actions.txValidator.setValidationState(EValidationState.VALIDATION_OK));
 
-    return generatedTxDetails
+    return generatedTxDetails;
   } catch (error) {
     if (error instanceof NotEnoughEtherForGasError) {
       logger.info(error);
@@ -47,10 +47,7 @@ export function* txValidateSaga({ logger }: TGlobalDependencies, action: TAction
 export function* validateGas(txDetails: IBlTxData): any {
   const etherBalance: BigNumber = yield select(selectEtherBalance);
 
-  if (
-      txDetails.gasPrice.mul(txDetails.gas)
-        .comparedTo(etherBalance.sub(txDetails.value)) > 0
-  ) {
+  if (txDetails.gasPrice.mul(txDetails.gas).comparedTo(etherBalance.sub(txDetails.value)) > 0) {
     throw new NotEnoughEtherForGasError("Not enough Ether to pay the Gas for this transaction");
   }
 }

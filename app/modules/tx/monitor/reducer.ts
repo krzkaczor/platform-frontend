@@ -2,8 +2,6 @@ import { AppReducer } from "../../../store";
 import { DeepReadonly } from "../../../types";
 import { ITxMonitorState } from "../interfaces";
 
-
-
 const initialState: ITxMonitorState = {
   txs: { pendingTransaction: undefined, oooTransactions: [] },
 };

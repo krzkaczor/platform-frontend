@@ -11,7 +11,7 @@ import { FUNDING_ROUNDS } from "../registration/pages/LegalInformation";
 import { CHART_COLORS } from "../shared/EtoView";
 
 import BigNumber from "bignumber.js";
-import {IBlShareholderData} from "../../../modules/eto-flow/interfaces/ShareholderData";
+import { IBlShareholderData } from "../../../modules/eto-flow/interfaces/ShareholderData";
 import * as styles from "./LegalInformationWidget.module.scss";
 
 interface IProps {
@@ -25,9 +25,12 @@ const generateShareholders = (
   if (shareholders === undefined) {
     return [];
   } else {
-    const assignedShares = shareholders.reduce((acc:BigNumber, shareholder:IBlShareholderData) => {
-      return shareholder && shareholder.shares ? (acc.add(shareholder.shares)) : acc;
-    }, new BigNumber(0));
+    const assignedShares = shareholders.reduce(
+      (acc: BigNumber, shareholder: IBlShareholderData) => {
+        return shareholder && shareholder.shares ? acc.add(shareholder.shares) : acc;
+      },
+      new BigNumber(0),
+    );
 
     if (assignedShares.lessThan(companyShares)) {
       return [

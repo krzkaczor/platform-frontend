@@ -17,10 +17,16 @@ describe("EtoUtils", () => {
 
     it("should return sharePrice as 0 when one of argument is undefined or 0", () => {
       expect(
-        getShareAndTokenPrice({ preMoneyValuationEur: new BigNumber(100), existingCompanyShares: undefined }),
+        getShareAndTokenPrice({
+          preMoneyValuationEur: new BigNumber(100),
+          existingCompanyShares: undefined,
+        }),
       ).to.deep.equal({ sharePrice: 0, tokenPrice: 0 });
       expect(
-        getShareAndTokenPrice({ preMoneyValuationEur: undefined, existingCompanyShares: new BigNumber(100 )}),
+        getShareAndTokenPrice({
+          preMoneyValuationEur: undefined,
+          existingCompanyShares: new BigNumber(100),
+        }),
       ).to.deep.equal({ sharePrice: 0, tokenPrice: 0 });
       expect(
         getShareAndTokenPrice({
@@ -78,8 +84,8 @@ describe("EtoUtils", () => {
         publicDiscountFraction: new BigNumber(0),
       });
 
-      expect(maxInvestmentAmount.toString()).to.equal('98950');
-      expect(minInvestmentAmount.toString()).to.equal('0');
+      expect(maxInvestmentAmount.toString()).to.equal("98950");
+      expect(minInvestmentAmount.toString()).to.equal("0");
 
       // general test case
       ({ minInvestmentAmount, maxInvestmentAmount } = getInvestmentAmount({
@@ -126,7 +132,9 @@ describe("EtoUtils", () => {
         publicDiscountFraction: new BigNumber(0),
       }));
 
-      expect(Math.round(maxInvestmentAmount.toNumber())).to.equal(Math.round(3652 * (125000000 / 40859)));
+      expect(Math.round(maxInvestmentAmount.toNumber())).to.equal(
+        Math.round(3652 * (125000000 / 40859)),
+      );
       expect(Math.round(minInvestmentAmount.toNumber())).to.equal(0);
 
       // with public discount fraction

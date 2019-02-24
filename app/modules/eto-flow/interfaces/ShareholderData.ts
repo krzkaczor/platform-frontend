@@ -1,11 +1,12 @@
 import BigNumber from "bignumber.js";
 
-import {NumericString} from "../../../types";
+import { NumericString } from "../../../types";
 import {
-  bigNumberToNumber, bigNumberToNumericString,
+  bigNumberToNumber,
+  bigNumberToNumericString,
   numberToNumericString,
   numericStringToBigNumber,
-  numericStringToNumber
+  numericStringToNumber,
 } from "../../../utils/numericStringUtils";
 
 export interface IStateShareholderData {
@@ -24,23 +25,21 @@ export interface IBlShareholderData {
 }
 
 export const apiToStateConversionSpec = {
-  shares: numberToNumericString()
+  shares: numberToNumericString(),
 };
 
 export const stateToBlConversionSpec = {
-  shares: numericStringToBigNumber()
+  shares: numericStringToBigNumber(),
 };
 
 export const blToApiConversionSpec = {
-  shares: bigNumberToNumber()
+  shares: bigNumberToNumber(),
 };
 
 export const stateToApiConversionSpec = {
-  shares: numericStringToNumber()
+  shares: numericStringToNumber(),
 };
 
 export const blToStateConversionSpec = {
-  shares: bigNumberToNumericString()
+  shares: bigNumberToNumericString(),
 };
-
-

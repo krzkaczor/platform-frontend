@@ -1,6 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IInitState} from './interfaces'
+import { IInitState } from "./interfaces";
 
 export const initInitialState: IInitState = {
   appInit: {

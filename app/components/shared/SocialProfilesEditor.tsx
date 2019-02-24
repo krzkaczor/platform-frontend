@@ -2,7 +2,7 @@ import * as cn from "classnames";
 import { connect, FieldArray, getIn } from "formik";
 import * as React from "react";
 
-import {IBlSocialChannel} from "../../modules/eto-flow/interfaces/SocialChannel";
+import { IBlSocialChannel } from "../../modules/eto-flow/interfaces/SocialChannel";
 import { CommonHtmlProps, TFormikConnect } from "../../types";
 import { FormField } from "./forms";
 import { InlineIcon } from "./InlineIcon";

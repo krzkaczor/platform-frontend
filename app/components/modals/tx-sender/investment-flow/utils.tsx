@@ -134,9 +134,12 @@ export function getActualTokenPriceEur( //  // formatMoney(investmentEurUlps.div
   return investmentEurUlps.div(equityTokenCount);
 }
 
-export const formatSummaryTokenPrice = (fullTokenPrice: BigNumber, actualTokenPrice?: BigNumber | null):string => {
-  if(!fullTokenPrice || !actualTokenPrice){
-    return ''
+export const formatSummaryTokenPrice = (
+  fullTokenPrice: BigNumber,
+  actualTokenPrice?: BigNumber | null,
+): string => {
+  if (!fullTokenPrice || !actualTokenPrice) {
+    return "";
   }
 
   const discount = new BigNumber(1)

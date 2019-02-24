@@ -1,4 +1,4 @@
-import {AppActionTypes} from "../../store";
+import { AppActionTypes } from "../../store";
 
 export enum ENotificationType {
   INFO = "info",

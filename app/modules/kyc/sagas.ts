@@ -27,7 +27,7 @@ import {
   IKycFileInfo,
   IKycIndividualData,
   IKycLegalRepresentative,
-  IKycRequestState
+  IKycRequestState,
 } from "./interfaces";
 import {
   selectCombinedBeneficialOwnerOwnership,

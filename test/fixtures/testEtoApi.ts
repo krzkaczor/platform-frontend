@@ -1,9 +1,12 @@
-import { EETOStateOnChain, TApiEtoWithCompanyAndContract } from "../../app/modules/public-etos/interfaces/interfaces";
-import { EEtoState } from "../../app/modules/eto-flow/interfaces/interfaces";
-import { EEtoDocumentLanguage, EEtoDocumentType } from "../../app/modules/eto-documents/interfaces";
 import { BigNumber } from "bignumber.js";
+import { EEtoDocumentLanguage, EEtoDocumentType } from "../../app/modules/eto-documents/interfaces";
+import { EEtoState } from "../../app/modules/eto-flow/interfaces/interfaces";
+import {
+  EETOStateOnChain,
+  TApiEtoWithCompanyAndContract,
+} from "../../app/modules/public-etos/interfaces/interfaces";
 import { etoDocuments } from "./fixtures";
-import {testCompanyApi} from "./testCompanyApi"
+import { testCompanyApi } from "./testCompanyApi";
 
 export const testEtoApi: TApiEtoWithCompanyAndContract = {
   additionalTerms: undefined,

@@ -1,6 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IStateContract } from './interfaces'
+import { IStateContract } from "./interfaces";
 
 const contractsInitialState: IStateContract = {
   platformTermsConstants: {} as any,

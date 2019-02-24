@@ -1,6 +1,6 @@
-import {genericModalIcons} from "../../components/modals/GenericModal";
-import {TMessage} from "../../components/translatedMessages/utils";
-import {AppActionTypes} from "../../store";
+import { genericModalIcons } from "../../components/modals/GenericModal";
+import { TMessage } from "../../components/translatedMessages/utils";
+import { AppActionTypes } from "../../store";
 
 export interface IStateGenericModal {
   isOpen: boolean;

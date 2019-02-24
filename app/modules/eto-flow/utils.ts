@@ -1,8 +1,9 @@
 import BigNumber from "bignumber.js";
 import * as Yup from "yup";
 
-import {IApiDetailedBookbuildingStats} from "../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
-import {  EtoCompanyInformationValidator,
+import { IApiDetailedBookbuildingStats } from "../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
+import {
+  EtoCompanyInformationValidator,
   EtoEquityTokenInfoValidator,
   EtoInvestmentTermsValidator,
   EtoKeyIndividualsValidator,
@@ -12,8 +13,8 @@ import {  EtoCompanyInformationValidator,
   EtoRiskAssessmentValidator,
   EtoTermsValidator,
   EtoVotingRightsValidator,
-  GeneralEtoDataValidator
-} from './validators'
+  GeneralEtoDataValidator,
+} from "./validators";
 
 function getErrorsNumber(validator: Yup.Schema<any>, data?: any): number {
   try {
@@ -95,7 +96,9 @@ export const calculateEtoKeyIndividualsProgress = getFormFractionDoneCalculator(
 export const calculateLegalInformationProgress = getFormFractionDoneCalculator(
   EtoLegalInformationValidator.toYup(),
 );
-export const calculateProductVisionProgress = getFormFractionDoneCalculator(EtoPitchValidator.toYup());
+export const calculateProductVisionProgress = getFormFractionDoneCalculator(
+  EtoPitchValidator.toYup(),
+);
 export const calculateEtoMediaProgress = getFormFractionDoneCalculator(
   EtoMediaValidator.toYup(),
   etoMediaProgressOptions,
@@ -114,9 +117,12 @@ export const calculateInvestmentTermsProgress = getFormFractionDoneCalculator(
   etoInvestmentTermsProgressOptions,
 );
 
-export const calculateGeneralEtoData = getFormFractionDoneCalculator(GeneralEtoDataValidator.toYup(), {
-  ignore: true,
-});
+export const calculateGeneralEtoData = getFormFractionDoneCalculator(
+  GeneralEtoDataValidator.toYup(),
+  {
+    ignore: true,
+  },
+);
 
 export function getFormFractionDoneCalculator(
   validator: Yup.Schema<any>,
@@ -140,7 +146,7 @@ export function getFormFractionDoneCalculator(
   };
 }
 
-export const bookBuildingStatsToCsvString = (stats: IApiDetailedBookbuildingStats[]):string =>
+export const bookBuildingStatsToCsvString = (stats: IApiDetailedBookbuildingStats[]): string =>
   [`email,amount,"submitted on","updated on"`]
     .concat(
       stats.map(

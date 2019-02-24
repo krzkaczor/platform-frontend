@@ -1,10 +1,10 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
+import BigNumber from "bignumber.js";
 import { IBlPublicEtoData } from "../../../../modules/eto-flow/interfaces/PublicEtoData";
 import { withModalBody } from "../../../../utils/storybookHelpers";
 import { InvestmentSummaryComponent } from "./Summary";
-import BigNumber from "bignumber.js";
 
 // tslint:disable-next-line:no-object-literal-type-assertion
 const eto = {
@@ -41,4 +41,6 @@ storiesOf("Investment/InvestmentSummary", module)
   .addDecorator(withModalBody())
   .add("default", () => <InvestmentSummaryComponent {...data} />)
   .add("with token price discount", () => <InvestmentSummaryComponent {...dataWithPriceDiscount} />)
-  .add("isIcbm", () => <InvestmentSummaryComponent {...data} isIcbm={true} estimatedReward={new BigNumber("0")} />);
+  .add("isIcbm", () => (
+    <InvestmentSummaryComponent {...data} isIcbm={true} estimatedReward={new BigNumber("0")} />
+  ));

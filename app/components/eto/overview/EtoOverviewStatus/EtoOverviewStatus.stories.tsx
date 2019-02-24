@@ -1,18 +1,19 @@
 import { storiesOf } from "@storybook/react";
+import BigNumber from "bignumber.js";
 import * as moment from "moment";
 import * as React from "react";
-import BigNumber from "bignumber.js";
 
-import {testEtoState} from "../../../../../test/fixtures/testEtoState";
-import {testEtoBl} from "../../../../../test/fixtures/testEtoBl";
+import { testEtoBl } from "../../../../../test/fixtures/testEtoBl";
+import { testEtoState } from "../../../../../test/fixtures/testEtoState";
 import {
-  EETOStateOnChain, TBlEtoWithCompanyAndContract,
+  EETOStateOnChain,
+  TBlEtoWithCompanyAndContract,
   TStateEtoWithCompanyAndContract,
 } from "../../../../modules/public-etos/interfaces/interfaces";
+import { NumericString } from "../../../../types";
 import { withStore } from "../../../../utils/storeDecorator";
 import { EtoWidgetContext } from "../../EtoWidgetView";
 import { EtoOverviewStatusLayout } from "./EtoOverviewStatus";
-import {NumericString} from "../../../../types";
 
 const etoState: TStateEtoWithCompanyAndContract = {
   ...testEtoState,

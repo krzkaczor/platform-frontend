@@ -1,5 +1,5 @@
-import { IBlCompanyEtoData } from "../../app/modules/eto-flow/interfaces/CompanyEtoData";
 import { BigNumber } from "bignumber.js";
+import { IBlCompanyEtoData } from "../../app/modules/eto-flow/interfaces/CompanyEtoData";
 
 export const testCompanyBl: IBlCompanyEtoData = {
   businessModel: "bla",

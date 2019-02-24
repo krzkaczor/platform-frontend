@@ -20,7 +20,7 @@ const createInvestmentTxData = (
   txData: string,
   contractAddress: string,
   value = new BigNumber("0"),
-):IBlTxData => ({
+): IBlTxData => ({
   to: contractAddress,
   from: selectEthereumAddressWithChecksum(state),
   data: txData,
@@ -33,7 +33,7 @@ const getEtherLockTransaction = (
   state: IAppState,
   contractsService: ContractsService,
   etoId: string,
-):IBlTxData => {
+): IBlTxData => {
   const txData = contractsService.etherLock
     .transferTx(etoId, new BigNumber(state.investmentFlow.ethValueUlps || "0"), [""])
     .getData();
@@ -44,7 +44,7 @@ const getEuroLockTransaction = (
   state: IAppState,
   contractsService: ContractsService,
   etoId: string,
-):IBlTxData => {
+): IBlTxData => {
   const txData = contractsService.euroLock
     .transferTx(etoId, new BigNumber(state.investmentFlow.euroValueUlps || "0"), [""])
     .getData();
@@ -74,7 +74,9 @@ function getEtherTokenTransaction(
     return createInvestmentTxData(state, txInput, contractsService.etherToken.address);
   } else {
     // fill up etherToken with ether from wallet
-    const txCall = contractsService.etherToken.depositAndTransferTx(etoId, etherValue, [""]).getData();
+    const txCall = contractsService.etherToken
+      .depositAndTransferTx(etoId, etherValue, [""])
+      .getData();
 
     return createInvestmentTxData(
       state,
@@ -90,7 +92,7 @@ export function* generateInvestmentTransaction({ contractsService }: TGlobalDepe
   const investmentState = state.investmentFlow;
   const eto = investmentState.etoId && selectPublicEtoById(state, investmentState.etoId);
 
-  if(eto){
+  if (eto) {
     switch (investmentState.investmentType) {
       case EInvestmentType.InvestmentWallet:
         return yield getEtherTokenTransaction(state, contractsService, eto.etoId);

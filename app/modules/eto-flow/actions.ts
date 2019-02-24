@@ -1,5 +1,5 @@
-import {DeepPartial} from "../../types";
-import { createAction, createActionFactory, createSimpleAction} from "../actionsUtils";
+import { DeepPartial } from "../../types";
+import { createAction, createActionFactory, createSimpleAction } from "../actionsUtils";
 import { TStateGeneralEtoData } from "./interfaces/interfaces";
 
 export const etoFlowActions = {

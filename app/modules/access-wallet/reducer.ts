@@ -1,6 +1,5 @@
 import { AppReducer } from "../../store";
-import { IStateSignMessageModal } from './interfaces'
-
+import { IStateSignMessageModal } from "./interfaces";
 
 const initialState: IStateSignMessageModal = {
   isModalOpen: false,

@@ -1,7 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
-import {IGasState} from "./interfaces";
-
+import { IGasState } from "./interfaces";
 
 export const gasInitialState: IGasState = {
   loading: false,

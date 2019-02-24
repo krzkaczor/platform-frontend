@@ -8,12 +8,12 @@ import { actions } from "../../../../modules/actions";
 import * as companyEtoDataInterfaces from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
 import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
-import {EtoRiskAssessmentValidator} from "../../../../modules/eto-flow/validators";
+import { EtoRiskAssessmentValidator } from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
-import {DeepPartial} from "../../../../types";
+import { DeepPartial } from "../../../../types";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { FormFieldBoolean, FormTextArea } from "../../../shared/forms";
-import {convert} from "../../utils";
+import { convert } from "../../utils";
 import { EtoFormBase } from "../EtoFormBase";
 import { Section } from "../Shared";
 import * as styles from "../Shared.module.scss";
@@ -28,10 +28,11 @@ interface IDispatchProps {
   saveData: (values: DeepPartial<companyEtoDataInterfaces.IBlCompanyEtoData>) => void;
 }
 
-type IProps = IStateProps & IDispatchProps & FormikProps<DeepPartial<companyEtoDataInterfaces.IBlCompanyEtoData>>;
+type IProps = IStateProps &
+  IDispatchProps &
+  FormikProps<DeepPartial<companyEtoDataInterfaces.IBlCompanyEtoData>>;
 
 const EtoRegistrationRiskAssessmentComponent = (props: IProps) => {
-
   return (
     <EtoFormBase title="Risk Assessment" validator={EtoRiskAssessmentValidator.toYup()}>
       <Section>
@@ -116,8 +117,10 @@ const EtoRegistrationRiskAssessment = compose<React.FunctionComponent>(
     stateToProps: s => ({
       loadingData: s.etoFlow.loading,
       savingData: s.etoFlow.saving,
-      stateValues: selectIssuerCompany(s) as DeepPartial<companyEtoDataInterfaces.IBlCompanyEtoData>,
-      browser: s.browser.name
+      stateValues: selectIssuerCompany(s) as DeepPartial<
+        companyEtoDataInterfaces.IBlCompanyEtoData
+      >,
+      browser: s.browser.name,
     }),
     dispatchToProps: dispatch => ({
       saveData: (data: DeepPartial<companyEtoDataInterfaces.IBlCompanyEtoData>) => {
@@ -130,11 +133,13 @@ const EtoRegistrationRiskAssessment = compose<React.FunctionComponent>(
       },
     }),
   }),
-  withFormik<IStateProps & IDispatchProps, DeepPartial<companyEtoDataInterfaces.IBlCompanyEtoData>>({
-    validationSchema: EtoRiskAssessmentValidator.toYup(),
-    mapPropsToValues: props => props.stateValues,
-    handleSubmit: (values, props) => props.props.saveData(values),
-  }),
+  withFormik<IStateProps & IDispatchProps, DeepPartial<companyEtoDataInterfaces.IBlCompanyEtoData>>(
+    {
+      validationSchema: EtoRiskAssessmentValidator.toYup(),
+      mapPropsToValues: props => props.stateValues,
+      handleSubmit: (values, props) => props.props.saveData(values),
+    },
+  ),
 )(EtoRegistrationRiskAssessmentComponent);
 
 export { EtoRegistrationRiskAssessmentComponent, EtoRegistrationRiskAssessment };

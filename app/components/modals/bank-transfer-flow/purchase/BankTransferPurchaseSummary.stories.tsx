@@ -1,7 +1,7 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
 import BigNumber from "bignumber.js";
+import * as React from "react";
 
 import { withModalBody } from "../../../../utils/storybookHelpers";
 import { BankTransferPurchaseLayout } from "./BankTransferPurchaseSummary";

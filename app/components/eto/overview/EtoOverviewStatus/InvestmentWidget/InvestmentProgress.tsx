@@ -64,7 +64,11 @@ const InvestmentProgress: React.FunctionComponent<TProps> = ({ eto }) => {
       svgGroupStyle={{ transform: `translate(0 4)` }}
       svgHeight={40}
     >
-      <rect x={`${successOfEtoNormalized.mul(100).toString()}%`} y={-6} className={cn(styles.successPoint)} />
+      <rect
+        x={`${successOfEtoNormalized.mul(100).toString()}%`}
+        y={-6}
+        className={cn(styles.successPoint)}
+      />
 
       <Label
         label={<FormattedMessage id="shared-component.eto-overview.invest.min-amount" />}

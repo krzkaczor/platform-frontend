@@ -1,7 +1,11 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
-import {EKycRequestType, EKycBusinessType, IKycIndividualData} from '../../modules/kyc/interfaces'
+import {
+  EKycBusinessType,
+  EKycRequestType,
+  IKycIndividualData,
+} from "../../modules/kyc/interfaces";
 import { dummyIntl } from "../../utils/injectIntlHelpers.fixtures";
 import { KYCBeneficialOwnerComponent } from "./business/BeneficialOwner";
 import { KYCBeneficialOwnersComponent } from "./business/BeneficialOwners";

@@ -6,10 +6,10 @@ import { setDisplayName } from "recompose";
 import { compose } from "redux";
 
 import { actions } from "../../../../modules/actions";
-import {  IBlCompanyEtoData} from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
+import { IBlCompanyEtoData } from "../../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/interfaces/interfaces";
 import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
-import {EtoCompanyInformationValidator} from "../../../../modules/eto-flow/validators"
+import { EtoCompanyInformationValidator } from "../../../../modules/eto-flow/validators";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { FormField, FormTextArea } from "../../../shared/forms";
@@ -18,7 +18,7 @@ import { EtoTagWidget, generateTagOptions } from "../../shared/EtoTagWidget";
 import { EtoFormBase } from "../EtoFormBase";
 import { Section } from "../Shared";
 
-import {DeepPartial} from "../../../../types";
+import { DeepPartial } from "../../../../types";
 import * as styles from "../Shared.module.scss";
 
 interface IStateProps {

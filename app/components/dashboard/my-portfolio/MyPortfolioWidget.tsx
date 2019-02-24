@@ -31,8 +31,8 @@ interface IBodyProps {
 
 interface IStateProps {
   isLoading: boolean;
-  balanceNeu?: BigNumber;
-  balanceEur?: BigNumber;
+  balanceNeu: BigNumber;
+  balanceEur: BigNumber;
   error?: string;
   isIncomingPayoutLoading: boolean;
   isIncomingPayoutAvailable: boolean;
@@ -86,8 +86,8 @@ export const MyPortfolioWidgetComponent: React.FunctionComponent<IProps> = ({
         ) : (
           <MyPortfolioWidgetComponentBody
             {...{
-              balanceEur: balanceEur!,
-              balanceNeu: balanceNeu!,
+              balanceEur: balanceEur,
+              balanceNeu: balanceNeu,
             }}
             error={error}
             isIncomingPayoutAvailable={isIncomingPayoutAvailable}

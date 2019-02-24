@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import { filter, map } from "lodash/fp";
 import { all, fork, put, select } from "redux-saga/effects";
 
-import {convert} from "../../components/eto/utils";
+import { convert } from "../../components/eto/utils";
 import { ECurrency } from "../../components/shared/Money";
 import { InvestorPortfolioMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
@@ -11,14 +11,14 @@ import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import { promisify } from "../../lib/contracts/typechain-runtime";
 import { IAppState } from "../../store";
 import { EthereumAddress } from "../../types";
-import {bigNumberToNumericString} from "../../utils/numericStringUtils";
+import { bigNumberToNumericString } from "../../utils/numericStringUtils";
 import { actions, TAction } from "../actions";
 import { IStateUser } from "../auth/interfaces";
 import { selectUser } from "../auth/selectors";
-import {TContribution} from "../contracts/interfaces";
-import {IStateCompanyEtoData} from "../eto-flow/interfaces/CompanyEtoData";
-import {EEtoState} from "../eto-flow/interfaces/interfaces";
-import {IStatePublicEtoData} from "../eto-flow/interfaces/PublicEtoData";
+import { TContribution } from "../contracts/interfaces";
+import { IStateCompanyEtoData } from "../eto-flow/interfaces/CompanyEtoData";
+import { EEtoState } from "../eto-flow/interfaces/interfaces";
+import { IStatePublicEtoData } from "../eto-flow/interfaces/PublicEtoData";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
 import * as calculatedContributionInterfaces from "./interfaces/CalculatedContribution";
@@ -66,13 +66,24 @@ export function* loadInvestorTicket(
   yield put(
     actions.investorEtoTicket.setEtoInvestorTicket(
       etoId,
-      convert(convertToInvestorTicket(investorTickerRaw),investorTicketInterfaces.blToStateConversionSpec),
+      convert(
+        convertToInvestorTicket(investorTickerRaw),
+        investorTicketInterfaces.blToStateConversionSpec,
+      ),
     ),
   );
 
-  const contribution:calculatedContributionInterfaces.IBlCalculatedContribution = yield neuCall(loadComputedContributionFromContract, action.payload.eto);
+  const contribution: calculatedContributionInterfaces.IBlCalculatedContribution = yield neuCall(
+    loadComputedContributionFromContract,
+    action.payload.eto,
+  );
 
-  yield put(actions.investorEtoTicket.setInitialCalculatedContribution(etoId, convert(contribution, calculatedContributionInterfaces.blToStateConversionSpec)));
+  yield put(
+    actions.investorEtoTicket.setInitialCalculatedContribution(
+      etoId,
+      convert(contribution, calculatedContributionInterfaces.blToStateConversionSpec),
+    ),
+  );
 }
 
 export function* loadComputedContributionFromContract(
@@ -87,18 +98,17 @@ export function* loadComputedContributionFromContract(
   const etoContract: ETOCommitment = yield contractsService.getETOCommitmentContract(eto.etoId);
 
   if (etoContract) {
-    const newInvestorContributionEurUlps:BigNumber =
+    const newInvestorContributionEurUlps: BigNumber =
       amountEuroUlps || (eto.minTicketEur && new BigNumber(eto.minTicketEur)) || new BigNumber("0");
 
     const from = selectEthereumAddressWithChecksum(state);
 
     // TODO: check whether typechain but still is not fixed
     // sorry no typechain, typechain has a bug with boolean casting
-    const contribution:TContribution = yield promisify(etoContract.rawWeb3Contract.calculateContribution, [
-      from,
-      isICBM,
-      newInvestorContributionEurUlps,
-    ]);
+    const contribution: TContribution = yield promisify(
+      etoContract.rawWeb3Contract.calculateContribution,
+      [from, isICBM, newInvestorContributionEurUlps],
+    );
 
     return convertToCalculatedContribution(contribution);
   }
@@ -161,25 +171,30 @@ export function* getIncomingPayouts({
       ),
     });
 
-    const euroTokenIncomingPayoutValue:BigNumber = euroTokenIncomingPayout.reduce(
-      (acc: BigNumber, x: BigNumber[]) => { //fixme write unit test
-        acc.add(x[1])
-        return acc
-      }, new BigNumber(0)
-    )
+    const euroTokenIncomingPayoutValue: BigNumber = euroTokenIncomingPayout.reduce(
+      (acc: BigNumber, x: BigNumber[]) => {
+        //fixme write unit test
+        acc.add(x[1]);
+        return acc;
+      },
+      new BigNumber(0),
+    );
 
-    const etherTokenIncomingPayoutValue:BigNumber = etherTokenIncomingPayout.reduce(
-      (acc: BigNumber, x: BigNumber[]) => { //fixme write unit test
-        acc.add(x[1])
-        return acc
-      }, new BigNumber(0)
-    )
+    const etherTokenIncomingPayoutValue: BigNumber = etherTokenIncomingPayout.reduce(
+      (acc: BigNumber, x: BigNumber[]) => {
+        //fixme write unit test
+        acc.add(x[1]);
+        return acc;
+      },
+      new BigNumber(0),
+    );
 
     yield put(
-      actions.investorEtoTicket.setIncomingPayouts({ //fixme write a converter fn
-        euroTokenIncomingPayoutValue : bigNumberToNumericString()(euroTokenIncomingPayoutValue),
-        etherTokenIncomingPayoutValue : bigNumberToNumericString()(etherTokenIncomingPayoutValue)
-      })
+      actions.investorEtoTicket.setIncomingPayouts({
+        //fixme write a converter fn
+        euroTokenIncomingPayoutValue: bigNumberToNumericString()(euroTokenIncomingPayoutValue),
+        etherTokenIncomingPayoutValue: bigNumberToNumericString()(etherTokenIncomingPayoutValue),
+      }),
     );
   } catch (error) {
     logger.error("Failed to load incoming payouts", error);

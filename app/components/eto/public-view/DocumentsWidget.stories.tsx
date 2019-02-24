@@ -2,11 +2,8 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
-import { IBlCompanyEtoData} from "../../../modules/eto-flow/interfaces/CompanyEtoData";
-import {
-  EEtoDocumentType,
-  TEtoDocumentTemplates,
-} from "../../../modules/eto-documents/interfaces";
+import { EEtoDocumentType, TEtoDocumentTemplates } from "../../../modules/eto-documents/interfaces";
+import { IBlCompanyEtoData } from "../../../modules/eto-flow/interfaces/CompanyEtoData";
 import { DocumentsWidgetLayout } from "./DocumentsWidget";
 
 const marketingLinks: IBlCompanyEtoData["marketingLinks"] = [

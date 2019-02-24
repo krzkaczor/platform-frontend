@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { LedgerErrorMessage } from "../../../components/translatedMessages/messages";
 import { createMessage } from "../../../components/translatedMessages/utils";
 import { actions } from "../../actions";
-import {  ILedgerWizardState} from './interfaces'
+import { ILedgerWizardState } from "./interfaces";
 import {
   DEFAULT_DERIVATION_PATH_PREFIX,
   DEFAULT_LEDGER_ACCOUNTS_PER_PAGE,

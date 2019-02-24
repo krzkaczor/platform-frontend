@@ -1,11 +1,11 @@
 import BigNumber from "bignumber.js";
 import * as React from "react";
-import {Modal} from "reactstrap";
-import {compose} from "recompose";
+import { Modal } from "reactstrap";
+import { compose } from "recompose";
 
-import {actions} from "../../../modules/actions";
-import {TWalletMigrationSteps} from "../../../modules/icbm-wallet-balance-modal/interfaces/intefaces";
-import {IBlWalletMigrationData} from "../../../modules/icbm-wallet-balance-modal/interfaces/WalletMigrationData";
+import { actions } from "../../../modules/actions";
+import { TWalletMigrationSteps } from "../../../modules/icbm-wallet-balance-modal/interfaces/intefaces";
+import { IBlWalletMigrationData } from "../../../modules/icbm-wallet-balance-modal/interfaces/WalletMigrationData";
 import {
   selectEtherBalanceIcbmModal,
   selectEtherNeumarksDueIcbmModal,
@@ -16,17 +16,17 @@ import {
   selectWalletMigrationCurrentStep,
   selectWalletMigrationData,
 } from "../../../modules/icbm-wallet-balance-modal/selectors";
-import {SelectIsVerificationFullyDone} from "../../../modules/selectors";
-import {ETokenType} from "../../../modules/tx/interfaces";
+import { SelectIsVerificationFullyDone } from "../../../modules/selectors";
+import { ETokenType } from "../../../modules/tx/interfaces";
 import {
   selectIsEtherUpgradeTargetSet,
   selectLockedWalletConnected,
 } from "../../../modules/wallet/selectors";
-import {appConnect} from "../../../store";
-import {LoadingIndicator} from "../../shared/loading-indicator";
-import {ModalComponentBody} from "../ModalComponentBody";
-import {BalanceModal} from "./BalanceModal";
-import {MigrateModal} from "./MigrateModal";
+import { appConnect } from "../../../store";
+import { LoadingIndicator } from "../../shared/loading-indicator";
+import { ModalComponentBody } from "../ModalComponentBody";
+import { BalanceModal } from "./BalanceModal";
+import { MigrateModal } from "./MigrateModal";
 
 import * as styles from "./IcbmWalletBalanceModal.module.scss";
 
@@ -56,10 +56,10 @@ interface IDispatchProps {
 
 type IProps = IStateProps &
   IDispatchProps & {
-  // For testing purpose and visual regression
-  isMigrating?: boolean;
-  success?: boolean;
-};
+    // For testing purpose and visual regression
+    isMigrating?: boolean;
+    success?: boolean;
+  };
 
 export const IcbmWalletBalanceComponentInner: React.FunctionComponent<IProps> = ({
   onGotoWallet,
@@ -80,7 +80,7 @@ export const IcbmWalletBalanceComponentInner: React.FunctionComponent<IProps> = 
 }) => (
   <div className={styles.content}>
     {!walletMigrationData || !ethAddress || isLoading ? (
-      <LoadingIndicator/>
+      <LoadingIndicator />
     ) : isWalletMigrating ? (
       <MigrateModal
         walletMigrationData={walletMigrationData[currentMigrationStep - 1]}
@@ -147,4 +147,4 @@ const IcbmWalletBalanceModal = compose<any, any>(
   }),
 )(IcbmWalletBalanceComponent);
 
-export {IcbmWalletBalanceComponent, IcbmWalletBalanceModal};
+export { IcbmWalletBalanceComponent, IcbmWalletBalanceModal };

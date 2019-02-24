@@ -9,11 +9,11 @@ import { MoneySuiteWidget } from "../../shared/MoneySuiteWidget";
 import { Panel } from "../../shared/Panel";
 import { PercentageIndicatorBar } from "../../shared/PercentageIndicatorBar";
 
+import BigNumber from "bignumber.js";
 import * as ethIcon from "../../../assets/img/eth_icon.svg";
 import * as moneyIcon from "../../../assets/img/nEUR_icon.svg";
 import * as stylesCommon from "../EtoOverviewCommon.module.scss";
 import * as styles from "./EtoRaisedAmount.module.scss";
-import BigNumber from "bignumber.js";
 
 interface IProps {
   chartData: IChartBarsData;

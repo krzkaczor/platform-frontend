@@ -2,8 +2,8 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { Row } from "reactstrap";
 
-import { testEtoApi } from "../../../test/fixtures/testEtoApi";
 import { mockedStore } from "../../../test/fixtures/mockedStore";
+import { testEtoApi } from "../../../test/fixtures/testEtoApi";
 import { EEtoState } from "../../modules/eto-flow/interfaces/interfaces";
 import { withStore } from "../../utils/storeDecorator";
 import { EtoDashboardStateViewComponent } from "./EtoDashboard";

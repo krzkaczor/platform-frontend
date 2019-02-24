@@ -1,6 +1,6 @@
 import { fork, put } from "redux-saga/effects";
 
-import {convert} from "../../components/eto/utils";
+import { convert } from "../../components/eto/utils";
 import { BookbuildingFlowMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { BOOKBUILDING_WATCHER_DELAY, EJwtPermissions } from "../../config/constants";
@@ -27,12 +27,19 @@ export function* saveMyPledgeEffect(
   etoId: string,
   pledge: pledgeInterfaces.IStatePledge,
 ): any {
-  const pledgeResult: IHttpResponse<pledgeInterfaces.IApiPledge> = yield apiEtoPledgeService.saveMyPledge(
+  const pledgeResult: IHttpResponse<
+    pledgeInterfaces.IApiPledge
+  > = yield apiEtoPledgeService.saveMyPledge(
     etoId,
     convert(pledge, pledgeInterfaces.stateToApiConversionSpec),
   );
 
-  yield put(actions.bookBuilding.setPledge(etoId, convert(pledgeResult.body, pledgeInterfaces.apiToStateConversionSpec)));
+  yield put(
+    actions.bookBuilding.setPledge(
+      etoId,
+      convert(pledgeResult.body, pledgeInterfaces.apiToStateConversionSpec),
+    ),
+  );
   yield put(actions.bookBuilding.loadBookBuildingStats(etoId));
 }
 
@@ -113,10 +120,15 @@ export function* loadBookBuildingStats(
 
   try {
     const etoId = action.payload.etoId;
-    const statsResponse: IHttpResponse<bookbuildingStatInterfaces.IApiBookBuildingStats> = yield apiEtoService.getBookBuildingStats(etoId);
+    const statsResponse: IHttpResponse<
+      bookbuildingStatInterfaces.IApiBookBuildingStats
+    > = yield apiEtoService.getBookBuildingStats(etoId);
 
-    yield put(actions.bookBuilding.setBookBuildingStats(etoId,
-      convert(statsResponse.body, bookbuildingStatInterfaces.apiToStateConversionSpec))
+    yield put(
+      actions.bookBuilding.setBookBuildingStats(
+        etoId,
+        convert(statsResponse.body, bookbuildingStatInterfaces.apiToStateConversionSpec),
+      ),
     );
   } catch (e) {
     notificationCenter.error(
@@ -135,9 +147,16 @@ export function* loadMyPledge(
 
   try {
     const etoId = action.payload.etoId;
-    const pledgeResponse: IHttpResponse<pledgeInterfaces.IApiPledge> = yield apiEtoPledgeService.getMyPledge(etoId);
+    const pledgeResponse: IHttpResponse<
+      pledgeInterfaces.IApiPledge
+    > = yield apiEtoPledgeService.getMyPledge(etoId);
 
-    yield put(actions.bookBuilding.setPledge(etoId, convert(pledgeResponse.body, pledgeInterfaces.apiToStateConversionSpec)));
+    yield put(
+      actions.bookBuilding.setPledge(
+        etoId,
+        convert(pledgeResponse.body, pledgeInterfaces.apiToStateConversionSpec),
+      ),
+    );
   } catch (e) {
     if (!(e instanceof EtoPledgeNotFound)) {
       notificationCenter.error(

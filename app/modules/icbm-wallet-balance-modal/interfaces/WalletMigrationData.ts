@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
-import {NumericString} from "../../../types";
-import {numericStringToBigNumber} from "../../../utils/numericStringUtils";
+import { NumericString } from "../../../types";
+import { numericStringToBigNumber } from "../../../utils/numericStringUtils";
 
 export interface IStateWalletMigrationData {
   smartContractAddress: string;

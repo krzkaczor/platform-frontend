@@ -1,5 +1,5 @@
 import { DeepReadonly } from "../../types";
-import {IEtoFiles, IStateEtoDocuments} from "./interfaces";
+import { IEtoFiles, IStateEtoDocuments } from "./interfaces";
 
 export const selectIsIpfsModalOpen = (state: DeepReadonly<IStateEtoDocuments>): boolean =>
   state.showIpfsModal;

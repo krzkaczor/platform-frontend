@@ -11,8 +11,7 @@ import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { downloadLink } from "../immutable-file/utils";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
-import {EEtoDocumentType, IEtoDocument, TEtoDocumentTemplates, TStateInfo} from "./interfaces";
-
+import { EEtoDocumentType, IEtoDocument, TEtoDocumentTemplates, TStateInfo } from "./interfaces";
 
 export function* generateDocumentFromTemplate(
   { apiImmutableStorage, notificationCenter, logger, apiEtoFileService }: TGlobalDependencies,
@@ -99,8 +98,11 @@ export function* downloadDocumentByType(
 ): any {
   if (action.type !== "ETO_DOCUMENTS_DOWNLOAD_BY_TYPE") return;
   try {
-    const matchingDocument:IEtoDocument = yield neuCall(getDocumentOfTypePromise, action.payload.documentType);
-    const downloadedDocument:Blob = yield apiImmutableStorage.getFile({
+    const matchingDocument: IEtoDocument = yield neuCall(
+      getDocumentOfTypePromise,
+      action.payload.documentType,
+    );
+    const downloadedDocument: Blob = yield apiImmutableStorage.getFile({
       ipfsHash: matchingDocument.ipfsHash,
       mimeType: matchingDocument.mimeType,
       asPdf: true,
@@ -121,8 +123,8 @@ export function* loadEtoFileData({
 }: TGlobalDependencies): any {
   try {
     yield put(actions.etoFlow.loadIssuerEto());
-    const stateInfo:TStateInfo = yield apiEtoFileService.getEtoFileStateInfo();
-    const allTemplates:TEtoDocumentTemplates = yield apiEtoFileService.getAllEtoTemplates();
+    const stateInfo: TStateInfo = yield apiEtoFileService.getEtoFileStateInfo();
+    const allTemplates: TEtoDocumentTemplates = yield apiEtoFileService.getAllEtoTemplates();
     yield put(
       actions.etoDocuments.loadEtoFileData({
         allTemplates,

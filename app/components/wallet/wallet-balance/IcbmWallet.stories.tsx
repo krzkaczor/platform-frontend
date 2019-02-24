@@ -1,16 +1,14 @@
+import { storiesOf } from "@storybook/react";
 import BigNumber from "bignumber.js";
-import {storiesOf} from "@storybook/react";
 import * as React from "react";
 
-import {IcbmWallet} from "./IcbmWallet";
+import { IcbmWallet } from "./IcbmWallet";
 
 storiesOf("ICBM Wallet", module)
   .add("Normal Wallet", () => (
     <IcbmWallet
-      onUpgradeEtherClick={() => {
-      }}
-      onUpgradeEuroClick={() => {
-      }}
+      onUpgradeEtherClick={() => {}}
+      onUpgradeEuroClick={() => {}}
       data={{
         hasFunds: true,
         isEtherUpgradeTargetSet: true,
@@ -25,10 +23,8 @@ storiesOf("ICBM Wallet", module)
   ))
   .add("With Eth only", () => (
     <IcbmWallet
-      onUpgradeEtherClick={() => {
-      }}
-      onUpgradeEuroClick={() => {
-      }}
+      onUpgradeEtherClick={() => {}}
+      onUpgradeEuroClick={() => {}}
       data={{
         hasFunds: true,
         isEtherUpgradeTargetSet: true,
@@ -43,10 +39,8 @@ storiesOf("ICBM Wallet", module)
   ))
   .add("With Euro only", () => (
     <IcbmWallet
-      onUpgradeEtherClick={() => {
-      }}
-      onUpgradeEuroClick={() => {
-      }}
+      onUpgradeEtherClick={() => {}}
+      onUpgradeEuroClick={() => {}}
       data={{
         hasFunds: true,
         isEtherUpgradeTargetSet: true,
@@ -61,10 +55,8 @@ storiesOf("ICBM Wallet", module)
   ))
   .add("With Both Values", () => (
     <IcbmWallet
-      onUpgradeEtherClick={() => {
-      }}
-      onUpgradeEuroClick={() => {
-      }}
+      onUpgradeEtherClick={() => {}}
+      onUpgradeEuroClick={() => {}}
       data={{
         hasFunds: true,
         isEtherUpgradeTargetSet: true,
@@ -95,10 +87,8 @@ storiesOf("ICBM Wallet", module)
   ))
   .add("With Both Values and Callbacks but target not set", () => (
     <IcbmWallet
-      onUpgradeEtherClick={() => {
-      }}
-      onUpgradeEuroClick={() => {
-      }}
+      onUpgradeEtherClick={() => {}}
+      onUpgradeEuroClick={() => {}}
       data={{
         hasFunds: true,
         isEtherUpgradeTargetSet: false,

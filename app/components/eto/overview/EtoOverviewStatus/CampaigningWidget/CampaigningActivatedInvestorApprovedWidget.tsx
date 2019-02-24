@@ -9,10 +9,13 @@ import {
 
 import BigNumber from "bignumber.js";
 import { actions } from "../../../../../modules/actions";
-import {blToStateConversionSpec, IBlPledge} from "../../../../../modules/bookbuilding-flow/interfaces/Pledge";
+import {
+  blToStateConversionSpec,
+  IBlPledge,
+} from "../../../../../modules/bookbuilding-flow/interfaces/Pledge";
 import { appConnect } from "../../../../../store";
 import { ECurrency } from "../../../../shared/Money";
-import {convert} from "../../../utils";
+import { convert } from "../../../utils";
 import {
   CampaigningActivatedInvestorApprovedWidgetLayout,
   CampaigningFormState,
@@ -59,7 +62,9 @@ const CampaigningActivatedInvestorApprovedWidget = compose<
   appConnect<{}, IDispatchProps, IExternalProps>({
     dispatchToProps: (dispatch, props) => ({
       savePledge: (newPledge: IBlPledge) => {
-        dispatch(actions.bookBuilding.savePledge(props.etoId, convert(newPledge, blToStateConversionSpec)));
+        dispatch(
+          actions.bookBuilding.savePledge(props.etoId, convert(newPledge, blToStateConversionSpec)),
+        );
       },
       deletePledge: () => {
         dispatch(actions.bookBuilding.deletePledge(props.etoId));

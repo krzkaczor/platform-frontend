@@ -1,4 +1,4 @@
-import {EWalletSubType, EWalletType} from "../web3/interfaces";
+import { EWalletSubType, EWalletType } from "../web3/interfaces";
 
 export interface IStateAuth {
   user?: IStateUser;
@@ -29,7 +29,6 @@ export interface IApiUser {
   walletType: EWalletType;
   walletSubtype: EWalletSubType;
 }
-
 
 export enum EUserType {
   INVESTOR = "investor",

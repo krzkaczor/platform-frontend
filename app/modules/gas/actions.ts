@@ -1,5 +1,5 @@
 import { createAction, createSimpleAction } from "../actionsUtils";
-import {IStateGasModel} from "./interfaces";
+import { IStateGasModel } from "./interfaces";
 
 export const gasActions = {
   gasApiEnsureLoading: () => createSimpleAction("GAS_API_ENSURE_LOADING"),

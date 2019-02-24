@@ -1,22 +1,22 @@
 import { effects } from "redux-saga";
 import { fork, put, select } from "redux-saga/effects";
 
-import {convert} from "../../components/eto/utils";
+import { convert } from "../../components/eto/utils";
 import { EtoDocumentsMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { IHttpResponse } from "../../lib/api/client/IHttpClient";
 import { IAppState } from "../../store";
-import {DeepPartial} from "../../types";
+import { DeepPartial } from "../../types";
 import { actions, TAction } from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
-import {IApiDetailedBookbuildingStats} from "../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
+import { IApiDetailedBookbuildingStats } from "../bookbuilding-flow/interfaces/DetailedBookbuildingStats";
 import { loadEtoContract } from "../public-etos/sagas";
 import { neuCall, neuTakeEvery, neuTakeLatest } from "../sagasUtils";
 import * as companyEtoDataInterfaces from "./interfaces/CompanyEtoData";
-import {EEtoState} from "./interfaces/interfaces";
-import * as publicEtoInterfaces from './interfaces/PublicEtoData';
+import { EEtoState } from "./interfaces/interfaces";
+import * as publicEtoInterfaces from "./interfaces/PublicEtoData";
 import { selectIsNewPreEtoStartDateValid, selectIssuerCompany, selectIssuerEto } from "./selectors";
 import { bookBuildingStatsToCsvString, createCsvDataUri, downloadFile } from "./utils";
 
@@ -26,10 +26,17 @@ export function* loadIssuerEto({
   logger,
 }: TGlobalDependencies): any {
   try {
-    const companyResponse: IHttpResponse<companyEtoDataInterfaces.IApiCompanyEtoData> = yield apiEtoService.getCompany();
-    const company = convert(companyResponse.body, companyEtoDataInterfaces.apiToStateConversionSpec);
+    const companyResponse: IHttpResponse<
+      companyEtoDataInterfaces.IApiCompanyEtoData
+    > = yield apiEtoService.getCompany();
+    const company = convert(
+      companyResponse.body,
+      companyEtoDataInterfaces.apiToStateConversionSpec,
+    );
 
-    const etoResponse: IHttpResponse<publicEtoInterfaces.IApiPublicEtoData> = yield apiEtoService.getMyEto();
+    const etoResponse: IHttpResponse<
+      publicEtoInterfaces.IApiPublicEtoData
+    > = yield apiEtoService.getMyEto();
     const eto = convert(etoResponse.body, publicEtoInterfaces.apiToStateConversionSpec);
 
     if (eto.state === EEtoState.ON_CHAIN) {
@@ -88,10 +95,11 @@ export function* downloadBookBuildingStats(
 ): any {
   if (action.type !== "ETO_FLOW_DOWNLOAD_BOOK_BUILDING_STATS") return;
   try {
-    const detailedStatsResponse: IHttpResponse<IApiDetailedBookbuildingStats[]> =
-      yield apiEtoService.getDetailedBookBuildingStats();
+    const detailedStatsResponse: IHttpResponse<
+      IApiDetailedBookbuildingStats[]
+    > = yield apiEtoService.getDetailedBookBuildingStats();
 
-    const dataAsString:string = yield bookBuildingStatsToCsvString(detailedStatsResponse.body);
+    const dataAsString: string = yield bookBuildingStatsToCsvString(detailedStatsResponse.body);
 
     yield downloadFile(createCsvDataUri(dataAsString), "whitelisted_investors.csv");
   } catch (e) {
@@ -102,7 +110,9 @@ export function* downloadBookBuildingStats(
   }
 }
 
-function stripEtoDataOptionalFields(data: DeepPartial<publicEtoInterfaces.IBlPublicEtoData>): DeepPartial<publicEtoInterfaces.IBlPublicEtoData> {
+function stripEtoDataOptionalFields(
+  data: DeepPartial<publicEtoInterfaces.IBlPublicEtoData>,
+): DeepPartial<publicEtoInterfaces.IBlPublicEtoData> {
   // formik will pass empty strings into numeric fields that are optional, see
   // https://github.com/jaredpalmer/formik/pull/827
   // todo: we should probably enumerate Yup schema and clean up all optional numbers
@@ -122,11 +132,18 @@ export function* saveEtoData(
 ): any {
   if (action.type !== "ETO_FLOW_SAVE_DATA_START") return;
   try {
-    const currentCompanyData: companyEtoDataInterfaces.IBlCompanyEtoData = yield effects.select(selectIssuerCompany);
-    const currentEtoData: publicEtoInterfaces.IBlPublicEtoData = yield effects.select(selectIssuerEto);
+    const currentCompanyData: companyEtoDataInterfaces.IBlCompanyEtoData = yield effects.select(
+      selectIssuerCompany,
+    );
+    const currentEtoData: publicEtoInterfaces.IBlPublicEtoData = yield effects.select(
+      selectIssuerEto,
+    );
     yield apiEtoService.putCompany({
       ...convert(currentCompanyData, companyEtoDataInterfaces.blToApiConversionSpec),
-      ...convert(action.payload.data.companyData, companyEtoDataInterfaces.stateToApiConversionSpec),
+      ...convert(
+        action.payload.data.companyData,
+        companyEtoDataInterfaces.stateToApiConversionSpec,
+      ),
     });
     if (currentEtoData.state === EEtoState.PREVIEW)
       yield apiEtoService.putMyEto(
@@ -136,8 +153,8 @@ export function* saveEtoData(
             ...currentEtoData,
             ...action.payload.data.etoData,
           }),
-          publicEtoInterfaces.blToApiConversionSpec
-        )
+          publicEtoInterfaces.blToApiConversionSpec,
+        ),
       );
     yield put(actions.etoFlow.loadDataStart());
     yield put(actions.routing.goToDashboard());

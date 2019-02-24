@@ -1,7 +1,7 @@
-import {inject, injectable} from "inversify";
+import { inject, injectable } from "inversify";
 
-import {symbols} from "../../di/symbols";
-import {IHttpClient, IHttpResponse} from "./client/IHttpClient";
+import { symbols } from "../../di/symbols";
+import { IHttpClient, IHttpResponse } from "./client/IHttpClient";
 
 import {
   IKycBeneficialOwner,
@@ -16,8 +16,8 @@ import {
   KycFileInfoValidator,
   KycIndividualDataValidator,
   KycLegalRepresentativeValidator,
-  KycRequestStateValidator
-} from "../../modules/kyc/validators"
+  KycRequestStateValidator,
+} from "../../modules/kyc/validators";
 
 const BASE_PATH = "/api/kyc/";
 

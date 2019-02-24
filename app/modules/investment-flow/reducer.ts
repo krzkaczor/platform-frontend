@@ -1,7 +1,7 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 
-import {EInvestmentType, IStateInvestmentFlow} from './interfaces'
+import { EInvestmentType, IStateInvestmentFlow } from "./interfaces";
 
 export const investmentFlowInitialState: IStateInvestmentFlow = {
   etoId: null,

@@ -7,30 +7,34 @@ import { selectEtoOnChainStateById } from "../public-etos/selectors";
 import { EValidationState } from "../tx/sender/interfaces";
 import { selectTxValidationState } from "../tx/sender/selectors";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
-import {EBankTransferFlowState, EInvestmentCurrency, EInvestmentErrorState, EInvestmentType} from "./interfaces";
+import {
+  EBankTransferFlowState,
+  EInvestmentCurrency,
+  EInvestmentErrorState,
+  EInvestmentType,
+} from "./interfaces";
 
 // State Selectors
 
-export const selectInvestmentEthValueUlps = (state: IAppState):BigNumber | null =>
-  state.investmentFlow.ethValueUlps
-    ? new BigNumber(state.investmentFlow.ethValueUlps)
-    : null;
+export const selectInvestmentEthValueUlps = (state: IAppState): BigNumber | null =>
+  state.investmentFlow.ethValueUlps ? new BigNumber(state.investmentFlow.ethValueUlps) : null;
 
-export const selectInvestmentEurValueUlps = (state: IAppState):BigNumber | null =>
-  state.investmentFlow.euroValueUlps
-    ? new BigNumber(state.investmentFlow.euroValueUlps)
-    : null;
+export const selectInvestmentEurValueUlps = (state: IAppState): BigNumber | null =>
+  state.investmentFlow.euroValueUlps ? new BigNumber(state.investmentFlow.euroValueUlps) : null;
 
-export const selectInvestmentErrorState = (state: IAppState):EInvestmentErrorState | undefined => state.investmentFlow.errorState;
+export const selectInvestmentErrorState = (state: IAppState): EInvestmentErrorState | undefined =>
+  state.investmentFlow.errorState;
 
-export const selectInvestmentType = (state: IAppState):EInvestmentType  | undefined => state.investmentFlow.investmentType;
+export const selectInvestmentType = (state: IAppState): EInvestmentType | undefined =>
+  state.investmentFlow.investmentType;
 
-export const selectInvestmentEtoId = (state: IAppState):string | null => state.investmentFlow.etoId;
+export const selectInvestmentEtoId = (state: IAppState): string | null =>
+  state.investmentFlow.etoId;
 
-export const selectIsInvestmentInputValidated = (state: IAppState):boolean =>
+export const selectIsInvestmentInputValidated = (state: IAppState): boolean =>
   state.investmentFlow.isValidatedInput;
 
-export const selectInvestmentActiveTypes = (state: IAppState):ReadonlyArray<EInvestmentType> =>
+export const selectInvestmentActiveTypes = (state: IAppState): ReadonlyArray<EInvestmentType> =>
   state.investmentFlow.activeInvestmentTypes;
 
 export const selectBankTransferFlowState = (state: IAppState): EBankTransferFlowState | undefined =>
@@ -41,11 +45,10 @@ export const selectIsBankTransferGasStipend = (state: IAppState): boolean =>
 
 // Derived Values
 
-export const selectIsICBMInvestment = (state: IAppState):boolean => {
+export const selectIsICBMInvestment = (state: IAppState): boolean => {
   const type = selectInvestmentType(state);
   return type === EInvestmentType.ICBMEth || type === EInvestmentType.ICBMnEuro;
 };
-
 
 export const selectIsReadyToInvest = (state: IAppState) => {
   const ethValue = selectInvestmentEthValueUlps(state);
@@ -59,22 +62,21 @@ export const selectIsReadyToInvest = (state: IAppState) => {
   );
 };
 
-
-export const selectCurrencyByInvestmentType = (state: IAppState):EInvestmentCurrency => {
+export const selectCurrencyByInvestmentType = (state: IAppState): EInvestmentCurrency => {
   const type = selectInvestmentType(state);
   return type === EInvestmentType.InvestmentWallet || type === EInvestmentType.ICBMEth
     ? EInvestmentCurrency.Ether
     : EInvestmentCurrency.Euro;
 };
 
-export const selectBankTransferReferenceCode = (state: IAppState):string | null => {
+export const selectBankTransferReferenceCode = (state: IAppState): string | null => {
   const addressHex = selectEthereumAddressWithChecksum(state);
 
   const reference = state.investmentFlow.bankTransferReference
     ? state.investmentFlow.bankTransferReference.toUpperCase()
     : null;
   const etoId = selectInvestmentEtoId(state);
-  if(etoId && reference) {
+  if (etoId && reference) {
     const date = moment().format("DD-MM-YYYY"); //FIXME this is not utc!
 
     let code = `Investment Amount, Reservation and Acquisition Agreement from ${date} NF ${addressHex} REF ${reference}`;
@@ -90,6 +92,6 @@ export const selectBankTransferReferenceCode = (state: IAppState):string | null 
     return code;
     // see https://github.com/Neufund/platform-backend/wiki/5.4.-Use-Case-EUR-T-deposit for reference
   } else {
-    return null
+    return null;
   }
 };

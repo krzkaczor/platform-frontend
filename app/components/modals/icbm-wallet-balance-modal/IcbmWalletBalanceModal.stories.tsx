@@ -1,9 +1,9 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
+import BigNumber from "bignumber.js";
 import { withModalBody } from "../../../utils/storybookHelpers";
 import { IcbmWalletBalanceComponentInner } from "./IcbmWalletBalanceModal";
-import BigNumber from "bignumber.js";
 
 export const dummyEthereumAddress = "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359";
 

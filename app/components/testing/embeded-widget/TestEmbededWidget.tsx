@@ -3,7 +3,6 @@ import { compose } from "recompose";
 
 import { actions } from "../../../modules/actions";
 import { TBlEtoWithCompanyAndContract } from "../../../modules/public-etos/interfaces/interfaces";
-import {IStatePublicEtos} from "../../../modules/public-etos/interfaces/PublicEto";
 import {
   selectEtoWidgetError,
   selectEtoWithCompanyAndContractById,
@@ -50,7 +49,7 @@ const TestEmbededWidget = compose<IStateProps, IRouterParams>(
   appConnect<IStateProps, {}, IRouterParams & IRouterParams>({
     stateToProps: (state, props) => ({
       eto: selectEtoWithCompanyAndContractById(state, props.etoId),
-      widgetError: selectEtoWidgetError(state.publicEtos as IStatePublicEtos),
+      widgetError: selectEtoWidgetError(state.publicEtos),
     }),
   }),
   onEnterAction({

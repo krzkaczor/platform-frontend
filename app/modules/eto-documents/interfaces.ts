@@ -1,4 +1,4 @@
-import {EtoStateToCamelcase} from "../eto-flow/interfaces/interfaces";
+import { EtoStateToCamelcase } from "../eto-flow/interfaces/interfaces";
 
 export interface IStateEtoDocuments {
   loading: boolean;

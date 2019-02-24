@@ -2,8 +2,8 @@ import { put, select } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ETOCommitment } from "../../../../lib/contracts/ETOCommitment";
-import {IStateTxData} from "../../../../modules/web3/interfaces";
-import {NumericString} from "../../../../types";
+import { IStateTxData } from "../../../../modules/web3/interfaces";
+import { NumericString } from "../../../../types";
 import { actions } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
@@ -27,7 +27,9 @@ export function* generateGetClaimTransaction(
     gasPrice: gasPriceWithOverhead.toString() as NumericString,
   };
 
-  const estimatedGasWithOverhead:string = yield web3Manager.estimateGasWithOverhead(txInitialDetails);
+  const estimatedGasWithOverhead: string = yield web3Manager.estimateGasWithOverhead(
+    txInitialDetails,
+  );
 
   const txDetails: IStateTxData = {
     ...txInitialDetails,

@@ -11,6 +11,11 @@ storiesOf("MyPortfolioWidget", module)
       isLoading
       isIncomingPayoutLoading
       isIncomingPayoutAvailable={false}
+      {...{
+        balanceEur: new BigNumber("12312352413"),
+        balanceNeu: new BigNumber(Q18.mul(123)),
+        isIcbmWalletConnected: true,
+      }}
     />
   ))
   .add("loaded", () => (
@@ -30,7 +35,11 @@ storiesOf("MyPortfolioWidget", module)
       isLoading={false}
       isIncomingPayoutLoading={false}
       isIncomingPayoutAvailable={false}
-      {...{ balanceEur: new BigNumber("0"), balanceNeu: new BigNumber("0"), isIcbmWalletConnected: true }}
+      {...{
+        balanceEur: new BigNumber("0"),
+        balanceNeu: new BigNumber("0"),
+        isIcbmWalletConnected: true,
+      }}
     />
   ))
   .add("error", () => (
@@ -39,6 +48,10 @@ storiesOf("MyPortfolioWidget", module)
       isIncomingPayoutLoading={false}
       isIncomingPayoutAvailable={false}
       error={"bla bla error"}
-      {...{ balanceEur: new BigNumber("0"), balanceNeu: new BigNumber("0"), isIcbmWalletConnected: true }}
+      {...{
+        balanceEur: new BigNumber("0"),
+        balanceNeu: new BigNumber("0"),
+        isIcbmWalletConnected: true,
+      }}
     />
   ));

@@ -3,7 +3,7 @@ import { put, select } from "redux-saga/effects";
 
 import BigNumber from "bignumber.js";
 import { TGlobalDependencies } from "../../../../di/setupBindings";
-import {EthereumAddress, NumericString} from "../../../../types";
+import { EthereumAddress, NumericString } from "../../../../types";
 import { actions } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
@@ -11,7 +11,7 @@ import {
   selectIsEtherUpgradeTargetSet,
   selectIsEuroUpgradeTargetSet,
 } from "../../../wallet/selectors";
-import {IStateTxData} from "../../../web3/interfaces";
+import { IStateTxData } from "../../../web3/interfaces";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { ETokenType } from "../../interfaces";
 
@@ -19,9 +19,9 @@ export function* generateEuroUpgradeTransaction({
   contractsService,
   web3Manager,
 }: TGlobalDependencies): any {
-  const userAddress:EthereumAddress = yield select(selectEthereumAddressWithChecksum);
-  const gasPriceWithOverhead:BigNumber = yield select(selectStandardGasPriceWithOverHead);
-  const migrationTarget:boolean = yield select(selectIsEuroUpgradeTargetSet);
+  const userAddress: EthereumAddress = yield select(selectEthereumAddressWithChecksum);
+  const gasPriceWithOverhead: BigNumber = yield select(selectStandardGasPriceWithOverHead);
+  const migrationTarget: boolean = yield select(selectIsEuroUpgradeTargetSet);
 
   if (!migrationTarget) {
     throw new Error();
@@ -38,7 +38,9 @@ export function* generateEuroUpgradeTransaction({
     gasPrice: gasPriceWithOverhead.toString() as NumericString,
   };
 
-  const estimatedGasWithOverhead:BigNumber = yield web3Manager.estimateGasWithOverhead(txInitialDetails);
+  const estimatedGasWithOverhead: BigNumber = yield web3Manager.estimateGasWithOverhead(
+    txInitialDetails,
+  );
 
   const txDetails: IStateTxData = {
     ...txInitialDetails,
@@ -52,7 +54,7 @@ export function* generateEtherUpgradeTransaction({
   web3Manager,
 }: TGlobalDependencies): any {
   const userAddress: EthereumAddress = yield select(selectEthereumAddressWithChecksum);
-  const gasPriceWithOverhead:BigNumber = yield select(selectStandardGasPriceWithOverHead);
+  const gasPriceWithOverhead: BigNumber = yield select(selectStandardGasPriceWithOverHead);
   const migrationTarget: boolean = yield select(selectIsEtherUpgradeTargetSet);
 
   if (!migrationTarget) {

@@ -30,10 +30,18 @@ describe("NumberUtils", () => {
 
   describe("normalize", () => {
     it("should normalize given number to a specified range", () => {
-      expect(normalize({ min: new BigNumber(0), max: new BigNumber(100 )}, new BigNumber(100))).to.eq(1);
-      expect(normalize({ min: new BigNumber(0), max: new BigNumber(100 )}, new BigNumber(0))).to.eq(0);
-      expect(normalize({ min: new BigNumber(0), max: new BigNumber(100 )}, new BigNumber(25))).to.eq(0.25);
-      expect(normalize({ min: new BigNumber(0), max: new BigNumber(100 )}, new BigNumber(80))).to.eq(0.8);
+      expect(
+        normalize({ min: new BigNumber(0), max: new BigNumber(100) }, new BigNumber(100)),
+      ).to.eq(1);
+      expect(normalize({ min: new BigNumber(0), max: new BigNumber(100) }, new BigNumber(0))).to.eq(
+        0,
+      );
+      expect(
+        normalize({ min: new BigNumber(0), max: new BigNumber(100) }, new BigNumber(25)),
+      ).to.eq(0.25);
+      expect(
+        normalize({ min: new BigNumber(0), max: new BigNumber(100) }, new BigNumber(80)),
+      ).to.eq(0.8);
     });
   });
 

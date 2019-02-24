@@ -1,12 +1,12 @@
 import BigNumber from "bignumber.js";
 
-import {ECurrency} from "../../../components/shared/Money";
-import {NumericString} from "../../../types";
+import { ECurrency } from "../../../components/shared/Money";
+import { NumericString } from "../../../types";
 import {
   bigNumberToNumericString,
   numberToNumericString,
   numericStringToBigNumber,
-  numericStringToNumber
+  numericStringToNumber,
 } from "../../../utils/numericStringUtils";
 
 export interface IApiPledge {
@@ -28,17 +28,17 @@ export interface IBlPledge {
 }
 
 export const stateToApiConversionSpec = {
-  amountEur: numericStringToNumber()
+  amountEur: numericStringToNumber(),
 };
 
 export const apiToStateConversionSpec = {
-  amountEur: numberToNumericString()
+  amountEur: numberToNumericString(),
 };
 
 export const stateToBlConversionSpec = {
-  amountEur: numericStringToBigNumber()
+  amountEur: numericStringToBigNumber(),
 };
 
 export const blToStateConversionSpec = {
-  amountEur: bigNumberToNumericString()
+  amountEur: bigNumberToNumericString(),
 };

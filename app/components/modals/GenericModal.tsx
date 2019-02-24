@@ -4,7 +4,7 @@ import { Modal, Row } from "reactstrap";
 import { compose, setDisplayName, withHandlers } from "recompose";
 
 import { actions } from "../../modules/actions";
-import {IBlGenericModalObject} from "../../modules/generic-modal/interfaces";
+import { IBlGenericModalObject } from "../../modules/generic-modal/interfaces";
 import {
   selectGenericModalComponent,
   selectGenericModalIsOpen,

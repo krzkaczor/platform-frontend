@@ -16,7 +16,6 @@ import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { LoadingIndicator } from "../shared/loading-indicator";
 import { EtoOverviewStatus } from "./overview/EtoOverviewStatus";
 
-import {IStatePublicEtos} from "../../modules/public-etos/interfaces/PublicEto";
 import * as styles from "./overview/EtoOverviewStatus/EtoOverviewStatus.module.scss";
 
 interface IStateProps {
@@ -65,7 +64,7 @@ const EtoWidgetView = compose<TProps, IRouterParams>(
   appConnect<IStateProps, {}, IRouterParams>({
     stateToProps: (state, props) => ({
       eto: selectEtoWithCompanyAndContract(state, props.previewCode),
-      widgetError: selectEtoWidgetError(state.publicEtos as IStatePublicEtos),
+      widgetError: selectEtoWidgetError(state.publicEtos),
     }),
   }),
   onEnterAction({

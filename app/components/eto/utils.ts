@@ -25,10 +25,10 @@ export const convert = (data: any, conversionSpec: any) => {
     const dataCopy = cloneDeep(data);
     Object.keys(conversionSpec).forEach(key => {
       const fieldValue = get(dataCopy, key);
-      if (isFunction(conversionSpec[key])){
+      if (isFunction(conversionSpec[key])) {
         set(dataCopy, key, convertField(fieldValue, conversionSpec[key]));
       } else {
-        set(dataCopy, key, convert(fieldValue, conversionSpec[key]))
+        set(dataCopy, key, convert(fieldValue, conversionSpec[key]));
       }
     });
     return dataCopy;
@@ -101,12 +101,13 @@ export const parseStringToInteger = () => (data: string | number | undefined) =>
   }
 };
 
-export const convertToPrecision = (precision: number) => (value: string):string | undefined => {
-  const data = new BigNumber(value)
+export const convertToPrecision = (precision: number) => (value: string): string | undefined => {
+  const data = new BigNumber(value);
   if (!data.isNaN()) {
-    return data.toNumber().toLocaleString(undefined, { //fixme toLocaleString()
-      maximumFractionDigits: precision
-    })
+    return data.toNumber().toLocaleString(undefined, {
+      //fixme toLocaleString()
+      maximumFractionDigits: precision,
+    });
   } else {
     return undefined;
   }

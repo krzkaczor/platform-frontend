@@ -1,9 +1,9 @@
-import { TBlEtoWithCompanyAndContract } from "../../app/modules/public-etos/interfaces/interfaces";
 import { BigNumber } from "bignumber.js";
-import { EEtoState } from "../../app/modules/eto-flow/interfaces/interfaces";
 import { EEtoDocumentLanguage, EEtoDocumentType } from "../../app/modules/eto-documents/interfaces";
+import { EEtoState } from "../../app/modules/eto-flow/interfaces/interfaces";
+import { TBlEtoWithCompanyAndContract } from "../../app/modules/public-etos/interfaces/interfaces";
 import { etoDocuments } from "./fixtures";
-import {testCompanyBl} from "./testCompanyBl"
+import { testCompanyBl } from "./testCompanyBl";
 
 export const testEtoBl: TBlEtoWithCompanyAndContract = {
   additionalTerms: undefined,

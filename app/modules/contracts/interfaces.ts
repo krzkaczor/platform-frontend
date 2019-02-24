@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
-import {NumericString} from '../../types'
-import {numericStringToBigNumber} from "../../utils/numericStringUtils";
+import { NumericString } from "../../types";
+import { numericStringToBigNumber } from "../../utils/numericStringUtils";
 
 /**
  * Constants from Platform Terms.
@@ -112,4 +112,4 @@ export interface IStateContract {
   platformTermsConstants: IStatePlatformTermsConstants;
 }
 
-export type TContribution = [boolean, boolean, BigNumber, BigNumber, BigNumber, BigNumber, boolean]
+export type TContribution = [boolean, boolean, BigNumber, BigNumber, BigNumber, BigNumber, boolean];

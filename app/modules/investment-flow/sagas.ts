@@ -2,12 +2,12 @@ import BigNumber from "bignumber.js";
 import { delay } from "redux-saga";
 import { put, select, take, takeEvery, takeLatest } from "redux-saga/effects";
 
-import {convert} from "../../components/eto/utils";
+import { convert } from "../../components/eto/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import * as txInterfaces from "../../modules/web3/interfaces";
 import { IAppState } from "../../store";
-import {NumericString} from "../../types";
+import { NumericString } from "../../types";
 import { compareBigNumbers } from "../../utils/BigNumberUtils";
 import { isLessThanNHours } from "../../utils/Date.utils";
 import { extractNumber } from "../../utils/StringUtils";
@@ -37,11 +37,7 @@ import {
   selectLockedEtherBalance,
   selectLockedEuroTokenBalance,
 } from "../wallet/selectors";
-import {
-  EInvestmentCurrency,
-  EInvestmentErrorState,
-  EInvestmentType,
-} from "./interfaces";
+import { EInvestmentCurrency, EInvestmentErrorState, EInvestmentType } from "./interfaces";
 import {
   selectCurrencyByInvestmentType,
   selectInvestmentEthValueUlps,
@@ -84,20 +80,35 @@ function* computeAndSetCurrencies(value: BigNumber, currency: EInvestmentCurrenc
   const state: IAppState = yield select();
   const etherPriceEur = selectEtherPriceEur(state);
   const eurPriceEther = selectEurPriceEther(state);
-  if (value.isNaN()) { //fixme remove this.
+  if (value.isNaN()) {
+    //fixme remove this.
     yield put(actions.investmentFlow.setEthValue(null));
     yield put(actions.investmentFlow.setEurValue(null));
   } else if (etherPriceEur && !etherPriceEur.isZero()) {
     switch (currency) {
       case EInvestmentCurrency.Ether:
         const eurVal = value.mul(etherPriceEur);
-        yield put(actions.investmentFlow.setEthValue(value.toFixed(0, BigNumber.ROUND_UP) as NumericString));
-        yield put(actions.investmentFlow.setEurValue(eurVal.toFixed(0, BigNumber.ROUND_UP) as NumericString));
+        yield put(
+          actions.investmentFlow.setEthValue(value.toFixed(0, BigNumber.ROUND_UP) as NumericString),
+        );
+        yield put(
+          actions.investmentFlow.setEurValue(eurVal.toFixed(
+            0,
+            BigNumber.ROUND_UP,
+          ) as NumericString),
+        );
         return;
       case EInvestmentCurrency.Euro:
         const ethVal = value.mul(eurPriceEther);
-        yield put(actions.investmentFlow.setEthValue(ethVal.toFixed(0, BigNumber.ROUND_UP) as NumericString));
-        yield put(actions.investmentFlow.setEurValue(value.toFixed(0, BigNumber.ROUND_UP) as NumericString));
+        yield put(
+          actions.investmentFlow.setEthValue(ethVal.toFixed(
+            0,
+            BigNumber.ROUND_UP,
+          ) as NumericString),
+        );
+        yield put(
+          actions.investmentFlow.setEurValue(value.toFixed(0, BigNumber.ROUND_UP) as NumericString),
+        );
         return;
     }
   }
@@ -135,14 +146,17 @@ function* investEntireBalance(): any {
 function calculateInvestmentError(state: IAppState): EInvestmentErrorState | undefined {
   const investmentFlow = state.investmentFlow;
 
-  if(!investmentFlow.etoId) {
+  if (!investmentFlow.etoId) {
     return;
   } else {
-    const euroValue = investmentFlow.euroValueUlps !== null ? new BigNumber(investmentFlow.euroValueUlps) : null;
-    const etherValue = investmentFlow.ethValueUlps !== null ? new BigNumber(investmentFlow.ethValueUlps) : null;
+    const euroValue =
+      investmentFlow.euroValueUlps !== null ? new BigNumber(investmentFlow.euroValueUlps) : null;
+    const etherValue =
+      investmentFlow.ethValueUlps !== null ? new BigNumber(investmentFlow.ethValueUlps) : null;
     const wallet = state.wallet.data;
-    const contribs:calculatedContributionInterfaces.IBlCalculatedContribution | undefined =
-      selectCalculatedContribution(state, investmentFlow.etoId);
+    const contribs:
+      | calculatedContributionInterfaces.IBlCalculatedContribution
+      | undefined = selectCalculatedContribution(state, investmentFlow.etoId);
     const ticketSizes = selectCalculatedEtoTicketSizesUlpsById(state, investmentFlow.etoId);
 
     if (!contribs || !euroValue || !etherValue || !wallet || !ticketSizes) return;
@@ -153,19 +167,21 @@ function calculateInvestmentError(state: IAppState): EInvestmentErrorState | und
       investmentFlow.investmentType === EInvestmentType.InvestmentWallet &&
       etherValue.add(gasPrice).comparedTo(selectLiquidEtherBalance(state.wallet)) > 0
     ) {
-        return EInvestmentErrorState.ExceedsWalletBalance;
+      return EInvestmentErrorState.ExceedsWalletBalance;
     }
 
-    if (investmentFlow.investmentType === EInvestmentType.ICBMnEuro &&
+    if (
+      investmentFlow.investmentType === EInvestmentType.ICBMnEuro &&
       euroValue.comparedTo(selectLockedEuroTokenBalance(state.wallet)) > 0
     ) {
-        return EInvestmentErrorState.ExceedsWalletBalance;
+      return EInvestmentErrorState.ExceedsWalletBalance;
     }
 
-    if (investmentFlow.investmentType === EInvestmentType.ICBMEth &&
+    if (
+      investmentFlow.investmentType === EInvestmentType.ICBMEth &&
       etherValue.comparedTo(selectLockedEtherBalance(state.wallet)) > 0
     ) {
-        return EInvestmentErrorState.ExceedsWalletBalance;
+      return EInvestmentErrorState.ExceedsWalletBalance;
     }
 
     if (euroValue.comparedTo(ticketSizes.minTicketEurUlps) < 0) {
@@ -195,18 +211,25 @@ function* validateAndCalculateInputs({ contractsService }: TGlobalDependencies):
     const etoContract: ETOCommitment = yield contractsService.getETOCommitmentContract(eto.etoId);
     if (etoContract) {
       const isICBM = selectIsICBMInvestment(state);
-      const contribution:calculatedContributionInterfaces.IBlCalculatedContribution =
-        yield neuCall(loadComputedContributionFromContract, eto, value, isICBM);
+      const contribution: calculatedContributionInterfaces.IBlCalculatedContribution = yield neuCall(
+        loadComputedContributionFromContract,
+        eto,
+        value,
+        isICBM,
+      );
 
-      yield put(actions.investorEtoTicket.setCalculatedContribution(eto.etoId,
-        convert(contribution, calculatedContributionInterfaces.blToStateConversionSpec)
-      ));
+      yield put(
+        actions.investorEtoTicket.setCalculatedContribution(
+          eto.etoId,
+          convert(contribution, calculatedContributionInterfaces.blToStateConversionSpec),
+        ),
+      );
 
       state = yield select();
 
       const error = yield calculateInvestmentError(state);
-      if(error){
-        yield put(actions.investmentFlow.setErrorState(error))
+      if (error) {
+        yield put(actions.investmentFlow.setErrorState(error));
       }
 
       // validate and set transaction if not on bank transfer
@@ -215,7 +238,11 @@ function* validateAndCalculateInputs({ contractsService }: TGlobalDependencies):
           txValidateSaga,
           actions.txValidator.txSenderValidateDraft({ type: ETxSenderType.INVEST }),
         );
-        yield put(actions.txSender.setTransactionData(convert(txData, txInterfaces.stateToBlConversionSpec)));
+        yield put(
+          actions.txSender.setTransactionData(
+            convert(txData, txInterfaces.stateToBlConversionSpec),
+          ),
+        );
       }
 
       yield put(actions.investmentFlow.setIsInputValidated(true));
@@ -233,9 +260,11 @@ function* start(action: TAction): any {
   yield put(actions.investmentFlow.setEtoId(etoId));
   yield put(actions.kyc.kycLoadClientData());
   yield put(actions.txTransactions.startInvestment());
-  yield put(actions.investorEtoTicket.loadEtoInvestorTicket(
-    convert(selectPublicEtoById(state, etoId), publicEtoDataInterfaces.blToApiConversionSpec)
-  ));
+  yield put(
+    actions.investorEtoTicket.loadEtoInvestorTicket(
+      convert(selectPublicEtoById(state, etoId), publicEtoDataInterfaces.blToApiConversionSpec),
+    ),
+  );
 
   yield take("TX_SENDER_WATCH_PENDING_TXS_DONE");
   yield getActiveInvestmentTypes();
@@ -249,7 +278,7 @@ export function* onInvestmentTxModalHide(): any {
 function* getActiveInvestmentTypes(): any {
   const state: IAppState = yield select();
   const etoId = selectInvestmentEtoId(state);
-  if(etoId){
+  if (etoId) {
     const eto = selectEtoWithCompanyAndContractById(state, etoId);
     const etoState = selectEtoOnChainStateById(state, etoId);
 

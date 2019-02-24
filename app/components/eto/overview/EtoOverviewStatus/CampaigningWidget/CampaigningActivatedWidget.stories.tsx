@@ -1,10 +1,10 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
+import BigNumber from "bignumber.js";
 import { EETOStateOnChain } from "../../../../../modules/public-etos/interfaces/interfaces";
 import { withStore } from "../../../../../utils/storeDecorator";
 import { CampaigningActivatedWidgetComponent } from "./CampaigningActivatedWidget";
-import BigNumber from "bignumber.js";
 
 storiesOf("ETO/CampaigningActivatedWidgetComponent", module)
   .addDecorator(withStore({}))

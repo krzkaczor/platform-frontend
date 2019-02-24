@@ -1,8 +1,7 @@
-import {IStateLockedWallet} from "../../wallet/interfaces";
-import {IStateWalletMigrationData} from "./WalletMigrationData";
+import { IStateLockedWallet } from "../../wallet/interfaces";
+import { IStateWalletMigrationData } from "./WalletMigrationData";
 
 export type TWalletMigrationSteps = 1 | 2; //todo enum
-
 
 export interface IStateIcbmWalletBalanceModal {
   isOpen: boolean;

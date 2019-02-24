@@ -87,7 +87,7 @@ const CampaigningActivatedInvestorApprovedWidgetLayout: React.FunctionComponent<
         </div>
       ) : (
         <Formik<{ amount: string }>
-          initialValues={{ amount: pledgedAmount ? pledgedAmount.toString() : ""}}
+          initialValues={{ amount: pledgedAmount ? pledgedAmount.toString() : "" }}
           onSubmit={({ amount }) => backNow(new BigNumber(amount))}
           validationSchema={generateCampaigningValidator(minPledge, maxPledge)}
         >
