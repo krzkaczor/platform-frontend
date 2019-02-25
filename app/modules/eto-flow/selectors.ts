@@ -12,10 +12,12 @@ import {
   TBlEtoWithCompanyAndContract,
 } from "../public-etos/interfaces/interfaces";
 import { selectEtoWithCompanyAndContract, selectPublicEto } from "../public-etos/selectors";
-import { IBlCompanyEtoData } from "./interfaces/CompanyEtoData";
+import * as companyEtoDataInterfaces from "./interfaces/CompanyEtoData";
 import { EEtoState } from "./interfaces/interfaces";
-import { IBlPublicEtoData } from "./interfaces/PublicEtoData";
+import {IBlPublicEtoData} from "./interfaces/PublicEtoData";
 import { isValidEtoStartDate } from "./utils";
+import { convert } from "../../components/eto/utils";
+
 
 export const selectIssuerEtoPreviewCode = (state: IAppState): string | undefined =>
   state.etoFlow.etoPreviewCode;
@@ -55,7 +57,7 @@ export const selectIsBookBuilding = (state: IAppState): boolean => {
 export const selectMaxPledges = (state: IAppState): BigNumber | null => {
   const eto = selectIssuerEto(state);
 
-  return eto !== undefined ? eto.maxPledges : null;
+  return eto !== undefined ? new BigNumber(eto.maxPledges) : null;
 };
 
 export const selectEtoId = (state: IAppState): string | undefined => {
@@ -96,11 +98,11 @@ export const selectIssuerEtoIsRetail = (state: IAppState): boolean => {
   return false;
 };
 
-export const selectIssuerCompany = (state: IAppState): IBlCompanyEtoData | undefined => {
+export const selectIssuerCompany = (state: IAppState): companyEtoDataInterfaces.IBlCompanyEtoData | undefined => {
   const eto = selectIssuerEtoWithCompanyAndContract(state);
 
   if (eto) {
-    return eto.company;
+    return convert(eto.company, companyEtoDataInterfaces.stateToBlConversionSpec);
   }
 
   return undefined;
@@ -110,7 +112,7 @@ export const selectIssuerEtoLoading = (state: IAppState): boolean => state.etoFl
 
 export const selectCombinedEtoCompanyData = (
   state: IAppState,
-): DeepPartial<IBlPublicEtoData & IBlCompanyEtoData> => {
+): DeepPartial<IBlPublicEtoData & companyEtoDataInterfaces.IBlCompanyEtoData> => {
   return {
     ...selectIssuerCompany(state),
     ...selectIssuerEto(state),

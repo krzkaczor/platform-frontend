@@ -12,7 +12,7 @@ import {
   removeEmptyKeyValueFields,
 } from "./utils";
 
-describe("removeEmptyKeyValueField", () => {
+describe.only("removeEmptyKeyValueField", () => {
   it("removes empty key-value fields", () => {
     const badInput = { a: undefined };
     const goodInput = { a: 1, b: 2 };

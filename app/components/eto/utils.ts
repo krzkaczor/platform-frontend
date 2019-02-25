@@ -25,11 +25,14 @@ export const convert = (data: any, conversionSpec: any) => {
     const dataCopy = cloneDeep(data);
     Object.keys(conversionSpec).forEach(key => {
       const fieldValue = get(dataCopy, key);
-      if (isFunction(conversionSpec[key])) {
+      console.log("convert", fieldValue, conversionSpec[key], Array.isArray(conversionSpec[key] ))
+      if (fieldValue && (isFunction(conversionSpec[key] || Array.isArray(conversionSpec[key] )))) {
+        console.log("convert convertField")
         set(dataCopy, key, convertField(fieldValue, conversionSpec[key]));
-      } else {
+      } else if (fieldValue){
+        console.log("convert else")
         set(dataCopy, key, convert(fieldValue, conversionSpec[key]));
-      }
+      } else return dataCopy
     });
     return dataCopy;
   } else {
@@ -38,6 +41,7 @@ export const convert = (data: any, conversionSpec: any) => {
 };
 
 const convertField = (input: any, f: any) => {
+  console.log("convertField", input, f)
   if (Array.isArray(f)) {
     return flow(f)(input);
   } else {
@@ -65,6 +69,7 @@ const findNonEmptyKeyValueField = (data: any) => {
 //removes data left from empty key-value fields, e.g. {key:undefined,value:undefined}
 export const removeEmptyKeyValueFields = () => (data: ICompoundField[] | undefined) => {
   if (data !== undefined && data !== null) {
+    console.log("removeEmptyKeyValueFields",data)
     const cleanData = data.filter(field => findNonEmptyKeyValueField(field));
     return cleanData.length ? cleanData : undefined;
   } else {

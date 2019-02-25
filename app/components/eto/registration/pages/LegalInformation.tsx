@@ -173,6 +173,7 @@ const EtoRegistrationLegalInformation = compose<React.FunctionComponent<IExterna
     }),
     dispatchToProps: dispatch => ({
       saveData: (data: Partial<IBlCompanyEtoData>) => {
+        console.log("EtoRegistrationLegalInformation",data)
         const convertedData = convert(data, fromFormState);
         dispatch(actions.etoFlow.saveDataStart({ companyData: convertedData, etoData: {} }));
       },
