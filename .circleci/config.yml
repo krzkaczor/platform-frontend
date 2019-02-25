@@ -213,7 +213,7 @@ workflows:
            - install-lint
       - test-e2e:
           requires:
-            - build-frontend
+            - build-frontend-hu
       - danger-ci:
          requires:
            - install-lint
