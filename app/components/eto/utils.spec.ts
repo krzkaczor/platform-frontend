@@ -12,7 +12,7 @@ import {
   removeEmptyKeyValueFields,
 } from "./utils";
 
-describe.only("removeEmptyKeyValueField", () => {
+describe("removeEmptyKeyValueField", () => {
   it("removes empty key-value fields", () => {
     const badInput = { a: undefined };
     const goodInput = { a: 1, b: 2 };
@@ -84,6 +84,13 @@ describe("convert", () => {
     const spec = {
       key1: [bla2fufu, fufu2pfui],
       "key2.key2_1": bla2fufu,
+    };
+    const data = {
+      key1: "bla",
+      key2: {
+        key2_1: "bla",
+        key2_2: "foobar",
+      },
     };
 
     const expectedOutput = {
