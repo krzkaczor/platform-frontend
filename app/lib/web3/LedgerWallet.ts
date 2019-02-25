@@ -1,6 +1,6 @@
 import ledgerWalletProvider from "ledger-wallet-provider";
 import * as semver from "semver";
-import * as Web3 from "web3";
+import Web3 from "web3";
 import * as Web3ProviderEngine from "web3-provider-engine";
 // tslint:disable-next-line
 import * as RpcSubprovider from "web3-provider-engine/subproviders/rpc";
@@ -15,6 +15,7 @@ import { IPersonalWallet, SignerType } from "./PersonalWeb3";
 import { IEthereumNetworkConfig } from "./types";
 import { Web3Adapter } from "./Web3Adapter";
 import { SignerRejectConfirmationError, SignerTimeoutError } from "./Web3Manager";
+import { Transaction } from 'web3-core/types';
 
 const CHECK_INTERVAL = 1000;
 
@@ -89,7 +90,7 @@ export class LedgerWallet implements IPersonalWallet {
     };
   }
 
-  public async sendTransaction(data: Web3.TxData): Promise<string> {
+  public async sendTransaction(data: Transaction): Promise<string> {
     try {
       return await this.web3Adapter.sendTransaction(data);
     } catch (e) {

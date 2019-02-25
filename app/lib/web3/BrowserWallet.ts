@@ -1,14 +1,14 @@
 import * as hex2ascii from "hex2ascii";
 import { injectable } from "inversify";
-import * as Web3 from "web3";
+import Web3 from "web3";
 
 import { EWalletSubType, EWalletType } from "../../modules/web3/types";
 import { EthereumAddress, EthereumNetworkId } from "../../types";
-import { promisify } from "../../utils/promisify";
 import { IBrowserWalletMetadata } from "../persistence/WalletMetadataObjectStorage";
 import { IPersonalWallet, SignerType } from "./PersonalWeb3";
 import { Web3Adapter } from "./Web3Adapter";
 import { SignerRejectConfirmationError } from "./Web3Manager";
+import { Transaction } from "web3-core/types";
 
 export class BrowserWalletError extends Error {}
 export class BrowserWalletMissingError extends BrowserWalletError {}
@@ -71,7 +71,7 @@ export class BrowserWallet implements IPersonalWallet {
     }
   }
 
-  public async sendTransaction(data: Web3.TxData): Promise<string> {
+  public async sendTransaction(data: Transaction): Promise<string> {
     try {
       return await this.web3Adapter.sendTransaction(data);
     } catch (e) {
@@ -157,7 +157,7 @@ export class BrowserWalletConnector {
   }
 
   private async getBrowserWalletType(web3: Web3): Promise<EWalletSubType> {
-    const nodeIdString = await promisify(web3.version.getNode)();
+    const nodeIdString = web3.version;
     const matchNodeIdString = nodeIdString.toLowerCase();
 
     if (matchNodeIdString.includes("metamask")) {

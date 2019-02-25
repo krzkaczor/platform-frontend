@@ -5,7 +5,7 @@ import { addHexPrefix, hashPersonalMessage, toBuffer } from "ethereumjs-util";
 import { inject, injectable } from "inversify";
 import * as nacl from "tweetnacl";
 import * as naclUtil from "tweetnacl-util";
-import * as Web3 from "web3";
+import Web3 from "web3";
 import * as Web3ProviderEngine from "web3-provider-engine";
 // tslint:disable-next-line
 import * as HookedWalletSubprovider from "web3-provider-engine/subproviders/hooked-wallet";
@@ -20,6 +20,7 @@ import { EthereumAddress } from "../../types";
 import { promisify } from "../../utils/promisify";
 import { ILightWalletMetadata } from "../persistence/WalletMetadataObjectStorage";
 import { Web3Adapter } from "./Web3Adapter";
+import { Transaction } from "web3-core/types";
 
 export interface ICreateVault {
   password: string;
@@ -236,14 +237,14 @@ export class LightWallet implements IPersonalWallet {
     }
   }
 
-  public async sendTransaction(txData: Web3.TxData): Promise<string> {
+  public async sendTransaction(txData: Transaction): Promise<string> {
     if (!this.password) {
       throw new LightWalletMissingPasswordError();
     }
-    const nonce = await this.web3Adapter.getTransactionCount(txData.from);
+    const nonce = await this.web3Adapter.getTransactionCount(txData.from as string);
 
     const encodedTxData: IRawTxData = {
-      from: txData.from,
+      from: txData.from as string,
       to: addHexPrefix(txData.to!),
       gas: addHexPrefix(new BigNumber(txData.gas || 0).toString(16)),
       gasPrice: addHexPrefix(new BigNumber(txData.gasPrice || 0).toString(16)),

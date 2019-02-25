@@ -1,6 +1,6 @@
 import { delay, END, eventChannel } from "redux-saga";
 import { put } from "redux-saga/effects";
-import * as Web3 from "web3";
+import { Transaction } from 'web3-core/types';
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { TPendingTxs } from "../../../lib/api/users/interfaces";
@@ -74,7 +74,7 @@ export type TEventEmitterChannelEvents =
     }
   | {
       type: EEventEmitterChannelEvents.TX_MINED;
-      tx: Web3.Transaction;
+      tx: Transaction;
     }
   | {
       type: EEventEmitterChannelEvents.ERROR;

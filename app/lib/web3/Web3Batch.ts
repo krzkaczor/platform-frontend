@@ -1,9 +1,13 @@
 import { interfaces } from "inversify";
-import * as Web3 from "web3";
+import Web3 from "web3";
+import { JsonRpcPayload, provider } from 'web3-providers/types';
+
 
 import { symbols } from "../../di/symbols";
 import { SelectPropertyNames } from "../../types";
 import { ILogger } from "../dependencies/logger";
+import { Eth } from 'web3-eth/types';
+import { Network } from 'web3-net/types';
 
 /**
  * Wrapper on top of web3 Batch API to execute batch request on the next event loop cycle
@@ -14,7 +18,7 @@ class Web3AutoExecuteBatch {
 
   constructor(private web3: Web3, private logger: ILogger) {}
 
-  add(request: Web3.JSONRPCRequestPayload): any {
+  add(request: JsonRpcPayload): any {
     if (this.web3Batch === undefined) {
       this.web3Batch = (this.web3 as any).createBatch();
       // execute batch request on the next event loop
@@ -32,11 +36,11 @@ class Web3AutoExecuteBatch {
   };
 }
 
-type Web3VersionMethodNames = SelectPropertyNames<Web3.VersionApi, Function>;
-type Web3VersionMethod = Web3.VersionApi[Web3VersionMethodNames];
+type Web3VersionMethodNames = SelectPropertyNames<Network, Function>;
+type Web3VersionMethod = Network[Web3VersionMethodNames];
 
-type Web3EthMethodNames = SelectPropertyNames<Web3.EthApi, Function>;
-type Web3EthMethod = Web3.EthApi[Web3EthMethodNames];
+type Web3EthMethodNames = SelectPropertyNames<Eth, Function>;
+type Web3EthMethod = Eth[Web3EthMethodNames];
 
 /**
  * Extends Web3 by auto batching common ethereum RPC requests
@@ -44,16 +48,16 @@ type Web3EthMethod = Web3.EthApi[Web3EthMethodNames];
 class Web3Batch extends Web3 {
   batch: Web3AutoExecuteBatch;
 
-  constructor(provider: Web3.Provider, batchFactory: Web3BatchFactoryType, logger: ILogger) {
+  constructor(provider: provider, batchFactory: Web3BatchFactoryType, logger: ILogger) {
     super(provider);
 
     this.batch = batchFactory(this);
 
-    // List of web3.version methods which calls should be batched in one request when possible
-    const versionMethods: Web3VersionMethodNames[] = ["getNetwork"];
+    /* // List of web3.version methods which calls should be batched in one request when possible
+    const versionMethods: Web3VersionMethodNames[] = ["getId"];
     versionMethods.forEach(
-      method => (this.version[method] = this.forceBatchExecution(this.version[method])),
-    );
+      method => (this.[method] = this.forceBatchExecution(this.version[method])),
+    ); */
 
     // List of web3.eth methods which calls should be batched in one request when possible
     const ethMethods: Web3EthMethodNames[] = ["call", "getCode", "getBalance"];
@@ -73,12 +77,12 @@ const web3BatchFactory: (context: interfaces.Context) => Web3BatchFactoryType = 
   return (web3: Web3) => new Web3AutoExecuteBatch(web3, logger);
 };
 
-type Web3FactoryType = (provider: Web3.Provider) => Web3;
+type Web3FactoryType = (provider: provider) => Web3;
 
 const web3Factory: (context: interfaces.Context) => Web3FactoryType = context => {
   const logger = context.container.get<ILogger>(symbols.logger);
   const batchFactory = context.container.get<Web3BatchFactoryType>(symbols.web3BatchFactory);
-  return (provider: Web3.Provider) => new Web3Batch(provider, batchFactory, logger);
+  return (provider: provider) => new Web3Batch(provider, batchFactory, logger);
 };
 
 export {

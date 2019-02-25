@@ -1,4 +1,4 @@
-import { isAddress, toChecksumAddress } from "web3-utils";
+import { isAddress, toChecksumAddress } from "web3/node_modules/web3-utils";
 
 import { TBigNumberVariant } from "../../lib/web3/types";
 import { EthereumAddress, EthereumAddressWithChecksum, EthereumNetworkId } from "../../types";

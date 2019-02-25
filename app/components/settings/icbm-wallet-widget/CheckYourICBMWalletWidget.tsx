@@ -1,7 +1,7 @@
 import { Formik, FormikConsumer } from "formik";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import * as Web3Utils from "web3-utils";
+import * as Web3Utils from "web3/node_modules/web3-utils";
 
 import { actions } from "../../../modules/actions";
 import { appConnect } from "../../../store";

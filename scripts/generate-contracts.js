@@ -1,4 +1,3 @@
-const tc = require("typechain");
 const path = require("path");
 const fs = require("fs");
 const loadAppEnv = require("../webpack/loadAppEnv");
@@ -21,19 +20,10 @@ async function generateKnownInterfaces() {
   );
 }
 
-tc.generateTypeChainWrappers({
-  outDir,
-  glob: `${contractsPath}/contracts/*.json`,
-  force: true,
-})
-  .catch(e => {
-    console.error("Failed to generate typechain contract wrappers");
-    console.error(e.message);
-    process.exit(1);
-  })
-  .then(() => generateKnownInterfaces())
-  .catch(e => {
-    console.error("Failed to read meta.json and generate knownInterfaces.json");
-    console.error(e.message);
-    process.exit(1);
-  });
+try {
+  generateKnownInterfaces();
+} catch (e) {
+  console.error("Failed to read meta.json and generate knownInterfaces.json");
+  console.error(e.message);
+  process.exit(1);
+}

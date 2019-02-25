@@ -43,7 +43,8 @@ describe("Wallet Migration Flow", () => {
       kyc: "individual",
     }).then(() => {
       const privKeyHex = "0x79177f5833b64c8fdcc9862f5a779b8ff0e1853bf6e9e4748898d4b6de7e8c93";
-      const account = new web3Accounts().privateKeyToAccount(privKeyHex);
+      const account = new web3Accounts.Accounts("").privateKeyToAccount(privKeyHex);
+
       cy.visit("/profile");
       cy.get(tid("models.profile.icbm-wallet-widget.check-your-icbm-wallet-widget.address")).type(
         ADDRESS + "{enter}",
@@ -93,7 +94,7 @@ describe("Wallet Migration Flow", () => {
                   getNonceRpc(NODE_ADDRESS, "0x429123b08DF32b0006fd1F3b0Ef893A8993802f3").then(
                     nonce => {
                       getChainIdRpc(NODE_ADDRESS).then(chainId => {
-                        account
+                        (account as any)
                           .signTransaction({
                             to,
                             value: "0",
@@ -156,7 +157,7 @@ describe("Wallet Migration Flow", () => {
                                               "0x429123b08DF32b0006fd1F3b0Ef893A8993802f3",
                                             ).then(nonce => {
                                               getChainIdRpc(NODE_ADDRESS).then(chainId => {
-                                                account
+                                                (account as any)
                                                   .signTransaction({
                                                     to,
                                                     value: "0",

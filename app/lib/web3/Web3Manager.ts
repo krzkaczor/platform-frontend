@@ -1,6 +1,6 @@
 import { BigNumber } from "bignumber.js";
 import { decorate, inject, injectable } from "inversify";
-import * as Web3 from "web3";
+import Web3 from "web3";
 
 import { EventEmitter } from "events";
 import { symbols } from "../../di/symbols";
@@ -17,6 +17,7 @@ import { IPersonalWallet } from "./PersonalWeb3";
 import { IEthereumNetworkConfig } from "./types";
 import { Web3Adapter } from "./Web3Adapter";
 import { Web3FactoryType } from "./Web3Batch";
+import { Transaction } from "web3-core/types";
 
 const DEFAULT_UPPER_GAS_LIMIT = 2000000;
 const DEFAULT_LOWER_GAS_LIMIT = 21000;
@@ -69,13 +70,18 @@ export class Web3Manager extends EventEmitter {
   private readonly web3ConnectionWatcher: AsyncIntervalScheduler;
 
   public async initialize(): Promise<void> {
+    const test = new Web3.providers.HttpProvider(this.ethereumNetworkConfig.rpcUrl);
     const web3 = this.web3Factory(
       new Web3.providers.HttpProvider(this.ethereumNetworkConfig.rpcUrl),
     );
 
     this.internalWeb3Adapter = new Web3Adapter(web3);
-
-    this.networkId = await this.internalWeb3Adapter.getNetworkId();
+    debugger;
+    try {
+      this.networkId = await this.internalWeb3Adapter.getNetworkId();
+    } catch (e) {
+      debugger;
+    }
   }
 
   public async plugPersonalWallet(personalWallet: IPersonalWallet): Promise<void> {
@@ -110,7 +116,7 @@ export class Web3Manager extends EventEmitter {
     }
   }
 
-  public async sendTransaction(tx: Web3.TxData): Promise<string> {
+  public async sendTransaction(tx: Transaction): Promise<string> {
     if (this.personalWallet) {
       return this.personalWallet.sendTransaction(tx);
     } else {
@@ -118,19 +124,19 @@ export class Web3Manager extends EventEmitter {
     }
   }
 
-  public async getTransactionByHash(txHash: string): Promise<Web3.Transaction> {
+  public async getTransactionByHash(txHash: string): Promise<Transaction> {
     return this.internalWeb3Adapter.getTransactionByHash(txHash);
   }
 
   public async getBalance(userAddress: string): Promise<BigNumber> {
     return this.internalWeb3Adapter.getBalance(userAddress);
   }
-  public async estimateGas(txData: Partial<Web3.TxData>): Promise<number> {
+  public async estimateGas(txData: Partial<Transaction>): Promise<number> {
     const encodedTxData = encodeTransaction(txData);
     return this.internalWeb3Adapter.estimateGas(encodedTxData);
   }
 
-  public async estimateGasWithOverhead(txData: Partial<Web3.TxData>): Promise<string> {
+  public async estimateGasWithOverhead(txData: Partial<Transaction>): Promise<string> {
     const gas = await this.estimateGas(txData);
     if (gas < DEFAULT_LOWER_GAS_LIMIT || gas > DEFAULT_UPPER_GAS_LIMIT) {
       this.logger.error(

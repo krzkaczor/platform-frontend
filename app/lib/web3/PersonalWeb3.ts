@@ -1,9 +1,9 @@
-import { TxData } from "web3";
 
 import { EWalletSubType, EWalletType } from "../../modules/web3/types";
 import { EthereumAddress, EthereumNetworkId } from "../../types";
 import { TWalletMetadata } from "../persistence/WalletMetadataObjectStorage";
 import { Web3Adapter } from "./Web3Adapter";
+import { Transaction } from 'web3-core/types';
 
 // strings should match signer types on backend
 export enum SignerType {
@@ -26,7 +26,7 @@ export interface IPersonalWallet {
   // sign message with the best available method for a given wallet
   signMessage(data: string): Promise<string>;
 
-  sendTransaction(txData: TxData): Promise<string>;
+  sendTransaction(txData: Transaction): Promise<string>;
 
   getMetadata(): TWalletMetadata;
 }

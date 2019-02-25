@@ -1,7 +1,7 @@
 import * as LightWalletProvider from "eth-lightwallet";
 import * as ethSig from "eth-sig-util";
 import { addHexPrefix, hashPersonalMessage, toBuffer } from "ethereumjs-util";
-import { toChecksumAddress } from "web3-utils";
+import { toChecksumAddress } from "web3/node_modules/web3-utils";
 
 import { tid } from "../../../test/testUtils";
 import { promisify } from "../../utils/promisify";

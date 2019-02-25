@@ -79,7 +79,7 @@ describe("Wallet Withdraw", () => {
       goToDashboard();
 
       const testValue = (5).toString();
-      const account = new Web3Accounts().create();
+      const account = new Web3Accounts.Accounts("").create();
       const expectedInput = `0x64663ea6000000000000000000000000${account.address
         .slice(2)
         .toLowerCase()}0000000000000000000000000000000000000000000000004563918244f40000`;

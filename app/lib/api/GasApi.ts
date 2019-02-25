@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import * as Web3Utils from "web3-utils";
+import * as Web3Utils from "web3/node_modules/web3-utils";
 import * as YupTS from "../yup-ts";
 
 import { symbols } from "../../di/symbols";
