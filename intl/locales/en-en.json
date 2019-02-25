@@ -1024,6 +1024,7 @@
   "wallet-selector.neuwallet.register-prompt": "New to blockchain? Create a Light Wallet",
   "wallet-selector.neuwallet.restore": "Restore",
   "wallet-selector.neuwallet.welcome": "Login with your Light Wallet",
+  "wallet-selector.recover.help.back": "BACK",
   "wallet-selector.recover.help.contact-for-help": "Do you need help? Click here",
   "wallet-selector.recover.help.email-login": "Before proceeding with wallet recovery, we recommend checking your inbox (or spam folder) for the access link you received after creating your Light Wallet",
   "wallet-selector.recover.help.ledger-lost": "I've lost my Ledger Nano",
