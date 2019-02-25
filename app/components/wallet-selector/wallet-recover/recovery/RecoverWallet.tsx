@@ -77,10 +77,10 @@ class RecoveryProcessesComponent extends React.Component<IMainRecoveryProps, IMa
         )}
 
         <Col md={12}>
-          <Row className="ml-2 mt-5 pt-5 mr-2 justify-content-between align-items-center">
+          <Row className="mx-2 mt-5 pt-5 justify-content-between align-items-center">
             <Link to={recoverRoutes.help}>
               <i className="fa fa-lg fa-angle-left mr-1" />
-              BACK
+              <FormattedMessage id="wallet-selector.recover.help.back"/>
             </Link>
             <ExternalLink href={`${externalRoutes.neufundSupport}/home`}>
               <FormattedMessage id="wallet-selector.recover.help.contact-for-help" />{" "}
