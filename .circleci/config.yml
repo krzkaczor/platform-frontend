@@ -63,6 +63,29 @@ jobs:
           root: /home/circleci/app
           paths:
             - ./
+
+  build-frontend-hu:
+    docker:
+      - image: krzkaczor/neufund-platform-base
+    working_directory: /home/circleci/app
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v15-deps-{{ checksum "package.json" }}
+            - v15-deps-
+
+      - run: yarn prepare-heroku
+      - run:
+          command: yarn build:prod:e2e
+          no_output_timeout: 10m
+      # If build takes more than 10mins then fail
+      - persist_to_workspace:
+          root: /home/circleci/app
+          paths:
+            - ./
+
   test:
     docker:
       - image: krzkaczor/neufund-platform-base
@@ -181,7 +204,7 @@ workflows:
   mainflow:
     jobs:
       - install-lint
-      - build-frontend:
+      - build-frontend-hu:
           requires:
             - install-lint
       - deploy-heroku
