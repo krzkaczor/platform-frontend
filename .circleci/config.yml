@@ -36,12 +36,6 @@ jobs:
         - image: krzkaczor/neufund-platform-base
       steps:
         - checkout
-        - restore_cache:
-            keys:
-              - v15-deps-{{ checksum "package.json" }}
-              - v15-deps-
-        - run: yarn --ignore-engines
-        - run: yarn prepare
         - run:
             name: Deploy Master to Heroku
             command: |
