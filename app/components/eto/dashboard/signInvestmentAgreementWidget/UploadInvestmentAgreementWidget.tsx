@@ -28,7 +28,7 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  stateOnChain: EETOStateOnChain;
+  stateOnChain?: EETOStateOnChain;
   agreementTemplate: IEtoDocument;
   uploadedAgreement: IEtoDocument | null;
 }
@@ -76,7 +76,7 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
       const etoId = selectEtoId(state);
       if (etoId) {
         return ({
-          stateOnChain: selectEtoOnChainStateById(state, etoId)!,
+          stateOnChain: selectEtoOnChainStateById(state, etoId),
           agreementTemplate: selectEtoDocumentData(state.etoDocuments).allTemplates.investmentAndShareholderAgreementTemplate,
           uploadedAgreement: selectUploadedInvestmentAgreement(state),
         })

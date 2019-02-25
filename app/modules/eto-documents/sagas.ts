@@ -189,6 +189,20 @@ function* uploadEtoFile(
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_UPLOAD_DOCUMENT_TITLE),
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_UPLOAD_DOCUMENT_DESCRIPTION),
     );
+
+    const matchingDocument = yield neuCall(getDocumentOfTypePromise, documentType);
+    if (matchingDocument)
+      yield apiEtoFileService.deleteSpecificEtoDocument(matchingDocument.ipfsHash);
+
+    const uploadResult:IEtoDocument = yield apiEtoFileService.uploadEtoDocument(file, documentType);
+    notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_UPLOADED));
+
+    if(documentType ===  EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){//fixme mb move to separate saga
+      const state = yield select();
+      const etoId = yield selectEtoId(state);
+      // yield put(actions.etoDocuments.loadFileDataStart());
+      yield put(actions.etoFlow.signInvestmentAgreement(etoId, uploadResult.ipfsHash))
+    }
   } catch (e) {
     if (e instanceof FileAlreadyExists) {
       notificationCenter.error(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_EXISTS));
