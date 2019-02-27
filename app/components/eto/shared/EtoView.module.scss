@@ -1,3 +1,27 @@
+.layout {
+  display:grid;
+  grid-template: auto/1fr 1fr 1fr;
+  grid-gap: 2rem;
+}
+
+.block-wrapper {
+  grid-column: 1/span 3;
+}
+.grid-block-wrapper {
+  grid-column: 1/span 3;
+  display: grid;
+  grid-template: auto/1fr 1fr 1fr;
+  grid-gap: 2rem;
+}
+
+.two-thirds-wrapper {
+  grid-column: 1/span 2;
+}
+
+.one-third-wrapper {
+  grid-column: 3/span 1;
+}
+
 .people-carousel-wrapper {
   padding: 0 25px;
 }

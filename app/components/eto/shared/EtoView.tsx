@@ -102,7 +102,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
   return (
     <>
       <PersonProfileModal />
-      <article data-test-id="eto.public-view">
+      <article data-test-id="eto.public-view" className={styles.layout}>
         <Cover
           companyName={brandName}
           companyOneliner={companyOneliner}
@@ -120,9 +120,10 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
           }}
           tags={categories}
         />
-        <EtoOverviewStatus eto={eto} className="mb-3" publicView={true} />
-        <Row>
-          <Col className="mb-4">
+        <div className={styles.blockWrapper}>
+          <EtoOverviewStatus eto={eto}  publicView={true} />
+        </div>
+        <div className={styles.blockWrapper}>
             <SectionHeader decorator={false} className="mb-3">
               <div className={styles.headerWithButton}>
                 <FormattedMessage id="eto.public-view.eto-timeline" />
@@ -142,20 +143,15 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                 startOfStates={isOnChain(eto) ? eto.contract.startOfStates : undefined}
               />
             </Panel>
-          </Col>
-        </Row>
-        <Row className="align-items-stretch">
-          <Col
-            xs={12}
-            md={
-              isSlideShareAvailable ||
-              isTwitterFeedEnabled ||
-              isYouTubeVideoAvailable ||
-              hasSocialChannelsAdded
-                ? 8
-                : 12
-            }
-            className="mb-4"
+        </div>
+        <div className={styles.gridBlockWrapper}>
+          <div className={styles.twoThirdsWrapper}
+
+              // isSlideShareAvailable ||
+              // isTwitterFeedEnabled ||
+              // isYouTubeVideoAvailable ||
+              // hasSocialChannelsAdded
+
           >
             <SectionHeader decorator={false} className="mb-4">
               <div className={styles.headerWithButton}>
@@ -180,9 +176,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             </SectionHeader>
 
             <LegalInformationWidget companyData={eto.company} />
-          </Col>
+          </div>
           {(isYouTubeVideoAvailable || isSlideShareAvailable) && (
-            <Col xs={12} md={4} className="mb-4 flex-column d-flex">
+            <div className={styles.oneThirdWrapper}>
               <Tabs className="mb-4" layoutSize="large" layoutOrnament={false}>
                 {isYouTubeVideoAvailable && (
                   <TabContent tab="video">
@@ -216,122 +212,120 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                   </Panel>
                 </>
               )}
-            </Col>
+            </div>
           )}
-        </Row>
-        <Row>
-          <Col className="mb-4">
-            <SectionHeader decorator={false} className="mb-4">
-              <FormattedMessage id="eto.public-view.token-terms.title" />
-            </SectionHeader>
+        </div>
+        <div className={styles.blockWrapper}>
+          <SectionHeader decorator={false} className="mb-4">
+            <FormattedMessage id="eto.public-view.token-terms.title" />
+          </SectionHeader>
 
-            <EtoInvestmentTermsWidget etoData={eto} />
-          </Col>
-        </Row>
-        {areThereIndividuals(team) && (
-          <Row>
-            <Col className="mb-4">
-              <SectionHeader decorator={false} className="mb-4">
-                <FormattedMessage id="eto.public-view.carousel.team" />
-              </SectionHeader>
-              <Panel>
-                <PeopleSwiperWidget
-                  people={(team && (team.members as IPerson[])) || []}
-                  key={"team"}
-                />
-              </Panel>
-            </Col>
-          </Row>
-        )}
-        {(areThereIndividuals(advisors) ||
-          areThereIndividuals(notableInvestors) ||
-          areThereIndividuals(partners) ||
-          areThereIndividuals(keyCustomers) ||
-          areThereIndividuals(keyAlliances) ||
-          areThereIndividuals(boardMembers)) && (
-          <Row>
-            <Col className="mb-4">
-              <Tabs
-                className="mb-4"
-                layoutSize="large"
-                layoutOrnament={false}
-                selectedIndex={selectActiveCarouselTab([
-                  advisors,
-                  notableInvestors,
-                  partners,
-                  keyCustomers,
-                  boardMembers,
-                  keyAlliances,
-                ])}
-              >
-                {areThereIndividuals(advisors) && (
-                  <TabContent tab={<FormattedMessage id="eto.public-view.carousel.tab.advisors" />}>
-                    <Panel>
-                      <PeopleSwiperWidget people={advisors.members as IPerson[]} key={"team"} />
-                    </Panel>
-                  </TabContent>
-                )}
-                {areThereIndividuals(notableInvestors) && (
-                  <TabContent
-                    tab={<FormattedMessage id="eto.public-view.carousel.tab.investors" />}
-                  >
-                    <Panel>
-                      <PeopleSwiperWidget
-                        people={notableInvestors.members as IPerson[]}
-                        key="notableInvestors"
-                      />
-                    </Panel>
-                  </TabContent>
-                )}
-                {areThereIndividuals(partners) && (
-                  <TabContent tab={<FormattedMessage id="eto.public-view.carousel.tab.partners" />}>
-                    <Panel>
-                      <PeopleSwiperWidget people={partners.members as IPerson[]} key="partners" />
-                    </Panel>
-                  </TabContent>
-                )}
-                {areThereIndividuals(keyCustomers) && (
-                  <TabContent
-                    tab={<FormattedMessage id="eto.public-view.carousel.tab.key-customers" />}
-                  >
-                    <Panel>
-                      <PeopleSwiperWidget
-                        key="keyCustomers"
-                        people={keyCustomers.members as IPerson[]}
-                      />
-                    </Panel>
-                  </TabContent>
-                )}
-                {areThereIndividuals(boardMembers) && (
-                  <TabContent
-                    tab={<FormattedMessage id="eto.public-view.carousel.tab.board-members" />}
-                  >
-                    <Panel>
-                      <PeopleSwiperWidget
-                        key="boardMembers"
-                        people={boardMembers.members as IPerson[]}
-                      />
-                    </Panel>
-                  </TabContent>
-                )}
-                {areThereIndividuals(keyAlliances) && (
-                  <TabContent
-                    tab={<FormattedMessage id="eto.public-view.carousel.tab.key-alliances" />}
-                  >
-                    <Panel>
-                      <PeopleSwiperWidget
-                        key="keyAlliances"
-                        people={keyAlliances.members as IPerson[]}
-                      />
-                    </Panel>
-                  </TabContent>
-                )}
-              </Tabs>
-            </Col>
-          </Row>
-        )}
-        <Row>
-          <Col sm={12} md={8} className="mb-4">
+          <EtoInvestmentTermsWidget etoData={eto} />
+        </div>
+        {/*{areThereIndividuals(team) && (*/}
+          {/*<Row>*/}
+            {/*<Col className="mb-4">*/}
+              {/*<SectionHeader decorator={false} className="mb-4">*/}
+                {/*<FormattedMessage id="eto.public-view.carousel.team" />*/}
+              {/*</SectionHeader>*/}
+              {/*<Panel>*/}
+                {/*<PeopleSwiperWidget*/}
+                  {/*people={(team && (team.members as IPerson[])) || []}*/}
+                  {/*key={"team"}*/}
+                {/*/>*/}
+              {/*</Panel>*/}
+            {/*</Col>*/}
+          {/*</Row>*/}
+        {/*)}*/}
+        {/*{(areThereIndividuals(advisors) ||*/}
+          {/*areThereIndividuals(notableInvestors) ||*/}
+          {/*areThereIndividuals(partners) ||*/}
+          {/*areThereIndividuals(keyCustomers) ||*/}
+          {/*areThereIndividuals(keyAlliances) ||*/}
+          {/*areThereIndividuals(boardMembers)) && (*/}
+          {/*<Row>*/}
+            {/*<Col className="mb-4">*/}
+              {/*<Tabs*/}
+                {/*className="mb-4"*/}
+                {/*layoutSize="large"*/}
+                {/*layoutOrnament={false}*/}
+                {/*selectedIndex={selectActiveCarouselTab([*/}
+                  {/*advisors,*/}
+                  {/*notableInvestors,*/}
+                  {/*partners,*/}
+                  {/*keyCustomers,*/}
+                  {/*boardMembers,*/}
+                  {/*keyAlliances,*/}
+                {/*])}*/}
+              {/*>*/}
+                {/*{areThereIndividuals(advisors) && (*/}
+                  {/*<TabContent tab={<FormattedMessage id="eto.public-view.carousel.tab.advisors" />}>*/}
+                    {/*<Panel>*/}
+                      {/*<PeopleSwiperWidget people={advisors.members as IPerson[]} key={"team"} />*/}
+                    {/*</Panel>*/}
+                  {/*</TabContent>*/}
+                {/*)}*/}
+                {/*{areThereIndividuals(notableInvestors) && (*/}
+                  {/*<TabContent*/}
+                    {/*tab={<FormattedMessage id="eto.public-view.carousel.tab.investors" />}*/}
+                  {/*>*/}
+                    {/*<Panel>*/}
+                      {/*<PeopleSwiperWidget*/}
+                        {/*people={notableInvestors.members as IPerson[]}*/}
+                        {/*key="notableInvestors"*/}
+                      {/*/>*/}
+                    {/*</Panel>*/}
+                  {/*</TabContent>*/}
+                {/*)}*/}
+                {/*{areThereIndividuals(partners) && (*/}
+                  {/*<TabContent tab={<FormattedMessage id="eto.public-view.carousel.tab.partners" />}>*/}
+                    {/*<Panel>*/}
+                      {/*<PeopleSwiperWidget people={partners.members as IPerson[]} key="partners" />*/}
+                    {/*</Panel>*/}
+                  {/*</TabContent>*/}
+                {/*)}*/}
+                {/*{areThereIndividuals(keyCustomers) && (*/}
+                  {/*<TabContent*/}
+                    {/*tab={<FormattedMessage id="eto.public-view.carousel.tab.key-customers" />}*/}
+                  {/*>*/}
+                    {/*<Panel>*/}
+                      {/*<PeopleSwiperWidget*/}
+                        {/*key="keyCustomers"*/}
+                        {/*people={keyCustomers.members as IPerson[]}*/}
+                      {/*/>*/}
+                    {/*</Panel>*/}
+                  {/*</TabContent>*/}
+                {/*)}*/}
+                {/*{areThereIndividuals(boardMembers) && (*/}
+                  {/*<TabContent*/}
+                    {/*tab={<FormattedMessage id="eto.public-view.carousel.tab.board-members" />}*/}
+                  {/*>*/}
+                    {/*<Panel>*/}
+                      {/*<PeopleSwiperWidget*/}
+                        {/*key="boardMembers"*/}
+                        {/*people={boardMembers.members as IPerson[]}*/}
+                      {/*/>*/}
+                    {/*</Panel>*/}
+                  {/*</TabContent>*/}
+                {/*)}*/}
+                {/*{areThereIndividuals(keyAlliances) && (*/}
+                  {/*<TabContent*/}
+                    {/*tab={<FormattedMessage id="eto.public-view.carousel.tab.key-alliances" />}*/}
+                  {/*>*/}
+                    {/*<Panel>*/}
+                      {/*<PeopleSwiperWidget*/}
+                        {/*key="keyAlliances"*/}
+                        {/*people={keyAlliances.members as IPerson[]}*/}
+                      {/*/>*/}
+                    {/*</Panel>*/}
+                  {/*</TabContent>*/}
+                {/*)}*/}
+              {/*</Tabs>*/}
+            {/*</Col>*/}
+          {/*</Row>*/}
+        {/*)}*/}
+      <div className={styles.gridBlockWrapper}>
+        <div className={styles.twoThirdsWrapper}>
             {(inspiration ||
               companyMission ||
               customerGroup ||
@@ -487,35 +481,35 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                 </Panel>
               </>
             )}
-          </Col>
-          <Col sm={12} md={4}>
-            {marketingLinks && (
+          </div>
+        <div className={styles.oneThirdWrapper}>
+          {marketingLinks && (
+            <>
+              <SectionHeader decorator={false} className="mb-4">
+                <FormattedMessage id="eto.form.documents.title" />
+              </SectionHeader>
+
+              <DocumentsWidget
+                className="mb-4"
+                companyMarketingLinks={marketingLinks}
+                etoTemplates={eto.templates}
+                etoDocuments={eto.documents}
+                isRetailEto={eto.allowRetailInvestors}
+              />
+            </>
+          )}
+
+          {companyNews &&
+            !!companyNews[0].url && (
               <>
                 <SectionHeader decorator={false} className="mb-4">
-                  <FormattedMessage id="eto.form.documents.title" />
+                  <FormattedMessage id="eto.form.media-links.title" />
                 </SectionHeader>
-
-                <DocumentsWidget
-                  className="mb-4"
-                  companyMarketingLinks={marketingLinks}
-                  etoTemplates={eto.templates}
-                  etoDocuments={eto.documents}
-                  isRetailEto={eto.allowRetailInvestors}
-                />
+                <MediaLinksWidget links={[...companyNews].reverse() as ILink[]} />
               </>
             )}
-
-            {companyNews &&
-              !!companyNews[0].url && (
-                <>
-                  <SectionHeader decorator={false} className="mb-4">
-                    <FormattedMessage id="eto.form.media-links.title" />
-                  </SectionHeader>
-                  <MediaLinksWidget links={[...companyNews].reverse() as ILink[]} />
-                </>
-              )}
-          </Col>
-        </Row>
+        </div>
+        </div>
       </article>
     </>
   );

@@ -3,7 +3,7 @@ $_logo-size-sm: 80px;
 
 .cover {
   @include get-out-of-container-layout;
-
+  grid-column: 1/span 3;
   margin-bottom: $spacing-vertical-lg-1;
 
   img {
