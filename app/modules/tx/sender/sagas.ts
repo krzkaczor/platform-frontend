@@ -1,6 +1,6 @@
-import { BigNumber } from "bignumber.js";
 import { addHexPrefix } from "ethereumjs-util";
 import { call, put, race, select, take } from "redux-saga/effects";
+import * as Web3 from "web3";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { TPendingTxs, TxWithMetadata } from "../../../lib/api/users/interfaces";
@@ -161,23 +161,26 @@ function* sendTxSubSaga({ web3Manager, apiUserService }: TGlobalDependencies): a
     yield validateGas(txData);
 
     const txHash: string = yield web3Manager.sendTransaction(txData);
+    const txDataFromWeb3: Web3.Transaction = yield web3Manager.getTransactionByHash(txHash);
     yield put(actions.txSender.txSenderSigned(txHash, type));
 
     const txWithMetadata: TxWithMetadata = {
       transaction: {
-        from: addHexPrefix(txData.from),
-        gas: addHexPrefix(new BigNumber(txData.gas).toString(16)),
-        gasPrice: addHexPrefix(new BigNumber(txData.gasPrice).toString(16)),
-        hash: addHexPrefix(txHash),
-        input: addHexPrefix(txData.data || "0x0"),
-        nonce: addHexPrefix("0"),
-        to: addHexPrefix(txData.to),
-        value: addHexPrefix(new BigNumber(txData.value).toString(16)),
+        from: txDataFromWeb3.from,
+        gas: addHexPrefix(txDataFromWeb3.gas.toString(16)),
+        gasPrice: addHexPrefix(txDataFromWeb3.gasPrice.toString(16)),
+        hash: txHash,
+        input: txDataFromWeb3.input,
+        nonce: addHexPrefix(txDataFromWeb3.nonce.toString(16)),
+        to: txDataFromWeb3.to || "0x",
+        value: addHexPrefix(txDataFromWeb3.value.toString(16)),
         blockHash: undefined,
         blockNumber: undefined,
         chainId: undefined,
         status: undefined,
-        transactionIndex: undefined,
+        transactionIndex: addHexPrefix(
+          (txDataFromWeb3.transactionIndex && txDataFromWeb3.transactionIndex.toString(16)) || "0",
+        ),
       },
       transactionType: type,
     };
