@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Col } from "reactstrap";
 
 import { ESectionHeaderSize, SectionHeader } from "../../shared/SectionHeader";
 
@@ -20,11 +19,9 @@ const DashboardSection: React.FunctionComponent<IProps> = ({
   className = "my-4",
   size,
 }) => (
-  <Col xs={12} data-test-id={dataTestId}>
-    <SectionHeader className={className} decorator={hasDecorator} size={size}>
+    <SectionHeader className={className} decorator={hasDecorator} size={size} data-test-id={dataTestId}>
       {step && <>STEP {step}:</>} {title}
     </SectionHeader>
-  </Col>
 );
 
 export { DashboardSection };

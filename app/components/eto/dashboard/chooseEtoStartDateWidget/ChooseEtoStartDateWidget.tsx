@@ -27,6 +27,10 @@ interface IStateProps {
   minOffsetPeriod: BigNumber;
 }
 
+interface IExternalProps {
+  layoutClass: string
+}
+
 interface IDispatchProps {
   uploadDate: (time: moment.Moment) => void;
 }
@@ -263,10 +267,10 @@ class DateChooser extends React.PureComponent<IDateChooserProps, IDateChooserSta
 }
 
 const ChooseEtoStartDateWidgetComponent: React.ComponentType<
-  IStateProps & IDispatchProps
+  IStateProps & IDispatchProps & IExternalProps
 > = props => {
   return (
-    <Panel headerText={<FormattedMessage id="eto.settings.eto-start-date" />}>
+    <Panel headerText={<FormattedMessage id="eto.settings.eto-start-date" />} className={props.layoutClass}>
       <div className={styles.content}>
         <p className={cn(styles.text, "pt-2")}>
           <FormattedMessage id="settings.choose-pre-eto-date.book-building-will-stop" />

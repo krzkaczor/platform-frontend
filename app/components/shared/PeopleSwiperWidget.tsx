@@ -94,7 +94,6 @@ class PeopleSwiperWidgeLayout extends React.PureComponent<IOwnProps & IDispatchP
   componentDidUpdate(): void {
     if (this.swiperRef.current) {
       const [visibleWidth, elementWidth] = this.getVisibleWidth();
-      console.log("componentDidUpdate", visibleWidth, elementWidth)
       this.setState({
         isVisible: true,
         elementWidth: elementWidth,

@@ -1,0 +1,27 @@
+.layout {
+  display: grid;
+  grid-template: auto/1fr;
+}
+
+.widget-layout {
+  display: grid;
+  grid-template: auto/repeat(6,1fr);
+  grid-gap: 2rem;
+}
+
+.eto-state-header {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.span-3 {
+  grid-column: span 3;
+}
+
+.span-4 {
+  grid-column: span 4;
+}

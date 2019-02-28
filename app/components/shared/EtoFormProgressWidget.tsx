@@ -18,6 +18,7 @@ interface IProps {
   isLoading: boolean;
   disabled: boolean;
   readonly: boolean;
+  dataTestId?: string;
 }
 
 interface IButtonTextProps {
@@ -44,10 +45,11 @@ export const EtoFormProgressWidgetLayout: React.FunctionComponent<IProps & IChar
   isLoading,
   disabled,
   readonly,
+  dataTestId
 }) => (
   <Panel>
     <Proportion width={100} height={108}>
-      <div className={styles.contentWrapper}>
+      <div className={styles.contentWrapper} data-test-id={dataTestId}>
         {isLoading ? (
           <LoadingIndicator />
         ) : (

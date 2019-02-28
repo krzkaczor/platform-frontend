@@ -37,6 +37,8 @@ import { UploadProspectusWidget } from "./dashboard/UploadProspectusWidget";
 import { UploadTermSheetWidget } from "./dashboard/UploadTermSheetWidget";
 import { DashboardSection } from "./shared/DashboardSection";
 
+import * as styles from './EtoDashboard.module.scss';
+
 const SUBMIT_PROPOSAL_THRESHOLD = 1;
 
 interface IStateProps {
@@ -83,10 +85,8 @@ const SubmitDashBoardSection: React.FunctionComponent<{ isTermSheetSubmitted?: b
 
 const EtoProgressDashboardSection: React.FunctionComponent = () => (
   <>
-    <DashboardSection step={2} title="ETO APPLICATION" />
-    <Col xs={12}>
-      <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
-    </Col>
+    <DashboardSection step={2} title="ETO APPLICATION" className={styles.etoState}/>
+    <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
     <ETOFormsProgressSection />
   </>
 );
@@ -141,19 +141,13 @@ const EtoDashboardStateViewComponent: React.FunctionComponent<IEtoStateRender> =
       return (
         <>
           <DashboardSection hasDecorator={false} title={dashboardTitle} />
-          {canEnableBookbuilding && (
-            <Col lg={8} xs={12}>
-              <BookBuildingWidget />
-            </Col>
-          )}
-          {!isOfferingDocumentSubmitted && (
-            <Col lg={4} xs={12}>
-              {isRetailEto ? <UploadProspectusWidget /> : <UploadInvestmentMemorandum />}
-            </Col>
-          )}
-          <Col xs={12}>
-            <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
-          </Col>
+          <div className={styles.widgetLayout}>
+            {canEnableBookbuilding &&  <BookBuildingWidget layoutClass={styles.span4}/> }
+            {!isOfferingDocumentSubmitted &&
+              (isRetailEto ? <UploadProspectusWidget layoutClass={styles.span2}/> : <UploadInvestmentMemorandum layoutClass={styles.span2} />)
+            }
+          </div>
+          <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
           <ETOFormsProgressSection />
         </>
       );
@@ -161,14 +155,10 @@ const EtoDashboardStateViewComponent: React.FunctionComponent<IEtoStateRender> =
       return (
         <>
           <DashboardSection hasDecorator={false} title={dashboardTitle} />
-          {canEnableBookbuilding && (
-            <Col lg={8} xs={12}>
-              <BookBuildingWidget />
-            </Col>
-          )}
-          <Col xs={12}>
-            <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
-          </Col>
+          <div className={styles.widgetLayout}>
+            {canEnableBookbuilding && (<BookBuildingWidget layoutClass={styles.span4}/>)}
+          </div>
+          <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
           <ETOFormsProgressSection />
         </>
       );
@@ -176,15 +166,11 @@ const EtoDashboardStateViewComponent: React.FunctionComponent<IEtoStateRender> =
       return (
         <>
           <DashboardSection hasDecorator={false} title={dashboardTitle} />
-          <Col lg={6} xs={12}>
-            <BookBuildingWidget />
-          </Col>
-          <Col lg={6} xs={12}>
-            <ChooseEtoStartDateWidget />
-          </Col>
-          <Col xs={12}>
-            <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
-          </Col>
+          <div className={styles.widgetLayout}>
+              <BookBuildingWidget layoutClass={styles.span3} />
+              <ChooseEtoStartDateWidget layoutClass={styles.span3} />
+          </div>
+          <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
           <ETOFormsProgressSection />
         </>
       );
@@ -226,7 +212,7 @@ class EtoDashboardComponent extends React.Component<IProps> {
 
     return (
       <LayoutAuthorized>
-        <Row className="row-gutter-top" data-test-id="eto-dashboard-application">
+        <div className={styles.layout} data-test-id="eto-dashboard-application">
           {!isVerificationSectionDone && (
             <>
               <DashboardSection
@@ -251,7 +237,7 @@ class EtoDashboardComponent extends React.Component<IProps> {
           ) : (
             <EtoProgressDashboardSection />
           )}
-        </Row>
+        </div>
       </LayoutAuthorized>
     );
   }

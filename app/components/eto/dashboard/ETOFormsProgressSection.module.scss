@@ -1,0 +1,5 @@
+.progress-section-layout {
+  display: grid;
+  grid-template: auto/repeat(3, 1fr);
+  grid-gap: 2rem;
+}

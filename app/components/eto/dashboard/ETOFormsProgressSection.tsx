@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { Col } from "reactstrap";
 
 import { EEtoState } from "../../../lib/api/eto/EtoApi.interfaces";
 import { etoFormIsReadonly } from "../../../lib/api/eto/EtoApiUtils";
@@ -27,6 +26,8 @@ import {
 import { appConnect } from "../../../store";
 import { EtoFormProgressWidget } from "../../shared/EtoFormProgressWidget";
 import { etoRegisterRoutes } from "../registration/routes";
+
+import * as styles from "./ETOFormsProgressSection.module.scss"
 
 interface IEtoRegisteredRoutes {
   [id: string]: EEtoFormTypes;
@@ -128,22 +129,22 @@ export const ETOFormsProgressSectionComponent: React.FunctionComponent<IStatePro
   ];
 
   return (
-    <>
+    <div className={styles.progressSectionLayout}>
       {sections.map((section, index) => (
-        <Col key={index} lg={4} xs={12} md={6} className="mb-4" data-test-id={section.testingId}>
-          <EtoFormProgressWidget
-            isLoading={loadingData}
-            to={(etoRegisterRoutes as IEtoRegisteredRoutes)[section.id]}
-            progress={shouldEtoDataLoad ? section.progress : 0}
-            disabled={!shouldEtoDataLoad}
-            name={section.name}
-            readonly={etoFormIsReadonly(section.id, etoStatus)}
-          />
-        </Col>
+        <EtoFormProgressWidget
+          isLoading={loadingData}
+          to={(etoRegisterRoutes as IEtoRegisteredRoutes)[section.id]}
+          progress={shouldEtoDataLoad ? section.progress : 0}
+          disabled={!shouldEtoDataLoad}
+          name={section.name}
+          readonly={etoFormIsReadonly(section.id, etoStatus)}
+          dataTestId={section.testingId}
+          key={index}
+        />
       ))}
-    </>
-  );
-};
+    </div>
+  )
+}
 
 export const ETOFormsProgressSection = appConnect<IStateProps, {}>({
   stateToProps: state => ({

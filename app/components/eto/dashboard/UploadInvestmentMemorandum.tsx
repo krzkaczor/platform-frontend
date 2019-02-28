@@ -5,7 +5,7 @@ import { injectIntlHelpers } from "../../../utils/injectIntlHelpers";
 import { appRoutes } from "../../appRoutes";
 import { DashboardLinkWidget } from "../../shared/dashboard-link-widget/DashboardLinkWidget";
 
-export const UploadInvestmentMemorandum = injectIntlHelpers(({ intl: { formatIntlMessage } }) => {
+export const UploadInvestmentMemorandum = injectIntlHelpers(({ layoutClass, intl: { formatIntlMessage } }) => {
   return (
     <DashboardLinkWidget
       title={formatIntlMessage("settings.upload-investment-memorandum.title")}
@@ -14,6 +14,7 @@ export const UploadInvestmentMemorandum = injectIntlHelpers(({ intl: { formatInt
       }
       to={appRoutes.documents}
       buttonText={<FormattedMessage id="settings.upload-investment-button.title" />}
+      layoutClass={layoutClass}
     />
   );
 });

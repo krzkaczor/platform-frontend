@@ -39,6 +39,7 @@ interface IStateProps {
   maxPledges: number | null;
   etoId?: string;
   canEnableBookbuilding: boolean;
+  layoutClass?: string;
 }
 
 interface IBookBuilding {
@@ -53,6 +54,7 @@ interface ILayoutProps {
   text: TTranslatedString;
   buttonText: TTranslatedString;
   canEnableBookbuilding: boolean;
+  layoutClass?: string;
 }
 
 type IProps = IDispatchProps & IStateProps;
@@ -100,8 +102,9 @@ const BookBuildingWidgetLayout: React.FunctionComponent<ILayoutProps> = ({
   text,
   buttonText,
   canEnableBookbuilding,
+  layoutClass
 }) => (
-  <Panel headerText={headerText}>
+  <Panel headerText={headerText} className={layoutClass}>
     <div className={styles.content}>
       <p className={cn(styles.text)}>
         {canEnableBookbuilding ? (
@@ -136,6 +139,7 @@ export const BookBuildingWidgetComponent: React.FunctionComponent<IProps> = ({
   downloadCSV,
   etoId,
   canEnableBookbuilding,
+  layoutClass
 }) => {
   if (bookBuildingStats === undefined) {
     //TODO data loading state
@@ -148,6 +152,7 @@ export const BookBuildingWidgetComponent: React.FunctionComponent<IProps> = ({
         buttonText={<FormattedMessage id="settings.book-building-widget.start-book-building" />}
         onClick={() => startBookBuilding(etoId as string)}
         canEnableBookbuilding={canEnableBookbuilding}
+        layoutClass={layoutClass}
       />
     );
   } else if (!bookBuildingEnabled && bookBuildingStats.investorsCount) {
@@ -160,6 +165,7 @@ export const BookBuildingWidgetComponent: React.FunctionComponent<IProps> = ({
         }
         onClick={() => startBookBuilding(etoId as string)}
         canEnableBookbuilding={canEnableBookbuilding}
+        layoutClass={layoutClass}
       >
         <BookBuildingStats
           bookBuildingStats={bookBuildingStats}
@@ -176,6 +182,7 @@ export const BookBuildingWidgetComponent: React.FunctionComponent<IProps> = ({
         buttonText={<FormattedMessage id="settings.book-building-widget.stop-book-building" />}
         onClick={() => stopBookBuilding(etoId as string)}
         canEnableBookbuilding={canEnableBookbuilding}
+        layoutClass={layoutClass}
       >
         <BookBuildingStats
           bookBuildingStats={bookBuildingStats}
