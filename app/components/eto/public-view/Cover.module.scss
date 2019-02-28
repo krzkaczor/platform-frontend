@@ -3,11 +3,12 @@ $_logo-size-sm: 80px;
 
 .cover {
   @include get-out-of-container-layout;
-  grid-column: 1/span 3;
   margin-bottom: $spacing-vertical-lg-1;
 
   img {
     user-select: none;
+    object-fit: cover;
+
   }
 }
 
@@ -39,6 +40,7 @@ $_logo-size-sm: 80px;
 
   flex-shrink: 0;
   overflow: hidden;
+  object-fit: cover;
 }
 
 .details {
@@ -80,4 +82,8 @@ $_logo-size-sm: 80px;
   justify-content: flex-end;
   margin-left: auto;
   z-index: $z-index-base;
+}
+
+.logo {
+  object-fit: cover;
 }
