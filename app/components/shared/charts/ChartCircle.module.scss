@@ -1,12 +1,12 @@
 .chart-circle {
   position: relative;
+  width: 100%;
+  max-width: 25rem;
 
-  &,
   svg {
-    @include rect(220px);
+    @include rect(100%);
 
     display: block;
-    margin: 0 auto;
   }
 
   &:global(.is-completed) {
@@ -43,12 +43,12 @@
 
 .labels {
   @include rect(100%);
-
   position: absolute;
   z-index: $z-index-base;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
 }
@@ -56,7 +56,6 @@
 .percents {
   font-size: px-to-rem(32px);
   font-weight: $font-weight-bold;
-  margin-top: 54px;
 }
 
 .name {
@@ -64,4 +63,14 @@
   font-weight: $font-weight-light;
   max-width: 64%;
   text-align: center;
+}
+
+@media (min-width: 1500px) {
+  .chart-circle {
+    position: relative;
+    width: 100%;
+    max-width: 22rem;
+
+
+  }
 }

@@ -9,12 +9,20 @@ export interface IChartCircleProps {
   name: TTranslatedString;
 }
 
+function polarToCartesian(centerX:number, centerY:number, radius:number, percentage:number) {
+  //subtract a small amount from percentage in order to be able to draw full circle
+  const angleInRadians = (percentage - 0.0001) * 2 * Math.PI;
+  const x = centerX + radius * Math.sin(angleInRadians);
+  const y = centerY - radius * Math.cos(angleInRadians);
+  return [x,y];
+}
+
 export const ChartCircle: React.FunctionComponent<IChartCircleProps> = ({ progress, name }) => {
   const viewBoxSize = 220;
   const radius = viewBoxSize / 2;
   const indicatorRadius = radius * 0.8;
-  const indicatorCircumference = indicatorRadius * 2 * Math.PI;
   const svgCenter = viewBoxSize / 2;
+  const [x,y] = polarToCartesian(svgCenter,svgCenter,indicatorRadius,progress)
 
   return (
     <div className={cn(styles.chartCircle, progress === 1 && "is-completed")}>
@@ -24,9 +32,8 @@ export const ChartCircle: React.FunctionComponent<IChartCircleProps> = ({ progre
         <path
           className={styles.progress}
           d={`M${svgCenter} ${radius - indicatorRadius}
-          a ${indicatorRadius} ${indicatorRadius} 0 0 1 0 ${indicatorRadius * 2}
-          a ${indicatorRadius} ${indicatorRadius} 0 0 1 0 ${indicatorRadius * -2}`}
-          strokeDasharray={`${progress * indicatorCircumference}, ${indicatorCircumference}`}
+              A ${indicatorRadius} ${indicatorRadius} 0 ${progress >= 0.5 ? 1:0} 1 ${x} ${y}`
+          }
         />
       </svg>
       <div className={styles.labels}>
