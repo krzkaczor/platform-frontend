@@ -1,6 +1,7 @@
 import * as React from "react";
-
+import * as cn from "classnames"
 import { FormattedMessage } from "react-intl-phraseapp";
+
 import { selectEthereumAddressWithChecksum } from "../../../modules/web3/selectors";
 import { appConnect } from "../../../store";
 import { AccountAddress } from "../../shared/AccountAddress";
@@ -10,13 +11,15 @@ import * as styles from "./YourEthereumAddressWidget.module.scss";
 
 interface IStateProps {
   address: string;
+  layoutClass?:string;
 }
 
 export const YourEthereumAddressWidgetComponent: React.FunctionComponent<IStateProps> = ({
   address,
+  layoutClass
 }) => (
   <Panel
-    className="h-100"
+    className={cn("h-100", layoutClass)}
     centerContent={false}
     headerText={<FormattedMessage id="your-ethereum-address-widget.header" />}
   >
@@ -29,7 +32,7 @@ export const YourEthereumAddressWidgetComponent: React.FunctionComponent<IStateP
   </Panel>
 );
 
-export const YourEthereumAddressWidget = appConnect<IStateProps>({
+export const YourEthereumAddressWidget:React.FunctionComponent<IStateProps> = appConnect<IStateProps>({
   stateToProps: state => ({
     address: selectEthereumAddressWithChecksum(state),
   }),

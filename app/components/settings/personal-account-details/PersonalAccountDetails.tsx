@@ -14,6 +14,7 @@ import { ResponsiveImage } from "../../shared/ResponsiveImage";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as personImage from "../../../assets/img/person@3x.png";
 import * as styles from "./PersonalAccountDetails.module.scss";
+import * as cn from "classnames";
 
 interface IStateProps {
   personalData: {
@@ -26,6 +27,10 @@ interface IStateProps {
     country?: string;
     isHighIncome?: boolean;
   };
+}
+
+interface IExternalProps {
+  layoutClass?: string;
 }
 
 interface IOwnState {
@@ -46,7 +51,7 @@ const Record: React.FunctionComponent<IRecordProps> = ({ value, label }) => {
   );
 };
 
-class AccountDetailsComponent extends React.Component<IStateProps, IOwnState> {
+class AccountDetailsComponent extends React.Component<IStateProps & IExternalProps, IOwnState> {
   state = {
     isDataHidden: true,
   };
@@ -61,7 +66,7 @@ class AccountDetailsComponent extends React.Component<IStateProps, IOwnState> {
 
     return (
       <Panel
-        className="h-100"
+        className={cn("h-100", this.props.layoutClass)}
         headerText={<FormattedMessage id="settings.account-details.title" />}
         rightComponent={
           <ResponsiveImage
@@ -134,7 +139,7 @@ class AccountDetailsComponent extends React.Component<IStateProps, IOwnState> {
   }
 }
 
-export const PersonalAccountDetails = compose<React.FunctionComponent>(
+export const PersonalAccountDetails:React.FunctionComponent<IExternalProps> = compose<React.FunctionComponent>(
   appConnect<IStateProps>({
     stateToProps: s => ({
       personalData: s.kyc.individualData || {},

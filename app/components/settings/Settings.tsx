@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
 import { EKycRequestType, ERequestStatus } from "../../lib/api/KycApi.interfaces";
@@ -27,6 +26,9 @@ import { CheckYourICBMWalletWidget } from "./icbm-wallet-widget/CheckYourICBMWal
 import { LinkedBankAccountWidget } from "./linked-bank-account/LinkedBankAccountWidget";
 import { PersonalAccountDetails } from "./personal-account-details/PersonalAccountDetails";
 import { SettingsWidgets } from "./settings-widget/SettingsWidgets";
+import { GridBaseLayout, WidgetGridLayout } from "../shared/Layout";
+
+import * as layoutStyles from '../shared/Layout.module.scss'
 
 interface IStateProps {
   isLightWallet: boolean;
@@ -52,57 +54,46 @@ export const SettingsComponent: React.FunctionComponent<IStateProps> = ({
 
   return (
     <LayoutAuthorized>
-      <Row className="row-gutter-top">
+      <GridBaseLayout>
         <DashboardSection
           title={<FormattedMessage id="settings.security-settings.title" />}
           data-test-id="eto-dashboard-application"
         />
-        <SettingsWidgets isDynamic={false} isLightWallet={isLightWallet} />
+        <WidgetGridLayout>
+          <SettingsWidgets isDynamic={false} isLightWallet={isLightWallet} layoutClass={layoutStyles.span3}/>
+        </WidgetGridLayout>
 
         <DashboardSection
           title={<FormattedMessage id="settings.account-info.title" />}
           data-test-id="eto-dashboard-application"
         />
-
-        <Col lg={4} xs={12}>
-          <YourEthereumAddressWidget />
-        </Col>
+        <WidgetGridLayout>
+        <YourEthereumAddressWidget layoutClass={layoutStyles.span3}/>
         {process.env.NF_CHECK_LOCKED_WALLET_WIDGET_ENABLED === "1" &&
           !isIcbmWalletConnected &&
           !isLockedWalletConnected &&
           isUserInvestor && (
-            <Col lg={4} xs={12}>
-              <CheckYourICBMWalletWidget />
-            </Col>
+            <CheckYourICBMWalletWidget layoutClass={layoutStyles.span3}/>
           )}
 
         {isUserInvestor &&
           isIndividual &&
           isPersonalDataProcessed && (
-            <Col lg={4} xs={12}>
-              <PersonalAccountDetails />
-            </Col>
+            <PersonalAccountDetails layoutClass={layoutStyles.span3} />
           )}
+        </WidgetGridLayout>
 
+
+          <SectionHeader>
+            <FormattedMessage id="settings.personal-settings.title" />
+          </SectionHeader>
+        <WidgetGridLayout>
         {process.env.NF_FEATURE_EMAIL_CHANGE_ENABLED === "1" && (
-          <>
-            {/* TODO: Remove message */}
-            <Col xs={12}>
-              <SectionHeader>
-                <FormattedMessage id="settings.personal-settings.title" />
-              </SectionHeader>
-            </Col>
-            <Col lg={8} xs={12}>
-              <ChangeEmail />
-            </Col>
-          </>
+          <ChangeEmail layoutClass={layoutStyles.span3}/>
         )}
-      </Row>
-      <Row className="row-gutter-top">
-        <Col lg={4} xs={12}>
-          <LinkedBankAccountWidget />
-        </Col>
-      </Row>
+        <LinkedBankAccountWidget layoutClass={layoutStyles.span3}/>
+        </WidgetGridLayout>
+      </GridBaseLayout>
     </LayoutAuthorized>
   );
 };

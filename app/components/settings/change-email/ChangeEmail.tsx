@@ -10,10 +10,15 @@ import { IIntlProps, injectIntlHelpers } from "../../../utils/injectIntlHelpers"
 import { Button } from "../../shared/buttons";
 import { Form, FormField } from "../../shared/forms";
 import { Panel } from "../../shared/Panel";
+import * as cn from "classnames";
 
 interface IDispatchProps {
   submitForm: (values: IFormValues) => void;
   currentValues?: IFormValues;
+}
+
+interface IExternalProps {
+  layoutClass?: string;
 }
 
 interface IFormValues {
@@ -45,12 +50,16 @@ const SettingsEnhancedChangeEmailForm = withFormik<IDispatchProps, IFormValues>(
   },
 })(ChangeEmailForm);
 
-export const ChangeEmailComponent: React.FunctionComponent<IDispatchProps & IIntlProps> = ({
+export const ChangeEmailComponent: React.FunctionComponent<IDispatchProps & IIntlProps & IExternalProps> = ({
   intl: { formatIntlMessage },
+  layoutClass,
   ...props
 }) => {
   return (
-    <Panel headerText={formatIntlMessage("settings.change-email-component.header")}>
+    <Panel
+      headerText={formatIntlMessage("settings.change-email-component.header")}
+      className={cn("h-100", layoutClass)}
+    >
       <Row>
         {/* TODO:  Change according to Marketing requests*/}
         <Col xs={6} className="mt-3">
@@ -66,7 +75,7 @@ export const ChangeEmailComponent: React.FunctionComponent<IDispatchProps & IInt
   );
 };
 
-export const ChangeEmail = compose<React.FunctionComponent>(
+export const ChangeEmail:React.FunctionComponent<IExternalProps> = compose<React.FunctionComponent>(
   appConnect<IDispatchProps>({
     dispatchToProps: dispatch => ({
       submitForm: (values: IFormValues) => {

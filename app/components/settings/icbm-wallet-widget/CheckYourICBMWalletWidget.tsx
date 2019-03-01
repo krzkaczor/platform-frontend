@@ -12,9 +12,14 @@ import { Tooltip } from "../../shared/Tooltip";
 
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as styles from "./CheckYourICBMWalletWidget.module.scss";
+import * as cn from "classnames";
 
 interface IDispatchProps {
   loadICBMWallet: (address: string) => void;
+}
+
+interface IExternalProps {
+  layoutClass?:string
 }
 
 class FormContent extends React.Component {
@@ -45,8 +50,9 @@ class FormContent extends React.Component {
   }
 }
 
-export const CheckYourICBMWalletWidgetComponent: React.FunctionComponent<IDispatchProps> = ({
+export const CheckYourICBMWalletWidgetComponent: React.FunctionComponent<IExternalProps & IDispatchProps> = ({
   loadICBMWallet,
+  layoutClass
 }) => {
   return (
     <Panel
@@ -56,7 +62,7 @@ export const CheckYourICBMWalletWidgetComponent: React.FunctionComponent<IDispat
           <Tooltip content={<FormattedMessage id="icbm-wallet.tooltip" />} alignLeft={true} />
         </>
       }
-      className="h-100"
+      className={cn("h-100", layoutClass)}
       data-test-id="models.profile.icbm-wallet-widget.check-your-icbm-wallet-widget"
     >
       <p>
@@ -74,7 +80,7 @@ export const CheckYourICBMWalletWidgetComponent: React.FunctionComponent<IDispat
   );
 };
 
-export const CheckYourICBMWalletWidget = appConnect<{}, IDispatchProps>({
+export const CheckYourICBMWalletWidget:React.FunctionComponent<IExternalProps & IDispatchProps> = appConnect<IExternalProps & IDispatchProps>({
   dispatchToProps: dispatch => ({
     loadICBMWallet: (address: string) => {
       dispatch(actions.icbmWalletBalanceModal.getWalletData(address));

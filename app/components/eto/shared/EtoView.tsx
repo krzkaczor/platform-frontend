@@ -29,6 +29,7 @@ import { DocumentsWidget } from "../public-view/DocumentsWidget";
 import { EtoInvestmentTermsWidget } from "../public-view/EtoInvestmentTermsWidget";
 import { LegalInformationWidget } from "../public-view/LegalInformationWidget";
 import { areThereIndividuals, selectActiveCarouselTab } from "./EtoView.utils";
+import { GridBaseLayout } from "../../shared/Layout";
 
 import * as styles from "./EtoView.module.scss";
 
@@ -101,7 +102,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
   return (
     <>
       <PersonProfileModal />
-      <article data-test-id="eto.public-view" className={styles.layout}>
+      <GridBaseLayout dataTestId={"eto.public-view"} additionalStyling={styles.layout}>
         <div className={styles.blockWrapper}>
           <Cover
             companyName={brandName}
@@ -497,7 +498,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             </>
           )}
         </section>
-      </article>
+      </GridBaseLayout>
     </>
   );
 };

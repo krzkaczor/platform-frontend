@@ -18,6 +18,7 @@ import { BankAccount } from "../../wallet/BankAccount";
 import * as bankIcon from "../../../assets/img/bank-transfer/bank_icon.svg";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as styles from "./LinkedBankAccountWidget.module.scss";
+import * as cn from "classnames";
 
 interface IDispatchProps {
   verifyBankAccount: () => void;
@@ -27,6 +28,7 @@ interface IStateProps {
   bankAccount?: DeepReadonly<TBankAccount>;
   isBankAccountVerified: boolean;
   isUserFullyVerified: boolean;
+  layoutClass?:string;
 }
 
 type IComponentProps = IStateProps & IDispatchProps;
@@ -55,6 +57,7 @@ const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps> = pro
   <Panel
     centerContent={false}
     headerText={<FormattedMessage id="linked-bank-account-widget.header" />}
+    className={cn("h-100", props.layoutClass)}
   >
     <section className={styles.panelBody}>
       {props.isBankAccountVerified && props.bankAccount && props.bankAccount.hasBankAccount ? (
