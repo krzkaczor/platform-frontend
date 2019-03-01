@@ -23,17 +23,9 @@ export const SettingsWidgets: React.FunctionComponent<IProps> = ({
   layoutClass
 }) => {
   let settingsStepCounter = 0;
-  console.log(
-    isLightWallet,
-    backupCodesVerified,
-    verifiedEmail,
-    isDynamic,
-    requestStatus,
-    layoutClass
-  )
+
   return (
     <>
-
       {(!isDynamic || !verifiedEmail) && (
           <VerifyEmailWidget step={++settingsStepCounter} layoutClass={layoutClass}/>
       )}
