@@ -37,7 +37,9 @@ interface IStateProps {
 
 interface IOwnProps {
   step: number;
+  layoutClass?: string
 }
+
 interface IEnhancedFormProps {
   handleSubmit: (values: IFormValues) => void;
   isLocked?: boolean;
@@ -220,6 +222,7 @@ export const VerifyEmailWidgetComponent: React.FunctionComponent<
   isEmailTemporaryCancelled,
   step,
   revertCancelEmail,
+  layoutClass
 }) => {
   const shouldViewVerifiedUser =
     !isThereUnverifiedEmail && !isEmailTemporaryCancelled && isUserEmailVerified;
@@ -228,7 +231,7 @@ export const VerifyEmailWidgetComponent: React.FunctionComponent<
     (!isThereUnverifiedEmail && !verifiedEmail) || isEmailTemporaryCancelled;
   return (
     <Panel
-      className="h-100"
+      className={cn("h-100", layoutClass)}
       headerText={formatIntlMessage("settings.verify-email-widget.header", { step })}
       rightComponent={
         isUserEmailVerified && !isThereUnverifiedEmail ? (

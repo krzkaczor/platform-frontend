@@ -20,14 +20,16 @@ interface IStateProps {
 
 interface IOwnProps {
   step: number;
+  layoutClass?: string;
 }
 
 const BackupSeedWidgetComponent: React.FunctionComponent<IStateProps & IOwnProps> = ({
   backupCodesVerified,
+  layoutClass
 }) => {
   return (
     <Panel
-      className="h-100"
+      className={cn("h-100", layoutClass)}
       headerText={<FormattedMessage id="settings.backup-seed-widget.header" />}
       rightComponent={
         backupCodesVerified ? (

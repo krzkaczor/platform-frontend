@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Col } from "reactstrap";
 
 import { ERequestStatus } from "../../../lib/api/KycApi.interfaces";
 import { BackupSeedWidget } from "../backup-seed/BackupSeedWidget";
@@ -12,6 +11,7 @@ interface IProps {
   verifiedEmail?: string;
   backupCodesVerified?: boolean;
   requestStatus?: ERequestStatus;
+  layoutClass?:string;
 }
 
 export const SettingsWidgets: React.FunctionComponent<IProps> = ({
@@ -20,25 +20,29 @@ export const SettingsWidgets: React.FunctionComponent<IProps> = ({
   verifiedEmail,
   isDynamic,
   requestStatus,
+  layoutClass
 }) => {
   let settingsStepCounter = 0;
+  console.log(
+    isLightWallet,
+    backupCodesVerified,
+    verifiedEmail,
+    isDynamic,
+    requestStatus,
+    layoutClass
+  )
   return (
     <>
+
       {(!isDynamic || !verifiedEmail) && (
-        <Col lg={4} xs={12}>
-          <VerifyEmailWidget step={++settingsStepCounter} />
-        </Col>
+          <VerifyEmailWidget step={++settingsStepCounter} layoutClass={layoutClass}/>
       )}
       {(!isDynamic || !backupCodesVerified) &&
         isLightWallet && (
-          <Col lg={4} xs={12}>
-            <BackupSeedWidget step={++settingsStepCounter} />
-          </Col>
+            <BackupSeedWidget step={++settingsStepCounter} layoutClass={layoutClass}/>
         )}
       {(!isDynamic || requestStatus !== ERequestStatus.ACCEPTED) && (
-        <Col lg={4} xs={12}>
-          <KycStatusWidget step={++settingsStepCounter} />
-        </Col>
+          <KycStatusWidget step={++settingsStepCounter}  layoutClass={layoutClass}/>
       )}
     </>
   );
