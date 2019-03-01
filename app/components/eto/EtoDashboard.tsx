@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormattedHTMLMessage } from "react-intl-phraseapp";
-import { Col, Row } from "reactstrap";
+import { Col } from "reactstrap";
 import { compose } from "redux";
 
 import { EEtoState } from "../../lib/api/eto/EtoApi.interfaces";

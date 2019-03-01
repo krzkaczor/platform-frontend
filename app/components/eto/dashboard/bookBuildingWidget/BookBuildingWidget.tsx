@@ -42,6 +42,10 @@ interface IStateProps {
   layoutClass?: string;
 }
 
+interface IExternalProps {
+  layoutClass?: string;
+}
+
 interface IBookBuilding {
   bookBuildingStats: IBookBuildingStats;
   downloadCSV: () => void;
@@ -194,7 +198,7 @@ export const BookBuildingWidgetComponent: React.FunctionComponent<IProps> = ({
   }
 };
 
-export const BookBuildingWidget = compose<React.FunctionComponent>(
+export const BookBuildingWidget = compose<React.FunctionComponent<IExternalProps>>(
   createErrorBoundary(ErrorBoundaryPanel),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => ({

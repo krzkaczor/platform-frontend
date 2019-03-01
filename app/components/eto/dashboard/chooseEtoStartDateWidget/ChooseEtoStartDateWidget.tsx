@@ -28,7 +28,7 @@ interface IStateProps {
 }
 
 interface IExternalProps {
-  layoutClass: string
+  layoutClass?: string
 }
 
 interface IDispatchProps {
@@ -302,7 +302,7 @@ const ChooseEtoStartDateWidgetComponent: React.ComponentType<
   );
 };
 
-const ChooseEtoStartDateWidget = compose<React.FunctionComponent>(
+const ChooseEtoStartDateWidget = compose<React.FunctionComponent<IExternalProps>>(
   createErrorBoundary(ErrorBoundaryPanel),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => {
