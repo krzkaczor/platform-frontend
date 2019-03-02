@@ -11,10 +11,13 @@ import * as styles from "./YourEthereumAddressWidget.module.scss";
 
 interface IStateProps {
   address: string;
+}
+
+interface IExternalProps {
   layoutClass?:string;
 }
 
-export const YourEthereumAddressWidgetComponent: React.FunctionComponent<IStateProps> = ({
+export const YourEthereumAddressWidgetComponent: React.FunctionComponent<IStateProps & IExternalProps> = ({
   address,
   layoutClass
 }) => (
@@ -32,7 +35,7 @@ export const YourEthereumAddressWidgetComponent: React.FunctionComponent<IStateP
   </Panel>
 );
 
-export const YourEthereumAddressWidget:React.FunctionComponent<IStateProps> = appConnect<IStateProps>({
+export const YourEthereumAddressWidget = appConnect<IStateProps>({
   stateToProps: state => ({
     address: selectEthereumAddressWithChecksum(state),
   }),

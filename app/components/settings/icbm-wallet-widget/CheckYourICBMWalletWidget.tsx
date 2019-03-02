@@ -80,7 +80,7 @@ export const CheckYourICBMWalletWidgetComponent: React.FunctionComponent<IExtern
   );
 };
 
-export const CheckYourICBMWalletWidget:React.FunctionComponent<IExternalProps & IDispatchProps> = appConnect<IExternalProps & IDispatchProps>({
+export const CheckYourICBMWalletWidget = appConnect<IDispatchProps>({
   dispatchToProps: dispatch => ({
     loadICBMWallet: (address: string) => {
       dispatch(actions.icbmWalletBalanceModal.getWalletData(address));

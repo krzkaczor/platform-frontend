@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { compose } from "recompose";
+import { compose } from "redux";
 
 import { actions } from "../../../modules/actions";
 import { selectIsUserFullyVerified } from "../../../modules/auth/selectors";
@@ -28,6 +28,9 @@ interface IStateProps {
   bankAccount?: DeepReadonly<TBankAccount>;
   isBankAccountVerified: boolean;
   isUserFullyVerified: boolean;
+}
+
+interface IExternalProps {
   layoutClass?:string;
 }
 
@@ -53,7 +56,7 @@ const LinkAccount: React.FunctionComponent<IComponentProps> = ({
   </>
 );
 
-const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps> = props => (
+const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps & IExternalProps> = props => (
   <Panel
     centerContent={false}
     headerText={<FormattedMessage id="linked-bank-account-widget.header" />}
@@ -81,7 +84,7 @@ const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps> = pro
   </Panel>
 );
 
-const LinkedBankAccountWidget = compose<IComponentProps, {}>(
+const LinkedBankAccountWidget = compose<React.FunctionComponent<IExternalProps>>(
   onEnterAction({
     actionCreator: dispatch => {
       dispatch(actions.kyc.loadBankAccountDetails());
