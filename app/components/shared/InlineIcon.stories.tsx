@@ -3,8 +3,6 @@ import * as React from "react";
 
 import { InlineIcon } from "./InlineIcon";
 
-import * as eth_icon from "../../assets/img/eth_icon.svg";
-import * as euro_icon from "../../assets/img/euro_icon.svg";
 import * as link_arrow from "../../assets/img/link_arrow.svg";
 import * as logo_square_white from "../../assets/img/logo-square-white.svg";
 import * as logo_capitalized from "../../assets/img/logo_capitalized.svg";
@@ -12,8 +10,6 @@ import * as logo_small_black from "../../assets/img/logo_small_black.svg";
 import * as logo_white from "../../assets/img/logo_white.svg";
 import * as logo_yellow from "../../assets/img/logo_yellow.svg";
 import * as mail_link from "../../assets/img/mail_link.svg";
-import * as neu_icon from "../../assets/img/neu_icon.svg";
-import * as nEUR_icon from "../../assets/img/nEUR_icon.svg";
 import * as info from "../../assets/img/notifications/info.svg";
 import * as success from "../../assets/img/notifications/success.svg";
 import * as warning from "../../assets/img/notifications/warning.svg";
@@ -89,8 +85,6 @@ storiesOf("Icons", module)
 
       <h3>Other icons</h3>
       {[
-        eth_icon,
-        euro_icon,
         link_arrow,
         logo_capitalized,
         logo_small_black,
@@ -98,8 +92,6 @@ storiesOf("Icons", module)
         logo_white,
         logo_yellow,
         mail_link,
-        neu_icon,
-        nEUR_icon,
         token_icon,
       ].map(svg => (
         <span style={{ display: "inline-block" }} className="m-1">
