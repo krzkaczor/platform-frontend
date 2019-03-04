@@ -1,3 +1,4 @@
+import * as cn from "classnames";
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "redux";
@@ -11,7 +12,6 @@ import { Button, EButtonLayout } from "../../shared/buttons";
 import { Panel } from "../../shared/Panel";
 import { ResponsiveImage } from "../../shared/ResponsiveImage";
 
-import * as cn from "classnames";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as personImage from "../../../assets/img/person@3x.png";
 import * as styles from "./PersonalAccountDetails.module.scss";
