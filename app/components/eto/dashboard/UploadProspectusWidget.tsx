@@ -11,7 +11,9 @@ interface IExternalProps {
   layoutClass?: string;
 }
 
-export const UploadProspectusWidgetComponent: React.FunctionComponent<IExternalProps> = ({layoutClass}) => (
+export const UploadProspectusWidgetComponent: React.FunctionComponent<IExternalProps> = ({
+  layoutClass,
+}) => (
   <DashboardLinkWidget
     title={<FormattedMessage id={"settings.upload-prospectus.title"} />}
     text={<FormattedMessage id="settings.upload-prospectus-please-upload-prospectus" />}
@@ -21,6 +23,6 @@ export const UploadProspectusWidgetComponent: React.FunctionComponent<IExternalP
   />
 );
 
-export const UploadProspectusWidget = compose<React.FunctionComponent<IExternalProps>>(createErrorBoundary(ErrorBoundaryPanel))(
-  UploadProspectusWidgetComponent,
-);
+export const UploadProspectusWidget = compose<React.FunctionComponent<IExternalProps>>(
+  createErrorBoundary(ErrorBoundaryPanel),
+)(UploadProspectusWidgetComponent);

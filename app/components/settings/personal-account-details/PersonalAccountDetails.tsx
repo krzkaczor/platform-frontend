@@ -11,10 +11,10 @@ import { Button, EButtonLayout } from "../../shared/buttons";
 import { Panel } from "../../shared/Panel";
 import { ResponsiveImage } from "../../shared/ResponsiveImage";
 
+import * as cn from "classnames";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as personImage from "../../../assets/img/person@3x.png";
 import * as styles from "./PersonalAccountDetails.module.scss";
-import * as cn from "classnames";
 
 interface IStateProps {
   personalData: {
@@ -139,7 +139,9 @@ class AccountDetailsComponent extends React.Component<IStateProps & IExternalPro
   }
 }
 
-export const PersonalAccountDetails:React.FunctionComponent<IExternalProps> = compose<React.FunctionComponent>(
+export const PersonalAccountDetails: React.FunctionComponent<IExternalProps> = compose<
+  React.FunctionComponent
+>(
   appConnect<IStateProps>({
     stateToProps: s => ({
       personalData: s.kyc.individualData || {},

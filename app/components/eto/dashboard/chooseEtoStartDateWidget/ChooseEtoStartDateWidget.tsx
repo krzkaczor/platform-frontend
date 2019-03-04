@@ -28,7 +28,7 @@ interface IStateProps {
 }
 
 interface IExternalProps {
-  layoutClass?: string
+  layoutClass?: string;
 }
 
 interface IDispatchProps {
@@ -270,7 +270,10 @@ const ChooseEtoStartDateWidgetComponent: React.ComponentType<
   IStateProps & IDispatchProps & IExternalProps
 > = props => {
   return (
-    <Panel headerText={<FormattedMessage id="eto.settings.eto-start-date" />} className={props.layoutClass}>
+    <Panel
+      headerText={<FormattedMessage id="eto.settings.eto-start-date" />}
+      className={props.layoutClass}
+    >
       <div className={styles.content}>
         <p className={cn(styles.text, "pt-2")}>
           <FormattedMessage id="settings.choose-pre-eto-date.book-building-will-stop" />

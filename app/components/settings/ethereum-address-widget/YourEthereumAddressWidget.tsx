@@ -1,5 +1,5 @@
+import * as cn from "classnames";
 import * as React from "react";
-import * as cn from "classnames"
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { selectEthereumAddressWithChecksum } from "../../../modules/web3/selectors";
@@ -14,13 +14,12 @@ interface IStateProps {
 }
 
 interface IExternalProps {
-  layoutClass?:string;
+  layoutClass?: string;
 }
 
-export const YourEthereumAddressWidgetComponent: React.FunctionComponent<IStateProps & IExternalProps> = ({
-  address,
-  layoutClass
-}) => (
+export const YourEthereumAddressWidgetComponent: React.FunctionComponent<
+  IStateProps & IExternalProps
+> = ({ address, layoutClass }) => (
   <Panel
     className={cn("h-100", layoutClass)}
     centerContent={false}

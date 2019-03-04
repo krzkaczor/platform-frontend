@@ -25,7 +25,7 @@ interface IOwnProps {
 
 const BackupSeedWidgetComponent: React.FunctionComponent<IStateProps & IOwnProps> = ({
   backupCodesVerified,
-  layoutClass
+  layoutClass,
 }) => {
   return (
     <Panel

@@ -12,6 +12,7 @@ import { PersonProfileModal } from "../../modals/PersonProfileModal";
 import { Accordion, AccordionElement } from "../../shared/Accordion";
 import { ButtonLink } from "../../shared/buttons";
 import { ChartDoughnut } from "../../shared/charts/ChartDoughnut";
+import { GridBaseLayout } from "../../shared/Layout";
 import { ExternalLink } from "../../shared/links";
 import { ILink, MediaLinksWidget, normalizedUrl } from "../../shared/MediaLinksWidget";
 import { Panel } from "../../shared/Panel";
@@ -29,7 +30,6 @@ import { DocumentsWidget } from "../public-view/DocumentsWidget";
 import { EtoInvestmentTermsWidget } from "../public-view/EtoInvestmentTermsWidget";
 import { LegalInformationWidget } from "../public-view/LegalInformationWidget";
 import { areThereIndividuals, selectActiveCarouselTab } from "./EtoView.utils";
-import { GridBaseLayout } from "../../shared/Layout";
 
 import * as styles from "./EtoView.module.scss";
 
@@ -130,30 +130,30 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             <div className={styles.headerWithButton}>
               <FormattedMessage id="eto.public-view.eto-timeline" />
               {process.env.NF_MAY_SHOW_INVESTOR_STATS === "1" &&
-              !isInSetupState && (
-                <ButtonLink
-                  to={withParams(externalRoutes.icoMonitorEto, { etoId: eto.etoId })}
-                  target="_blank"
-                >
-                  <FormattedMessage id="eto.public-view.fundraising-statistics-button" />
-                </ButtonLink>
-              )}
+                !isInSetupState && (
+                  <ButtonLink
+                    to={withParams(externalRoutes.icoMonitorEto, { etoId: eto.etoId })}
+                    target="_blank"
+                  >
+                    <FormattedMessage id="eto.public-view.fundraising-statistics-button" />
+                  </ButtonLink>
+                )}
             </div>
           </SectionHeader>
           <Panel>
-            <EtoTimeline
-              startOfStates={isOnChain(eto) ? eto.contract.startOfStates : undefined}
-            />
+            <EtoTimeline startOfStates={isOnChain(eto) ? eto.contract.startOfStates : undefined} />
           </Panel>
         </section>
-        <section className={
-          isSlideShareAvailable ||
-          isTwitterFeedEnabled ||
-          isYouTubeVideoAvailable ||
-          hasSocialChannelsAdded
-            ? cn(styles.blockWrapper, styles.twoThirds)
-            : styles.blockWrapper
-        }>
+        <section
+          className={
+            isSlideShareAvailable ||
+            isTwitterFeedEnabled ||
+            isYouTubeVideoAvailable ||
+            hasSocialChannelsAdded
+              ? cn(styles.blockWrapper, styles.twoThirds)
+              : styles.blockWrapper
+          }
+        >
           <SectionHeader decorator={false} className="mb-4">
             <div className={styles.headerWithButton}>
               {brandName}
@@ -195,7 +195,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             <div
               className={cn(
                 (isSlideShareAvailable || isTwitterFeedEnabled || isYouTubeVideoAvailable) &&
-                "mt-4",
+                  "mt-4",
               )}
             >
               <SocialProfilesList profiles={(socialChannels as IEtoSocialProfile[]) || []} />
@@ -263,9 +263,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                 </TabContent>
               )}
               {areThereIndividuals(notableInvestors) && (
-                <TabContent
-                  tab={<FormattedMessage id="eto.public-view.carousel.tab.investors" />}
-                >
+                <TabContent tab={<FormattedMessage id="eto.public-view.carousel.tab.investors" />}>
                   <Panel>
                     <PeopleSwiperWidget
                       people={notableInvestors.members as IPerson[]}
@@ -320,7 +318,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             </Tabs>
           </section>
         )}
-        <section className={cn(styles.blockWrapper,styles.twoThirds)}>
+        <section className={cn(styles.blockWrapper, styles.twoThirds)}>
           {(inspiration ||
             companyMission ||
             customerGroup ||
@@ -391,9 +389,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                   )}
                   {sellingProposition && (
                     <AccordionElement
-                      title={
-                        <FormattedMessage id="eto.form.product-vision.selling-proposition" />
-                      }
+                      title={<FormattedMessage id="eto.form.product-vision.selling-proposition" />}
                     >
                       <p>{sellingProposition}</p>
                     </AccordionElement>
@@ -413,9 +409,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                     <AccordionElement
                       title={<FormattedMessage id="eto.form.product-vision.use-of-capital" />}
                     >
-                      {useOfCapital && (
-                        <p>{useOfCapital}</p>
-                      )}
+                      {useOfCapital && <p>{useOfCapital}</p>}
 
                       {useOfCapitalList && (
                         <ChartDoughnut
@@ -471,7 +465,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             </>
           )}
         </section>
-        <section className={cn(styles.blockWrapper,styles.oneThird)}>
+        <section className={cn(styles.blockWrapper, styles.oneThird)}>
           {marketingLinks && (
             <>
               <SectionHeader decorator={false} className="mb-4">
@@ -489,14 +483,14 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
           )}
 
           {companyNews &&
-          !!companyNews[0].url && (
-            <>
-              <SectionHeader decorator={false} className="mb-4">
-                <FormattedMessage id="eto.form.media-links.title" />
-              </SectionHeader>
-              <MediaLinksWidget links={[...companyNews].reverse() as ILink[]} />
-            </>
-          )}
+            !!companyNews[0].url && (
+              <>
+                <SectionHeader decorator={false} className="mb-4">
+                  <FormattedMessage id="eto.form.media-links.title" />
+                </SectionHeader>
+                <MediaLinksWidget links={[...companyNews].reverse() as ILink[]} />
+              </>
+            )}
         </section>
       </GridBaseLayout>
     </>

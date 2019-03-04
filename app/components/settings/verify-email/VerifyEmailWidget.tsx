@@ -37,7 +37,7 @@ interface IStateProps {
 
 interface IOwnProps {
   step: number;
-  layoutClass?: string
+  layoutClass?: string;
 }
 
 interface IEnhancedFormProps {
@@ -222,7 +222,7 @@ export const VerifyEmailWidgetComponent: React.FunctionComponent<
   isEmailTemporaryCancelled,
   step,
   revertCancelEmail,
-  layoutClass
+  layoutClass,
 }) => {
   const shouldViewVerifiedUser =
     !isThereUnverifiedEmail && !isEmailTemporaryCancelled && isUserEmailVerified;

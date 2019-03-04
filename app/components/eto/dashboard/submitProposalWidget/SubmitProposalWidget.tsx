@@ -18,15 +18,17 @@ interface IDispatchProps {
 }
 
 interface IExternalProps {
-  layoutClass?: string
+  layoutClass?: string;
 }
 
-export const SubmitProposalWidgetComponent: React.FunctionComponent<IDispatchProps & IExternalProps> = ({
-  submitProposal,
-  layoutClass
-}) => {
+export const SubmitProposalWidgetComponent: React.FunctionComponent<
+  IDispatchProps & IExternalProps
+> = ({ submitProposal, layoutClass }) => {
   return (
-    <Panel headerText={<FormattedMessage id="settings.submit-your-proposal.header" />} className={layoutClass}>
+    <Panel
+      headerText={<FormattedMessage id="settings.submit-your-proposal.header" />}
+      className={layoutClass}
+    >
       <div className={styles.content}>
         <p className={cn(styles.text, "pt-2")}>
           <FormattedMessage id="settings.submit-proposal-widget.completed-fields" />

@@ -11,7 +11,7 @@ interface IProps {
   verifiedEmail?: string;
   backupCodesVerified?: boolean;
   requestStatus?: ERequestStatus;
-  layoutClass?:string;
+  layoutClass?: string;
 }
 
 export const SettingsWidgets: React.FunctionComponent<IProps> = ({
@@ -20,21 +20,21 @@ export const SettingsWidgets: React.FunctionComponent<IProps> = ({
   verifiedEmail,
   isDynamic,
   requestStatus,
-  layoutClass
+  layoutClass,
 }) => {
   let settingsStepCounter = 0;
 
   return (
     <>
       {(!isDynamic || !verifiedEmail) && (
-          <VerifyEmailWidget step={++settingsStepCounter} layoutClass={layoutClass}/>
+        <VerifyEmailWidget step={++settingsStepCounter} layoutClass={layoutClass} />
       )}
       {(!isDynamic || !backupCodesVerified) &&
         isLightWallet && (
-            <BackupSeedWidget step={++settingsStepCounter} layoutClass={layoutClass}/>
+          <BackupSeedWidget step={++settingsStepCounter} layoutClass={layoutClass} />
         )}
       {(!isDynamic || requestStatus !== ERequestStatus.ACCEPTED) && (
-          <KycStatusWidget step={++settingsStepCounter}  layoutClass={layoutClass}/>
+        <KycStatusWidget step={++settingsStepCounter} layoutClass={layoutClass} />
       )}
     </>
   );

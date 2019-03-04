@@ -106,7 +106,7 @@ const BookBuildingWidgetLayout: React.FunctionComponent<ILayoutProps> = ({
   text,
   buttonText,
   canEnableBookbuilding,
-  layoutClass
+  layoutClass,
 }) => (
   <Panel headerText={headerText} className={layoutClass}>
     <div className={styles.content}>
@@ -143,7 +143,7 @@ export const BookBuildingWidgetComponent: React.FunctionComponent<IProps> = ({
   downloadCSV,
   etoId,
   canEnableBookbuilding,
-  layoutClass
+  layoutClass,
 }) => {
   if (bookBuildingStats === undefined) {
     //TODO data loading state

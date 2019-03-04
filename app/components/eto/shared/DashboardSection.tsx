@@ -19,9 +19,14 @@ const DashboardSection: React.FunctionComponent<IProps> = ({
   className = "my-4",
   size,
 }) => (
-    <SectionHeader className={className} decorator={hasDecorator} size={size} data-test-id={dataTestId}>
-      {step && <>STEP {step}:</>} {title}
-    </SectionHeader>
+  <SectionHeader
+    className={className}
+    decorator={hasDecorator}
+    size={size}
+    data-test-id={dataTestId}
+  >
+    {step && <>STEP {step}:</>} {title}
+  </SectionHeader>
 );
 
 export { DashboardSection };

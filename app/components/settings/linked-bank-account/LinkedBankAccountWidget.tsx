@@ -15,10 +15,10 @@ import { Button, ButtonSize, EButtonLayout } from "../../shared/buttons";
 import { Panel } from "../../shared/Panel";
 import { BankAccount } from "../../wallet/BankAccount";
 
+import * as cn from "classnames";
 import * as bankIcon from "../../../assets/img/bank-transfer/bank_icon.svg";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as styles from "./LinkedBankAccountWidget.module.scss";
-import * as cn from "classnames";
 
 interface IDispatchProps {
   verifyBankAccount: () => void;
@@ -31,7 +31,7 @@ interface IStateProps {
 }
 
 interface IExternalProps {
-  layoutClass?:string;
+  layoutClass?: string;
 }
 
 type IComponentProps = IStateProps & IDispatchProps;
@@ -56,7 +56,9 @@ const LinkAccount: React.FunctionComponent<IComponentProps> = ({
   </>
 );
 
-const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps & IExternalProps> = props => (
+const LinkedBankAccountComponent: React.FunctionComponent<
+  IComponentProps & IExternalProps
+> = props => (
   <Panel
     centerContent={false}
     headerText={<FormattedMessage id="linked-bank-account-widget.header" />}

@@ -45,7 +45,7 @@ export const EtoFormProgressWidgetLayout: React.FunctionComponent<IProps & IChar
   isLoading,
   disabled,
   readonly,
-  dataTestId
+  dataTestId,
 }) => (
   <Panel>
     <Proportion width={100} height={108}>

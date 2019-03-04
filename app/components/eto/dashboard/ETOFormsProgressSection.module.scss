@@ -1,6 +1,6 @@
 .progress-section-layout {
   display: grid;
-  grid-template: auto/repeat(2, 1fr);
+  grid-template: auto / repeat(2, 1fr);
   grid-gap: 1rem;
 }
 
@@ -12,6 +12,6 @@
 
 @media (min-width: 990px) {
   .progress-section-layout {
-    grid-template: auto/repeat(3, 1fr);
+    grid-template: auto / repeat(3, 1fr);
   }
 }

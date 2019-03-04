@@ -47,7 +47,7 @@ interface IStateProps {
 
 interface IOwnProps {
   step: number;
-  layoutClass?:string;
+  layoutClass?: string;
 }
 
 interface IDispatchProps {
@@ -264,12 +264,12 @@ export const KycStatusWidgetComponent: React.FunctionComponent<IKycStatusWidgetP
     isLoading,
     error,
     step,
-    layoutClass
+    layoutClass,
   } = props;
 
   return (
     <Panel
-      className={cn("h-100",layoutClass)}
+      className={cn("h-100", layoutClass)}
       headerText={<FormattedMessage id="settings.kyc-widget.header" values={{ step }} />}
       rightComponent={<StatusIcon {...props} />}
     >

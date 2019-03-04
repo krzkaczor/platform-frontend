@@ -211,7 +211,6 @@ class PeopleSwiperWidgeLayout extends React.PureComponent<IOwnProps & IDispatchP
   };
 
   render(): React.ReactNode {
-    console.log('render')
     const isHorizontal = this.props.people.length < 3 || this.state.slidesPerView < 3;
     const showArrows = this.props.people.length > this.state.slidesPerView;
 

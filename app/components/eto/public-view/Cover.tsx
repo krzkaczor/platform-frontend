@@ -34,7 +34,12 @@ export const Cover: React.FunctionComponent<IProps> = ({
       <div className={styles.companyDetails}>
         <div className={styles.identity}>
           <div className={styles.logo}>
-            <ResponsiveImage className={styles.logo} srcSet={companyLogo.srcSet} alt={companyLogo.alt} theme="light" />
+            <ResponsiveImage
+              className={styles.logo}
+              srcSet={companyLogo.srcSet}
+              alt={companyLogo.alt}
+              theme="light"
+            />
           </div>
           <div className={styles.details}>
             <h2 className={styles.name}>{companyName}</h2>

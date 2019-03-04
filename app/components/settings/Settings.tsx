@@ -19,6 +19,7 @@ import { DashboardSection } from "../eto/shared/DashboardSection";
 import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
+import { GridBaseLayout, WidgetGridLayout } from "../shared/Layout";
 import { SectionHeader } from "../shared/SectionHeader";
 import { ChangeEmail } from "./change-email/ChangeEmail";
 import { YourEthereumAddressWidget } from "./ethereum-address-widget/YourEthereumAddressWidget";
@@ -26,9 +27,8 @@ import { CheckYourICBMWalletWidget } from "./icbm-wallet-widget/CheckYourICBMWal
 import { LinkedBankAccountWidget } from "./linked-bank-account/LinkedBankAccountWidget";
 import { PersonalAccountDetails } from "./personal-account-details/PersonalAccountDetails";
 import { SettingsWidgets } from "./settings-widget/SettingsWidgets";
-import { GridBaseLayout, WidgetGridLayout } from "../shared/Layout";
 
-import * as layoutStyles from '../shared/Layout.module.scss'
+import * as layoutStyles from "../shared/Layout.module.scss";
 
 interface IStateProps {
   isLightWallet: boolean;
@@ -60,7 +60,11 @@ export const SettingsComponent: React.FunctionComponent<IStateProps> = ({
           data-test-id="eto-dashboard-application"
         />
         <WidgetGridLayout>
-          <SettingsWidgets isDynamic={false} isLightWallet={isLightWallet} layoutClass={layoutStyles.span3}/>
+          <SettingsWidgets
+            isDynamic={false}
+            isLightWallet={isLightWallet}
+            layoutClass={layoutStyles.span3}
+          />
         </WidgetGridLayout>
 
         <DashboardSection
@@ -68,30 +72,25 @@ export const SettingsComponent: React.FunctionComponent<IStateProps> = ({
           data-test-id="eto-dashboard-application"
         />
         <WidgetGridLayout>
-        <YourEthereumAddressWidget layoutClass={layoutStyles.span3}/>
-        {process.env.NF_CHECK_LOCKED_WALLET_WIDGET_ENABLED === "1" &&
-          !isIcbmWalletConnected &&
-          !isLockedWalletConnected &&
-          isUserInvestor && (
-            <CheckYourICBMWalletWidget layoutClass={layoutStyles.span3}/>
-          )}
+          <YourEthereumAddressWidget layoutClass={layoutStyles.span3} />
+          {process.env.NF_CHECK_LOCKED_WALLET_WIDGET_ENABLED === "1" &&
+            !isIcbmWalletConnected &&
+            !isLockedWalletConnected &&
+            isUserInvestor && <CheckYourICBMWalletWidget layoutClass={layoutStyles.span3} />}
 
-        {isUserInvestor &&
-          isIndividual &&
-          isPersonalDataProcessed && (
-            <PersonalAccountDetails layoutClass={layoutStyles.span3} />
-          )}
+          {isUserInvestor &&
+            isIndividual &&
+            isPersonalDataProcessed && <PersonalAccountDetails layoutClass={layoutStyles.span3} />}
         </WidgetGridLayout>
 
-
-          <SectionHeader>
-            <FormattedMessage id="settings.personal-settings.title" />
-          </SectionHeader>
+        <SectionHeader>
+          <FormattedMessage id="settings.personal-settings.title" />
+        </SectionHeader>
         <WidgetGridLayout>
-        {process.env.NF_FEATURE_EMAIL_CHANGE_ENABLED === "1" && (
-          <ChangeEmail layoutClass={layoutStyles.span3}/>
-        )}
-        <LinkedBankAccountWidget layoutClass={layoutStyles.span3}/>
+          {process.env.NF_FEATURE_EMAIL_CHANGE_ENABLED === "1" && (
+            <ChangeEmail layoutClass={layoutStyles.span3} />
+          )}
+          <LinkedBankAccountWidget layoutClass={layoutStyles.span3} />
         </WidgetGridLayout>
       </GridBaseLayout>
     </LayoutAuthorized>

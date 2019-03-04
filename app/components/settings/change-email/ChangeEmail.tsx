@@ -4,13 +4,13 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
+import * as cn from "classnames";
 import { actions } from "../../../modules/actions";
 import { appConnect } from "../../../store";
 import { IIntlProps, injectIntlHelpers } from "../../../utils/injectIntlHelpers";
 import { Button } from "../../shared/buttons";
 import { Form, FormField } from "../../shared/forms";
 import { Panel } from "../../shared/Panel";
-import * as cn from "classnames";
 
 interface IDispatchProps {
   submitForm: (values: IFormValues) => void;
@@ -50,11 +50,9 @@ const SettingsEnhancedChangeEmailForm = withFormik<IDispatchProps, IFormValues>(
   },
 })(ChangeEmailForm);
 
-export const ChangeEmailComponent: React.FunctionComponent<IDispatchProps & IIntlProps & IExternalProps> = ({
-  intl: { formatIntlMessage },
-  layoutClass,
-  ...props
-}) => {
+export const ChangeEmailComponent: React.FunctionComponent<
+  IDispatchProps & IIntlProps & IExternalProps
+> = ({ intl: { formatIntlMessage }, layoutClass, ...props }) => {
   return (
     <Panel
       headerText={formatIntlMessage("settings.change-email-component.header")}
@@ -75,7 +73,9 @@ export const ChangeEmailComponent: React.FunctionComponent<IDispatchProps & IInt
   );
 };
 
-export const ChangeEmail:React.FunctionComponent<IExternalProps> = compose<React.FunctionComponent>(
+export const ChangeEmail: React.FunctionComponent<IExternalProps> = compose<
+  React.FunctionComponent
+>(
   appConnect<IDispatchProps>({
     dispatchToProps: dispatch => ({
       submitForm: (values: IFormValues) => {

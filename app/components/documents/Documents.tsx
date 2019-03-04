@@ -49,7 +49,6 @@ type IProps = IComponentStateProps & IDispatchProps;
 
 interface IComponentStateProps {
   etoFilesData: DeepReadonly<IEtoFiles>;
-  loadingData: boolean;
   etoFileLoading: boolean;
   etoState?: EEtoState;
   etoTemplates: TEtoDocumentTemplates;
@@ -59,6 +58,7 @@ interface IComponentStateProps {
 }
 
 type IStateProps = IComponentStateProps & {
+  dataNotReady: boolean;
   shouldEtoDataLoad: boolean;
 };
 
@@ -211,13 +211,18 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
 const Documents = compose<React.FunctionComponent>(
   createErrorBoundary(ErrorBoundaryLayoutAuthorized),
   setDisplayName("Documents"),
+  onEnterAction({ actionCreator: d => d(actions.etoDocuments.loadFileDataStart()) }),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => {
       const isRetailEto = selectIssuerEtoIsRetail(state);
+      const etoFilesData = selectEtoDocumentData(state.etoDocuments);
+      const etoFilesDataIsEmpty = Object.keys(etoFilesData.allTemplates).length === 0;
+
       return {
         shouldEtoDataLoad: selectShouldEtoDataLoad(state),
-        etoFilesData: selectEtoDocumentData(state.etoDocuments),
-        loadingData: selectIssuerEtoLoading(state),
+        etoFilesData,
+        dataNotReady:
+          selectIssuerEtoLoading(state) || state.etoDocuments.loading || etoFilesDataIsEmpty,
         etoFileLoading: selectEtoDocumentLoading(state.etoDocuments),
         etoState: selectIssuerEtoState(state),
         etoTemplates: selectIssuerEtoTemplates(state)!,
@@ -234,13 +239,12 @@ const Documents = compose<React.FunctionComponent>(
   }),
   withMetaTags((_, intl) => ({ title: intl.formatIntlMessage("menu.documents-page") })),
   withContainer(LayoutAuthorized),
-  branch(
-    (props: IStateProps) => !props.shouldEtoDataLoad,
+  branch<IStateProps>(
+    props => !props.shouldEtoDataLoad,
     renderComponent(() => <Redirect to={appRoutes.profile} />),
   ),
-  onEnterAction({ actionCreator: d => d(actions.etoDocuments.loadFileDataStart()) }),
-  branch(
-    (props: IProps) => props.loadingData || props.etoFileLoading || !props.etoState,
+  branch<IStateProps>(
+    props => props.dataNotReady || props.etoFileLoading || !props.etoState,
     renderComponent(LoadingIndicator),
   ),
 )(DocumentsLayout);

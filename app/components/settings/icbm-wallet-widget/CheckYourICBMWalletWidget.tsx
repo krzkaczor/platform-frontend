@@ -10,16 +10,16 @@ import { Form, FormFieldColorful } from "../../shared/forms";
 import { Panel } from "../../shared/Panel";
 import { Tooltip } from "../../shared/Tooltip";
 
+import * as cn from "classnames";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as styles from "./CheckYourICBMWalletWidget.module.scss";
-import * as cn from "classnames";
 
 interface IDispatchProps {
   loadICBMWallet: (address: string) => void;
 }
 
 interface IExternalProps {
-  layoutClass?:string
+  layoutClass?: string;
 }
 
 class FormContent extends React.Component {
@@ -50,10 +50,9 @@ class FormContent extends React.Component {
   }
 }
 
-export const CheckYourICBMWalletWidgetComponent: React.FunctionComponent<IExternalProps & IDispatchProps> = ({
-  loadICBMWallet,
-  layoutClass
-}) => {
+export const CheckYourICBMWalletWidgetComponent: React.FunctionComponent<
+  IExternalProps & IDispatchProps
+> = ({ loadICBMWallet, layoutClass }) => {
   return (
     <Panel
       headerText={

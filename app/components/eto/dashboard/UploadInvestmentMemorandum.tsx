@@ -9,10 +9,12 @@ import { createErrorBoundary } from "../../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryPanel } from "../../shared/errorBoundary/ErrorBoundaryPanel";
 
 interface IExternalProps {
-  layoutClass: string
+  layoutClass: string;
 }
 
-export const UploadInvestmentMemorandumLayout: React.FunctionComponent<IExternalProps & IIntlProps> = ({ layoutClass, intl: { formatIntlMessage } }) =>
+export const UploadInvestmentMemorandumLayout: React.FunctionComponent<
+  IExternalProps & IIntlProps
+> = ({ layoutClass, intl: { formatIntlMessage } }) => (
   <DashboardLinkWidget
     title={formatIntlMessage("settings.upload-investment-memorandum.title")}
     text={<FormattedMessage id="settings.upload-investment-memorandum-please-upload-prospectus" />}
@@ -20,10 +22,9 @@ export const UploadInvestmentMemorandumLayout: React.FunctionComponent<IExternal
     buttonText={<FormattedMessage id="settings.upload-investment-button.title" />}
     layoutClass={layoutClass}
   />
-
+);
 
 export const UploadInvestmentMemorandum = compose<React.FunctionComponent<IExternalProps>>(
   createErrorBoundary(ErrorBoundaryPanel),
-  injectIntlHelpers
-)
-(UploadInvestmentMemorandumLayout);
+  injectIntlHelpers,
+)(UploadInvestmentMemorandumLayout);

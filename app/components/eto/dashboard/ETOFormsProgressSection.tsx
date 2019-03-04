@@ -27,7 +27,7 @@ import { appConnect } from "../../../store";
 import { EtoFormProgressWidget } from "../../shared/EtoFormProgressWidget";
 import { etoRegisterRoutes } from "../registration/routes";
 
-import * as styles from "./ETOFormsProgressSection.module.scss"
+import * as styles from "./ETOFormsProgressSection.module.scss";
 
 interface IEtoRegisteredRoutes {
   [id: string]: EEtoFormTypes;
@@ -143,8 +143,8 @@ export const ETOFormsProgressSectionComponent: React.FunctionComponent<IStatePro
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
 export const ETOFormsProgressSection = appConnect<IStateProps, {}>({
   stateToProps: state => ({

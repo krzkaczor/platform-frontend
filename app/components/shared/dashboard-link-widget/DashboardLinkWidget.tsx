@@ -14,7 +14,7 @@ interface IProps {
   to: H.LocationDescriptor;
   buttonText: TTranslatedString;
   buttonTid?: string;
-  layoutClass?: string
+  layoutClass?: string;
 }
 
 export const DashboardLinkWidget: React.FunctionComponent<IProps> = ({
@@ -23,7 +23,7 @@ export const DashboardLinkWidget: React.FunctionComponent<IProps> = ({
   to,
   buttonText,
   buttonTid,
-  layoutClass
+  layoutClass,
 }) => {
   return (
     <Panel headerText={title} className={layoutClass}>
