@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { shallow } from "enzyme";
 import * as React from "react";
 import { spy } from "sinon";
+
 import { tid } from "../../../test/testUtils";
 import { appRoutes } from "../appRoutes";
 import { HeaderComponent } from "./Header";

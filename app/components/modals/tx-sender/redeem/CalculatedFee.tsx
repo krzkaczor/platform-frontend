@@ -20,7 +20,7 @@ const CalculatedFee: React.FunctionComponent<{ amount: string; bankFee: string }
   const calculatedFee = multiplyBigNumbers([providedAmount, bankFee]);
 
   return (
-    <Money value={calculatedFee} currencySymbol={ECurrencySymbol.SYMBOL} currency={ECurrency.EUR} />
+    <Money value={calculatedFee} currencySymbol={ECurrencySymbol.CODE} currency={ECurrency.EUR} />
   );
 };
 

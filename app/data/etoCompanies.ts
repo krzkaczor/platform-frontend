@@ -1,3 +1,7 @@
+import * as brille24hoverMp4 from "../assets/img/eto_offers/brille_animation.mp4";
+import * as brille24hoverWebm from "../assets/img/eto_offers/brille_animation.webm";
+import * as curfhoverMp4 from "../assets/img/eto_offers/curfhover@1x.mp4";
+import * as curfhoverWebm from "../assets/img/eto_offers/curfhover@1x.webm";
 import { IEtoOfferingProps } from "../components/shared/EtoOfferingCard";
 import { EVideoTheme } from "../components/shared/ResponsiveVideo";
 
@@ -13,13 +17,9 @@ import * as blockstatehover from "../assets/img/eto_offers/blockstate-hover@1x.p
 import * as blockstate2hover from "../assets/img/eto_offers/blockstate-hover@2x.png";
 import * as blockstate from "../assets/img/eto_offers/blockstate@1x.jpg";
 import * as blockstate2 from "../assets/img/eto_offers/blockstate@2x.jpg";
-import * as brille24hoverMp4 from "../assets/img/eto_offers/brille_animation.mp4";
-import * as brille24hoverWebm from "../assets/img/eto_offers/brille_animation.webm";
 import * as brille24 from "../assets/img/eto_offers/brille_card.jpg";
 import * as curf from "../assets/img/eto_offers/curf.jpg";
 import * as curf2 from "../assets/img/eto_offers/curf@2x.jpg";
-import * as curfhoverMp4 from "../assets/img/eto_offers/curfhover@1x.mp4";
-import * as curfhoverWebm from "../assets/img/eto_offers/curfhover@1x.webm";
 import * as emflux from "../assets/img/eto_offers/emflux.jpg";
 import * as emfluxhover from "../assets/img/eto_offers/emfluxhover@1x.jpg";
 import * as emflux2hover from "../assets/img/eto_offers/emfluxhover@2x.jpg";

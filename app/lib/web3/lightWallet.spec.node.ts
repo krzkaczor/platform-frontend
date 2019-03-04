@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { expectToBeRejected } from "../../../test/testUtils";
 import { LightWalletUtil } from "./LightWallet";
 

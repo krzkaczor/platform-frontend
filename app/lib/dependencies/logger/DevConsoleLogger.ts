@@ -1,4 +1,5 @@
 import { injectable } from "inversify";
+
 import { ILogger } from ".";
 import { ErrorArgs, LogArg, TUser } from "./ILogger";
 

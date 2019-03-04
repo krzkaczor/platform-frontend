@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
-import { showErrorToast, showInfoToast } from "../../components/shared/Toast";
 
+import { showErrorToast, showInfoToast } from "../../components/shared/Toast";
 import { getMessageTranslation } from "../../components/translatedMessages/messages";
 import { TMessage } from "../../components/translatedMessages/utils";
 

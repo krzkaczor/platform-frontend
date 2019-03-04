@@ -1,5 +1,3 @@
-import "react-datetime/css/react-datetime.css";
-
 import { Field, FieldProps } from "formik";
 import { Moment } from "moment";
 import * as React from "react";
@@ -7,6 +5,7 @@ import * as DateTime from "react-datetime";
 
 import { InlineIcon } from "../../InlineIcon";
 
+import "react-datetime/css/react-datetime.css";
 import * as iconCalendar from "../../../../assets/img/inline_icons/calendar.svg";
 import * as styles from "./FormFieldDatePicker.module.scss";
 

@@ -1,16 +1,16 @@
 import * as cn from "classnames";
 import * as React from "react";
-
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Container, Row } from "reactstrap";
+
 import { ChartBars, IChartBarsData } from "../../shared/charts/ChartBars";
+import { HorizontalLine } from "../../shared/HorizontalLine";
 import { Panel } from "../../shared/Panel";
 import { TableBody } from "../../shared/table/TableBody";
 import { TableCell } from "../../shared/table/TableCell";
 import { TableHeader } from "../../shared/table/TableHeader";
 import { TableRow } from "../../shared/table/TableRow";
 
-import { HorizontalLine } from "../../shared/HorizontalLine";
 import * as stylesCommon from "../EtoOverviewCommon.module.scss";
 
 interface IInvestor {

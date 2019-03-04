@@ -25,7 +25,7 @@ const TotalRedeemed: React.FunctionComponent<{ amount: string; bankFee: string }
   return (
     <Money
       value={totalRedeemed}
-      currencySymbol={ECurrencySymbol.SYMBOL}
+      currencySymbol={ECurrencySymbol.CODE}
       currency={ECurrency.EUR}
       roundingMode={ERoundingMode.DOWN}
     />

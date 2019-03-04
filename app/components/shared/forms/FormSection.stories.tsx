@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-
 import { Container } from "reactstrap";
+
 import { FormSection } from "./FormSection";
 
 storiesOf("Form/Section", module).add("default", () => (

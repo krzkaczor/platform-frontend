@@ -36,7 +36,21 @@
     "no-debugger": true,
     "no-invalid-this": false,
     "typedef": [true, "call-signature"],
-    "ordered-imports": true,
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true,
+        "groups": [
+          {
+            "name": "styles and other files",
+            "match": "\\.(svg|jpg|png|gif|scss|css)$",
+            "order": 30
+          },
+          { "name": "TS/JS files", "match": "^\\.", "order": 20 },
+          { "name": "libraries", "match": "^[\\w|@]", "order": 10 }
+        ]
+      }
+    ],
     "no-commented-code": true,
     "no-submodule-imports": false,
     "no-use-before-declare": false,

@@ -1,10 +1,9 @@
-import "ignore-styles";
-import "reflect-metadata";
-
 import * as BigNumber from "bignumber.js";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import * as chaiBignumber from "chai-bignumber";
+import "ignore-styles";
+import "reflect-metadata";
 import * as sinonChai from "sinon-chai";
 
 chai.use(chaiAsPromised);

@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 import { FormikConsumer, FormikProps, withFormik } from "formik";
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
@@ -14,6 +15,7 @@ import {
 import { selectLiquidEuroTokenBalance } from "../../../../modules/wallet/selectors";
 import { doesUserHaveEnoughNEuro, doesUserWithdrawMinimal } from "../../../../modules/web3/utils";
 import { appConnect } from "../../../../store";
+import { ERoundingMode, formatToFixed } from "../../../../utils/Money.utils";
 import { onEnterAction } from "../../../../utils/OnEnterAction";
 import { Button, ButtonSize, EButtonLayout } from "../../../shared/buttons/Button";
 import { ButtonArrowRight } from "../../../shared/buttons/index";
@@ -130,7 +132,9 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
           <Form>
             <FormField
               name="amount"
-              placeholder={`€ ${getFormattedMoney(neuroAmount, ECurrency.EUR, EMoneyFormat.WEI)}`}
+              suffix="EUR"
+              maxLength={15}
+              placeholder={`${getFormattedMoney(neuroAmount, ECurrency.EUR, EMoneyFormat.WEI)}`}
             />
             <section className={styles.section}>
               <SectionHeader decorator={false} size={ESectionHeaderSize.SMALL}>
@@ -138,7 +142,7 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
               </SectionHeader>
 
               <span className="text-warning">
-                {"-"} <CalculatedFee bankFee={bankFee} amount={values.amount} />
+                {"-"} {isValid && <CalculatedFee bankFee={bankFee} amount={values.amount} />}
               </span>
             </section>
             <section className={styles.section}>
@@ -146,7 +150,7 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
                 <FormattedMessage id="bank-transfer.redeem.init.total-reedemed" />
               </SectionHeader>
               <span className="text-success">
-                <TotalRedeemed bankFee={bankFee} amount={values.amount} />
+                {isValid ? <TotalRedeemed bankFee={bankFee} amount={values.amount} /> : "-"}
               </span>
             </section>
             <VerifiedBankAccount
@@ -191,8 +195,9 @@ const BankTransferRedeemInit = compose<IProps, {}>(
   withFormik<IStateProps & IDispatchProps, IReedemData>({
     validationSchema: (props: IStateProps) => getValidators(props.minAmount, props.neuroAmount),
     handleSubmit: (values, { props }) => {
+      const value = formatToFixed(new BigNumber(values.amount), 2, ERoundingMode.DOWN);
       props.confirm({
-        value: values.amount,
+        value,
       });
     },
   }),

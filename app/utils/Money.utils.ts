@@ -7,7 +7,7 @@ export enum ERoundingMode {
   HALF_DOWN = "half_down",
 }
 
-function formatToFixed(
+export function formatToFixed(
   moneyInPrimaryBase: BigNumber,
   decimalPlaces: number,
   roundingMode?: ERoundingMode,

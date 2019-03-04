@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { TTranslatedString } from "../../../types";
+
 import * as styles from "./FormHighlightGroup.module.scss";
 
 interface IProps {

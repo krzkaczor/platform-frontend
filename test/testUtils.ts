@@ -1,6 +1,7 @@
 import { AssertionError, expect } from "chai";
 import { isFunction, omit } from "lodash";
 import { spy } from "sinon";
+
 import { invariant } from "../app/utils/invariant";
 
 // helper to generate quickly selector for data-test-ids

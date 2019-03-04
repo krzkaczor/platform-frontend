@@ -1,5 +1,6 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
+
 import { UnlockedETHWallet } from "./UnlockedETHWallet";
 
 storiesOf("Unlocked ETH Wallet", module)

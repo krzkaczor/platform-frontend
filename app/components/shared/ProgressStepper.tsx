@@ -1,7 +1,7 @@
-import * as React from "react";
-
 import * as cn from "classnames";
 import { range } from "lodash";
+import * as React from "react";
+
 import * as styles from "./ProgressStepper.module.scss";
 
 export interface IProgressStepper {

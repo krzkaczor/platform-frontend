@@ -49,7 +49,10 @@ const BankTransferRedeemSummaryLayout: React.FunctionComponent<IComponentProps> 
         caption={<FormattedMessage id="bank-transfer.redeem.summary.to-bank-account" />}
         value={
           bankAccount.hasBankAccount && (
-            <BankNumber last4={bankAccount.details.bankAccountNumberLast4} bank={""} />
+            <BankNumber
+              last4={bankAccount.details.bankAccountNumberLast4}
+              bank={bankAccount.details.bankName}
+            />
           )
         }
       />
@@ -59,7 +62,7 @@ const BankTransferRedeemSummaryLayout: React.FunctionComponent<IComponentProps> 
           <Money
             format={EMoneyFormat.FLOAT}
             value={amount}
-            currencySymbol={ECurrencySymbol.SYMBOL}
+            currencySymbol={ECurrencySymbol.CODE}
             currency={ECurrency.EUR}
           />
         }

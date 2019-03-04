@@ -1,5 +1,6 @@
 import { Container } from "inversify";
 import { Middleware, MiddlewareAPI } from "redux";
+
 import { FunctionWithDeps } from "../types";
 
 export function createInjectMiddleware(

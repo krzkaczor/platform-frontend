@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { ERoundingMode, formatMoney } from "./Money.utils";
 
 describe("Money utils", () => {

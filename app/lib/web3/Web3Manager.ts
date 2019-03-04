@@ -1,8 +1,8 @@
 import { BigNumber } from "bignumber.js";
+import { EventEmitter } from "events";
 import { decorate, inject, injectable } from "inversify";
 import * as Web3 from "web3";
 
-import { EventEmitter } from "events";
 import { symbols } from "../../di/symbols";
 import { calculateGasLimitWithOverhead, encodeTransaction } from "../../modules/tx/utils";
 import { EthereumNetworkId } from "../../types";

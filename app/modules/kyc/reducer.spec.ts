@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { updateArrayItem } from "./reducer";
 
 describe("KYC reducer", () => {

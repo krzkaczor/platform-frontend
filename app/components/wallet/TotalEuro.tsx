@@ -1,8 +1,9 @@
 import * as React from "react";
-import * as styles from "./TotalEuro.module.scss";
-
 import { FormattedMessage } from "react-intl-phraseapp";
+
 import { ECurrency, Money } from "../shared/Money";
+
+import * as styles from "./TotalEuro.module.scss";
 
 interface ITotalEuroProps {
   totalEurValue: string;

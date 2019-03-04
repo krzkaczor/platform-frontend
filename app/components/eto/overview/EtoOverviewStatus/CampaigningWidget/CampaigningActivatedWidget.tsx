@@ -13,14 +13,14 @@ import {
 import { EETOStateOnChain } from "../../../../../modules/public-etos/types";
 import { appConnect } from "../../../../../store";
 import { onEnterAction } from "../../../../../utils/OnEnterAction";
+import { appRoutes } from "../../../../appRoutes";
+import { ButtonLink } from "../../../../shared/buttons";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../../../../shared/Money";
+import { Tooltip } from "../../../../shared/Tooltip";
 import { CounterWidget } from "../index";
 import { Message } from "../Message";
 import { CampaigningActivatedInvestorApprovedWidget } from "./CampaigningActivatedInvestorApprovedWidget";
 
-import { appRoutes } from "../../../../appRoutes";
-import { ButtonLink } from "../../../../shared/buttons";
-import { Tooltip } from "../../../../shared/Tooltip";
 import * as styles from "../EtoOverviewStatus.module.scss";
 
 export interface IExternalProps {

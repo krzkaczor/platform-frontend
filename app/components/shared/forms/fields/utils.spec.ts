@@ -1,6 +1,6 @@
 import { expect } from "chai";
-
 import * as Yup from "yup";
+
 import { isFieldRequired, isNonValid, isValid } from "./utils";
 
 describe("Form utils", () => {

@@ -13,11 +13,11 @@ import {
 import { appConnect, AppDispatch } from "../../store";
 import { DeepReadonly } from "../../types";
 import { Button } from "../shared/buttons";
+import { getMessageTranslation } from "../translatedMessages/messages";
 import { ModalComponentBody } from "./ModalComponentBody";
 
 import * as successIcon from "../../assets/img/notifications/success.svg";
 import * as warningIcon from "../../assets/img/notifications/warning.svg";
-import { getMessageTranslation } from "../translatedMessages/messages";
 import * as styles from "./GenericModal.module.scss";
 
 interface IStateProps {

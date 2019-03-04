@@ -6,18 +6,15 @@ import Select from "react-virtualized-select";
 import { Col, Row } from "reactstrap";
 
 import { TElementRef } from "../../../types";
+import { englishMnemonics } from "../../../utils/englishMnemonics";
 import { Button, EButtonLayout } from "../../shared/buttons";
 import { WarningAlert } from "../../shared/WarningAlert";
 
-import * as arrowLeft from "../../../assets/img/inline_icons/arrow_left.svg";
-import { englishMnemonics } from "../../../utils/englishMnemonics";
-import * as styles from "./BackupSeedVerify.module.scss";
-
-/* tslint:disable: no-submodule-imports */
 import "react-select/dist/react-select.css";
 import "react-virtualized-select/styles.css";
 import "react-virtualized/styles.css";
-/* tslint:enable: no-submodule-imports */
+import * as arrowLeft from "../../../assets/img/inline_icons/arrow_left.svg";
+import * as styles from "./BackupSeedVerify.module.scss";
 
 const WORDS_TO_VERIFY = 4;
 

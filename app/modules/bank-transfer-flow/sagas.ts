@@ -4,7 +4,6 @@ import { all, fork, put, select, take } from "redux-saga/effects";
 
 import { BankTransferFlowMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
-import { Q18 } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { cryptoRandomString } from "../../lib/dependencies/cryptoRandomString";
 import { EthereumAddressWithChecksum } from "../../types";
@@ -14,7 +13,11 @@ import { selectIsUserFullyVerified } from "../auth/selectors";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
 import { EBankTransferType } from "./reducer";
-import { selectIsBankAccountVerified, selectIsBankTransferModalOpened } from "./selectors";
+import {
+  selectBankTransferFlowReference,
+  selectIsBankAccountVerified,
+  selectIsBankTransferModalOpened,
+} from "./selectors";
 
 /**
  * Generates reference code in the following format:
@@ -34,44 +37,8 @@ function* generateReference(_: TGlobalDependencies, type: EBankTransferType): It
   return `NF ${addressHex} REF ${reference}`;
 }
 
-function* startVerification({ contractsService }: TGlobalDependencies): any {
-  const reference: string = yield neuCall(generateReference, EBankTransferType.VERIFY);
-
-  const minEuroUlps: BigNumber = yield contractsService.euroTokenController.minDepositAmountEurUlps;
-
-  yield put(
-    actions.bankTransferFlow.setTransferDetails(
-      EBankTransferType.VERIFY,
-      minEuroUlps.toString(),
-      reference,
-    ),
-  );
-
-  yield put(actions.bankTransferFlow.continueToInit());
-
-  yield take(actions.bankTransferFlow.continueProcessing);
-
-  yield put(actions.bankTransferFlow.continueToDetails());
-}
-
-function* startPurchase({ contractsService }: TGlobalDependencies): any {
-  const reference: string = yield neuCall(generateReference, EBankTransferType.PURCHASE);
-
-  const minEuroUlps: BigNumber = yield contractsService.euroTokenController.minDepositAmountEurUlps;
-
-  yield put(
-    actions.bankTransferFlow.setTransferDetails(
-      EBankTransferType.PURCHASE,
-      minEuroUlps.toString(),
-      reference,
-    ),
-  );
-
-  yield put(actions.bankTransferFlow.continueToDetails());
-}
-
 function* start(
-  { logger, notificationCenter }: TGlobalDependencies,
+  { logger, notificationCenter, contractsService }: TGlobalDependencies,
   action: TActionFromCreator<typeof actions.bankTransferFlow.startBankTransfer>,
 ): any {
   try {
@@ -79,20 +46,26 @@ function* start(
 
     invariant(isAllowed, "Bank Flow is not allowed, account is not verified completely");
 
+    const transferType = action.payload.type;
+
+    const reference: string = yield neuCall(generateReference, transferType);
+
+    const minEuroUlps: BigNumber = yield contractsService.euroTokenController
+      .minDepositAmountEurUlps;
+
+    yield put(
+      actions.bankTransferFlow.setTransferDetails(transferType, minEuroUlps.toString(), reference),
+    );
+
     const isVerified: boolean = yield select(selectIsBankAccountVerified);
 
-    if (action.payload.type !== EBankTransferType.VERIFY && !isVerified) {
-      yield neuCall(startVerification);
-    } else {
-      switch (action.payload.type) {
-        case EBankTransferType.PURCHASE:
-          yield neuCall(startPurchase);
-          break;
-        case EBankTransferType.VERIFY:
-          yield neuCall(startVerification);
-          break;
-      }
+    // Only show agreement when bank account was not yet verified
+    if (!isVerified) {
+      yield put(actions.bankTransferFlow.continueToAgreement());
+      yield take(actions.bankTransferFlow.continueProcessing);
     }
+
+    yield put(actions.bankTransferFlow.continueToSummary());
   } catch (e) {
     yield put(actions.bankTransferFlow.stopBankTransfer());
 
@@ -131,18 +104,27 @@ function* downloadNEurTokenAgreement({ contractsService, intlWrapper }: TGlobalD
 
 export function* getRedeemData({ contractsService }: TGlobalDependencies): any {
   const { bankFeeUlps, minEuroUlps } = yield all({
-    /* TODO: use real method when implemented
-    /*  bankFee: contractsService.euroTokenController.withdrawalFeeFraction
-     */
-    bankFeeUlps: Q18.mul(0.005).toString(),
+    bankFeeUlps: contractsService.euroTokenController.withdrawalFeeFraction,
     minEuroUlps: contractsService.euroTokenController.minWithdrawAmountEurUlps,
   });
 
   yield put(actions.bankTransferFlow.setRedeemData(bankFeeUlps, minEuroUlps));
 }
 
+export function* completeBankTransfer({ apiKycService, logger }: TGlobalDependencies): any {
+  try {
+    const reference: string = yield select(selectBankTransferFlowReference);
+
+    // TODO: replace by correct amount when implemented
+    apiKycService.nEurPurchaseRequest("1", reference);
+  } catch (e) {
+    logger.error(`Not able to complete bank transfer`, e);
+  }
+}
+
 export function* bankTransferFlowSaga(): any {
   yield fork(neuTakeEvery, actions.bankTransferFlow.startBankTransfer, start);
+  yield fork(neuTakeEvery, actions.bankTransferFlow.continueToSuccess, completeBankTransfer);
   yield fork(
     neuTakeEvery,
     actions.bankTransferFlow.downloadNEurTokenAgreement,

@@ -1,8 +1,6 @@
 import * as promiseAll from "promise-all";
 import { delay } from "redux-saga";
 import { fork, put, select, take } from "redux-saga/effects";
-import { selectIsSmartContractInitDone } from "../init/selectors";
-import { EInitType } from "./../init/reducer";
 
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { ICBMLockedAccount } from "../../lib/contracts/ICBMLockedAccount";
@@ -10,8 +8,10 @@ import { LockedAccount } from "../../lib/contracts/LockedAccount";
 import { EthereumAddress } from "../../types";
 import { actions } from "../actions";
 import { numericValuesToString } from "../contracts/utils";
+import { selectIsSmartContractInitDone } from "../init/selectors";
 import { neuCall, neuTakeEvery, neuTakeOnly, neuTakeUntil } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
+import { EInitType } from "./../init/reducer";
 import { ILockedWallet, IWalletStateData } from "./reducer";
 
 const WALLET_DATA_FETCHING_INTERVAL = 12000;

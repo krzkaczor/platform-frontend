@@ -13,6 +13,7 @@ import {
   selectUnverifiedUserEmail,
   selectVerifiedUserEmail,
 } from "../../../modules/auth/selectors";
+import { selectIsCancelEmail } from "../../../modules/profile/reducer";
 import { selectIsConnectedButtonLocked } from "../../../modules/verify-email-widget/reducer";
 import { appConnect } from "../../../store";
 import { IIntlProps, injectIntlHelpers } from "../../../utils/injectIntlHelpers";
@@ -23,7 +24,6 @@ import { Panel } from "../../shared/Panel";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as successIcon from "../../../assets/img/notifications/success.svg";
 import * as warningIcon from "../../../assets/img/notifications/warning.svg";
-import { selectIsCancelEmail } from "../../../modules/profile/reducer";
 import * as styles from "./VerifyEmailWidget.module.scss";
 
 interface IStateProps {

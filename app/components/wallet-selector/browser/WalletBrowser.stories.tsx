@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-
 import { noop } from "redux-saga/utils";
+
 import { BrowserWalletErrorMessage } from "../../translatedMessages/messages";
 import { createMessage } from "../../translatedMessages/utils";
 import { WalletBrowserComponent } from "./WalletBrowser";

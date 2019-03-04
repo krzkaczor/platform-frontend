@@ -7,6 +7,10 @@
   @include font-label;
 }
 
+.bank-number {
+  word-break: break-all;
+}
+
 .icon {
   @include rect(38px);
 

@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Proportion } from "../../shared/Proportion";
+
 import * as styles from "./Panels.module.scss";
 
 export interface IKycPanel {

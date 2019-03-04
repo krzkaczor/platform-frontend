@@ -154,7 +154,7 @@ export const WalletStart = compose<React.FunctionComponent>(
       },
       lockedWalletData: {
         hasFunds: selectLockedWalletHasFunds(state),
-        ethAmount: selectLockedEtherBalance(state.wallet),
+        ethAmount: selectLockedEtherBalance(state),
         ethEuroAmount: selectLockedEtherBalanceEuroAmount(state),
         neuroAmount: selectLockedEuroTokenBalance(state.wallet),
         neuroEuroAmount: selectLockedEuroTokenBalance(state.wallet),

@@ -2,14 +2,15 @@ import * as cn from "classnames";
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { Container } from "reactstrap";
-import { compose, withProps } from "recompose";
+import { compose } from "recompose";
 
-import { getConfig } from "../../../../config/getConfig";
+import { KycBankQuintessenceBankAccount } from "../../../../lib/api/KycApi.interfaces";
 import { actions } from "../../../../modules/actions";
 import {
   selectBankTransferFlowReference,
   selectBankTransferMinAmount,
 } from "../../../../modules/bank-transfer-flow/selectors";
+import { selectQuintessenceBankAccount } from "../../../../modules/kyc/selectors";
 import { appConnect } from "../../../../store";
 import { ButtonArrowRight } from "../../../shared/buttons";
 import { CopyToClipboardButton } from "../../../shared/CopyToClipboardButton";
@@ -23,19 +24,14 @@ import * as styles from "../../tx-sender/investment-flow/Summary.module.scss";
 interface IStateProps {
   referenceCode: string;
   minAmount: string;
-}
-
-interface IWithProps {
-  recipient: string;
-  iban: string;
-  bic: string;
+  quintessenceBankAccount: KycBankQuintessenceBankAccount | undefined;
 }
 
 interface IDispatchProps {
-  continueToSummary: () => void;
+  continueToSuccess: () => void;
 }
 
-type IProps = IStateProps & IDispatchProps & IWithProps;
+type IProps = IStateProps & IDispatchProps;
 
 const CopyToClipboardLabel: React.FunctionComponent<{ label: string }> = ({ label }) => (
   <>
@@ -45,10 +41,8 @@ const CopyToClipboardLabel: React.FunctionComponent<{ label: string }> = ({ labe
 );
 
 const BankTransferVerifySummaryLayout: React.FunctionComponent<IProps> = ({
-  recipient,
-  bic,
-  iban,
-  continueToSummary,
+  quintessenceBankAccount,
+  continueToSuccess,
   referenceCode,
   minAmount,
 }) => (
@@ -66,27 +60,24 @@ const BankTransferVerifySummaryLayout: React.FunctionComponent<IProps> = ({
         data-test-id="bank-transfer.summary.amount"
         caption={<FormattedMessage id="bank-transfer.verify.summary.min-amount" />}
         value={
-          <Money
-            value={minAmount}
-            currency={ECurrency.EUR}
-            currencySymbol={ECurrencySymbol.SYMBOL}
-          />
+          <Money value={minAmount} currency={ECurrency.EUR} currencySymbol={ECurrencySymbol.CODE} />
         }
       />
       <InfoRow
-        data-test-id="bank-transfer.summary.recipient"
+        caption={<FormattedMessage id="bank-transfer.summary.purchase-price.caption" />}
+        value={<FormattedMessage id="bank-transfer.summary.purchase-price.value" />}
+      />
+      <InfoRow
         caption={<FormattedMessage id="bank-transfer.summary.recipient" />}
-        value={<CopyToClipboardLabel label={recipient} />}
+        value={<CopyToClipboardLabel label={quintessenceBankAccount!.name} />}
       />
       <InfoRow
-        data-test-id="bank-transfer.summary.iban"
         caption={<FormattedMessage id="bank-transfer.summary.iban" />}
-        value={<CopyToClipboardLabel label={iban} />}
+        value={<CopyToClipboardLabel label={quintessenceBankAccount!.bankAccountNumber} />}
       />
       <InfoRow
-        data-test-id="bank-transfer.summary.bic"
         caption={<FormattedMessage id="bank-transfer.summary.bic" />}
-        value={<CopyToClipboardLabel label={bic} />}
+        value={<CopyToClipboardLabel label={quintessenceBankAccount!.swiftCode} />}
       />
       <InfoRow
         data-test-id="bank-transfer.summary.reference-number"
@@ -101,7 +92,7 @@ const BankTransferVerifySummaryLayout: React.FunctionComponent<IProps> = ({
 
     <section className="text-center">
       <ButtonArrowRight
-        onClick={continueToSummary}
+        onClick={continueToSuccess}
         data-test-id="bank-transfer.summary.transfer-completed"
       >
         <FormattedMessage id="bank-transfer.summary.transfer-completed" />
@@ -115,19 +106,11 @@ const BankTransferVerifySummary = compose<IProps, {}>(
     stateToProps: state => ({
       referenceCode: selectBankTransferFlowReference(state),
       minAmount: selectBankTransferMinAmount(state),
+      quintessenceBankAccount: selectQuintessenceBankAccount(state),
     }),
     dispatchToProps: dispatch => ({
-      continueToSummary: () => dispatch(actions.bankTransferFlow.continueToSummary()),
+      continueToSuccess: () => dispatch(actions.bankTransferFlow.continueToSuccess()),
     }),
-  }),
-  withProps<IWithProps, {}>(() => {
-    const { bankTransferDetails } = getConfig(process.env);
-
-    return {
-      recipient: bankTransferDetails.recipient,
-      iban: bankTransferDetails.iban,
-      bic: bankTransferDetails.bic,
-    };
   }),
 )(BankTransferVerifySummaryLayout);
 

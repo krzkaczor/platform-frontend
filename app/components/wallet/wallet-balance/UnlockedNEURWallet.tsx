@@ -39,7 +39,7 @@ export const UnlockedNEURWallet: React.FunctionComponent<IUnlockedNEURWallet & C
         tagName="span"
         id="shared-component.neur-wallet-balance.explanation"
         values={{
-          quintessenseHref: externalRoutes.quintessenseLanding,
+          quintessenceHref: externalRoutes.quintessenceLanding,
         }}
       />
     </p>

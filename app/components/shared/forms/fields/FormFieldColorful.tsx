@@ -5,11 +5,11 @@ import { FormGroup, Input } from "reactstrap";
 
 import { CommonHtmlProps, InputType, TTranslatedString } from "../../../../types";
 import { Avatar } from "../../Avatar";
+import { FormFieldError, generateErrorId } from "./FormFieldError";
 import { FormFieldLabel } from "./FormFieldLabel";
 import { isNonValid } from "./utils";
 
 import * as styles from "./FormFieldColorful.module.scss";
-import { FormFieldError, generateErrorId } from "./FormFieldError";
 
 interface IFieldGroup {
   label?: string | React.ReactNode;

@@ -1,8 +1,9 @@
 import * as cn from "classnames";
 import * as React from "react";
 
-import * as styles from "./LoadingIndicator.module.scss";
 import { LoadingIndicatorHexagon } from "./LoadingIndicatorHexagon";
+
+import * as styles from "./LoadingIndicator.module.scss";
 
 type TLoadingIndicator = "pulse" | "blocks" | "hexagon";
 

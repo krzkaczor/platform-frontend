@@ -16,6 +16,7 @@ export interface IInvestmentDraftType {
 export type IDraftType = IWithdrawDraftType | IInvestmentDraftType;
 
 export enum ETxSenderType {
+  UNLOCK_FUNDS = "UNLOCK_FUNDS",
   WITHDRAW = "WITHDRAW",
   INVEST = "INVEST",
   UPGRADE = "UPGRADE",

@@ -6,8 +6,8 @@ import { CommonHtmlProps } from "../../types";
 import * as styles from "./Confetti.module.scss";
 
 export enum EConfettiTheme {
+  COLORFUL = styles.themeColorful,
   GREEN = styles.themeGreen,
-  PURPLE = styles.themePurple,
 }
 
 type TProps = {
@@ -67,5 +67,5 @@ export const Confetti: React.FunctionComponent<CommonHtmlProps & TProps> = ({
 };
 
 Confetti.defaultProps = {
-  theme: EConfettiTheme.GREEN,
+  theme: EConfettiTheme.COLORFUL,
 };

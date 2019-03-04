@@ -41,9 +41,8 @@ const PortfolioReservedAssets: React.FunctionComponent<IExternalProps> = ({ pend
             <FormattedMessage id="portfolio.section.reserved-assets.table.header.placeholder" />
           }
           titles={[
-            { title: "", width: "30px" },
             <FormattedMessage id="portfolio.section.reserved-assets.table.header.token" />,
-            { title: "", width: "100px" },
+            "",
             <FormattedMessage id="portfolio.section.reserved-assets.table.header.balance" />,
             <FormattedMessage id="portfolio.section.reserved-assets.table.header.value-eur" />,
             <FormattedMessage id="portfolio.section.reserved-assets.table.header.price-eur" />,
@@ -51,7 +50,12 @@ const PortfolioReservedAssets: React.FunctionComponent<IExternalProps> = ({ pend
               <img src={neuIcon} alt="neu token" className={cn("mr-2", styles.tokenSmall)} />
               <FormattedMessage id="portfolio.section.reserved-assets.table.header.neu-reward" />
             </>,
-            <FormattedMessage id="portfolio.section.reserved-assets.table.header.eto-status" />,
+            {
+              title: (
+                <FormattedMessage id="portfolio.section.reserved-assets.table.header.eto-status" />
+              ),
+              width: "20%",
+            },
           ]}
         >
           {pendingAssets.map(
@@ -74,15 +78,17 @@ const PortfolioReservedAssets: React.FunctionComponent<IExternalProps> = ({ pend
                   data-test-id={`portfolio-reserved-asset-${etoId}`}
                   cellLayout={ENewTableCellLayout.MIDDLE}
                 >
-                  <img src={equityTokenImage} alt="" className={cn("mr-2", styles.token)} />
-                  <span className={"d-inline-block"}>
-                    <span
-                      className={styles.tokenName}
-                      data-test-id="portfolio-reserved-asset-token-name"
-                    >
-                      {equityTokenName} ({equityTokenSymbol})
+                  <>
+                    <img src={equityTokenImage} alt="" className={cn("mr-2", styles.token)} />
+                    <span className={"d-inline-block"}>
+                      <span
+                        className={styles.tokenName}
+                        data-test-id="portfolio-reserved-asset-token-name"
+                      >
+                        {equityTokenName} ({equityTokenSymbol})
+                      </span>
                     </span>
-                  </span>
+                  </>
                   <Link
                     to={withParams(appRoutes.etoPublicView, { previewCode })}
                     data-test-id="portfolio-reserved-assets-view-profile"

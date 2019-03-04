@@ -162,7 +162,7 @@ const PortfolioMyAssets = compose<TComponentProps, IExternalProps>(
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => {
       const neuPrice = selectNeuPriceEur(state);
-      const myNeuBalance = selectNeuBalance(state.wallet);
+      const myNeuBalance = selectNeuBalance(state);
 
       return {
         myNeuBalance,

@@ -4,10 +4,19 @@ import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
-import { appConnect } from "../../../store";
-
+import {
+  EKycRequestType,
+  IKycBusinessData,
+  IKycFileInfo,
+  IKycIndividualData,
+  IKycLegalRepresentative,
+  KycLegalRepresentativeSchemaRequired,
+} from "../../../lib/api/KycApi.interfaces";
 import { actions } from "../../../modules/actions";
-
+import { appConnect } from "../../../store";
+import { IIntlProps, injectIntlHelpers } from "../../../utils/injectIntlHelpers";
+import { onEnterAction } from "../../../utils/OnEnterAction";
+import { Button } from "../../shared/buttons";
 import {
   BOOL_FALSE_KEY,
   BOOL_TRUE_KEY,
@@ -21,24 +30,11 @@ import {
   NONE_KEY,
   unboolify,
 } from "../../shared/forms";
-
-import { KYCBeneficialOwners } from "./BeneficialOwners";
-
-import {
-  EKycRequestType,
-  IKycBusinessData,
-  IKycFileInfo,
-  IKycIndividualData,
-  IKycLegalRepresentative,
-  KycLegalRepresentativeSchemaRequired,
-} from "../../../lib/api/KycApi.interfaces";
-import { IIntlProps, injectIntlHelpers } from "../../../utils/injectIntlHelpers";
-import { onEnterAction } from "../../../utils/OnEnterAction";
-import { Button } from "../../shared/buttons";
 import { MultiFileUpload } from "../../shared/MultiFileUpload";
 import { Tooltip } from "../../shared/Tooltip";
 import { KycPanel } from "../KycPanel";
 import { kycRoutes } from "../routes";
+import { KYCBeneficialOwners } from "./BeneficialOwners";
 
 export const businessSteps = [
   {

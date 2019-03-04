@@ -29,6 +29,7 @@ import { ErrorMessage } from "./shared/ErrorMessage";
 import { SigningMessage } from "./shared/SigningMessage";
 import { TxPending } from "./shared/TxPending";
 import { WatchPendingTxs } from "./shared/WatchPeningTxs";
+import { UnlockWalletSummary } from "./unlock-wallet-flow/Summary";
 import { UpgradeSummary } from "./upgrade-flow/Summary";
 import { UserClaimSuccess } from "./user-claim/Success";
 import { UserClaimSummary } from "./user-claim/Summary";
@@ -116,6 +117,8 @@ const SummaryComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ t
       return <InvestorAcceptPayoutSummary />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
       return <InvestorRedistributePayoutSummary />;
+    case ETxSenderType.UNLOCK_FUNDS:
+      return <UnlockWalletSummary />;
     case ETxSenderType.NEUR_WITHDRAW:
       return <BankTransferRedeemSummary />;
     default:

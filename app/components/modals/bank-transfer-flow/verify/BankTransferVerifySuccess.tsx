@@ -19,7 +19,7 @@ const BankTransferVerifySuccessLayout: React.FunctionComponent<IProps> = ({ goTo
   <Message
     data-test-id="bank-transfer.success"
     image={
-      <Confetti theme={EConfettiTheme.PURPLE} className="mb-3">
+      <Confetti theme={EConfettiTheme.GREEN} className="mb-3">
         <img src={bankIcon} alt="" />
       </Confetti>
     }

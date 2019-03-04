@@ -159,7 +159,7 @@ export const KycBankVerifiedBankAccountSchema = YupTS.object({
   swiftCode: YupTS.string(),
 });
 
-export const KycBankOurBankAccountSchema = YupTS.object({
+export const KycBankQuintessenceBankAccountSchema = YupTS.object({
   bankAccountNumber: YupTS.string(),
   bankName: YupTS.string(),
   isSepa: YupTS.boolean(),
@@ -168,10 +168,12 @@ export const KycBankOurBankAccountSchema = YupTS.object({
 });
 
 export const KycBankAccountSchema = YupTS.object({
-  ourAccount: KycBankOurBankAccountSchema,
+  ourAccount: KycBankQuintessenceBankAccountSchema,
   verifiedUserAccount: KycBankVerifiedBankAccountSchema.optional(),
 });
 
 export type KycBankVerifiedBankAccount = YupTS.TypeOf<typeof KycBankVerifiedBankAccountSchema>;
-export type KycBankOurBankAccount = YupTS.TypeOf<typeof KycBankOurBankAccountSchema>;
+export type KycBankQuintessenceBankAccount = YupTS.TypeOf<
+  typeof KycBankQuintessenceBankAccountSchema
+>;
 export type TKycBankAccount = YupTS.TypeOf<typeof KycBankAccountSchema>;

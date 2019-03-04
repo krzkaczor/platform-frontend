@@ -1,5 +1,6 @@
 import { effects } from "redux-saga";
 import { fork } from "redux-saga/effects";
+
 import { EUserType } from "../../lib/api/users/interfaces";
 import { IAppState } from "../../store";
 import { neuCall, neuTakeEvery } from "../sagasUtils";

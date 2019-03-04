@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { formatDate } from "../../utils/Date.utils";
+
 import * as styles from "./Date.module.scss";
 
 interface IProps {

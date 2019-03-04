@@ -31,6 +31,7 @@ import {
   TEventEmitterChannelEvents,
   updatePendingTxs,
 } from "../monitor/sagas";
+import { UserCannotUnlockFunds } from "../transactions/unlock/errors";
 import { validateGas } from "../validator/sagas";
 import { ETransactionErrorType } from "./reducer";
 import { selectTxDetails, selectTxType } from "./selectors";
@@ -109,6 +110,10 @@ export function* txSendProcess(
     } else if (error instanceof LedgerContractsDisabledError) {
       return yield put(
         actions.txSender.txSenderError(ETransactionErrorType.LEDGER_CONTRACTS_DISABLED),
+      );
+    } else if (error instanceof UserCannotUnlockFunds) {
+      return yield put(
+        actions.txSender.txSenderError(ETransactionErrorType.NOT_ENOUGH_NEUMARKS_TO_UNLOCK),
       );
     } else {
       return yield put(actions.txSender.txSenderError(ETransactionErrorType.UNKNOWN_ERROR));

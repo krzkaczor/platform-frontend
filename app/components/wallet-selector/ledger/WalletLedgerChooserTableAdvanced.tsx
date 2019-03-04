@@ -6,6 +6,7 @@ import { ILedgerAccount } from "../../../modules/wallet-selector/ledger-wizard/r
 import { Button, EButtonLayout } from "../../shared/buttons";
 import { ECurrency, Money } from "../../shared/Money";
 import { NavigationButton } from "../../shared/Navigation";
+
 import * as styles from "./WalletLedgerChooserTableAdvanced.module.scss";
 
 interface IAccountRow {

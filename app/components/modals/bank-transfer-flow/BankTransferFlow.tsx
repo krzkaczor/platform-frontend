@@ -16,7 +16,8 @@ import { LoadingIndicator } from "../../shared/loading-indicator";
 import { BankTransferPurchaseSuccess } from "./purchase/BankTransferPurchaseSuccess";
 import { BankTransferPurchaseSummary } from "./purchase/BankTransferPurchaseSummary";
 import { QuintessenceModal } from "./QuintessenceModal";
-import { BankTransferVerifyInit } from "./verify/BankTransferVerifyInit";
+import { BankTransferAgreement } from "./shared/BankTransferAgreement";
+import { BankTransferVerifyAgreement } from "./verify/BankTransferVerifyAgreement";
 import { BankTransferVerifySuccess } from "./verify/BankTransferVerifySuccess";
 import { BankTransferVerifySummary } from "./verify/BankTransferVerifySummary";
 
@@ -42,12 +43,14 @@ const BankTransferFlowModalLayout: React.FunctionComponent<Props> = props => {
   );
 };
 
-const BankTransferFlowInit: React.FunctionComponent<Props> = ({ type }) => {
+const BankTransferFlowAgreement: React.FunctionComponent<Props> = ({ type }) => {
   switch (type) {
     case EBankTransferType.VERIFY:
-      return <BankTransferVerifyInit />;
+      return <BankTransferVerifyAgreement />;
+    case EBankTransferType.PURCHASE:
+      return <BankTransferAgreement />;
     default:
-      return invariant(false, `Type "${type}" doesn't implement init flow`);
+      return invariant(false, `Type "${type}" doesn't implement agreement flow`);
   }
 };
 
@@ -77,8 +80,8 @@ const BankTransferFlowBody: React.FunctionComponent<Props> = props => {
   switch (props.state) {
     case EBankTransferFlowState.PROCESSING:
       return <LoadingIndicator />;
-    case EBankTransferFlowState.INIT:
-      return <BankTransferFlowInit {...props} />;
+    case EBankTransferFlowState.AGREEMENT:
+      return <BankTransferFlowAgreement {...props} />;
     case EBankTransferFlowState.SUMMARY:
       return <BankTransferFlowSummary {...props} />;
     case EBankTransferFlowState.SUCCESS:

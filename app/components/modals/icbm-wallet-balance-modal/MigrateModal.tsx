@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
+import { Col, Container, Row } from "reactstrap";
 
 import {
   IWalletMigrationData,
@@ -12,7 +13,6 @@ import { HighlightedStripField } from "../../shared/HighlightedStripField";
 import { ExternalLink } from "../../shared/links";
 import { SectionHeader } from "../../shared/SectionHeader";
 
-import { Col, Container, Row } from "reactstrap";
 import * as iconMyEtherWallet from "../../../assets/img/myEtherWallet.svg";
 import * as styles from "./IcbmWalletBalanceModal.module.scss";
 

@@ -1,6 +1,7 @@
 import * as cn from "classnames";
 import * as React from "react";
 import { Doughnut } from "react-chartjs-2";
+
 import { DEFAULT_CHART_COLOR } from "../../eto/shared/EtoView";
 import { ChartLegend } from "./ChartLegend";
 

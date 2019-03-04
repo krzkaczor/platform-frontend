@@ -591,11 +591,17 @@ function* loadBankAccountDetails({
   notificationCenter,
 }: TGlobalDependencies): Iterator<any> {
   try {
+    // bank details depend on claims `hasBankAccount` flag
+    // so to have consistent ui we need to reload claims
+    yield put(actions.kyc.kycLoadClaims());
+
     const isVerified: boolean = yield select(selectIsUserVerified);
 
     // bank account api can only be called when account is verified
     if (isVerified) {
       const result: TKycBankAccount = yield apiKycService.getBankAccount();
+
+      yield put(actions.kyc.setQuintessenceBankAccountDetails(result.ourAccount));
 
       if (result.verifiedUserAccount !== undefined) {
         yield put(
