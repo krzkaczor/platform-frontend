@@ -96,7 +96,7 @@ function* investEntireBalance(): any {
       break;
 
     case EInvestmentType.ICBMnEuro:
-      balance = selectLockedEuroTokenBalance(state.wallet);
+      balance = selectLockedEuroTokenBalance(state);
       yield computeAndSetCurrencies(balance, EInvestmentCurrency.Euro);
       break;
 
@@ -137,7 +137,7 @@ function validateInvestment(state: IAppState): EInvestmentErrorState | undefined
   }
 
   if (investmentFlow.investmentType === EInvestmentType.ICBMnEuro) {
-    if (compareBigNumbers(euroValue, selectLockedEuroTokenBalance(state.wallet)) > 0) {
+    if (compareBigNumbers(euroValue, selectLockedEuroTokenBalance(state)) > 0) {
       return EInvestmentErrorState.ExceedsWalletBalance;
     }
   }
@@ -226,7 +226,7 @@ function* getActiveInvestmentTypes(): any {
   }
 
   // only ICBM investment if balance available
-  if (compareBigNumbers(selectLockedEuroTokenBalance(state.wallet), 0) > 0) {
+  if (compareBigNumbers(selectLockedEuroTokenBalance(state), 0) > 0) {
     activeTypes.unshift(EInvestmentType.ICBMnEuro);
   }
   if (compareBigNumbers(selectLockedEtherBalance(state), 0) > 0) {
