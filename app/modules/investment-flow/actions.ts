@@ -1,5 +1,6 @@
+import { ECurrency } from "../../components/shared/Money";
 import { createAction, createSimpleAction } from "../actionsUtils";
-import { EInvestmentCurrency, EInvestmentErrorState, EInvestmentType } from "./reducer";
+import { EInvestmentErrorState, EInvestmentType } from "./reducer";
 
 export const investmentFlowActions = {
   // public actions
@@ -7,7 +8,7 @@ export const investmentFlowActions = {
   resetInvestment: () => createSimpleAction("INVESTMENT_FLOW_RESET"),
   selectInvestmentType: (type?: EInvestmentType) =>
     createAction("INVESTMENT_FLOW_SELECT_INVESTMENT_TYPE", { type }),
-  submitCurrencyValue: (value: string, currency: EInvestmentCurrency) =>
+  submitCurrencyValue: (value: string, currency: ECurrency) =>
     createAction("INVESTMENT_FLOW_SUBMIT_INVESTMENT_VALUE", { value, currency }),
   investEntireBalance: () => createSimpleAction("INVESTMENT_FLOW_INVEST_ENTIRE_BALANCE"),
   validateInputs: () => createSimpleAction("INVESTMENT_FLOW_VALIDATE_INPUTS"),

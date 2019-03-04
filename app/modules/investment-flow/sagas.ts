@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js";
 import { delay } from "redux-saga";
 import { put, select, take, takeEvery, takeLatest } from "redux-saga/effects";
 
+import { ECurrency } from "../../components/shared/Money";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import { ITxData } from "../../lib/web3/types";
@@ -29,15 +30,15 @@ import {
   selectLockedEtherBalance,
   selectLockedEuroTokenBalance,
 } from "../wallet/selectors";
-import { EInvestmentCurrency, EInvestmentErrorState, EInvestmentType } from "./reducer";
+import { EInvestmentErrorState, EInvestmentType } from "./reducer";
 import {
-  selectCurrencyByInvestmentType,
   selectInvestmentEthValueUlps,
   selectInvestmentEtoId,
   selectInvestmentEurValueUlps,
   selectInvestmentType,
   selectIsICBMInvestment,
 } from "./selectors";
+import { getCurrencyByInvestmentType } from "./utils";
 
 function* processCurrencyValue(action: TAction): any {
   if (action.type !== "INVESTMENT_FLOW_SUBMIT_INVESTMENT_VALUE") return;
@@ -46,7 +47,7 @@ function* processCurrencyValue(action: TAction): any {
   const value = action.payload.value && convertToBigInt(extractNumber(action.payload.value));
   const curr = action.payload.currency;
   const oldVal =
-    curr === EInvestmentCurrency.Ether
+    curr === ECurrency.ETH
       ? selectInvestmentEthValueUlps(state)
       : selectInvestmentEurValueUlps(state);
 
@@ -59,7 +60,7 @@ function* processCurrencyValue(action: TAction): any {
   yield put(actions.investmentFlow.validateInputs());
 }
 
-function* computeAndSetCurrencies(value: string, currency: EInvestmentCurrency): any {
+function* computeAndSetCurrencies(value: string, currency: ECurrency): any {
   const state: IAppState = yield select();
   const etherPriceEur = selectEtherPriceEur(state);
   const eurPriceEther = selectEurPriceEther(state);
@@ -69,12 +70,12 @@ function* computeAndSetCurrencies(value: string, currency: EInvestmentCurrency):
   } else if (etherPriceEur && etherPriceEur !== "0") {
     const bignumber = new BigNumber(value);
     switch (currency) {
-      case EInvestmentCurrency.Ether:
+      case ECurrency.ETH:
         const eurVal = bignumber.mul(etherPriceEur);
         yield put(actions.investmentFlow.setEthValue(bignumber.toFixed(0, BigNumber.ROUND_UP)));
         yield put(actions.investmentFlow.setEurValue(eurVal.toFixed(0, BigNumber.ROUND_UP)));
         return;
-      case EInvestmentCurrency.Euro:
+      case ECurrency.EUR_TOKEN:
         const ethVal = bignumber.mul(eurPriceEther);
         yield put(actions.investmentFlow.setEthValue(ethVal.toFixed(0, BigNumber.ROUND_UP)));
         yield put(actions.investmentFlow.setEurValue(bignumber.toFixed(0, BigNumber.ROUND_UP)));
@@ -92,19 +93,19 @@ function* investEntireBalance(): any {
   switch (type) {
     case EInvestmentType.ICBMEth:
       balance = selectLockedEtherBalance(state);
-      yield computeAndSetCurrencies(balance, EInvestmentCurrency.Ether);
+      yield computeAndSetCurrencies(balance, ECurrency.ETH);
       break;
 
     case EInvestmentType.ICBMnEuro:
       balance = selectLockedEuroTokenBalance(state);
-      yield computeAndSetCurrencies(balance, EInvestmentCurrency.Euro);
+      yield computeAndSetCurrencies(balance, ECurrency.EUR_TOKEN);
       break;
 
-    case EInvestmentType.InvestmentWallet:
+    case EInvestmentType.Eth:
       const gasCostEth = selectTxGasCostEthUlps(state);
       balance = selectLiquidEtherBalance(state);
       balance = subtractBigNumbers([balance, gasCostEth]);
-      yield computeAndSetCurrencies(balance, EInvestmentCurrency.Ether);
+      yield computeAndSetCurrencies(balance, ECurrency.ETH);
       break;
   }
 
@@ -125,7 +126,7 @@ function validateInvestment(state: IAppState): EInvestmentErrorState | undefined
 
   const gasPrice = selectTxGasCostEthUlps(state);
 
-  if (investmentFlow.investmentType === EInvestmentType.InvestmentWallet) {
+  if (investmentFlow.investmentType === EInvestmentType.Eth) {
     if (
       compareBigNumbers(addBigNumbers([etherValue, gasPrice]), selectLiquidEtherBalance(state)) > 0
     ) {
@@ -215,7 +216,7 @@ function* getActiveInvestmentTypes(): any {
   const etoId = selectInvestmentEtoId(state);
   const etoState = selectEtoOnChainStateById(state, etoId);
 
-  let activeTypes: EInvestmentType[] = [EInvestmentType.InvestmentWallet];
+  let activeTypes: EInvestmentType[] = [EInvestmentType.Eth];
 
   // no regular investment if not whitelisted in pre eto
   if (etoState === EETOStateOnChain.Whitelist && !selectIsWhitelisted(state, etoId)) {
@@ -242,10 +243,17 @@ function* getActiveInvestmentTypes(): any {
 function* recalculateCurrencies(): any {
   yield delay(100); // wait for new token price to be available
   const s: IAppState = yield select();
-  const curr = selectCurrencyByInvestmentType(s);
+  const type = selectInvestmentType(s);
+
+  if (type === undefined) {
+    throw new Error("Investment Type can't undefined at this moment");
+  }
+
+  const curr = getCurrencyByInvestmentType(type);
   const ethVal = selectInvestmentEthValueUlps(s);
   const eurVal = selectInvestmentEurValueUlps(s);
-  if (curr === EInvestmentCurrency.Ether && ethVal) {
+
+  if (curr === ECurrency.ETH && ethVal) {
     yield computeAndSetCurrencies(ethVal, curr);
   } else if (eurVal) {
     yield computeAndSetCurrencies(eurVal, curr);

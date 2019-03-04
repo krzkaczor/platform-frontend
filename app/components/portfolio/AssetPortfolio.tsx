@@ -7,17 +7,15 @@ import { branch, compose, renderComponent } from "recompose";
 import { actions } from "../../modules/actions";
 import { ITokenDisbursal } from "../../modules/investor-portfolio/types";
 import { appConnect } from "../../store";
-import { CommonHtmlProps } from "../../types";
 import { Button, ButtonSize, EButtonLayout } from "../shared/buttons";
+import { CurrencyIcon } from "../shared/icons/CurrencyIcon";
 import { LoadingIndicator } from "../shared/loading-indicator";
-import { ECurrency, ETheme, Money, selectCurrencyCode } from "../shared/Money";
+import { ETheme, Money, selectCurrencyCode } from "../shared/Money";
 import { Panel } from "../shared/Panel";
 import { SectionHeader } from "../shared/SectionHeader";
 import { NewTable, NewTableRow } from "../shared/table";
 
-import * as ethIcon from "../../assets/img/eth_icon.svg";
 import * as neuIcon from "../../assets/img/neu_icon.svg";
-import * as nEurIcon from "../../assets/img/nEUR_icon.svg";
 
 interface IExternalProps {
   tokensDisbursal: ReadonlyArray<ITokenDisbursal> | undefined;
@@ -34,25 +32,6 @@ interface IDispatchToProps {
   acceptPayout: (tokenDisbursal: ITokenDisbursal) => void;
   acceptCombinedPayout: (tokensDisbursal: ReadonlyArray<ITokenDisbursal>) => void;
 }
-
-// TODO: move as a reusable component
-const CurrencyIcon: React.FunctionComponent<{ currency: ECurrency } & CommonHtmlProps> = ({
-  currency,
-  className,
-}) => {
-  switch (currency) {
-    case ECurrency.EUR_TOKEN:
-      return (
-        <img src={nEurIcon} alt={`${selectCurrencyCode(currency)} token`} className={className} />
-      );
-    case ECurrency.ETH:
-      return (
-        <img src={ethIcon} alt={`${selectCurrencyCode(currency)} token`} className={className} />
-      );
-    default:
-      throw new Error(`Icon for currency ${currency} not found`);
-  }
-};
 
 const AssetPortfolioLayoutNoPayouts: React.FunctionComponent = () => (
   <SectionHeader

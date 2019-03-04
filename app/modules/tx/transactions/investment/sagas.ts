@@ -94,7 +94,7 @@ export function* generateInvestmentTransaction({ contractsService }: TGlobalDepe
   const eto = selectPublicEtoById(state, investmentState.etoId)!;
 
   switch (investmentState.investmentType) {
-    case EInvestmentType.InvestmentWallet:
+    case EInvestmentType.Eth:
       return yield getEtherTokenTransaction(state, contractsService, eto.etoId);
     case EInvestmentType.ICBMEth:
       return yield getEtherLockTransaction(state, contractsService, eto.etoId);

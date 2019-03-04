@@ -23,34 +23,28 @@ import { formatMoney } from "../../../../utils/Money.utils";
 import { formatThousands } from "../../../../utils/Number.utils";
 import { WalletSelectionData } from "./InvestmentTypeSelector";
 
-import * as ethIcon from "../../../../assets/img/eth_icon.svg";
-import * as neuroIcon from "../../../../assets/img/nEUR_icon.svg";
-
 export function createWallets(state: IAppState): WalletSelectionData[] {
   const icbmEther = selectLockedEtherBalance(state);
   const icbmNeuro = selectLockedEuroTokenBalance(state);
 
   const wallets: Dictionary<WalletSelectionData> = {
-    [EInvestmentType.InvestmentWallet]: {
+    [EInvestmentType.Eth]: {
       balanceEth: selectLiquidEtherBalance(state),
       balanceEur: selectLiquidEtherBalanceEuroAmount(state),
-      type: EInvestmentType.InvestmentWallet,
+      type: EInvestmentType.Eth,
       name: "Investment Wallet",
-      icon: ethIcon,
     },
     [EInvestmentType.ICBMnEuro]: {
       type: EInvestmentType.ICBMnEuro,
       name: "ICBM Wallet",
       balanceNEuro: icbmNeuro,
       balanceEur: icbmNeuro,
-      icon: neuroIcon,
     },
     [EInvestmentType.ICBMEth]: {
       type: EInvestmentType.ICBMEth,
       name: "ICBM Wallet",
       balanceEth: icbmEther,
       balanceEur: selectLockedEtherBalanceEuroAmount(state),
-      icon: ethIcon,
     },
   };
 
