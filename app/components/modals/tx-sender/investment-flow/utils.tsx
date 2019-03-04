@@ -27,13 +27,12 @@ import * as ethIcon from "../../../../assets/img/eth_icon.svg";
 import * as neuroIcon from "../../../../assets/img/nEUR_icon.svg";
 
 export function createWallets(state: IAppState): WalletSelectionData[] {
-  const w = state.wallet;
   const icbmEther = selectLockedEtherBalance(state);
   const icbmNeuro = selectLockedEuroTokenBalance(state);
 
   const wallets: Dictionary<WalletSelectionData> = {
     [EInvestmentType.InvestmentWallet]: {
-      balanceEth: selectLiquidEtherBalance(w),
+      balanceEth: selectLiquidEtherBalance(state),
       balanceEur: selectLiquidEtherBalanceEuroAmount(state),
       type: EInvestmentType.InvestmentWallet,
       name: "Investment Wallet",

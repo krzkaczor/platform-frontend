@@ -33,11 +33,14 @@ export const selectEtherBalance = (state: IAppState): string =>
 /**
  * Liquid Assets
  */
-export const selectLiquidEtherBalance = (state: IWalletState) =>
-  (state.data && addBigNumbers([state.data.etherBalance, state.data.etherTokenBalance])) || "0";
+export const selectLiquidEtherBalance = createSelector(
+  selectWalletData,
+  (data: IWalletStateData | undefined) =>
+    data ? addBigNumbers([data.etherBalance, data.etherTokenBalance]) : "0",
+);
 
 export const selectLiquidEtherBalanceEuroAmount = (state: IAppState) =>
-  multiplyBigNumbers([selectEtherPriceEur(state), selectLiquidEtherBalance(state.wallet)]);
+  multiplyBigNumbers([selectEtherPriceEur(state), selectLiquidEtherBalance(state)]);
 
 export const selectLiquidEuroTokenBalance = (state: IWalletState) =>
   (state.data && state.data.euroTokenBalance) || "0";
@@ -73,10 +76,7 @@ export const selectLockedEuroTokenBalance = createSelector(
 );
 
 export const selectLockedEuroTotalAmount = (state: IAppState) =>
-  addBigNumbers([
-    selectLockedEtherBalanceEuroAmount(state),
-    selectLockedEuroTokenBalance(state),
-  ]);
+  addBigNumbers([selectLockedEtherBalanceEuroAmount(state), selectLockedEuroTokenBalance(state)]);
 
 export const selectEtherLockedWalletHasFunds = createSelector(
   selectLockedEtherBalance,
@@ -120,7 +120,7 @@ export const selectICBMLockedWalletHasFunds = (state: IAppState): boolean =>
  */
 export const selectTotalEtherBalance = (state: IAppState) =>
   addBigNumbers([
-    selectLiquidEtherBalance(state.wallet),
+    selectLiquidEtherBalance(state),
     selectLockedEtherBalance(state),
     selectICBMLockedEtherBalance(state),
   ]);
@@ -196,4 +196,4 @@ export const selectIsEuroUpgradeTargetSet = (state: IAppState): boolean =>
 
 /**General State Selectors */
 export const selectMaxAvailableEther = (state: IAppState): string =>
-  subtractBigNumbers([selectLiquidEtherBalance(state.wallet), selectTxGasCostEthUlps(state)]);
+  subtractBigNumbers([selectLiquidEtherBalance(state), selectTxGasCostEthUlps(state)]);

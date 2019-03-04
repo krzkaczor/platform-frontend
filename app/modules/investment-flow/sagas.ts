@@ -102,7 +102,7 @@ function* investEntireBalance(): any {
 
     case EInvestmentType.InvestmentWallet:
       const gasCostEth = selectTxGasCostEthUlps(state);
-      balance = selectLiquidEtherBalance(state.wallet);
+      balance = selectLiquidEtherBalance(state);
       balance = subtractBigNumbers([balance, gasCostEth]);
       yield computeAndSetCurrencies(balance, EInvestmentCurrency.Ether);
       break;
@@ -127,10 +127,7 @@ function validateInvestment(state: IAppState): EInvestmentErrorState | undefined
 
   if (investmentFlow.investmentType === EInvestmentType.InvestmentWallet) {
     if (
-      compareBigNumbers(
-        addBigNumbers([etherValue, gasPrice]),
-        selectLiquidEtherBalance(state.wallet),
-      ) > 0
+      compareBigNumbers(addBigNumbers([etherValue, gasPrice]), selectLiquidEtherBalance(state)) > 0
     ) {
       return EInvestmentErrorState.ExceedsWalletBalance;
     }

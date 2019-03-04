@@ -146,7 +146,7 @@ export const WalletStart = compose<React.FunctionComponent>(
       error: selectWalletError(state.wallet),
       isUserFullyVerified: selectIsUserFullyVerified(state),
       liquidWalletData: {
-        ethAmount: selectLiquidEtherBalance(state.wallet),
+        ethAmount: selectLiquidEtherBalance(state),
         ethEuroAmount: selectLiquidEtherBalanceEuroAmount(state),
         neuroAmount: selectLiquidEuroTokenBalance(state.wallet),
         neuroEuroAmount: selectLiquidEuroTokenBalance(state.wallet),

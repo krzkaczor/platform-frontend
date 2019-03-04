@@ -36,7 +36,7 @@ export const MAX_EXPIRATION_DIFF_MINUTES = 10;
 export const Q18 = new BigNumber(10).pow(MONEY_DECIMALS);
 
 /**
- * Represesnt zero address on Etherum - non existing address used by ERC20 to mark minting and burning
+ * Represent zero address on Ethereum - non existing address used by ERC20 to mark minting and burning
  */
 export const ETHEREUM_ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
