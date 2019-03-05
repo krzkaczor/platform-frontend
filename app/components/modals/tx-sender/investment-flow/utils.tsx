@@ -3,15 +3,13 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { MONEY_DECIMALS } from "../../../../config/constants";
-import {
-  EInvestmentErrorState,
-  EInvestmentType,
-} from "../../../../modules/investment-flow/reducer";
+import { EInvestmentErrorState, EInvestmentType } from "../../../../modules/investment-flow/reducer";
 import { selectInvestmentActiveTypes } from "../../../../modules/investment-flow/selectors";
 import { EValidationState } from "../../../../modules/tx/sender/reducer";
 import {
   selectLiquidEtherBalance,
   selectLiquidEtherBalanceEuroAmount,
+  selectLiquidEuroTokenBalance,
   selectLockedEtherBalance,
   selectLockedEtherBalanceEuroAmount,
   selectLockedEuroTokenBalance,
@@ -24,15 +22,21 @@ import { formatThousands } from "../../../../utils/Number.utils";
 import { WalletSelectionData } from "./InvestmentTypeSelector";
 
 export function createWallets(state: IAppState): WalletSelectionData[] {
-  const icbmEther = selectLockedEtherBalance(state);
   const icbmNeuro = selectLockedEuroTokenBalance(state);
+  const balanceNEur = selectLiquidEuroTokenBalance(state.wallet);
 
   const wallets: Dictionary<WalletSelectionData> = {
     [EInvestmentType.Eth]: {
       balanceEth: selectLiquidEtherBalance(state),
       balanceEur: selectLiquidEtherBalanceEuroAmount(state),
       type: EInvestmentType.Eth,
-      name: "Investment Wallet",
+      name: "Eth Wallet",
+    },
+    [EInvestmentType.NEur]: {
+      balanceNEuro: balanceNEur,
+      balanceEur: balanceNEur,
+      type: EInvestmentType.NEur,
+      name: "Euro Wallet",
     },
     [EInvestmentType.ICBMnEuro]: {
       type: EInvestmentType.ICBMnEuro,
@@ -43,7 +47,7 @@ export function createWallets(state: IAppState): WalletSelectionData[] {
     [EInvestmentType.ICBMEth]: {
       type: EInvestmentType.ICBMEth,
       name: "ICBM Wallet",
-      balanceEth: icbmEther,
+      balanceEth: selectLockedEtherBalance(state),
       balanceEur: selectLockedEtherBalanceEuroAmount(state),
     },
   };

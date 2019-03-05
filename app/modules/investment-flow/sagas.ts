@@ -26,9 +26,9 @@ import { selectTxGasCostEthUlps } from "../tx/sender/selectors";
 import { generateInvestmentTransaction } from "../tx/transactions/investment/sagas";
 import { txValidateSaga } from "../tx/validator/sagas";
 import {
-  selectLiquidEtherBalance,
+  selectLiquidEtherBalance, selectLiquidEuroTokenBalance,
   selectLockedEtherBalance,
-  selectLockedEuroTokenBalance,
+  selectLockedEuroTokenBalance, selectWalletData,
 } from "../wallet/selectors";
 import { EInvestmentErrorState, EInvestmentType } from "./reducer";
 import {
@@ -101,6 +101,11 @@ function* investEntireBalance(): any {
       yield computeAndSetCurrencies(balance, ECurrency.EUR_TOKEN);
       break;
 
+    case EInvestmentType.NEur:
+      balance = selectLiquidEuroTokenBalance(state.wallet);
+      yield computeAndSetCurrencies(balance, ECurrency.EUR_TOKEN);
+      break;
+
     case EInvestmentType.Eth:
       const gasCostEth = selectTxGasCostEthUlps(state);
       balance = selectLiquidEtherBalance(state);
@@ -116,17 +121,20 @@ function* investEntireBalance(): any {
 
 function validateInvestment(state: IAppState): EInvestmentErrorState | undefined {
   const investmentFlow = state.investmentFlow;
+
   const euroValue = investmentFlow.euroValueUlps;
   const etherValue = investmentFlow.ethValueUlps;
-  const wallet = state.wallet.data;
+
+  const wallet = selectWalletData(state);
+
   const contribs = selectCalculatedContribution(state, investmentFlow.etoId);
   const ticketSizes = selectCalculatedEtoTicketSizesUlpsById(state, investmentFlow.etoId);
 
   if (!contribs || !euroValue || !wallet || !ticketSizes) return;
 
-  const gasPrice = selectTxGasCostEthUlps(state);
-
   if (investmentFlow.investmentType === EInvestmentType.Eth) {
+    const gasPrice = selectTxGasCostEthUlps(state);
+
     if (
       compareBigNumbers(addBigNumbers([etherValue, gasPrice]), selectLiquidEtherBalance(state)) > 0
     ) {
@@ -136,6 +144,12 @@ function validateInvestment(state: IAppState): EInvestmentErrorState | undefined
 
   if (investmentFlow.investmentType === EInvestmentType.ICBMnEuro) {
     if (compareBigNumbers(euroValue, selectLockedEuroTokenBalance(state)) > 0) {
+      return EInvestmentErrorState.ExceedsWalletBalance;
+    }
+  }
+
+  if (investmentFlow.investmentType === EInvestmentType.NEur) {
+    if (compareBigNumbers(euroValue, selectLiquidEuroTokenBalance(state.wallet)) > 0) {
       return EInvestmentErrorState.ExceedsWalletBalance;
     }
   }
@@ -216,7 +230,7 @@ function* getActiveInvestmentTypes(): any {
   const etoId = selectInvestmentEtoId(state);
   const etoState = selectEtoOnChainStateById(state, etoId);
 
-  let activeTypes: EInvestmentType[] = [EInvestmentType.Eth];
+  let activeTypes: EInvestmentType[] = [EInvestmentType.Eth, EInvestmentType.NEur];
 
   // no regular investment if not whitelisted in pre eto
   if (etoState === EETOStateOnChain.Whitelist && !selectIsWhitelisted(state, etoId)) {
