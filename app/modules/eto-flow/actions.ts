@@ -21,4 +21,16 @@ export const etoFlowActions = {
   clearNewStartDate: createActionFactory("ETO_FLOW_CLEAR_START_DATE", () => ({
     newStartDate: undefined,
   })),
+  loadSignedInvestmentAgreement: createActionFactory(
+    "ETO_FLOW_LOAD_INVESTMENT_AGREEMENT",
+    (etoId: string) => ({ etoId }),
+  ),
+  setInvestmentAgreementHash: createActionFactory(
+    "ETO_FLOW_SET_INVESTMENT_AGREEMENT_URL",
+    (signedInvestmentAgreementUrl: string | null) => ({ signedInvestmentAgreementUrl }),
+  ),
+  signInvestmentAgreement: createActionFactory(
+    "ETO_FLOW_SIGN_INVESTMENT_AGREEMENT",
+    (etoId: string, agreementHash: string) => ({ etoId, agreementHash }),
+  ),
 };

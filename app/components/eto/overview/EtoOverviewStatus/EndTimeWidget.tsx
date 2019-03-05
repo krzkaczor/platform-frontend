@@ -15,7 +15,8 @@ const EndTimeWidget: React.FunctionComponent<IExternalProps> = ({ endTime }) => 
         <FormattedMessage
           id="shared-component.eto-overview.invest.ends-in"
           values={{
-            endsIn: <FormattedRelative value={endTime} style="numeric" />,
+            //initial now is necessary for storybook tests
+            endsIn: <FormattedRelative value={endTime} initialNow={new Date()} style="numeric" />,
           }}
         />
       )}

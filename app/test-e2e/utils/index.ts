@@ -93,6 +93,14 @@ export const closeModal = () => {
   cy.get(tid("modal-close-button")).click();
 };
 
+export const getLatestVerifyUserEmailLink = () => {
+  return cy.request({ url: mockApiUrl + "sendgrid/session/mails", method: "GET" }).then(r => {
+    const activationLink = get(r, "body[0].personalizations[0].substitutions.-activationLink-");
+    // we need to replace the loginlink pointing to a remote destination with one pointing to our local instance
+    return activationLink.replace("https://platform.neufund.io", "");
+  });
+};
+
 export const verifyLatestUserEmail = () => {
   cy.request({ url: mockApiUrl + "sendgrid/session/mails", method: "GET" }).then(r => {
     const activationLink = get(r, "body[0].personalizations[0].substitutions.-activationLink-");

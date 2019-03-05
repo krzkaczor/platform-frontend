@@ -12,7 +12,7 @@ import { neuCall, neuTakeEvery, neuTakeLatest } from "../sagasUtils";
 import { selectActivationCodeFromQueryString, selectEmailFromQueryString } from "../web3/selectors";
 import { verifyUserEmailPromise } from "./email/sagas";
 import { watchRedirectChannel } from "./jwt/sagas";
-import { selectVerifiedUserEmail } from "./selectors";
+import { selectUserEmail, selectVerifiedUserEmail } from "./selectors";
 import { loadUser, signInUser } from "./user/sagas";
 
 function* logoutWatcher(
@@ -20,16 +20,18 @@ function* logoutWatcher(
   action: TAction,
 ): Iterator<any> {
   if (action.type !== "AUTH_LOGOUT") return;
-  const { userType } = action.payload;
+  const { userType, disableRedirect } = action.payload;
 
   userStorage.clear();
   jwtStorage.clear();
   yield web3Manager.unplugPersonalWallet();
   yield put(actions.web3.personalWalletDisconnected());
-  if (userType === EUserType.INVESTOR || !userType) {
-    yield put(actions.routing.goHome());
-  } else {
-    yield put(actions.routing.goEtoHome());
+  if (!disableRedirect) {
+    if (userType === EUserType.INVESTOR || !userType) {
+      yield put(actions.routing.goHome());
+    } else {
+      yield put(actions.routing.goEtoHome());
+    }
   }
   yield put(actions.init.start(EInitType.APP_INIT));
   logger.setUser(null);
@@ -77,8 +79,15 @@ function* handleSignInUser({ logger }: TGlobalDependencies): Iterator<any> {
 function* verifyUserEmail(): Iterator<any> {
   const userCode = yield select((s: IAppState) => selectActivationCodeFromQueryString(s.router));
   const urlEmail = yield select((s: IAppState) => selectEmailFromQueryString(s.router));
+  const userEmail = yield select((s: IAppState) => selectUserEmail(s.auth));
 
+  if (userEmail && userEmail !== urlEmail) {
+    // Logout if there is different user session active
+    yield put(actions.auth.logout(undefined, true));
+    return;
+  }
   const verifiedEmail = yield select((s: IAppState) => selectVerifiedUserEmail(s.auth));
+
   yield neuCall(verifyUserEmailPromise, userCode, urlEmail, verifiedEmail);
   yield loadUser();
   yield put(actions.routing.goToProfile());

@@ -1,4 +1,4 @@
-import { assertEtoDashboard, assertEtoDocuments } from "../utils";
+import { assertEtoDashboard, assertEtoDocuments } from "../utils/assertions";
 import { fillForm, TFormFixture, uploadDocumentToFieldWithTid } from "../utils/forms";
 import { tid } from "../utils/selectors";
 import { createAndLoginNewUser } from "../utils/userHelpers";

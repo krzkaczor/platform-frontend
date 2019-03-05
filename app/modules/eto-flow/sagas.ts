@@ -12,11 +12,13 @@ import {
   TEtoSpecsData,
   TPartialEtoSpecData,
 } from "../../lib/api/eto/EtoApi.interfaces";
+import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
 import { IAppState } from "../../store";
-import { actions, TAction } from "../actions";
+import { actions, TAction, TActionFromCreator } from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { loadEtoContact } from "../public-etos/sagas";
 import { neuCall, neuTakeEvery, neuTakeLatest } from "../sagasUtils";
+import { etoFlowActions } from "./actions";
 import { selectIsNewPreEtoStartDateValid, selectIssuerCompany, selectIssuerEto } from "./selectors";
 import { bookBuildingStatsToCsvString, createCsvDataUri, downloadFile } from "./utils";
 
@@ -192,6 +194,18 @@ export function* cleanupSetDateTX(): any {
   yield put(actions.etoFlow.clearNewStartDate());
 }
 
+export function* loadInvestmentAgreement(
+  { contractsService }: TGlobalDependencies,
+  action: TActionFromCreator<typeof actions.etoFlow.loadSignedInvestmentAgreement>,
+): any {
+  const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(
+    action.payload.etoId,
+  );
+  const url: string | null = yield contract.signedInvestmentAgreementUrl;
+
+  yield put(actions.etoFlow.setInvestmentAgreementHash(url !== "" ? url : null));
+}
+
 export function* etoFlowSagas(): any {
   yield fork(neuTakeEvery, "ETO_FLOW_LOAD_ISSUER_ETO", loadIssuerEto);
   yield fork(neuTakeEvery, "ETO_FLOW_SAVE_DATA_START", saveEtoData);
@@ -200,4 +214,5 @@ export function* etoFlowSagas(): any {
   yield fork(neuTakeLatest, "ETO_FLOW_DOWNLOAD_BOOK_BUILDING_STATS", downloadBookBuildingStats);
   yield fork(neuTakeLatest, "ETO_FLOW_START_DATE_TX", startSetDateTX);
   yield fork(neuTakeLatest, "ETO_FLOW_CLEANUP_START_DATE_TX", cleanupSetDateTX);
+  yield fork(neuTakeLatest, etoFlowActions.loadSignedInvestmentAgreement, loadInvestmentAgreement);
 }
