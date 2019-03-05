@@ -1,10 +1,15 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
+import { withMockedDate } from "../../utils/storybookHelpers";
 import { Counter } from "./Counter";
 
-const day = 86400000;
+const hour = 3600000;
+const day = 24 * hour;
 
-const futureDate = new Date(Date.now() + 7 * day);
+const dummyNow = new Date("2021-12-31T05:03:56.000Z");
+const futureDate = new Date(dummyNow.valueOf() + 87 * day + 13.5 * hour);
 
-storiesOf("Counter", module).add("default", () => <Counter endDate={futureDate} />);
+storiesOf("Counter", module)
+  .addDecorator(withMockedDate(dummyNow))
+  .add("default", () => <Counter endDate={futureDate} />);

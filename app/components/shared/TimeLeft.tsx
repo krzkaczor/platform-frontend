@@ -2,7 +2,6 @@ import * as moment from "moment";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { IS_CYPRESS } from "../../config/constants";
 import { calculateTimeLeft, calculateTimeLeftUnits } from "./utils";
 
 import * as sheep from "../../assets/img/landing/rainbowsheep.gif";
@@ -131,7 +130,7 @@ const FancyRenderTimeLeft: React.ComponentType<ITimeLeftProps> = ({ timeLeft }) 
   } else {
     return (
       <span className={styles.etoTimeLeft}>
-        {IS_CYPRESS ? (
+        {process.env.NF_STORYBOOK_RUN ? (
           <img src={test_sheep} alt="no time left" />
         ) : (
           <img src={sheep} alt="no time left" />
@@ -171,13 +170,15 @@ class TimeLeftRefresher extends React.PureComponent<ITimeLeftRefresher, { timeLe
 }
 
 const FancyTimeLeft = ({ finalTime, asUtc }: any) => {
-  return (
+  return !process.env.NF_STORYBOOK_RUN ? (
     <TimeLeftRefresher finalTime={finalTime} asUtc={asUtc} renderComponent={FancyRenderTimeLeft} />
+  ) : (
+    <FancyRenderTimeLeft timeLeft={calculateTimeLeft(finalTime, true)} />
   );
 };
 
 const TimeLeft = ({ finalTime, asUtc, refresh }: any) => {
-  return refresh ? (
+  return refresh && !process.env.NF_STORYBOOK_RUN ? (
     <TimeLeftRefresher finalTime={finalTime} asUtc={asUtc} renderComponent={RenderTimeLeft} />
   ) : (
     <RenderTimeLeft timeLeft={calculateTimeLeft(finalTime, true)} />

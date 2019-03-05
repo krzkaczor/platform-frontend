@@ -147,7 +147,7 @@ const VerifiedUser: React.FunctionComponent<{ verifiedEmail?: string }> = ({ ver
         <strong>
           <FormattedMessage id="settings.verify-email-widget.verified-email" />:{" "}
         </strong>
-        {verifiedEmail}
+        <span data-test-id="profile.verify-email-widget.verified-email">{verifiedEmail}</span>
       </p>
     </Col>
   </section>

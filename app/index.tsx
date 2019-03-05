@@ -1,3 +1,10 @@
+import "reflect-metadata";
+
+import "./components/translatedMessages/yupLocales.sideEffect";
+
+import "./styles/bootstrap.scss";
+
+// tslint:disable-next-line:ordered-imports
 import { ConnectedRouter, routerMiddleware } from "connected-react-router";
 import { createBrowserHistory, History } from "history";
 import { Container } from "inversify";
@@ -9,10 +16,8 @@ import { Provider as ReduxProvider } from "react-redux";
 import { applyMiddleware, createStore, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
-import "reflect-metadata";
 
 import { App } from "./components/App";
-import "./components/translatedMessages/yupLocales.sideEffect";
 import { getConfig } from "./config/getConfig";
 import { createGlobalDependencies, setupBindings, TGlobalDependencies } from "./di/setupBindings";
 import { symbols } from "./di/symbols";
@@ -28,7 +33,6 @@ import * as serviceWorker from "./utils/serviceWorker";
 import "font-awesome/scss/font-awesome.scss";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import "./styles/bootstrap.scss";
 import "./styles/overrides.scss";
 
 function renderApp(
