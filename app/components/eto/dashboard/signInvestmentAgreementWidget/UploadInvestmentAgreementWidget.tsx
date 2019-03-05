@@ -59,19 +59,16 @@ export const UploadInvestmentAgreementLayout: React.FunctionComponent<
   );
 };
 
-export const EtoCompletedWidgetLayout: React.ComponentType<any> = ({ goToWallet }) => {
-  //fixme
-  return (
-    <Panel>
-      <PanelHeader headerText={<FormattedMessage id="download-agreement-widget.success-title" />} />
-      <div className={styles.content}>
-        <ButtonArrowRight data-test-id="eto-dashboard-submit-proposal" onClick={goToWallet}>
-          <FormattedMessage id="download-agreement-widget.go-to-wallet" />
-        </ButtonArrowRight>
-      </div>
-    </Panel>
-  );
-};
+export const EtoCompletedWidgetLayout: React.ComponentType<any> = ({ goToWallet }) => (
+  <Panel>
+    <PanelHeader headerText={<FormattedMessage id="download-agreement-widget.success-title" />} />
+    <div className={styles.content}>
+      <ButtonArrowRight data-test-id="eto-dashboard-submit-proposal" onClick={goToWallet}>
+        <FormattedMessage id="download-agreement-widget.go-to-wallet" />
+      </ButtonArrowRight>
+    </div>
+  </Panel>
+);
 
 export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
   createErrorBoundary(ErrorBoundaryPanel),
@@ -97,6 +94,7 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
   }),
   branch<IStateProps | null>(props => props === null, renderNothing),
   branch<IStateProps>(props => props.stateOnChain < EETOStateOnChain.Signing, renderNothing),
+  branch<IStateProps>(props => props.stateOnChain === EETOStateOnChain.Refund, renderNothing),
   branch<IStateProps>(
     props => props.stateOnChain > EETOStateOnChain.Signing,
     renderComponent(EtoCompletedWidgetLayout),
@@ -108,8 +106,9 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
 )(UploadInvestmentAgreementLayout);
 
 //invalid state, props invalid
-//stateOnChain is Claim, Proceeds
-//stateOnChain is not Signing
+//stateOnChain is < signing
+//stateOnChain is refund
+//stateOnChain is Claim, Payout
 //uploadedAgreement is there
 //uploadedAgreement is null
 //----------//
