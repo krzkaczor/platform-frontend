@@ -1,3 +1,4 @@
+import * as cn from "classnames";
 import { Formik, FormikConsumer } from "formik";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
@@ -10,7 +11,6 @@ import { Form, FormFieldColorful } from "../../shared/forms";
 import { Panel } from "../../shared/Panel";
 import { Tooltip } from "../../shared/Tooltip";
 
-import * as cn from "classnames";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as styles from "./CheckYourICBMWalletWidget.module.scss";
 

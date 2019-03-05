@@ -1,7 +1,7 @@
+import * as cn from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "redux";
-import * as cn from "classnames";
 
 import { actions } from "../../../modules/actions";
 import { selectIsUserFullyVerified } from "../../../modules/auth/selectors";

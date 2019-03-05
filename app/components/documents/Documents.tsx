@@ -278,7 +278,7 @@ const Documents = compose<React.FunctionComponent>(
         etoFilesData,
         dataNotReady:
           selectIssuerEtoLoading(state) || state.etoDocuments.loading || etoFilesDataIsEmpty,
-        etoFileLoading: selectEtoDocumentLoading(state.etoDocuments),
+        etoFileLoading: selectEtoDocumentsLoading(state.etoDocuments),
         etoState: selectIssuerEtoState(state),
         onChainState: selectEtoOnChainStateById(state, selectEtoId(state)!)!,
         etoTemplates: selectIssuerEtoTemplates(state)!,
