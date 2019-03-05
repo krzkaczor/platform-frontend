@@ -3,7 +3,10 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { MONEY_DECIMALS } from "../../../../config/constants";
-import { EInvestmentErrorState, EInvestmentType } from "../../../../modules/investment-flow/reducer";
+import {
+  EInvestmentErrorState,
+  EInvestmentType,
+} from "../../../../modules/investment-flow/reducer";
 import { selectInvestmentActiveTypes } from "../../../../modules/investment-flow/selectors";
 import { EValidationState } from "../../../../modules/tx/sender/reducer";
 import {

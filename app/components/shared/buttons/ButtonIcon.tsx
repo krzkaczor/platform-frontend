@@ -2,7 +2,7 @@ import * as cn from "classnames";
 import * as React from "react";
 
 import { CommonHtmlProps, TTranslatedString } from "../../../types";
-import { InlineIcon } from "../InlineIcon";
+import { InlineIcon } from "../icons";
 import { IGeneralButton } from "./Button";
 
 import * as closeIcon from "../../../assets/img/inline_icons/close.svg";

@@ -26,9 +26,11 @@ import { selectTxGasCostEthUlps } from "../tx/sender/selectors";
 import { generateInvestmentTransaction } from "../tx/transactions/investment/sagas";
 import { txValidateSaga } from "../tx/validator/sagas";
 import {
-  selectLiquidEtherBalance, selectLiquidEuroTokenBalance,
+  selectLiquidEtherBalance,
+  selectLiquidEuroTokenBalance,
   selectLockedEtherBalance,
-  selectLockedEuroTokenBalance, selectWalletData,
+  selectLockedEuroTokenBalance,
+  selectWalletData,
 } from "../wallet/selectors";
 import { EInvestmentErrorState, EInvestmentType } from "./reducer";
 import {

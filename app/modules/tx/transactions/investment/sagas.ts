@@ -52,7 +52,6 @@ const getEuroLockTransaction = (
   return createInvestmentTxData(state, txData, contractsService.euroLock.address);
 };
 
-
 const getEuroTokenTransaction = (
   state: IAppState,
   contractsService: ContractsService,
