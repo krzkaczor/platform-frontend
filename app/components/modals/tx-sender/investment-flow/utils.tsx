@@ -39,7 +39,7 @@ export function createWallets(state: IAppState): WalletSelectionData[] {
       balanceNEuro: balanceNEur,
       balanceEur: balanceNEur,
       type: EInvestmentType.NEur,
-      name: "Euro Wallet",
+      name: "nEuro Wallet",
     },
     [EInvestmentType.ICBMnEuro]: {
       type: EInvestmentType.ICBMnEuro,

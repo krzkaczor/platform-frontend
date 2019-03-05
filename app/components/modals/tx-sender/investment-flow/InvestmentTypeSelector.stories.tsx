@@ -24,7 +24,13 @@ export const wallets: WalletSelectionData[] = [
     balanceEth: "50000000000000000000",
     balanceEur: "45600000000000000000",
     type: EInvestmentType.Eth,
-    name: "Investment Wallet",
+    name: "Eth Wallet",
+  },
+  {
+    balanceNEuro: "45600000000000000000",
+    balanceEur: "45600000000000000000",
+    type: EInvestmentType.NEur,
+    name: "nEur Wallet",
   },
 ];
 
