@@ -9,6 +9,8 @@ import { Button, EButtonLayout } from "../../../shared/buttons";
 import { Heading } from "../../../shared/modals/Heading";
 import { ResponsiveImage } from "../../../shared/ResponsiveImage";
 
+import * as signGraphic from "../../../../assets/img/sign-agreement.svg";
+
 interface IDispatchProps {
   onAccept: () => any;
 }
@@ -25,7 +27,13 @@ const SignInvestmentAgreementComponent: React.FunctionComponent<IDispatchProps> 
       </Row>
 
       <Row className="mt-4">
-        <ResponsiveImage srcSet={{ "1x": "", "2x": "", "3x": "" }} alt="" />
+        <ResponsiveImage
+          width={2}
+          height={1}
+          theme={"transparent"}
+          srcSet={{ "1x": signGraphic }}
+          alt=""
+        />
       </Row>
 
       <Row className="justify-content-center mt-4">

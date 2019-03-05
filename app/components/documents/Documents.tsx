@@ -47,7 +47,7 @@ import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoun
 import { LoadingIndicator } from "../shared/loading-indicator";
 import { SectionHeader } from "../shared/SectionHeader";
 import { SingleColDocuments } from "../shared/SingleColDocumentWidget";
-import { renameDocuments, getDocumentTitles, isBusy, isFileUploaded, uploadAllowed } from "./utils";
+import { getDocumentTitles, isBusy, isFileUploaded, renameDocuments, uploadAllowed } from "./utils";
 
 import * as styles from "./Documents.module.scss";
 
