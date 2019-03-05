@@ -4,10 +4,12 @@ import {
   EKycRequestType,
   ERequestOutsourcedStatus,
   ERequestStatus,
+  KycBankQuintessenceBankAccount,
 } from "../../lib/api/KycApi.interfaces";
 import { IAppState } from "../../store";
 import { DeepReadonly } from "../../types";
 import { IKycState } from "./reducer";
+import { TBankAccount } from "./types";
 
 export const selectKycRequestStatus = (state: IAppState): ERequestStatus | undefined => {
   const userKycType = selectKycRequestType(state.kyc);
@@ -117,3 +119,16 @@ export const selectIsAccountFrozen = createSelector(selectClaims, claims => {
 
   return false;
 });
+
+export const selectIsUserVerifiedOnBlockchain = (state: IAppState) =>
+  selectIsClaimsVerified(state) && !selectIsAccountFrozen(state);
+
+export const selectBankAccount = (state: IAppState): DeepReadonly<TBankAccount> | undefined =>
+  state.kyc.bankAccount;
+
+export const selectIsBankAccountLoading = (state: IAppState): boolean =>
+  state.kyc.bankAccount === undefined;
+
+export const selectQuintessenceBankAccount = (
+  state: IAppState,
+): DeepReadonly<KycBankQuintessenceBankAccount> | undefined => state.kyc.quintessenceBankAccount;

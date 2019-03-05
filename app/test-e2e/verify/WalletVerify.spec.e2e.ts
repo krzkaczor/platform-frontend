@@ -1,9 +1,18 @@
-import { goToDashboard, logoutViaTopRightButton } from "../utils";
+import {
+  assertUserInDashboard,
+  assertVerifyEmailWidgetIsInVerfiedEmailState,
+  clearEmailServer,
+  getLatestVerifyUserEmailLink,
+  goToDashboard,
+  logoutViaTopRightButton,
+  registerWithLightWallet,
+} from "../utils";
+import { fillForm } from "../utils/forms";
 import { tid } from "../utils/selectors";
-import { createAndLoginNewUser } from "../utils/userHelpers";
+import { createAndLoginNewUser, generateRandomEmailAddress } from "../utils/userHelpers";
 
-describe("Invest with change", () => {
-  it("do", () => {
+describe("Verify Wallet", () => {
+  it("should update login email on activation", () => {
     const TEST_LINK =
       "https://localhost:9090/email-verify?code=b7fb21ea-b248-4bc3-8500-b3f2b8644c17&email=pavloblack%40hotmail.com&user_type=investor&wallet_type=light&wallet_subtype=unknown&salt=XzNJFpdkgjOxrUXPFD6NmzkUGGpUmuA5vjrt1xyMFd4%3D";
 
@@ -24,6 +33,43 @@ describe("Invest with change", () => {
           expect(activationEmail).to.not.equal(registerEmail);
         });
       });
+    });
+  });
+
+  it("should logout previous user when email activation occurs", () => {
+    const email = generateRandomEmailAddress();
+    const password = "strongpassword";
+
+    clearEmailServer();
+
+    registerWithLightWallet(email, password);
+    assertUserInDashboard();
+
+    getLatestVerifyUserEmailLink().then(activationLink => {
+      logoutViaTopRightButton();
+
+      // register another user
+      const newEmail = generateRandomEmailAddress();
+      registerWithLightWallet(newEmail, password);
+      assertUserInDashboard();
+
+      assertUserInDashboard();
+
+      // try to activate previous user when second one is logged in
+      cy.visit(activationLink);
+
+      cy.get(tid("light-wallet-login-with-email-email-field")).contains(email);
+
+      fillForm({
+        password,
+        "wallet-selector-nuewallet.login-button": {
+          type: "submit",
+        },
+      });
+
+      // email should be verified
+      assertVerifyEmailWidgetIsInVerfiedEmailState();
+      cy.get(tid("profile.verify-email-widget.verified-email")).contains(email);
     });
   });
 });

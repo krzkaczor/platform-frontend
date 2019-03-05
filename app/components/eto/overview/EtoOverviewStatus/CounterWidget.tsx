@@ -33,7 +33,9 @@ const CounterWidget: React.FunctionComponent<ICounterWidgetProps> = ({
         )}
       </div>
       <div className={styles.zone}>
-        <time dateTime={endDate.toISOString()}>{moment.utc(endDate).format("llll z")}</time>
+        <time dateTime={endDate.toISOString()}>
+          {`${moment.utc(endDate).format("ddd, MMM Do YYYY, HH:mm")} UTC`}
+        </time>
       </div>
       <Counter endDate={endDate} />
     </div>

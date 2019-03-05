@@ -8,6 +8,7 @@ import {
   TEtoWithCompanyAndContract,
 } from "../../../../modules/public-etos/types";
 import { withStore } from "../../../../utils/storeDecorator";
+import { withMockedDate } from "../../../../utils/storybookHelpers";
 import { EtoWidgetContext } from "../../EtoWidgetView";
 import { EtoOverviewStatusLayout } from "./EtoOverviewStatus";
 
@@ -29,6 +30,9 @@ const eto: TEtoWithCompanyAndContract = {
     timedState: EETOStateOnChain.Whitelist,
   },
 };
+// 2018-11-16T05:03:56.000Z
+// Fri Nov 23 2018 06:03:56 GMT+0100
+const dummyNow = new Date("2018-10-16T05:03:56+00:00");
 
 storiesOf("ETO/EtoOverviewStatus", module)
   .addDecorator(
@@ -40,6 +44,7 @@ storiesOf("ETO/EtoOverviewStatus", module)
       },
     }),
   )
+  .addDecorator(withMockedDate(dummyNow))
   .add("default", () => (
     <EtoWidgetContext.Provider value={eto.previewCode}>
       <EtoOverviewStatusLayout

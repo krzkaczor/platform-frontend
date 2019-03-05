@@ -15,7 +15,7 @@ type TProps = OmitKeys<
  */
 const ExternalLink: React.FunctionComponent<TProps> = ({ href, children, ...rest }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" {...rest}>
-    {children}
+    {children || href}
     {/* Hide accessibility improvement on e2e tests as often we get text content of anchor to compare with some pattern */}
     {!IS_CYPRESS && (
       <span className="sr-only">

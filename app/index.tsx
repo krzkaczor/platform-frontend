@@ -4,6 +4,7 @@ import "./components/translatedMessages/yupLocales.sideEffect";
 
 import "./styles/bootstrap.scss";
 
+// tslint:disable-next-line:ordered-imports
 import { ConnectedRouter, routerMiddleware } from "connected-react-router";
 import { createBrowserHistory, History } from "history";
 import { Container } from "inversify";

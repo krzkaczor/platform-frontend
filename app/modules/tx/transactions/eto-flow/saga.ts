@@ -4,7 +4,8 @@ import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ETOCommitment } from "../../../../lib/contracts/ETOCommitment";
 import { ITxData } from "../../../../lib/web3/types";
 import { IAppState } from "../../../../store";
-import {actions} from "../../../actions";
+import { EthereumAddressWithChecksum } from "../../../../types";
+import { actions } from "../../../actions";
 import {
   selectIsNewPreEtoStartDateValid,
   selectIssuerEto,
@@ -53,27 +54,21 @@ export function* generateSetStartDateTransaction({
   return txDetails;
 }
 
-
 export function* generateSignInvestmentAgreementTx(
-  {contractsService, web3Manager}: TGlobalDependencies,
-  extraParam:{etoId:string, agreementHash:string}
+  { contractsService, web3Manager }: TGlobalDependencies,
+  extraParam: { etoId: string; agreementHash: string },
 ): any {
-  const {etoId, agreementHash} = extraParam
+  const { etoId, agreementHash } = extraParam;
   const state: IAppState = yield select();
 
-  // const etoId:string|undefined = yield selectEtoId(state);
-  // const agreementUrl:IEtoDocument|null = yield selectUploadedInvestmentAgreement(state)
-  console.log("generateSignInvestmentAgreementTx",etoId,agreementHash)
-
-
-  if(etoId && agreementHash){
+  if (etoId && agreementHash) {
     const userAddress: EthereumAddressWithChecksum = yield selectEthereumAddressWithChecksum(state);
     const gasPriceWithOverhead: string = yield selectStandardGasPriceWithOverHead(state);
 
-    const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(etoId)
-    const txData: string = yield contract.companySignsInvestmentAgreementTx(`ifps:${agreementHash}`).getData()
-
-    console.log("generateSignInvestmentAgreementTx",contract)
+    const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(etoId);
+    const txData: string = yield contract
+      .companySignsInvestmentAgreementTx(`ifps:${agreementHash}`)
+      .getData();
 
     const txInitialDetails = {
       to: contract.address,
@@ -83,7 +78,9 @@ export function* generateSignInvestmentAgreementTx(
       gasPrice: gasPriceWithOverhead,
     };
 
-    const estimatedGasWithOverhead:string = yield web3Manager.estimateGasWithOverhead(txInitialDetails);
+    const estimatedGasWithOverhead: string = yield web3Manager.estimateGasWithOverhead(
+      txInitialDetails,
+    );
 
     const txDetails: ITxData = {
       ...txInitialDetails,
@@ -96,17 +93,17 @@ export function* generateSignInvestmentAgreementTx(
   }
 }
 
-
 export function* etoSetDateGenerator(_: TGlobalDependencies): any {
   const generatedTxDetails = yield neuCall(generateSetStartDateTransaction);
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(actions.txSender.txSenderContinueToSummary());
 }
 
-
-export function* etoSignInvestmentAgreementGenerator(_: TGlobalDependencies,
-  extraParam:{etoId:string, agreementHash:string}): any {
-  const generatedTxDetails = yield neuCall(generateSignInvestmentAgreementTx,extraParam);
+export function* etoSignInvestmentAgreementGenerator(
+  _: TGlobalDependencies,
+  extraParam: { etoId: string; agreementHash: string },
+): any {
+  const generatedTxDetails = yield neuCall(generateSignInvestmentAgreementTx, extraParam);
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(actions.txSender.txSenderContinueToSummary());
 }

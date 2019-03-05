@@ -1,12 +1,13 @@
 import * as React from "react";
-import * as styles from "./DepositEth.module.scss";
-import { DepositFunds } from "./DepositFunds";
-
 import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "redux";
-import * as icon from "../../../../assets/img/eth_icon.svg";
+
 import { selectEthereumAddressWithChecksum } from "../../../../modules/web3/selectors";
 import { appConnect } from "../../../../store";
+import { DepositFunds } from "./DepositFunds";
+
+import * as icon from "../../../../assets/img/eth_icon.svg";
+import * as styles from "./DepositEth.module.scss";
 
 interface IProps {
   path: string;

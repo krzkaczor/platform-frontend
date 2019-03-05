@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import * as code from "!raw-loader!./DummySmartContractCode.sol";
 import * as styles from "./SmartContractWindow.module.scss";
+
+import * as code from "!raw-loader!./DummySmartContractCode.sol";
 
 export const SmartContractWindow = () => (
   <div className={styles.view}>

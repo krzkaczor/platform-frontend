@@ -7,13 +7,13 @@ import {
   getInvestmentCalculatedPercentage,
 } from "../../../../../lib/api/eto/EtoUtils";
 import { TEtoWithCompanyAndContract } from "../../../../../modules/public-etos/types";
+import { TTranslatedString } from "../../../../../types";
 import { normalize } from "../../../../../utils/Number.utils";
 import {
   PercentageIndicatorBar,
   TProgressBarProps,
 } from "../../../../shared/PercentageIndicatorBar";
 
-import { TTranslatedString } from "../../../../../types";
 import * as styles from "./InvestmentProgress.module.scss";
 
 type TProps = {

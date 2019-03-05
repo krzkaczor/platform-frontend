@@ -2,7 +2,6 @@ import {
   compose,
   lifecycle,
   StateHandler,
-  StateHandlerMap,
   withHandlers,
   withProps,
   withStateHandlers,
@@ -45,7 +44,7 @@ interface ILocalStateProps {
   formState: CampaigningFormState;
 }
 
-type ILocalStateHandlersProps = StateHandlerMap<ILocalStateProps> & {
+type ILocalStateHandlersProps = {
   changeConsentToRevealEmail: StateHandler<ILocalStateProps>;
   moveToEdit: StateHandler<ILocalStateProps>;
   moveToView: StateHandler<ILocalStateProps>;

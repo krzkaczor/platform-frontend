@@ -1,5 +1,6 @@
 import * as QRCode from "qrcode";
 import * as React from "react";
+
 import { TDataTestId } from "../../types";
 
 interface IProps {

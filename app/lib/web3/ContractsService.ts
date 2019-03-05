@@ -6,20 +6,20 @@ import { symbols } from "../../di/symbols";
 import { EtherToken } from "../contracts/EtherToken";
 import { ETOCommitment } from "../contracts/ETOCommitment";
 import { EuroToken } from "../contracts/EuroToken";
+import { EuroTokenController } from "../contracts/EuroTokenController";
 import { FeeDisbursal } from "../contracts/FeeDisbursal";
 import { ICBMLockedAccount } from "../contracts/ICBMLockedAccount";
 import { IControllerGovernance } from "../contracts/IControllerGovernance";
 import { IdentityRegistry } from "../contracts/IdentityRegistry";
 import { IEquityToken } from "../contracts/IEquityToken";
 import { ITokenExchangeRateOracle } from "../contracts/ITokenExchangeRateOracle";
+import * as knownInterfaces from "../contracts/knownInterfaces.json";
 import { LockedAccount } from "../contracts/LockedAccount";
 import { Neumark } from "../contracts/Neumark";
 import { PlatformTerms } from "../contracts/PlatformTerms";
 import { Universe } from "../contracts/Universe";
 import { ILogger } from "../dependencies/logger";
 import { Web3Manager } from "./Web3Manager";
-
-import * as knownInterfaces from "../contracts/knownInterfaces.json";
 
 @injectable()
 export class ContractsService {
@@ -31,6 +31,7 @@ export class ContractsService {
   public universeContract!: Universe;
   public neumark!: Neumark;
   public euroToken!: EuroToken;
+  public euroTokenController!: EuroTokenController;
   public etherToken!: EtherToken;
 
   public euroLock!: LockedAccount;
@@ -70,6 +71,7 @@ export class ContractsService {
       icbmEuroLockAddress,
       icbmEtherLockAddress,
       euroTokenAddress,
+      euroTokenControllerAddress,
       etherTokenAddress,
       tokenExchangeRateOracleAddress,
       identityRegistryAddress,
@@ -82,6 +84,7 @@ export class ContractsService {
       knownInterfaces.icbmEuroLock,
       knownInterfaces.icbmEtherLock,
       knownInterfaces.euroToken,
+      knownInterfaces.euroTokenController,
       knownInterfaces.etherToken,
       knownInterfaces.tokenExchangeRateOracle,
       knownInterfaces.identityRegistry,
@@ -99,6 +102,7 @@ export class ContractsService {
       this.identityRegistry,
       this.platformTerms,
       this.euroToken,
+      this.euroTokenController,
       this.etherToken,
       this.feeDisbursal,
     ] = await Promise.all<any>([
@@ -111,6 +115,7 @@ export class ContractsService {
       create(IdentityRegistry, this.web3, identityRegistryAddress),
       create(PlatformTerms, this.web3, platformTermsAddress),
       create(EuroToken, this.web3, euroTokenAddress),
+      create(EuroTokenController, this.web3, euroTokenControllerAddress),
       create(EtherToken, this.web3, etherTokenAddress),
       create(FeeDisbursal, this.web3, feeDisbursalAddress),
     ]);

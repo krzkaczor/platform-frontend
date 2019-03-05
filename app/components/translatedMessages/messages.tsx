@@ -10,6 +10,7 @@ interface ITranslationValues {
 }
 
 export type TranslatedMessageType =
+  | BankTransferFlowMessage
   | GenericErrorMessage
   | GenericModalMessage
   | SignInUserErrorMessage
@@ -95,6 +96,10 @@ export enum ToSMessage {
   TOS_ACCEPT_PERMISSION_TEXT = "tosAcceptPermissionText",
 }
 
+export enum BankTransferFlowMessage {
+  BANK_TRANSFER_FLOW_ERROR = "bankTransferFlowError",
+}
+
 export enum BookbuildingFlowMessage {
   PLEDGE_FLOW_CONFIRM_PLEDGE = "pledgeFlowConfirmPledge",
   PLEDGE_FLOW_PLEDGE_DESCRIPTION = "pledgeFlowPledgeDescription",
@@ -158,6 +163,7 @@ export enum KycFlowMessage {
   KYC_SETTINGS_BUTTON = "kycSettingsButton",
   KYC_ERROR = "kycError",
   KYC_BENEFICIAL_OWNERS = "kycBeneficialOwners",
+  KYC_PROBLEM_LOADING_BANK_DETAILS = "kycProblemLoadingBankDetails",
 }
 
 export enum AuthMessage {
@@ -230,6 +236,9 @@ const getMessageTranslation = ({ messageType, messageData }: TMessage): TTransla
 
     case GenericModalMessage.ERROR_TITLE:
       return <FormattedMessage id="modal.generic.title.error" />;
+
+    case BankTransferFlowMessage.BANK_TRANSFER_FLOW_ERROR:
+      return <FormattedMessage id="bank-transfer-flow.failed-to-start" />;
 
     case BrowserWalletErrorMessage.WALLET_IS_LOCKED:
       return <FormattedMessage id="error-message.browser-wallet.wallet-locked" />;
@@ -385,6 +394,8 @@ const getMessageTranslation = ({ messageType, messageData }: TMessage): TTransla
       return <FormattedMessage id="module.kyc.sagas.error" />;
     case KycFlowMessage.KYC_BENEFICIAL_OWNERS:
       return <FormattedMessage id="module.kyc.sagas.beneficial-owners" />;
+    case KycFlowMessage.KYC_PROBLEM_LOADING_BANK_DETAILS:
+      return <FormattedMessage id="module.kyc.sagas.problem-loading-bank-details" />;
 
     case AuthMessage.AUTH_EMAIL_ALREADY_VERIFIED:
       return (

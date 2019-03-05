@@ -1,9 +1,10 @@
 import * as React from "react";
-import * as styles from "./DepositEuroToken.module.scss";
+import { FormattedMessage } from "react-intl-phraseapp";
+
 import { DepositFunds } from "./DepositFunds";
 
-import { FormattedMessage } from "react-intl-phraseapp";
 import * as icon from "../../../../assets/img/nEUR_icon.svg";
+import * as styles from "./DepositEuroToken.module.scss";
 
 interface IProps {
   path: string;

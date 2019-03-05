@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { ETransactionErrorType } from "../../../../modules/tx/sender/reducer";
-import { Message } from "./Message";
+import { Message } from "../../Message";
 
 import * as failedImg from "../../../../assets/img/ether_fail.svg";
 import * as styles from "./ErrorMessage.module.scss";
@@ -13,6 +13,10 @@ interface IProps {
 
 const getErrorMessageByType = (type?: ETransactionErrorType) => {
   switch (type) {
+    case ETransactionErrorType.NOT_ENOUGH_NEUMARKS_TO_UNLOCK:
+      return (
+        <FormattedMessage id="modal.txsender.error-message.error-not-enough-neu-to-unlock.message" />
+      );
     case ETransactionErrorType.ERROR_WHILE_WATCHING_TX:
       return <FormattedMessage id="modal.txsender.error-message.error-while-watching-tx" />;
     case ETransactionErrorType.FAILED_TO_GENERATE_TX:
@@ -39,8 +43,20 @@ const getErrorMessageByType = (type?: ETransactionErrorType) => {
       return <FormattedMessage id="modal.txsender.error-message.tx-was-rejected" />;
     case ETransactionErrorType.LEDGER_CONTRACTS_DISABLED:
       return <FormattedMessage id="modal.txsender.error-message.ledger-contracts-disabled" />;
+    default:
+      return <FormattedMessage id="modal.shared.signing-message.transaction-error.hint" />;
   }
-  return <FormattedMessage id="modal.shared.signing-message.transaction-error.hint" />;
+};
+
+const getErrorTitleByType = (type?: ETransactionErrorType) => {
+  switch (type) {
+    case ETransactionErrorType.NOT_ENOUGH_NEUMARKS_TO_UNLOCK:
+      return (
+        <FormattedMessage id="modal.txsender.error-message.error-not-enough-neu-to-unlock.title" />
+      );
+    default:
+      return <FormattedMessage id="modal.shared.signing-message.transaction-error.title" />;
+  }
 };
 
 const ErrorMessage: React.FunctionComponent<IProps> = ({ type }) => {
@@ -48,7 +64,7 @@ const ErrorMessage: React.FunctionComponent<IProps> = ({ type }) => {
     <Message
       data-test-id="modals.shared.signing-message.modal"
       image={<img src={failedImg} className={styles.eth} />}
-      title={<FormattedMessage id="modal.shared.signing-message.transaction-error.title" />}
+      title={getErrorTitleByType(type)}
       hint={getErrorMessageByType(type)}
     />
   );

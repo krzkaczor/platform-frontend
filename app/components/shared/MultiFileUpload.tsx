@@ -4,12 +4,10 @@ import Dropzone from "react-dropzone";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 
 import { EKycRequestType, IKycFileInfo } from "../../lib/api/KycApi.interfaces";
-
+import { TAcceptedFileType } from "../../types";
 import { InlineIcon } from "./InlineIcon";
 import { ResponsiveImage } from "./ResponsiveImage";
 import { UploadedFiles } from "./UploadedFiles";
-
-import { TAcceptedFileType } from "../../types";
 
 import * as bankStatementTemplate from "../../assets/img/bank-statement-template.svg";
 import * as documentBothSidesImage from "../../assets/img/document-both-side.jpg";

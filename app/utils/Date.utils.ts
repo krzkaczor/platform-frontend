@@ -26,3 +26,5 @@ export function isLessThanNMinutes(d1: Date, d2: Date, n: number): boolean {
 export function minutesToMs(minutes: number): number {
   return minutes * 6 * 10 * 1000;
 }
+
+export const getCurrentUTCTimestamp = (): number => Math.floor(Date.now() / 1000);

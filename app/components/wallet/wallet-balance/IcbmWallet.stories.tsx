@@ -1,5 +1,6 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
+
 import { IcbmWallet } from "./IcbmWallet";
 
 storiesOf("ICBM Wallet", module)
@@ -55,20 +56,6 @@ storiesOf("ICBM Wallet", module)
     <IcbmWallet
       onUpgradeEtherClick={() => {}}
       onUpgradeEuroClick={() => {}}
-      data={{
-        hasFunds: true,
-        isEtherUpgradeTargetSet: true,
-        isEuroUpgradeTargetSet: true,
-        ethAmount: "1",
-        ethEuroAmount: "1",
-        neuroAmount: "1",
-        neuroEuroAmount: "1",
-        totalEuroAmount: "0",
-      }}
-    />
-  ))
-  .add("With Both Values But no Callback Function", () => (
-    <IcbmWallet
       data={{
         hasFunds: true,
         isEtherUpgradeTargetSet: true,

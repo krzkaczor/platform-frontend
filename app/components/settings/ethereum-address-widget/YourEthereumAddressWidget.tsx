@@ -1,6 +1,6 @@
 import * as React from "react";
-
 import { FormattedMessage } from "react-intl-phraseapp";
+
 import { selectEthereumAddressWithChecksum } from "../../../modules/web3/selectors";
 import { appConnect } from "../../../store";
 import { AccountAddress } from "../../shared/AccountAddress";

@@ -14,23 +14,23 @@ describe("Upgrade icbm wallet", () => {
     }).then(() => {
       let icbmBalance: number;
       cy.visit("/wallet");
-      cy.get(tid("icbmNeuroWallet.balance-values-large-value")).should($e => {
+      cy.get(tid("icbm-wallet.neur.balance-values.large-value")).should($e => {
         icbmBalance = parseFloat(extractNumber($e.text()));
         expect(icbmBalance).to.be.greaterThan(0);
       });
-      cy.get(tid("icbmNeuroWallet.shared-component.upgrade.button")).click();
+      cy.get(tid("wallet.icbm-euro.upgrade-button")).click();
       cy.get(tid("modals.tx-sender.withdraw-flow.summery.withdrawSummery.accept")).click();
       confirmAccessModal();
       cy.get(tid("modals.shared.signing-message.modal"));
       cy.get(tid("modals.tx-sender.withdraw-flow.success"));
       closeModal();
-      cy.get(tid("lockedEuroWallet.balance-values-large-value")).should($e => {
+      cy.get(tid("locked-wallet.eur.balance-values.large-value")).should($e => {
         const val = parseFloat(extractNumber($e.text()));
         expect(val).to.be.greaterThan(0);
         expect(val).to.equal(icbmBalance);
       });
       cy.get(tid("wallet-start-container")).should($e => {
-        expect($e.find(tid("icbmNeuroWallet.balance-values-large-value")).length).to.equal(0);
+        expect($e.find(tid("icbm-wallet.neur.balance-values.large-value")).length).to.equal(0);
       });
     });
   });
@@ -44,23 +44,23 @@ describe("Upgrade icbm wallet", () => {
     }).then(() => {
       let icbmBalance: number;
       cy.visit("/wallet");
-      cy.get(tid("icbmEtherWallet.balance-values-large-value")).should($e => {
+      cy.get(tid("icbm-wallet.eth.balance-values.large-value")).should($e => {
         icbmBalance = parseFloat(extractNumber($e.text()));
         expect(icbmBalance).to.be.greaterThan(0);
       });
-      cy.get(tid("icbmEtherWallet.shared-component.upgrade.button")).click();
+      cy.get(tid("wallet.icbm-eth.upgrade-button")).click();
       cy.get(tid("modals.tx-sender.withdraw-flow.summery.withdrawSummery.accept")).click();
       confirmAccessModal();
       cy.get(tid("modals.shared.signing-message.modal"));
       cy.get(tid("modals.tx-sender.withdraw-flow.success"));
       closeModal();
-      cy.get(tid("lockedEtherWallet.balance-values-large-value")).should($e => {
+      cy.get(tid("locked-wallet.eth.balance-values.large-value")).should($e => {
         const val = parseFloat(extractNumber($e.text()));
         expect(val).to.be.greaterThan(0);
         expect(val).to.equal(icbmBalance);
       });
       cy.get(tid("wallet-start-container")).should($e => {
-        expect($e.find(tid("icbmEtherWallet.balance-values-large-value")).length).to.equal(0);
+        expect($e.find(tid("icbm-wallet.eth.balance-values.large-value")).length).to.equal(0);
       });
     });
   });

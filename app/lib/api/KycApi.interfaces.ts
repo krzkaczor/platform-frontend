@@ -1,4 +1,6 @@
 import * as Yup from "yup";
+
+import * as YupTS from "../yup-ts";
 import {
   countryCode,
   isUsCitizen,
@@ -148,3 +150,30 @@ export enum EKycBusinessType {
   SMALL = "small",
   PARTNERSHIP = "partnership",
 }
+
+export const KycBankVerifiedBankAccountSchema = YupTS.object({
+  bankAccountNumberLast4: YupTS.string(),
+  bankName: YupTS.string(),
+  isSepa: YupTS.boolean(),
+  name: YupTS.string(),
+  swiftCode: YupTS.string(),
+});
+
+export const KycBankQuintessenceBankAccountSchema = YupTS.object({
+  bankAccountNumber: YupTS.string(),
+  bankName: YupTS.string(),
+  isSepa: YupTS.boolean(),
+  name: YupTS.string(),
+  swiftCode: YupTS.string(),
+});
+
+export const KycBankAccountSchema = YupTS.object({
+  ourAccount: KycBankQuintessenceBankAccountSchema,
+  verifiedUserAccount: KycBankVerifiedBankAccountSchema.optional(),
+});
+
+export type KycBankVerifiedBankAccount = YupTS.TypeOf<typeof KycBankVerifiedBankAccountSchema>;
+export type KycBankQuintessenceBankAccount = YupTS.TypeOf<
+  typeof KycBankQuintessenceBankAccountSchema
+>;
+export type TKycBankAccount = YupTS.TypeOf<typeof KycBankAccountSchema>;

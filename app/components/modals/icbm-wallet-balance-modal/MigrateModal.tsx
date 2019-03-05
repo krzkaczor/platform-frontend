@@ -1,19 +1,18 @@
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
+import { Col, Container, Row } from "reactstrap";
 
 import {
   IWalletMigrationData,
   TWalletMigrationSteps,
 } from "../../../modules/icbm-wallet-balance-modal/reducer";
 import { myEtherWalletUrl } from "../../../utils/myEtherWallet";
-import { ConfettiEthereum } from "../../landing/parts/ConfettiEthereum";
-import { SpinningEthereum } from "../../landing/parts/SpinningEthereum";
 import { ButtonArrowRight } from "../../shared/buttons";
+import { ConfettiEthereum, SpinningEthereum } from "../../shared/ethererum";
 import { HighlightedStripField } from "../../shared/HighlightedStripField";
 import { ExternalLink } from "../../shared/links";
 import { SectionHeader } from "../../shared/SectionHeader";
 
-import { Col, Container, Row } from "reactstrap";
 import * as iconMyEtherWallet from "../../../assets/img/myEtherWallet.svg";
 import * as styles from "./IcbmWalletBalanceModal.module.scss";
 

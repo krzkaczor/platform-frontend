@@ -21,5 +21,7 @@ export const txTransactionsActions = {
       tokenDisbursals,
     }),
   ),
+  startWithdrawNEuro: createActionFactory("TRANSACTIONS_START_WITHDRAW_NEUR"),
+  startUnlockEtherFunds: createActionFactory("TRANSACTIONS_START_UNLOCK_ETHER_FUNDS"),
   // Add here new custom sagas that represent flows
 };

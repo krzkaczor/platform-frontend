@@ -12,6 +12,7 @@ import {
 } from "../../../../lib/api/eto/EtoApi.interfaces";
 import { actions } from "../../../../modules/actions";
 import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
+import { EEtoFormTypes } from "../../../../modules/eto-flow/types";
 import { appConnect } from "../../../../store";
 import { TFormikConnect, TTranslatedString } from "../../../../types";
 import { getFieldSchema, isRequired } from "../../../../utils/yupUtils";
@@ -26,7 +27,6 @@ import { Section } from "../Shared";
 
 import * as closeIcon from "../../../../assets/img/inline_icons/round_close.svg";
 import * as plusIcon from "../../../../assets/img/inline_icons/round_plus.svg";
-import { EEtoFormTypes } from "../../../../modules/eto-flow/types";
 import * as styles from "../Shared.module.scss";
 import * as localStyles from "./KeyIndividuals.module.scss";
 

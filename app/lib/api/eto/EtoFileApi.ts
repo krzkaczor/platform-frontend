@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
-
 import { Dictionary } from "lodash";
+
 import { symbols } from "../../../di/symbols";
 import { IHttpClient, IHttpResponse } from "../client/IHttpClient";
 import { withParams } from "./../../../utils/withParams";

@@ -22,6 +22,10 @@ module.exports = merge.smart(configCommon, {
         parallel: true,
         terserOptions: {
           ecma: 6,
+          mangle: {
+            // for details see https://github.com/ethereum/web3.js/issues/1356
+            reserved: ["BigNumber"],
+          },
         },
       }),
       new OptimizeCSSAssetsPlugin(),

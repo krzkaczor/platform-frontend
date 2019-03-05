@@ -5,4 +5,6 @@ export const externalRoutes = {
   icoMonitorEto: "https://icomonitor.io/#/:etoId",
   incomingPayoutBlogPost:
     "https://blog.neufund.org/neufund-101-how-to-accept-a-payout-from-neu-4de6eb4cc4a2",
+  quintessenceLanding: "https://quintessence.global/",
+  quintessenseTermsOfUse: "https://quintessence.global/terms-of-use.pdf",
 };

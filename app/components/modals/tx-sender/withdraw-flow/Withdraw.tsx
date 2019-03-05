@@ -14,13 +14,13 @@ import { selectTxValidationState } from "../../../../modules/tx/sender/selectors
 import { selectMaxAvailableEther } from "../../../../modules/wallet/selectors";
 import { doesUserHaveEnoughEther, validateAddress } from "../../../../modules/web3/utils";
 import { appConnect } from "../../../../store";
+import { OmitKeys } from "../../../../types";
 import { IIntlProps, injectIntlHelpers } from "../../../../utils/injectIntlHelpers";
-import { SpinningEthereum } from "../../../landing/parts/SpinningEthereum";
 import { Button } from "../../../shared/buttons";
+import { SpinningEthereum } from "../../../shared/ethererum";
 import { Form, FormField } from "../../../shared/forms";
 import { ValidationErrorMessage } from "../shared/ValidationErrorMessage";
 
-import { OmitKeys } from "../../../../types";
 import * as styles from "./Withdraw.module.scss";
 
 interface IStateProps {

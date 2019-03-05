@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import * as Yup from "yup";
+
 import { findMax, findMin } from "./EtoApiUtils";
 
 describe("EtoApiUtils", () => {

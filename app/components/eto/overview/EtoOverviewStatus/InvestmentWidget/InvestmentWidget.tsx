@@ -4,7 +4,7 @@ import { compose } from "recompose";
 
 import { actions } from "../../../../../modules/actions";
 import { selectIsInvestor } from "../../../../../modules/auth/selectors";
-import { selectIsAllowedToInvest } from "../../../../../modules/investment-flow/selectors";
+import { selectIsUserVerifiedOnBlockchain } from "../../../../../modules/kyc/selectors";
 import { selectEtoOnChainNextStateStartDate } from "../../../../../modules/public-etos/selectors";
 import { TEtoWithCompanyAndContract } from "../../../../../modules/public-etos/types";
 import { appConnect } from "../../../../../store";
@@ -110,7 +110,7 @@ const InvestmentWidgetLayout: React.FunctionComponent<TInvestWidgetProps> = ({
 const InvestmentWidget = compose<TInvestWidgetProps, IInvestmentWidgetProps>(
   appConnect<IInvestmentWidgetStateProps, IInvestmentWidgetDispatchProps, IInvestmentWidgetProps>({
     stateToProps: (state, props) => ({
-      isAllowedToInvest: selectIsAllowedToInvest(state),
+      isAllowedToInvest: selectIsUserVerifiedOnBlockchain(state),
       isInvestor: selectIsInvestor(state),
       nextStateDate: selectEtoOnChainNextStateStartDate(state, props.eto.previewCode),
     }),

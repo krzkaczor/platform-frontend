@@ -1,10 +1,10 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
+import { CommonHtmlProps } from "../../../types";
 import { AccountBalance } from "../../shared/AccountBalance";
 import { HorizontalLine } from "../../shared/HorizontalLine";
 import { ECurrency } from "../../shared/Money";
-import { IPanelProps } from "../../shared/Panel";
 import { isWalletNotEmpty } from "./utils";
 import { IWalletValues, WalletBalanceContainer } from "./WalletBalance";
 
@@ -18,29 +18,32 @@ export interface IIcbmWalletValues extends IWalletValues {
   isEuroUpgradeTargetSet: boolean;
 }
 
-interface IIcbmWallet extends IPanelProps {
-  onUpgradeEtherClick?: () => void;
-  onUpgradeEuroClick?: () => void;
+interface IIcbmWallet {
+  onUpgradeEtherClick: () => void;
+  onUpgradeEuroClick: () => void;
   data: IIcbmWalletValues;
 }
 
-export const IcbmWallet: React.FunctionComponent<IIcbmWallet> = ({
+export const IcbmWallet: React.FunctionComponent<IIcbmWallet & CommonHtmlProps> = ({
   data,
   className,
-  headerText,
   onUpgradeEtherClick,
   onUpgradeEuroClick,
 }) => {
   return (
-    <WalletBalanceContainer {...{ className, headerText }}>
-      <section className={styles.message}>
+    <WalletBalanceContainer
+      className={className}
+      headerText={<FormattedMessage id="components.wallet.start.icbm-wallet" />}
+    >
+      <p className={styles.message}>
         <FormattedMessage id="shared-component.wallet-icbm.upgrade-message" />
-      </section>
+      </p>
 
       <section>
         <h4 className={styles.title}>
           <FormattedMessage id="shared-component.wallet-balance.title.account-balance" />
         </h4>
+
         {isWalletNotEmpty(data.neuroAmount) && (
           <AccountBalance
             icon={neuroIcon}
@@ -48,9 +51,15 @@ export const IcbmWallet: React.FunctionComponent<IIcbmWallet> = ({
             currencyTotal={ECurrency.EUR}
             largeNumber={data.neuroAmount}
             value={data.neuroEuroAmount}
-            onUpgradeClick={onUpgradeEuroClick}
-            disabled={!data.isEuroUpgradeTargetSet}
-            dataTestId="icbmNeuroWallet"
+            actions={[
+              {
+                name: <FormattedMessage id="shared-component.account-balance.upgrade" />,
+                onClick: onUpgradeEuroClick,
+                disabled: !data.isEuroUpgradeTargetSet,
+                "data-test-id": "wallet.icbm-euro.upgrade-button",
+              },
+            ]}
+            data-test-id="icbm-wallet.neur"
           />
         )}
         {isWalletNotEmpty(data.neuroAmount) &&
@@ -62,9 +71,15 @@ export const IcbmWallet: React.FunctionComponent<IIcbmWallet> = ({
             currencyTotal={ECurrency.EUR}
             largeNumber={data.ethAmount}
             value={data.ethEuroAmount}
-            onUpgradeClick={onUpgradeEtherClick}
-            disabled={!data.isEtherUpgradeTargetSet}
-            dataTestId="icbmEtherWallet"
+            actions={[
+              {
+                name: <FormattedMessage id="shared-component.account-balance.upgrade" />,
+                onClick: onUpgradeEtherClick,
+                disabled: !data.isEtherUpgradeTargetSet,
+                "data-test-id": "wallet.icbm-eth.upgrade-button",
+              },
+            ]}
+            data-test-id="icbm-wallet.eth"
           />
         )}
       </section>

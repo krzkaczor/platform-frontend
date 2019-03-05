@@ -35,7 +35,8 @@ type IStateProps = IIncomingPayoutData & {
 
 type IComponentProps = CommonHtmlProps & IDispatchProps & IStateProps;
 
-const counterDate = moment()
+//calculate the start of the next day
+const endDate = moment()
   .utc()
   .add(1, "day")
   .startOf("day")
@@ -90,7 +91,7 @@ const IncomingPayoutCounter: React.FunctionComponent<IIncomingPayoutData & IDisp
     <Counter
       data-test-id="incoming-payout-counter"
       className={styles.counterWidget}
-      endDate={counterDate}
+      endDate={endDate}
       onFinish={() => incomingPayoutDone()}
     />
     <div>

@@ -1,4 +1,5 @@
 import { Middleware } from "redux";
+
 import { ILogger } from "../lib/dependencies/logger";
 
 export const reduxLogger = (logger: ILogger): Middleware => {

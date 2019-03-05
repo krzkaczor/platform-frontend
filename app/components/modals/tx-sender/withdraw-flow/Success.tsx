@@ -1,8 +1,8 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { ConfettiEthereum } from "../../../landing/parts/ConfettiEthereum";
-import { EtherscanAddressLink } from "../../../shared/links";
+import { ConfettiEthereum } from "../../../shared/ethererum";
+import { EtherscanTxLink } from "../../../shared/links";
 
 import * as styles from "./Success.module.scss";
 
@@ -20,7 +20,7 @@ export const WithdrawSuccess: React.FunctionComponent<IProps> = ({ txHash }) => 
       <FormattedMessage id="withdraw-flow.success-transaction-id" />
     </div>
     <div data-test-id="modals.tx-sender.withdraw-flow.tx-hash">
-      <EtherscanAddressLink address={txHash}>{txHash}</EtherscanAddressLink>
+      <EtherscanTxLink txHash={txHash}>{txHash}</EtherscanTxLink>
     </div>
   </div>
 );

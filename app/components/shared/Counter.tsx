@@ -47,18 +47,20 @@ export class Counter extends React.Component<IProps & CommonHtmlProps, IState> {
   timer: any = null;
 
   componentDidMount(): void {
-    this.timer = setInterval(() => {
-      const { timeLeft } = this.state;
+    if (!process.env.NF_STORYBOOK_RUN) {
+      this.timer = setInterval(() => {
+        const { timeLeft } = this.state;
 
-      if (timeLeft < 0) {
-        if (this.props.onFinish) {
-          this.props.onFinish();
+        if (timeLeft < 0) {
+          if (this.props.onFinish) {
+            this.props.onFinish();
+          }
+          clearInterval(this.timer);
         }
-        clearInterval(this.timer);
-      }
 
-      this.setState({ timeLeft: this.getTimeLeft() });
-    }, 1000);
+        this.setState({ timeLeft: this.getTimeLeft() });
+      }, 1000);
+    }
   }
 
   componentWillUnmount(): void {

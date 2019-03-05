@@ -3,10 +3,9 @@ import { shallow } from "enzyme";
 import * as React from "react";
 import { spy } from "sinon";
 
+import { tid } from "../../../../test/testUtils";
 import { ENotificationText, ENotificationType } from "../../../modules/notifications/reducer";
 import { Notification } from "./Notification";
-
-import { tid } from "../../../../test/testUtils";
 
 describe("<Notification />", () => {
   it("should call correct click handler for notification content", () => {

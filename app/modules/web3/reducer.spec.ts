@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { dummyEthereumAddress } from "../../../test/fixtures";
 import { actions } from "../actions";
 import { web3Actions } from "./actions";

@@ -3,16 +3,19 @@ import { call, fork, put, select } from "redux-saga/effects";
 
 import { EtoDocumentsMessage, IpfsMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
-import { EJwtPermissions, ETHEREUM_ZERO_ADDRESS } from "../../config/constants";
+import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
+import { EEtoState } from "../../lib/api/eto/EtoApi.interfaces";
 import { FileAlreadyExists } from "../../lib/api/eto/EtoFileApi";
 import {
   EEtoDocumentType,
   IEtoDocument,
   TEtoDocumentTemplates,
 } from "../../lib/api/eto/EtoFileApi.interfaces";
-import { actions, TAction } from "../actions";
+import { IAppState } from "../../store";
+import { actions, TAction, TActionFromCreator } from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
+import { selectIssuerEtoState } from "../eto-flow/selectors";
 import { downloadLink } from "../immutable-file/utils";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
@@ -25,27 +28,32 @@ export function* generateDocumentFromTemplate(
   if (action.type !== "ETO_DOCUMENTS_GENERATE_TEMPLATE") return;
   try {
     const document = action.payload.document;
+    const appState: IAppState = yield select();
+    const etoState: EEtoState = yield selectIssuerEtoState(appState);
+    let resolvedTemplate = null;
 
     yield put(actions.immutableStorage.downloadDocumentStarted(document.ipfsHash));
 
-    const templates = yield apiEtoFileService.getEtoTemplate(
-      {
-        documentType: document.documentType,
-        name: document.name,
-        form: "template",
-        ipfsHash: document.ipfsHash,
-        mimeType: document.mimeType,
-      },
-      // token holder is required in on-chain state, use non-existing address
-      // to obtain issuer side template
-      { token_holder_ethereum_address: ETHEREUM_ZERO_ADDRESS },
-    );
+    if (etoState !== EEtoState.ON_CHAIN) {
+      resolvedTemplate = yield apiEtoFileService.getEtoTemplate(
+        {
+          documentType: document.documentType,
+          name: document.name,
+          form: "template",
+          ipfsHash: document.ipfsHash,
+          mimeType: document.mimeType,
+        },
+        {},
+      );
+    }
+
     const generatedDocument = yield apiImmutableStorage.getFile({
-      ipfsHash: templates.ipfs_hash,
-      mimeType: templates.mime_type,
-      placeholders: templates.placeholders,
+      ipfsHash: document.ipfsHash,
+      mimeType: document.mimeType,
+      placeholders: resolvedTemplate ? resolvedTemplate.placeholders : undefined,
       asPdf: false,
     });
+
     yield call(downloadLink, generatedDocument, document.name, ".doc");
   } catch (e) {
     logger.error("Failed to generate ETO template", e);
@@ -97,11 +105,10 @@ export function* generateDocumentFromTemplateByEtoId(
   }
 }
 
-export function* downloadDocumentByType(
+export function* downloadDocumentStart(
   { apiImmutableStorage, notificationCenter, logger }: TGlobalDependencies,
-  action: TAction,
+  action: TActionFromCreator<typeof actions.etoDocuments.downloadDocumentStart>,
 ): any {
-  if (action.type !== "ETO_DOCUMENTS_DOWNLOAD_BY_TYPE") return;
   try {
     const matchingDocument = yield neuCall(getDocumentOfTypePromise, action.payload.documentType);
     const downloadedDocument = yield apiImmutableStorage.getFile({
@@ -115,6 +122,8 @@ export function* downloadDocumentByType(
     notificationCenter.error(
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FAILED_TO_DOWNLOAD_FILE),
     );
+  } finally {
+    yield put(actions.etoDocuments.downloadDocumentFinish(action.payload.documentType));
   }
 }
 
@@ -175,9 +184,8 @@ function* uploadEtoFileEffect(
 
 function* uploadEtoFile(
   { notificationCenter, logger }: TGlobalDependencies,
-  action: TAction,
+  action: TActionFromCreator<typeof actions.etoDocuments.etoUploadDocumentStart>,
 ): Iterator<any> {
-  if (action.type !== "ETO_DOCUMENTS_UPLOAD_DOCUMENT_START") return;
   const { file, documentType } = action.payload;
   try {
     yield put(actions.etoDocuments.hideIpfsModal());
@@ -212,6 +220,7 @@ function* uploadEtoFile(
     }
   } finally {
     yield put(actions.etoDocuments.loadFileDataStart());
+    yield put(actions.etoDocuments.etoUploadDocumentFinish(documentType));
   }
 }
 
@@ -223,6 +232,10 @@ export function* etoDocumentsSagas(): any {
   );
   yield fork(neuTakeEvery, "ETO_DOCUMENTS_GENERATE_TEMPLATE", generateDocumentFromTemplate);
   yield fork(neuTakeEvery, "ETO_DOCUMENTS_LOAD_FILE_DATA_START", loadEtoFileData);
-  yield fork(neuTakeEvery, "ETO_DOCUMENTS_UPLOAD_DOCUMENT_START", uploadEtoFile);
-  yield fork(neuTakeEvery, "ETO_DOCUMENTS_DOWNLOAD_BY_TYPE", downloadDocumentByType);
+  yield fork(neuTakeEvery, actions.etoDocuments.etoUploadDocumentStart.getType(), uploadEtoFile);
+  yield fork(
+    neuTakeEvery,
+    actions.etoDocuments.downloadDocumentStart.getType(),
+    downloadDocumentStart,
+  );
 }

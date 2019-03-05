@@ -4,10 +4,10 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { actions } from "../../../../modules/actions";
 import { appConnect } from "../../../../store";
 import { appRoutes } from "../../../appRoutes";
-import { ConfettiEthereum } from "../../../landing/parts/ConfettiEthereum";
 import { ButtonArrowRight } from "../../../shared/buttons";
+import { ConfettiEthereum } from "../../../shared/ethererum";
 import { EtherscanTxLink } from "../../../shared/links";
-import { Message } from "../shared/Message";
+import { Message } from "../../Message";
 
 interface IDispatchProps {
   goToPortfolio: () => void;

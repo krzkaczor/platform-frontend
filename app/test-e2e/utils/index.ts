@@ -93,6 +93,14 @@ export const closeModal = () => {
   cy.get(tid("modal-close-button")).click();
 };
 
+export const getLatestVerifyUserEmailLink = () => {
+  return cy.request({ url: mockApiUrl + "sendgrid/session/mails", method: "GET" }).then(r => {
+    const activationLink = get(r, "body[0].personalizations[0].substitutions.-activationLink-");
+    // we need to replace the loginlink pointing to a remote destination with one pointing to our local instance
+    return activationLink.replace("https://platform.neufund.io", "");
+  });
+};
+
 export const verifyLatestUserEmail = () => {
   cy.request({ url: mockApiUrl + "sendgrid/session/mails", method: "GET" }).then(r => {
     const activationLink = get(r, "body[0].personalizations[0].substitutions.-activationLink-");
@@ -188,7 +196,7 @@ export const getWalletEthAmount = () => {
   goToWallet();
 
   return cy
-    .get(tid("wallet-balance.ether.balance-values-large-value"))
+    .get(tid("wallet-balance.ether.balance-values.large-value"))
     .then($element => parseAmount($element.text()));
 };
 
@@ -199,7 +207,7 @@ export const getWalletNEurAmount = () => {
   goToWallet();
 
   return cy
-    .get(tid("unlockedEuroWallet.balance-values-large-value"))
+    .get(tid("wallet-balance.neur.balance-values.large-value"))
     .then($element => parseAmount($element.text()));
 };
 

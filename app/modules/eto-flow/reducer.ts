@@ -1,5 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
+import { actions } from "../actions";
 import { IEtoFlowState } from "./types";
 import {actions} from "../actions";
 
@@ -48,20 +49,16 @@ export const etoFlowReducer: AppReducer<IEtoFlowState> = (
         ...action.payload,
       };
     case actions.etoFlow.loadSignedInvestmentAgreement.getType():
-      console.log("loadSignedInvestmentAgreement action")
       return {
         ...state,
-        signedInvestmentAgreementUrlLoading: true
-    }
+        signedInvestmentAgreementUrlLoading: true,
+      };
     case actions.etoFlow.setInvestmentAgreementHash.getType():
-    {
-      console.log("signedInvestmentAgreementUrl action",action.payload)
       return {
         ...state,
         signedInvestmentAgreementUrlLoading: false,
-        signedInvestmentAgreementUrl: action.payload.signedInvestmentAgreementUrl
-      }
-    }
+        signedInvestmentAgreementUrl: action.payload.signedInvestmentAgreementUrl,
+      };
   }
   return state;
 };

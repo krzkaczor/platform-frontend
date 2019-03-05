@@ -1,6 +1,7 @@
 import { RouterState } from "connected-react-router";
 import { isString } from "lodash";
 import * as queryString from "query-string";
+
 import { EWalletType } from "../web3/types";
 
 export const selectRedirectURLFromQueryString = (state: RouterState): string | undefined => {

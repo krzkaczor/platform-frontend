@@ -2,30 +2,29 @@ import * as queryString from "query-string";
 import * as React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-import { OnlyAuthorizedRoute } from "./shared/routing/OnlyAuthorizedRoute";
-import { OnlyPublicRoute } from "./shared/routing/OnlyPublicRoute";
-
-import { Dashboard } from "./dashboard/Dashboard";
-import { Documents } from "./documents/Documents";
-import { EtoDashboard } from "./eto/EtoDashboard";
-import { Kyc } from "./kyc/Kyc";
-import { Portfolio } from "./portfolio";
-
 import { IS_CYPRESS } from "../config/constants";
 import { SwitchConnected } from "../utils/connectedRouting";
 import { appRoutes } from "./appRoutes";
+import { Dashboard } from "./dashboard/Dashboard";
+import { Documents } from "./documents/Documents";
 import { MigrationFromLink } from "./edge-cases/MigrationFromLink";
+import { UnlockWalletFundsFromLink } from "./edge-cases/UnlockWalletFundsFromLink";
+import { EtoDashboard } from "./eto/EtoDashboard";
 import { EtoIssuerView } from "./eto/EtoIssuerView";
 import { EtoPublicView } from "./eto/EtoPublicView";
 import { EtoPublicViewByContractId } from "./eto/EtoPublicViewByContractId";
 import { EtoWidgetView } from "./eto/EtoWidgetView";
 import { EtoRegister } from "./eto/registration/Start";
+import { Kyc } from "./kyc/Kyc";
 import { Landing } from "./landing/Landing";
 import { LandingEto } from "./landing/LandingEto";
+import { Portfolio } from "./portfolio";
 import { BackupSeed } from "./settings/backup-seed/BackupSeed";
 import { EmailVerify } from "./settings/EmailVerify";
 import { profileRoutes } from "./settings/routes";
 import { Settings } from "./settings/Settings";
+import { OnlyAuthorizedRoute } from "./shared/routing/OnlyAuthorizedRoute";
+import { OnlyPublicRoute } from "./shared/routing/OnlyPublicRoute";
 import { TestCriticalError } from "./testing/critical-error/TestCriticalError";
 import { e2eRoutes } from "./testing/e2eRoutes";
 import { TestEmbededWidget } from "./testing/embeded-widget/TestEmbededWidget";
@@ -81,6 +80,10 @@ export const AppRouter: React.FunctionComponent = () => (
       <OnlyAuthorizedRoute path={appRoutes.portfolio} investorComponent={Portfolio} />
     )}
     <OnlyAuthorizedRoute path={appRoutes.icbmMigration} investorComponent={MigrationFromLink} />
+    <OnlyAuthorizedRoute
+      path={appRoutes.walletUnlock}
+      investorComponent={UnlockWalletFundsFromLink}
+    />
 
     {/* only issuer routes */}
     <OnlyAuthorizedRoute path={appRoutes.documents} issuerComponent={Documents} />

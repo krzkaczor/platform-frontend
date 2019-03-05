@@ -3,5 +3,5 @@ export const makeTid = (base: string | undefined, postfix: string): string | und
     return undefined;
   }
 
-  return base + postfix;
+  return base + "." + postfix;
 };

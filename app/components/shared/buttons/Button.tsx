@@ -8,7 +8,7 @@ import { LoadingIndicator } from "../loading-indicator";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as styles from "./Button.module.scss";
 
-type TButtonTheme = "dark" | "white" | "brand" | "silver" | "graphite" | "neon" | "green";
+type TButtonTheme = "dark" | "white" | "brand" | "silver" | "graphite" | "neon" | "green" | "blue";
 type TIconPosition = "icon-before" | "icon-after";
 
 export enum EButtonLayout {
@@ -63,6 +63,7 @@ const buttonThemeClassNames: Record<TButtonTheme, string> = {
   graphite: styles.buttonGraphite,
   neon: styles.buttonNeon,
   green: styles.buttonGreen,
+  blue: styles.buttonBlue,
 };
 
 const Button: React.ForwardRefExoticComponent<

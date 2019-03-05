@@ -1,8 +1,11 @@
 import { ITxData } from "../../../lib/web3/types";
 import { AppReducer } from "../../../store";
-import { ETxSenderType } from "./../interfaces";
+import { ETxSenderType } from "../interfaces";
 
 export enum ETransactionErrorType {
+  // Flow Specific Errors
+  NOT_ENOUGH_NEUMARKS_TO_UNLOCK = "not_enough_neumarks_to_unlock",
+  // General Errors
   NOT_ENOUGH_ETHER_FOR_GAS = "not_enough_ether_for_gas",
   FAILED_TO_GENERATE_TX = "failed_to_generate_tx",
   GAS_TOO_LOW = "gas_too_low",

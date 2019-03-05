@@ -1,4 +1,3 @@
-import { cryptoRandomString } from "../../lib/dependencies/cryptoRandomString";
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 
@@ -6,7 +5,6 @@ export enum EInvestmentType {
   InvestmentWallet = "INVESTMENT_WALLET",
   ICBMEth = "ICBM_ETH",
   ICBMnEuro = "ICBM_NEURO",
-  BankTransfer = "BANK_TRANSFER",
 }
 
 export enum EInvestmentCurrency {
@@ -21,11 +19,6 @@ export enum EInvestmentErrorState {
   ExceedsWalletBalance = "exceeds_wallet_balance",
 }
 
-export enum EBankTransferFlowState {
-  Details = "details",
-  Summary = "summary",
-}
-
 export interface IInvestmentFlowState {
   etoId: string;
   euroValueUlps: string;
@@ -34,9 +27,6 @@ export interface IInvestmentFlowState {
   activeInvestmentTypes: EInvestmentType[];
   errorState?: EInvestmentErrorState;
   isValidatedInput: boolean;
-  bankTransferFlowState?: EBankTransferFlowState;
-  bankTransferGasStipend?: boolean;
-  bankTransferReference: string;
 }
 
 export const investmentFlowInitialState: IInvestmentFlowState = {
@@ -46,8 +36,6 @@ export const investmentFlowInitialState: IInvestmentFlowState = {
   investmentType: EInvestmentType.InvestmentWallet,
   activeInvestmentTypes: [],
   isValidatedInput: false,
-  bankTransferGasStipend: true,
-  bankTransferReference: "",
 };
 
 export const investmentFlowReducer: AppReducer<IInvestmentFlowState> = (
@@ -56,17 +44,13 @@ export const investmentFlowReducer: AppReducer<IInvestmentFlowState> = (
 ): DeepReadonly<IInvestmentFlowState> => {
   switch (action.type) {
     case "INVESTMENT_FLOW_RESET":
-      return {
-        ...investmentFlowInitialState,
-        bankTransferReference: state.bankTransferReference,
-      };
+      return investmentFlowInitialState;
     case "INVESTMENT_FLOW_SELECT_INVESTMENT_TYPE":
       return {
         ...investmentFlowInitialState,
         etoId: state.etoId,
         activeInvestmentTypes: state.activeInvestmentTypes,
         investmentType: action.payload.type,
-        bankTransferReference: state.bankTransferReference,
       };
     case "INVESTMENT_FLOW_SET_ETO_ID":
       return {
@@ -93,33 +77,10 @@ export const investmentFlowReducer: AppReducer<IInvestmentFlowState> = (
         ...state,
         isValidatedInput: action.payload.isValidated,
       };
-    case "INVESTMENT_FLOW_SET_BANK_TRANSFER_FLOW_STATE":
-      return {
-        ...state,
-        bankTransferFlowState: action.payload.state,
-      };
-    case "INVESTMENT_FLOW_TOGGLE_BANK_TRANSFER_GAS_STIPEND":
-      return {
-        ...state,
-        bankTransferGasStipend: !state.bankTransferGasStipend,
-      };
     case "INVESTMENT_FLOW_SET_ACTIVE_INVESTMENT_TYPES":
       return {
         ...state,
         ...action.payload,
-      };
-    case "INVESTMENT_FLOW_BANK_TRANSFER_CHANGE":
-      return {
-        ...state,
-        bankTransferFlowState: undefined,
-      };
-    case "GENERATE_BANK_TRANSFER_REFERENCE":
-      const bankTransferReference = btoa(cryptoRandomString(9))
-        .replace("=", "")
-        .toUpperCase();
-      return {
-        ...state,
-        bankTransferReference,
       };
   }
 

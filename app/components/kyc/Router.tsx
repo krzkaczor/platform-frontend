@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { kycRoutes } from "./routes";
 
 import { EUserType } from "../../lib/api/users/interfaces";
 import { selectUserType } from "../../modules/auth/selectors";
@@ -13,6 +12,7 @@ import { KycLegalRepresentative } from "./business/LegalRepresentative";
 import { KycPersonalDocumentVerification } from "./personal/DocumentVerification";
 import { KYCPersonalStart } from "./personal/Start";
 import { KYCPersonalUpload } from "./personal/Upload";
+import { kycRoutes } from "./routes";
 import { KYCStart } from "./start/Start";
 
 interface IStateProps {

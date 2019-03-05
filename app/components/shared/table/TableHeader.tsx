@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import * as styles from "./TableHeader.module.scss";
 
 interface ITableHeaderProps {
@@ -7,6 +8,9 @@ interface ITableHeaderProps {
   mobileActionName?: string;
 }
 
+/**
+ * @deprecated Use NewTable. Remove when we get rid of all usages.
+ */
 export const TableHeader: React.FunctionComponent<ITableHeaderProps> = ({
   children,
   mobileAction,

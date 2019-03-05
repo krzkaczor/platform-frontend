@@ -24,6 +24,7 @@ import { SectionHeader } from "../shared/SectionHeader";
 import { ChangeEmail } from "./change-email/ChangeEmail";
 import { YourEthereumAddressWidget } from "./ethereum-address-widget/YourEthereumAddressWidget";
 import { CheckYourICBMWalletWidget } from "./icbm-wallet-widget/CheckYourICBMWalletWidget";
+import { LinkedBankAccountWidget } from "./linked-bank-account/LinkedBankAccountWidget";
 import { PersonalAccountDetails } from "./personal-account-details/PersonalAccountDetails";
 import { SettingsWidgets } from "./settings-widget/SettingsWidgets";
 
@@ -96,6 +97,11 @@ export const SettingsComponent: React.FunctionComponent<IStateProps> = ({
             </Col>
           </>
         )}
+      </Row>
+      <Row className="row-gutter-top">
+        <Col lg={4} xs={12}>
+          <LinkedBankAccountWidget />
+        </Col>
       </Row>
     </LayoutAuthorized>
   );

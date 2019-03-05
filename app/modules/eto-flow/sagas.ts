@@ -12,15 +12,15 @@ import {
   TEtoSpecsData,
   TPartialEtoSpecData,
 } from "../../lib/api/eto/EtoApi.interfaces";
-import {IAppState} from "../../store";
-import {actions, TAction, TActionFromCreator} from "../actions";
-import {ensurePermissionsArePresentAndRunEffect} from "../auth/jwt/sagas";
-import {loadEtoContact} from "../public-etos/sagas";
-import {neuCall, neuTakeEvery, neuTakeLatest} from "../sagasUtils";
-import {selectIsNewPreEtoStartDateValid, selectIssuerCompany, selectIssuerEto} from "./selectors";
-import {bookBuildingStatsToCsvString, createCsvDataUri, downloadFile} from "./utils";
-import {ETOCommitment} from "../../lib/contracts/ETOCommitment";
-import {etoFlowActions} from "./actions";
+import { ETOCommitment } from "../../lib/contracts/ETOCommitment";
+import { IAppState } from "../../store";
+import { actions, TAction, TActionFromCreator } from "../actions";
+import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
+import { loadEtoContact } from "../public-etos/sagas";
+import { neuCall, neuTakeEvery, neuTakeLatest } from "../sagasUtils";
+import { etoFlowActions } from "./actions";
+import { selectIsNewPreEtoStartDateValid, selectIssuerCompany, selectIssuerEto } from "./selectors";
+import { bookBuildingStatsToCsvString, createCsvDataUri, downloadFile } from "./utils";
 
 export function* loadIssuerEto({
   apiEtoService,
@@ -193,17 +193,16 @@ export function* cleanupSetDateTX(): any {
 }
 
 export function* loadInvestmentAgreement(
-  {contractsService,}: TGlobalDependencies,
+  { contractsService }: TGlobalDependencies,
   action: TActionFromCreator<typeof actions.etoFlow.loadSignedInvestmentAgreement>,
 ): any {
-  // if (action.type !== etoFlowActions.loadSignedInvestmentAgreement.getType()) return;
-  const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(action.payload.etoId)
-  const url: string | null = yield  contract.signedInvestmentAgreementUrl
-  console.log("loadInvestmentAgreement :","'",url,"'", typeof url)
-  yield put(actions.etoFlow.setInvestmentAgreementHash(url !== "" ? url : null))
+  const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(
+    action.payload.etoId,
+  );
+  const url: string | null = yield contract.signedInvestmentAgreementUrl;
+
+  yield put(actions.etoFlow.setInvestmentAgreementHash(url !== "" ? url : null));
 }
-
-
 
 export function* etoFlowSagas(): any {
   yield fork(neuTakeEvery, "ETO_FLOW_LOAD_ISSUER_ETO", loadIssuerEto);

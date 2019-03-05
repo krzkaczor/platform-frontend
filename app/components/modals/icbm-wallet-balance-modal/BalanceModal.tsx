@@ -1,6 +1,6 @@
 import * as React from "react";
-
 import { FormattedMessage } from "react-intl-phraseapp";
+
 import { Button, EButtonLayout } from "../../shared/buttons";
 import { DocumentTemplateButton } from "../../shared/DocumentLink";
 import { HighlightedField } from "../../shared/HighlightedField";

@@ -1,10 +1,10 @@
-import "react-toastify/dist/ReactToastify.css";
-
 import * as React from "react";
 import { toast, ToastContainer as ToastifyContainer } from "react-toastify";
 
 import { IS_CYPRESS, TOAST_COMPONENT_DELAY } from "../../config/constants";
 import { TDataTestId, TTranslatedString } from "../../types";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const ToastContainer = () => <ToastifyContainer autoClose={TOAST_COMPONENT_DELAY} />;
 

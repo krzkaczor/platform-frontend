@@ -2,15 +2,15 @@ import * as cn from "classnames";
 import * as React from "react";
 import { withSizes } from "react-sizes";
 
-import * as QuestionMark from "!url-loader!../../assets/img/inline_icons/questionmark_huge.svg";
-import * as AppStoreIcon from "../../assets/img/eto_offers/appstore.png";
-import * as SiemensLogo from "../../assets/img/eto_offers/Siemens-logo.svg";
 import { ExternalLink } from "./links";
 import { Proportion } from "./Proportion";
 import { IResponsiveImage, ResponsiveImage } from "./ResponsiveImage";
 import { IResponsiveVideo, ResponsiveVideo } from "./ResponsiveVideo";
 import { ITag, Tag } from "./Tag";
 
+import * as QuestionMark from "!url-loader!../../assets/img/inline_icons/questionmark_huge.svg";
+import * as AppStoreIcon from "../../assets/img/eto_offers/appstore.png";
+import * as SiemensLogo from "../../assets/img/eto_offers/Siemens-logo.svg";
 import * as styles from "./EtoOfferingCard.module.scss";
 
 export interface IEtoOfferingProps {

@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 import { branch, compose, renderComponent } from "recompose";
 
+import { externalRoutes } from "../../../../config/externalRoutes";
 import { actions } from "../../../../modules/actions";
 import { selectIsMessageSigning } from "../../../../modules/wallet-selector/selectors";
 import { appConnect } from "../../../../store";
 import { HeaderProgressStepper } from "../../../shared/HeaderProgressStepper";
+import { ExternalLink } from "../../../shared/links/ExternalLink";
 import { RegisterWalletComponent } from "../../light/Register/RegisterLightWallet";
 import { WalletMessageSigner } from "../../WalletMessageSigner";
 import { recoverRoutes } from "../router/recoverRoutes";
@@ -73,12 +75,17 @@ class RecoveryProcessesComponent extends React.Component<IMainRecoveryProps, IMa
             />
           </div>
         )}
+
         <Col md={12}>
-          <Row className="mt-5 pt-5 justify-content-end align-items-center">
+          <Row className="mx-2 mt-5 pt-5 justify-content-between align-items-center">
             <Link to={recoverRoutes.help}>
+              <i className="fa fa-lg fa-angle-left mr-1" />
+              <FormattedMessage id="wallet-selector.recover.help.back" />
+            </Link>
+            <ExternalLink href={`${externalRoutes.neufundSupport}/home`}>
               <FormattedMessage id="wallet-selector.recover.help.contact-for-help" />{" "}
               <i className="fa fa-lg fa-angle-right ml-1" />
-            </Link>
+            </ExternalLink>
           </Row>
         </Col>
       </>

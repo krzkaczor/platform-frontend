@@ -6,8 +6,8 @@ export interface IEtoFlowState {
   saving: boolean;
   bookbuildingStats: TBookbuildingStatsType[];
   newStartDate?: Date;
-  signedInvestmentAgreementUrlLoading: boolean,
-  signedInvestmentAgreementUrl: string | null
+  signedInvestmentAgreementUrlLoading: boolean;
+  signedInvestmentAgreementUrl: string | null;
 }
 
 export enum EEtoFormTypes {

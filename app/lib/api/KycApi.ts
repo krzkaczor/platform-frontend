@@ -2,7 +2,6 @@ import { inject, injectable } from "inversify";
 
 import { symbols } from "../../di/symbols";
 import { IHttpClient, IHttpResponse } from "./client/IHttpClient";
-
 import {
   IKycBeneficialOwner,
   IKycBusinessData,
@@ -17,6 +16,7 @@ import {
 } from "./KycApi.interfaces";
 
 const BASE_PATH = "/api/kyc/";
+
 const INDIVIDUAL_DATA_PATH = "/individual/data";
 const INDIVIDUAL_REQUEST_PATH = "/individual/request";
 const INSTANT_ID_REQUEST_PATH = "/individual/request/instant-id";
@@ -32,17 +32,15 @@ const BENEFICIAL_OWNER_PATH = "/business/beneficial-owner";
 const BENEFICIAL_OWNER_ENTRY_PATH = "/beneficial-owner/";
 const BENEFICIAL_OWNER_DOCUMENT_PATH = "/beneficial-owner/{boid}/document";
 
-/**
- *
- *
- * @export
- * @class KycApi
- */
+const BANK_ACCOUNT_PATH = "/bank-account";
+const NEUR_PURCHASE_REQUEST_PATH = "/neur-purchase-requests";
+
+export class KycApiError extends Error {}
+export class BankAccountNotFound extends KycApiError {}
+
 @injectable()
 export class KycApi {
-  // tslint:disable-next-line
   constructor(@inject(symbols.authorizedJsonHttpClient) private httpClient: IHttpClient) {}
-  // tslint:disable-next-line
 
   /**
    * Individual Requests
@@ -269,5 +267,33 @@ export class KycApi {
       url: BUSINESS_REQUEST_PATH,
       responseSchema: KycRequestStateSchema,
     });
+  }
+
+  /**
+   * Bank account
+   */
+
+  public async getBankAccount(): Promise<IKycRequestState> {
+    const response = await this.httpClient.get<IKycRequestState>({
+      baseUrl: BASE_PATH,
+      url: BANK_ACCOUNT_PATH,
+      // TODO test why `optional` is not working
+      // responseSchema: KycBankAccountSchema,
+    });
+
+    return response.body;
+  }
+
+  public async nEurPurchaseRequest(amount: string, purpose: string): Promise<{}> {
+    const response = await this.httpClient.post<{}>({
+      baseUrl: BASE_PATH,
+      url: NEUR_PURCHASE_REQUEST_PATH,
+      body: {
+        amount,
+        purpose,
+      },
+    });
+
+    return response.body;
   }
 }

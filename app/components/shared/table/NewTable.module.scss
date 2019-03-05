@@ -1,0 +1,66 @@
+.table-wrapper {
+  overflow: auto;
+
+  &:not(:global(.keep-rhythm)) {
+    .cell {
+      &:not(.cell--placeholder) {
+        &:last-of-type {
+          text-align: end;
+        }
+      }
+    }
+  }
+}
+
+.table {
+  @include media-breakpoint-up (md) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  min-width: 200%;
+  font-size: px-to-rem(12px);
+
+  :global(.document-icon),
+  :global(.icon) {
+    @include rect(20px);
+
+    margin-right: 12px;
+  }
+}
+
+.header {
+  @include font-label;
+}
+
+.row {
+  border-top: 1px solid $neu-silver;
+  padding: 10px 0;
+}
+
+.cell {
+  padding: 10px;
+  vertical-align: middle;
+
+  &:global(.middle) {
+    vertical-align: middle;
+  }
+
+  &:global(.top) {
+    vertical-align: center;
+  }
+
+  &:global(.bottom) {
+    vertical-align: bottom;
+  }
+
+  &--placeholder {
+    text-align: center;
+  }
+}
+
+.panel {
+  padding: px-to-rem(12px);
+  margin-bottom: 1.5rem;
+
+}

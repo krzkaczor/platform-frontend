@@ -1,5 +1,5 @@
 import { IAppState } from "../../../store";
-import { multiplyBigNumbers } from "./../../../utils/BigNumberUtils";
+import { multiplyBigNumbers } from "../../../utils/BigNumberUtils";
 import { ETxSenderState, EValidationState } from "./reducer";
 
 export const selectTxSenderModalOpened = (state: IAppState) =>

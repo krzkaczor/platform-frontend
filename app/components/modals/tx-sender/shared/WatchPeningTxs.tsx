@@ -1,7 +1,7 @@
 import * as React from "react";
-
 import { FormattedMessage } from "react-intl-phraseapp";
-import { SpinningEthereum } from "../../../landing/parts/SpinningEthereum";
+
+import { SpinningEthereum } from "../../../shared/ethererum";
 import { EtherscanTxLink } from "../../../shared/links";
 
 import * as styles from "./TxPending.module.scss";

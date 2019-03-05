@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { dummyEthereumAddress } from "../../../test/fixtures";
 import { createMock } from "../../../test/testUtils";
 import { IVault, LightWallet } from "./LightWallet";

@@ -67,7 +67,7 @@ export const AccessWalletContainerComponent: React.FunctionComponent<
         </div>
       </div>
     )}
-    {errorMessage && <p className={cn("mt-3", styles.error)}>{errorMessage}</p>}
+    {errorMessage && <p className={cn("mt-3", "text-warning")}>{errorMessage}</p>}
   </div>
 );
 

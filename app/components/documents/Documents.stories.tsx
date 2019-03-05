@@ -1,8 +1,10 @@
+import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
 import { etoDocuments, etoFilesData, etoTemplates } from "../../../test/fixtures";
 import { EEtoState } from "../../lib/api/eto/EtoApi.interfaces";
+import { EETOStateOnChain } from "../../modules/public-etos/types";
 import { DocumentsLayout } from "./Documents";
 import { getDocumentTitles } from "./utils";
 
@@ -15,8 +17,13 @@ const props = {
   etoDocuments: etoDocuments,
   documentTitles: getDocumentTitles(false),
   isRetailEto: false,
-  generateTemplate: () => {},
-  downloadDocumentByType: () => {},
+  generateTemplate: action("generateTemplate"),
+  startDocumentDownload: action("startDocumentDownload"),
+  onChainState: EETOStateOnChain.Signing,
+  documentsDownloading: {},
+  documentsUploading: {},
+  documentsGenerated: {},
+  transactionPending: false,
 };
 
 storiesOf("ETO/Documents", module).add("default", () => {
