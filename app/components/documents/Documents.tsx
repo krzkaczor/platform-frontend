@@ -49,8 +49,6 @@ import { LoadingIndicator } from "../shared/loading-indicator";
 import { SectionHeader } from "../shared/SectionHeader";
 import { SingleColDocuments } from "../shared/SingleColDocumentWidget";
 import { getDocumentTitles } from "./utils";
-import {selectEtoOnChainStateById} from "../../modules/public-etos/selectors";
-import {EETOStateOnChain} from "../../modules/public-etos/types";
 
 import * as styles from "./Documents.module.scss";
 
@@ -99,7 +97,6 @@ interface IUploadableDocumentProps {
   documentUploading: boolean;
   documentDownloading: boolean;
   transactionPending: boolean;
-  downloadDocumentByType: (documentType: EEtoDocumentType) => void;
 }
 
 export type TDocumentTitles = { [key in EEtoDocumentType]: TTranslatedString };
@@ -121,23 +118,12 @@ export const GeneratedDocument: React.FunctionComponent<IGeneratedDocumentProps>
   );
 };
 
-//todo
-const canUploadInOnChainStates = (documentKey:EEtoDocumentType, onChainState:EETOStateOnChain) => {
-  if (onChainState === EETOStateOnChain.Signing && documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){
-    return true
-  } else {
-    return false
-  }
-}
-// const noPendingTransactions
-
 const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
   documentTitle,
   documentKey,
   etoDocuments,
   stateInfo,
   etoState,
-  downloadDocumentByType,
   onChainState,
   startDocumentDownload,
   documentUploading,
@@ -243,25 +229,21 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
           </h4>
           {stateInfo &&
             etoState &&
-            generalUploadables.map((key: EEtoDocumentType) => {
-              console.log("generalUploadables", generalUploadables, stateInfo, etoState)
-              return (
-                <UploadableDocument
-                  key={key}
-                  documentKey={key}
-                  documentTitle={documentTitles[key]}
-                  etoDocuments={etoDocuments}
-                  stateInfo={stateInfo}
-                  etoState={etoState}
-                  startDocumentDownload={startDocumentDownload}
-                  onChainState={onChainState}
-                  documentUploading={documentsUploading[key] || false}
-                  documentDownloading={documentsDownloading[key] || false}
-                  transactionPending={transactionPending}
-                  downloadDocumentByType={downloadDocumentByType}
-                />
-              );
-            })}
+            generalUploadables.map((key: EEtoDocumentType) => (
+              <UploadableDocument
+                key={key}
+                documentKey={key}
+                documentTitle={documentTitles[key]}
+                etoDocuments={etoDocuments}
+                stateInfo={stateInfo}
+                etoState={etoState}
+                startDocumentDownload={startDocumentDownload}
+                onChainState={onChainState}
+                documentUploading={documentsUploading[key] || false}
+                documentDownloading={documentsDownloading[key] || false}
+                transactionPending={transactionPending}
+              />
+            ))}
         </section>
         {allTemplates && (
           <SingleColDocuments

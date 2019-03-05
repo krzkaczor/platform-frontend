@@ -2,7 +2,6 @@ import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 import { actions } from "../actions";
 import { IEtoFlowState } from "./types";
-import {actions} from "../actions";
 
 export const etoFlowInitialState: IEtoFlowState = {
   etoPreviewCode: undefined,
@@ -10,7 +9,7 @@ export const etoFlowInitialState: IEtoFlowState = {
   saving: false,
   bookbuildingStats: [],
   signedInvestmentAgreementUrlLoading: false,
-  signedInvestmentAgreementUrl: null
+  signedInvestmentAgreementUrl: null,
 };
 
 export const etoFlowReducer: AppReducer<IEtoFlowState> = (

@@ -1,7 +1,7 @@
 import * as cn from "classnames";
 import * as React from "react";
-import {FormattedMessage} from "react-intl-phraseapp";
-import {Modal} from "reactstrap";
+import { FormattedMessage } from "react-intl-phraseapp";
+import { Modal } from "reactstrap";
 
 import { ITxData } from "../../../lib/web3/types";
 import { actions } from "../../../modules/actions";
@@ -14,6 +14,7 @@ import { QuintessenceModal } from "../bank-transfer-flow/QuintessenceModal";
 import { ModalComponentBody } from "../ModalComponentBody";
 import { AccessWalletContainer } from "../wallet-access/AccessWalletModal";
 import { SetEtoDateSummary } from "./eto-flow/SetDateSummary";
+import { SignInvestmentAgreementSummary } from "./eto-flow/SignInvestmentAgreementSummary";
 import { InvestmentSelection } from "./investment-flow/Investment";
 import { InvestmentSuccess } from "./investment-flow/Success";
 import { InvestmentSummary } from "./investment-flow/Summary";
@@ -36,7 +37,6 @@ import { UserClaimSummary } from "./user-claim/Summary";
 import { WithdrawSuccess } from "./withdraw-flow/Success";
 import { WithdrawSummary } from "./withdraw-flow/Summary";
 import { Withdraw } from "./withdraw-flow/Withdraw";
-import {SignInvestmentAgreementSummary} from "./eto-flow/SignInvestmentAgreementSummary";
 
 interface IStateProps {
   isOpen: boolean;

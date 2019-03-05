@@ -19,7 +19,6 @@ import { selectKycRequestStatus } from "../kyc/selectors";
 import { selectEtoWithCompanyAndContract, selectPublicEto } from "../public-etos/selectors";
 import { EETOStateOnChain } from "../public-etos/types";
 import { isValidEtoStartDate } from "./utils";
-import {DeepReadonly} from "../../types";
 
 export const selectIssuerEtoPreviewCode = (state: IAppState) => state.etoFlow.etoPreviewCode;
 

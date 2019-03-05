@@ -15,11 +15,10 @@ import {
 import { IAppState } from "../../store";
 import { actions, TAction, TActionFromCreator } from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
-import { selectIssuerEtoState } from "../eto-flow/selectors";
+import { selectEtoId, selectIssuerEtoState } from "../eto-flow/selectors";
 import { downloadLink } from "../immutable-file/utils";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../web3/selectors";
-import {selectEtoId} from "../eto-flow/selectors";
 
 export function* generateDocumentFromTemplate(
   { apiImmutableStorage, notificationCenter, logger, apiEtoFileService }: TGlobalDependencies,
@@ -171,14 +170,14 @@ function* uploadEtoFileEffect(
   if (matchingDocument)
     yield apiEtoFileService.deleteSpecificEtoDocument(matchingDocument.ipfsHash);
 
-  const uploadResult:IEtoDocument = yield apiEtoFileService.uploadEtoDocument(file, documentType);
+  const uploadResult: IEtoDocument = yield apiEtoFileService.uploadEtoDocument(file, documentType);
   notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_UPLOADED));
-  if(documentType ===  EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){
+  if (documentType === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT) {
     const state = yield select();
     const etoId = yield selectEtoId(state);
     yield put(actions.etoDocuments.loadFileDataStart());
     // yield put(actions.etoFlow.setInvestmentAgreementHash(uploadResult.ipfsHash))
-    yield put(actions.etoFlow.signInvestmentAgreement(etoId,uploadResult.ipfsHash))
+    yield put(actions.etoFlow.signInvestmentAgreement(etoId, uploadResult.ipfsHash));
   }
 }
 
@@ -197,20 +196,6 @@ function* uploadEtoFile(
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_UPLOAD_DOCUMENT_TITLE),
       createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_CONFIRM_UPLOAD_DOCUMENT_DESCRIPTION),
     );
-
-    const matchingDocument = yield neuCall(getDocumentOfTypePromise, documentType);
-    if (matchingDocument)
-      yield apiEtoFileService.deleteSpecificEtoDocument(matchingDocument.ipfsHash);
-
-    const uploadResult:IEtoDocument = yield apiEtoFileService.uploadEtoDocument(file, documentType);
-    notificationCenter.info(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_UPLOADED));
-
-    if(documentType ===  EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT){//fixme mb move to separate saga
-      const state = yield select();
-      const etoId = yield selectEtoId(state);
-      // yield put(actions.etoDocuments.loadFileDataStart());
-      yield put(actions.etoFlow.signInvestmentAgreement(etoId, uploadResult.ipfsHash))
-    }
   } catch (e) {
     if (e instanceof FileAlreadyExists) {
       notificationCenter.error(createMessage(EtoDocumentsMessage.ETO_DOCUMENTS_FILE_EXISTS));

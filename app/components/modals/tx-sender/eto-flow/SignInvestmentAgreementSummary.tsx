@@ -7,8 +7,7 @@ import { actions } from "../../../../modules/actions";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { Heading } from "../../../shared/modals/Heading";
-import {ResponsiveImage} from "../../../shared/ResponsiveImage";
-
+import { ResponsiveImage } from "../../../shared/ResponsiveImage";
 
 interface IDispatchProps {
   onAccept: () => any;
@@ -26,10 +25,7 @@ const SignInvestmentAgreementComponent: React.FunctionComponent<IDispatchProps> 
       </Row>
 
       <Row className="mt-4">
-        <ResponsiveImage
-          srcSet={{ "1x": "", "2x": "", "3x": "" }}
-          alt=""
-        />
+        <ResponsiveImage srcSet={{ "1x": "", "2x": "", "3x": "" }} alt="" />
       </Row>
 
       <Row className="justify-content-center mt-4">

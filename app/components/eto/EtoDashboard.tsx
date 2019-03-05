@@ -31,12 +31,12 @@ import { LoadingIndicator } from "../shared/loading-indicator";
 import { BookBuildingWidget } from "./dashboard/bookBuildingWidget/BookBuildingWidget";
 import { ChooseEtoStartDateWidget } from "./dashboard/chooseEtoStartDateWidget/ChooseEtoStartDateWidget";
 import { ETOFormsProgressSection } from "./dashboard/ETOFormsProgressSection";
+import { UploadInvestmentAgreement } from "./dashboard/signInvestmentAgreementWidget/UploadInvestmentAgreementWidget";
 import { SubmitProposalWidget } from "./dashboard/submitProposalWidget/SubmitProposalWidget";
 import { UploadInvestmentMemorandum } from "./dashboard/UploadInvestmentMemorandum";
 import { UploadProspectusWidget } from "./dashboard/UploadProspectusWidget";
 import { UploadTermSheetWidget } from "./dashboard/UploadTermSheetWidget";
 import { DashboardSection } from "./shared/DashboardSection";
-import {UploadInvestmentAgreement} from "./dashboard/signInvestmentAgreementWidget/UploadInvestmentAgreementWidget";
 
 const SUBMIT_PROPOSAL_THRESHOLD = 1;
 

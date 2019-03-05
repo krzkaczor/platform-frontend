@@ -18,7 +18,6 @@ import { startNEuroRedeemGenerator } from "./redeem/saga";
 import { unlockEtherFundsTransactionGenerator } from "./unlock/sagas";
 import { upgradeTransactionFlow } from "./upgrade/sagas";
 import { ethWithdrawFlow } from "./withdraw/sagas";
-import {etoFlowActions} from "../../eto-flow/actions";
 
 export function* withdrawSaga({ logger }: TGlobalDependencies): any {
   try {

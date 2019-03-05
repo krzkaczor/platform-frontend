@@ -14,7 +14,6 @@ import {
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
-import {EthereumAddressWithChecksum} from "../../../../types";
 
 export function* generateSetStartDateTransaction({
   contractsService,
