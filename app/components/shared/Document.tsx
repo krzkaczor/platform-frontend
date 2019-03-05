@@ -5,14 +5,14 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { EEtoDocumentType, IEtoDocument } from "../../lib/api/eto/EtoFileApi.interfaces";
 import { TTranslatedString } from "../../types";
 import { ETOAddDocuments } from "../eto/shared/EtoAddDocument";
+import { LoadingIndicator } from "./loading-indicator/LoadingIndicator";
 
 import * as styles from "./Document.module.scss";
-import { LoadingIndicator } from "./loading-indicator/LoadingIndicator";
 
 interface IDocumentProps {
   extension: string;
   blank?: boolean;
-  extraCss?: string;
+  className?: string;
 }
 
 interface IDocumentTileProps {
@@ -42,7 +42,7 @@ interface IClickableDocumentTileProps {
 export const Document: React.FunctionComponent<IDocumentProps> = ({
   extension,
   blank,
-  extraCss,
+  className,
 }) => {
   const labelHeight = 24;
   const labelWidth = 50;
@@ -53,7 +53,7 @@ export const Document: React.FunctionComponent<IDocumentProps> = ({
   return (
     <svg
       viewBox="0 0 61 73"
-      className={cn("document-icon", styles.document, !blank && computedExtension, extraCss)}
+      className={cn("document-icon", styles.document, { [computedExtension]: !blank }, className)}
     >
       <path
         className={styles.file}
@@ -76,40 +76,45 @@ export const DocumentTile: React.FunctionComponent<IDocumentProps & IDocumentTil
   blank,
   onlyDownload,
   active,
-  busy = false,
+  busy,
 }) => {
   return (
     <div
       className={cn(
         styles.tile,
-        busy && styles.busy,
-        !blank && styles.enabled,
-        active && styles.active,
+        {
+          [styles.busy]: busy,
+          [styles.enabled]: !blank,
+          [styles.active]: active,
+        },
         className,
       )}
     >
       <LoadingIndicator className={busy ? styles.documentBusy : styles.documentNotBusy} />
 
-      <Document extension={extension} blank={blank} extraCss={busy && styles.documentIconBusy} />
+      <Document extension={extension} blank={blank} className={busy && styles.documentIconBusy} />
       <p
-        className={cn(
-          styles.title,
-          blank && styles.blankTitle,
-          !onlyDownload && !active && styles.disabledTitle,
-          busy && styles.textBusy,
-        )}
+        className={cn(styles.title, {
+          [styles.blankTitle]: blank,
+          [styles.disabledTitle]: !onlyDownload && !active,
+          [styles.textBusy]: busy,
+        })}
       >
         {title}
       </p>
       {!onlyDownload &&
         blank &&
         active && (
-          <p className={cn(styles.subTitle, busy && styles.textBusy)}>
+          <p className={cn(styles.subTitle, { [styles.textBusy]: busy })}>
             <FormattedMessage id="documents.drag-n-drop" />
           </p>
         )}
     </div>
   );
+};
+
+DocumentTile.defaultProps = {
+  busy: false,
 };
 
 export const ClickableDocumentTile: React.FunctionComponent<

@@ -1,6 +1,6 @@
+import * as MockDate from "mockdate";
 import * as React from "react";
 
-import * as MockDate from "mockdate";
 import { ModalComponentBody } from "../components/modals/ModalComponentBody";
 
 export const withModalBody = (maxWidth = "37.5rem") => (story: any) => (

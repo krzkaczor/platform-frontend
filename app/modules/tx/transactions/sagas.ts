@@ -2,9 +2,9 @@ import { fork, put, select, take } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { actions, TAction, TActionFromCreator } from "../../actions";
-import { etoFlowActions } from "../../eto-flow/actions";
 import { EBankTransferType } from "../../bank-transfer-flow/reducer";
 import { selectIsBankAccountVerified } from "../../bank-transfer-flow/selectors";
+import { etoFlowActions } from "../../eto-flow/actions";
 import { onInvestmentTxModalHide } from "../../investment-flow/sagas";
 import { neuTakeLatest } from "../../sagasUtils";
 import { ETxSenderType } from "../interfaces";

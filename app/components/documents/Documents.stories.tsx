@@ -1,3 +1,4 @@
+import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
@@ -16,8 +17,8 @@ const props = {
   etoDocuments: etoDocuments,
   documentTitles: getDocumentTitles(false),
   isRetailEto: false,
-  generateTemplate: () => {},
-  startDocumentDownload: () => {},
+  generateTemplate: action("generateTemplate"),
+  startDocumentDownload: action("startDocumentDownload"),
   onChainState: EETOStateOnChain.Signing,
   documentsDownloading: {},
   documentsUploading: {},

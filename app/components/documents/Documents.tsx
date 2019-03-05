@@ -288,9 +288,8 @@ const Documents = compose<React.FunctionComponent>(
     },
     dispatchToProps: dispatch => ({
       generateTemplate: document => dispatch(actions.etoDocuments.generateTemplate(document)),
-      startDocumentDownload: documentType => {
-        return dispatch(actions.etoDocuments.downloadDocumentStart(documentType));
-      },
+      startDocumentDownload: documentType =>
+        dispatch(actions.etoDocuments.downloadDocumentStart(documentType)),
     }),
   }),
   withMetaTags((_, intl) => ({ title: intl.formatIntlMessage("menu.documents-page") })),
