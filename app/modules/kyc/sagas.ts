@@ -6,7 +6,6 @@ import { createMessage } from "../../components/translatedMessages/utils";
 import { EJwtPermissions } from "../../config/constants";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { IHttpResponse } from "../../lib/api/client/IHttpClient";
-import { BankAccountNotFound } from "../../lib/api/KycApi";
 import {
   EKycRequestType,
   ERequestOutsourcedStatus,
@@ -24,7 +23,7 @@ import { IdentityRegistry } from "../../lib/contracts/IdentityRegistry";
 import { IAppAction, IAppState } from "../../store";
 import { actions, TAction } from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
-import { selectUser } from "../auth/selectors";
+import { selectIsUserVerified, selectUser } from "../auth/selectors";
 import { displayErrorModalSaga } from "../generic-modal/sagas";
 import { EInitType } from "../init/reducer";
 import { selectIsSmartContractInitDone } from "../init/selectors";
@@ -592,20 +591,43 @@ function* loadBankAccountDetails({
   notificationCenter,
 }: TGlobalDependencies): Iterator<any> {
   try {
-    const result: TKycBankAccount = yield apiKycService.getBankAccount();
+    // bank details depend on claims `hasBankAccount` flag
+    // so to have consistent ui we need to reload claims
+    yield put(actions.kyc.kycLoadClaims());
 
-    yield put(
-      actions.kyc.setBankAccountDetails({
-        hasBankAccount: true,
-        details: result,
-      }),
-    );
-  } catch (e) {
-    if (!(e instanceof BankAccountNotFound)) {
-      notificationCenter.error(createMessage(KycFlowMessage.KYC_PROBLEM_LOADING_BANK_DETAILS));
+    const isVerified: boolean = yield select(selectIsUserVerified);
 
-      logger.error("Error while loading kyc bank details", e);
+    // bank account api can only be called when account is verified
+    if (isVerified) {
+      const result: TKycBankAccount = yield apiKycService.getBankAccount();
+
+      yield put(actions.kyc.setQuintessenceBankAccountDetails(result.ourAccount));
+
+      if (result.verifiedUserAccount !== undefined) {
+        yield put(
+          actions.kyc.setBankAccountDetails({
+            hasBankAccount: true,
+            details: result.verifiedUserAccount,
+          }),
+        );
+      } else {
+        yield put(
+          actions.kyc.setBankAccountDetails({
+            hasBankAccount: false,
+          }),
+        );
+      }
+    } else {
+      yield put(
+        actions.kyc.setBankAccountDetails({
+          hasBankAccount: false,
+        }),
+      );
     }
+  } catch (e) {
+    notificationCenter.error(createMessage(KycFlowMessage.KYC_PROBLEM_LOADING_BANK_DETAILS));
+
+    logger.error("Error while loading kyc bank details", e);
 
     yield put(
       actions.kyc.setBankAccountDetails({

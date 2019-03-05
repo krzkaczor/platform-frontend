@@ -1,14 +1,13 @@
+import BigNumber from "bignumber.js";
 import { expect } from "chai";
 import { render, shallow } from "enzyme";
 import * as React from "react";
 import { spy } from "sinon";
 
-import { AccountRow, WalletLedgerChooserTableAdvanced } from "./WalletLedgerChooserTableAdvanced";
-
-import BigNumber from "bignumber.js";
 import { wrapWithIntl } from "../../../../test/integrationTestUtils";
 import { tid } from "../../../../test/testUtils";
 import { Q18 } from "../../../config/constants";
+import { AccountRow, WalletLedgerChooserTableAdvanced } from "./WalletLedgerChooserTableAdvanced";
 
 const weiBalance = new BigNumber(1.6495).mul(Q18).toString();
 const neuWeiBalance = new BigNumber(10.6495).mul(Q18).toString();

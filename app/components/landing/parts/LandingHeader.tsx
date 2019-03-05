@@ -6,8 +6,6 @@ import { ExternalLink } from "../../shared/links";
 import { ResponsiveImage } from "../../shared/ResponsiveImage";
 import { JoinCta } from "./JoinCta";
 
-import * as styles from "./LandingHeader.module.scss";
-
 import * as blockstateImage from "../../../assets/img/landing/blockstate.png";
 import * as blockstateImage2x from "../../../assets/img/landing/blockstate@2x.png";
 import * as blockstateImage3x from "../../../assets/img/landing/blockstate@3x.png";
@@ -31,6 +29,7 @@ import * as neufundImage3x from "../../../assets/img/landing/neufund@3x.png";
 import * as unitiImage from "../../../assets/img/landing/uniti.png";
 import * as unitiImage2x from "../../../assets/img/landing/uniti@2x.png";
 import * as unitiImage3x from "../../../assets/img/landing/uniti@3x.png";
+import * as styles from "./LandingHeader.module.scss";
 
 export const LandingHeader: React.FunctionComponent = () => (
   <section className={styles.hero}>

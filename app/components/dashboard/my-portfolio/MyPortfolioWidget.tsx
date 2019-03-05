@@ -114,7 +114,7 @@ export const MyPortfolioWidget = compose<IStateProps, TOwnProps>(
     stateToProps: s => ({
       isLoading: s.wallet.loading,
       error: s.wallet.error,
-      balanceNeu: selectNeuBalance(s.wallet),
+      balanceNeu: selectNeuBalance(s),
       balanceEur: selectNeuBalanceEuroAmount(s),
       isIncomingPayoutLoading: selectIsIncomingPayoutLoading(s),
       isIncomingPayoutAvailable: selectIsIncomingPayoutAvailable(s),

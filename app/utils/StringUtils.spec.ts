@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { extractNumber, isExternalUrl } from "./StringUtils";
 
 describe("StringUtils", () => {

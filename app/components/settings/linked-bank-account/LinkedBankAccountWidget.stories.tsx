@@ -6,15 +6,50 @@ import { LinkedBankAccountComponent } from "./LinkedBankAccountWidget";
 
 storiesOf("LinkedBankAccountWidget", module)
   .add("not verified", () => (
-    <LinkedBankAccountComponent verifyBankAccount={action("verify")} isVerified={false} />
+    <LinkedBankAccountComponent
+      verifyBankAccount={action("verify")}
+      isBankAccountVerified={false}
+      isUserFullyVerified={true}
+    />
+  ))
+  .add("not verified and blocked to start", () => (
+    <LinkedBankAccountComponent
+      verifyBankAccount={action("verify")}
+      isBankAccountVerified={false}
+      isUserFullyVerified={false}
+    />
   ))
   .add("verified", () => (
     <LinkedBankAccountComponent
-      isVerified={true}
+      isBankAccountVerified={true}
+      isUserFullyVerified={true}
       verifyBankAccount={action("verify")}
       bankAccount={{
         hasBankAccount: true,
-        details: { bankAccountNumberLast4: "1234", holderName: "Lorem Ipsum" },
+        details: {
+          bankAccountNumberLast4: "1234",
+          bankName: "mBank",
+          name: "Lorem Ipsum",
+          isSepa: true,
+          swiftCode: "33212",
+        },
+      }}
+    />
+  ))
+  .add("verified but blocked to start", () => (
+    <LinkedBankAccountComponent
+      isBankAccountVerified={true}
+      isUserFullyVerified={false}
+      verifyBankAccount={action("verify")}
+      bankAccount={{
+        hasBankAccount: true,
+        details: {
+          bankAccountNumberLast4: "1234",
+          bankName: "mBank",
+          name: "Lorem Ipsum",
+          isSepa: true,
+          swiftCode: "33212",
+        },
       }}
     />
   ));

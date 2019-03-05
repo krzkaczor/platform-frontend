@@ -2,9 +2,9 @@
  * Wraps the json http api with authorization header injection
  * collected from localstorage
  */
-import { symbols } from "../../../di/symbols";
-
 import { inject, injectable } from "inversify";
+
+import { symbols } from "../../../di/symbols";
 import { ObjectStorage } from "../../persistence/ObjectStorage";
 import { AuthorizedHttpClient } from "./AuthHttpClient";
 import { IHttpClient } from "./IHttpClient";

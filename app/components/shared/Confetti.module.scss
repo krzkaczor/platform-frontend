@@ -4,10 +4,7 @@ $animation-duration: 1.2s;
 
 $debug-animation-count: infinite; // infinite | 1
 
-$brink-pink: #ff6e83;
-$melrose: #bfa4ff;
 $yellow-orange: #ffb534;
-$malibu: #58cbfe;
 
 .wrapper {
   @include rect(100%, 2 * $size);
@@ -144,7 +141,7 @@ $malibu: #58cbfe;
   }
 }
 
-.theme-green {
+.theme-colorful {
   .cannon {
     .confetti {
       &-color-1 {
@@ -166,23 +163,23 @@ $malibu: #58cbfe;
   }
 }
 
-.theme-purple {
+.theme-green {
   .cannon {
     .confetti {
       &-color-1 {
-        background-color: $neu-bright-orange;
+        background-color: $neu-piss-yellow;
       }
 
       &-color-2 {
-        background-color: $melrose;
+        background-color: $neu-piss-yellow;
       }
 
       &-color-3 {
-        background-color: $yellow-orange;
+        background-color: $neu-piss-yellow;
       }
 
       &-color-4 {
-        background-color: $malibu;
+        background-color: $neu-piss-yellow;
       }
     }
   }

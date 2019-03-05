@@ -3,8 +3,10 @@
 
   &:not(:global(.keep-rhythm)) {
     .cell {
-      &:last-of-type {
-        text-align: end;
+      &:not(.cell--placeholder) {
+        &:last-of-type {
+          text-align: end;
+        }
       }
     }
   }
@@ -17,7 +19,6 @@
   }
 
   min-width: 200%;
-  table-layout: fixed;
   font-size: px-to-rem(12px);
 
   :global(.document-icon),
@@ -53,7 +54,7 @@
     vertical-align: bottom;
   }
 
-  &-placeholder {
+  &--placeholder {
     text-align: center;
   }
 }

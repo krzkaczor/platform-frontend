@@ -3,7 +3,7 @@ import * as cn from "classnames";
 import * as React from "react";
 
 import { MONEY_DECIMALS } from "../../config/constants";
-import { formatMoney } from "../../utils/Money.utils";
+import { ERoundingMode, formatMoney } from "../../utils/Money.utils";
 import { NumberFormat } from "./NumberFormat";
 
 import * as styles from "./Money.module.scss";
@@ -45,6 +45,7 @@ interface IOwnProps extends React.HTMLAttributes<HTMLSpanElement> {
   currencyClassName?: string;
   transfer?: EMoneyTransfer;
   theme?: ETheme;
+  roundingMode?: ERoundingMode;
   /**
    * Use to represent token price (value is set to 8 decimal places)
    */
@@ -106,8 +107,14 @@ export function getFormattedMoney(
   currency: ECurrency,
   format: EMoneyFormat,
   isPrice?: boolean,
+  roundingMode?: ERoundingMode,
 ): string {
-  return formatMoney(value, getFormatDecimals(format), selectDecimalPlaces(currency, isPrice));
+  return formatMoney(
+    value,
+    getFormatDecimals(format),
+    selectDecimalPlaces(currency, isPrice),
+    roundingMode,
+  );
 }
 
 const Money: React.FunctionComponent<IProps> = ({
@@ -119,6 +126,7 @@ const Money: React.FunctionComponent<IProps> = ({
   currencySymbol = ECurrencySymbol.CODE,
   theme,
   isPrice,
+  roundingMode,
   ...props
 }) => {
   if (!value) {
@@ -127,7 +135,7 @@ const Money: React.FunctionComponent<IProps> = ({
 
   const money =
     (format === EMoneyFormat.WEI && !React.isValidElement(value)) || isPrice
-      ? getFormattedMoney(value as BigNumber, currency, format, isPrice)
+      ? getFormattedMoney(value as BigNumber, currency, format, isPrice, roundingMode)
       : value;
 
   const formattedMoney = !React.isValidElement(money) ? (

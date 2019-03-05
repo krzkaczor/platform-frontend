@@ -1,6 +1,6 @@
 import * as React from "react";
-
 import { FormattedMessage } from "react-intl-phraseapp";
+
 import { SpinningEthereum } from "../../../shared/ethererum";
 import { EtherscanTxLink } from "../../../shared/links";
 

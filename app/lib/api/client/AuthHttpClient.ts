@@ -3,6 +3,7 @@
  * collected from localstorage
  */
 import { injectable } from "inversify";
+
 import { ObjectStorage } from "../../persistence/ObjectStorage";
 import {
   IHttpClient,

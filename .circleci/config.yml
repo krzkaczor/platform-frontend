@@ -181,10 +181,10 @@ workflows:
             - build-frontend
       - danger-ci:
          requires:
-           - install-lint
+           - build-frontend
       - bundlewatcher:
          requires:
-           - install-lint
+           - build-frontend
 
   nightly:
     triggers:

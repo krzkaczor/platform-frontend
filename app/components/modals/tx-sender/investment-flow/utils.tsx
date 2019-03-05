@@ -28,7 +28,7 @@ import * as neuroIcon from "../../../../assets/img/nEUR_icon.svg";
 
 export function createWallets(state: IAppState): WalletSelectionData[] {
   const w = state.wallet;
-  const icbmEther = selectLockedEtherBalance(w);
+  const icbmEther = selectLockedEtherBalance(state);
   const icbmNeuro = selectLockedEuroTokenBalance(w);
 
   const wallets: Dictionary<WalletSelectionData> = {

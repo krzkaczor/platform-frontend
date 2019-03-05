@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { spy } from "sinon";
+
 import { dummyEthereumAddress, dummyEthereumAddressWithChecksum } from "../../../test/fixtures";
 import { createMock } from "../../../test/testUtils";
 import { TGlobalDependencies } from "../../di/setupBindings";

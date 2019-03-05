@@ -13,7 +13,7 @@ storiesOf("Unlocked EUR Wallet", module)
       onVerify={action("onVerify")}
       neuroAmount={"0"}
       neuroEuroAmount={"0"}
-      isBankFlowEnabled={false}
+      isUserFullyVerified={false}
     />
   ))
   .add("not empty and enabled", () => (
@@ -23,6 +23,6 @@ storiesOf("Unlocked EUR Wallet", module)
       onVerify={action("onVerify")}
       neuroAmount={Q18.mul(847213).toString()}
       neuroEuroAmount={Q18.mul(847213).toString()}
-      isBankFlowEnabled={true}
+      isUserFullyVerified={true}
     />
   ));

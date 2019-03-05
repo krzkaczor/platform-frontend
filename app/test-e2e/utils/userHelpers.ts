@@ -20,21 +20,17 @@ export const generateRandomEmailAddress = () =>
     .toString(36)
     .substring(7)}@e2e.com`;
 
-export const createAndLoginNewUser = (
-  params: {
-    type?: "investor" | "issuer";
-    kyc?: "business" | "individual";
-    seed?: string;
-    hdPath?: string;
-    clearPendingTransactions?: boolean;
-    onlyLogin?: boolean;
-    permissions?: string[];
-  } = {},
-) => {
+export const createAndLoginNewUser = (params: {
+  type: "investor" | "issuer";
+  kyc?: "business" | "individual";
+  seed?: string;
+  hdPath?: string;
+  clearPendingTransactions?: boolean;
+  onlyLogin?: boolean;
+  permissions?: string[];
+}) => {
   return cy.clearLocalStorage().then(async ls => {
     cy.log("Logging in...");
-
-    const userType = params.type ? params.type : "investor";
 
     const {
       lightWalletInstance,
@@ -46,7 +42,7 @@ export const createAndLoginNewUser = (
 
     // set wallet data on local storage
     ls.setItem(
-      userType === "investor" ? INVESTOR_WALLET_KEY : ISSUER_WALLET_KEY,
+      params.type === "investor" ? INVESTOR_WALLET_KEY : ISSUER_WALLET_KEY,
       JSON.stringify({
         address,
         email: "dave@neufund.org",
@@ -62,7 +58,7 @@ export const createAndLoginNewUser = (
 
     if (!params.onlyLogin)
       // create a user object on the backend
-      await createUser(privateKey, userType, params.kyc);
+      await createUser(privateKey, params.type, params.kyc);
 
     // mark backup codes verified
     await markBackupCodesVerified(jwt);
@@ -74,7 +70,7 @@ export const createAndLoginNewUser = (
     }
 
     cy.log(
-      `Logged in as ${userType}`,
+      `Logged in as ${params.type}`,
       `KYC: ${params.kyc}, clearPendingTransactions: ${params.clearPendingTransactions}, seed: ${
         params.seed
       }`,

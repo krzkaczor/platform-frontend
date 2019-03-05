@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { promisify } from "./promisify";
 
 describe("promisifies a function", () => {

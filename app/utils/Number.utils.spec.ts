@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { convertToBigInt, formatThousands, isZero, normalize } from "./Number.utils";
 
 describe("NumberUtils", () => {

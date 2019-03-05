@@ -13,14 +13,13 @@ import { IControllerGovernance } from "../contracts/IControllerGovernance";
 import { IdentityRegistry } from "../contracts/IdentityRegistry";
 import { IEquityToken } from "../contracts/IEquityToken";
 import { ITokenExchangeRateOracle } from "../contracts/ITokenExchangeRateOracle";
+import * as knownInterfaces from "../contracts/knownInterfaces.json";
 import { LockedAccount } from "../contracts/LockedAccount";
 import { Neumark } from "../contracts/Neumark";
 import { PlatformTerms } from "../contracts/PlatformTerms";
 import { Universe } from "../contracts/Universe";
 import { ILogger } from "../dependencies/logger";
 import { Web3Manager } from "./Web3Manager";
-
-import * as knownInterfaces from "../contracts/knownInterfaces.json";
 
 @injectable()
 export class ContractsService {

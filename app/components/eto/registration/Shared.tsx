@@ -1,6 +1,8 @@
 import * as cn from "classnames";
 import * as React from "react";
+
 import { HorizontalLine } from "../../shared/HorizontalLine";
+
 import * as styles from "./Shared.module.scss";
 
 interface ISectionProps {

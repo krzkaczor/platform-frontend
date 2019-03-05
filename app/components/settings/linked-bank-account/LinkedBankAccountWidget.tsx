@@ -1,18 +1,21 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
+import { compose } from "recompose";
 
 import { actions } from "../../../modules/actions";
+import { selectIsUserFullyVerified } from "../../../modules/auth/selectors";
 import { EBankTransferType } from "../../../modules/bank-transfer-flow/reducer";
 import { selectIsBankAccountVerified } from "../../../modules/bank-transfer-flow/selectors";
 import { selectBankAccount } from "../../../modules/kyc/selectors";
 import { TBankAccount } from "../../../modules/kyc/types";
 import { appConnect } from "../../../store";
 import { DeepReadonly } from "../../../types";
+import { onEnterAction } from "../../../utils/OnEnterAction";
 import { Button, ButtonSize, EButtonLayout } from "../../shared/buttons";
 import { Panel } from "../../shared/Panel";
 import { BankAccount } from "../../wallet/BankAccount";
 
-import * as bankIcon from "../../../assets/img/bank-transfer/bank_icon.svg";
+import * as bankIcon from "../../../assets/img/bank-transfer/bank-icon.svg";
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as styles from "./LinkedBankAccountWidget.module.scss";
 
@@ -22,16 +25,21 @@ interface IDispatchProps {
 
 interface IStateProps {
   bankAccount?: DeepReadonly<TBankAccount>;
-  isVerified: boolean;
+  isBankAccountVerified: boolean;
+  isUserFullyVerified: boolean;
 }
 
 type IComponentProps = IStateProps & IDispatchProps;
 
-const LinkAccount: React.FunctionComponent<IDispatchProps> = ({ verifyBankAccount }) => (
+const LinkAccount: React.FunctionComponent<IComponentProps> = ({
+  verifyBankAccount,
+  isUserFullyVerified,
+}) => (
   <>
-    <img className={styles.icon} src={bankIcon} />
+    <img className={styles.icon} src={bankIcon} alt="" />
     <Button
-      onClick={() => verifyBankAccount()}
+      onClick={verifyBankAccount}
+      disabled={!isUserFullyVerified}
       data-test-id="linked-bank-account-widget.link-account"
       layout={EButtonLayout.SECONDARY}
       size={ButtonSize.SMALL}
@@ -43,28 +51,23 @@ const LinkAccount: React.FunctionComponent<IDispatchProps> = ({ verifyBankAccoun
   </>
 );
 
-const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps> = ({
-  isVerified,
-  bankAccount,
-  verifyBankAccount,
-}) => (
+const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps> = props => (
   <Panel
     centerContent={false}
     headerText={<FormattedMessage id="linked-bank-account-widget.header" />}
   >
     <section className={styles.panelBody}>
-      {isVerified && bankAccount && bankAccount.hasBankAccount ? (
-        <>
-          <BankAccount details={bankAccount.details} />
-        </>
+      {props.isBankAccountVerified && props.bankAccount && props.bankAccount.hasBankAccount ? (
+        <BankAccount details={props.bankAccount.details} />
       ) : (
-        <LinkAccount verifyBankAccount={verifyBankAccount} />
+        <LinkAccount {...props} />
       )}
     </section>
-    {isVerified && (
+    {props.isBankAccountVerified && (
       <Button
         className={styles.linkButton}
-        onClick={() => verifyBankAccount()}
+        onClick={props.verifyBankAccount}
+        disabled={!props.isUserFullyVerified}
         data-test-id="linked-bank-account-widget.link-different-account"
         layout={EButtonLayout.INLINE}
         size={ButtonSize.SMALL}
@@ -75,15 +78,23 @@ const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps> = ({
   </Panel>
 );
 
-const LinkedBankAccountWidget = appConnect<IStateProps, IDispatchProps, {}>({
-  stateToProps: state => ({
-    bankAccount: selectBankAccount(state),
-    isVerified: selectIsBankAccountVerified(state),
+const LinkedBankAccountWidget = compose<IComponentProps, {}>(
+  onEnterAction({
+    actionCreator: dispatch => {
+      dispatch(actions.kyc.loadBankAccountDetails());
+    },
   }),
-  dispatchToProps: dispatch => ({
-    verifyBankAccount: () =>
-      dispatch(actions.bankTransferFlow.startBankTransfer(EBankTransferType.VERIFY)),
+  appConnect<IStateProps, IDispatchProps, {}>({
+    stateToProps: state => ({
+      bankAccount: selectBankAccount(state),
+      isBankAccountVerified: selectIsBankAccountVerified(state),
+      isUserFullyVerified: selectIsUserFullyVerified(state),
+    }),
+    dispatchToProps: dispatch => ({
+      verifyBankAccount: () =>
+        dispatch(actions.bankTransferFlow.startBankTransfer(EBankTransferType.VERIFY)),
+    }),
   }),
-})(LinkedBankAccountComponent);
+)(LinkedBankAccountComponent);
 
 export { LinkedBankAccountWidget, LinkedBankAccountComponent };

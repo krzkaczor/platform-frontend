@@ -1,12 +1,12 @@
+import { inject, injectable } from "inversify";
 import ledgerWalletProvider from "ledger-wallet-provider";
+import { delay } from "redux-saga";
 import * as semver from "semver";
 import * as Web3 from "web3";
 import * as Web3ProviderEngine from "web3-provider-engine";
 // tslint:disable-next-line
 import * as RpcSubprovider from "web3-provider-engine/subproviders/rpc";
 
-import { inject, injectable } from "inversify";
-import { delay } from "redux-saga";
 import { symbols } from "../../di/symbols";
 import { EWalletSubType, EWalletType } from "../../modules/web3/types";
 import { EthereumAddress, EthereumNetworkId } from "../../types";

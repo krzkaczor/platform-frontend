@@ -18,7 +18,7 @@ type IProps = IDispatchProps;
 const BankTransferPurchaseSuccessLayout: React.FunctionComponent<IProps> = ({ goToWallet }) => (
   <Message
     image={
-      <Confetti theme={EConfettiTheme.PURPLE} className="mb-3">
+      <Confetti theme={EConfettiTheme.GREEN} className="mb-3">
         <img src={bankIcon} alt="" />
       </Confetti>
     }

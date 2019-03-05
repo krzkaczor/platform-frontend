@@ -81,7 +81,7 @@ const statusTextMap: Record<ERequestStatus, React.ReactNode> = {
       values={{ url: `${externalRoutes.neufundSupport}/home` }}
     />
   ),
-  Outsourced: <FormattedMessage id="settings.kyc-status-widget.status.outsourced" />,
+  Outsourced: <FormattedMessage id="settings.kyc-status-widget.status.outsourced.started" />,
 };
 
 const outsourcedStatusTextMap: Record<ERequestOutsourcedStatus, React.ReactNode> = {
@@ -108,13 +108,7 @@ const outsourcedStatusTextMap: Record<ERequestOutsourcedStatus, React.ReactNode>
       values={{ url: `${externalRoutes.neufundSupport}/home` }}
     />
   ),
-  started: (
-    <FormattedHTMLMessage
-      tagName="span"
-      id="settings.kyc-status-widget.status.outsourced"
-      values={{ url: `${externalRoutes.neufundSupport}/home` }}
-    />
-  ),
+  started: <FormattedMessage id="settings.kyc-status-widget.status.outsourced.started" />,
   success: <FormattedMessage id="settings.kyc-status-widget.status.outsourced.review_pending" />,
   success_data_changed: (
     <FormattedMessage id="settings.kyc-status-widget.status.outsourced.review_pending" />

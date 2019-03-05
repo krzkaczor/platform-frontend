@@ -23,6 +23,15 @@ storiesOf("NewTable", module)
       </NewTableRow>
     </NewTable>
   ))
+  .add("empty", () => <NewTable titles={["Name", "Surname", "Role"]}>{[]}</NewTable>)
+  .add("empty with custom placeholder", () => (
+    <NewTable
+      titles={["Name", "Surname", "Role"]}
+      placeholder="This is custom placeholder when table is empty"
+    >
+      {[]}
+    </NewTable>
+  ))
   .add("keeps rhytm", () => (
     <NewTable titles={["Name", "Surname", "Role"]} keepRhythm>
       <NewTableRow>
@@ -40,5 +49,10 @@ storiesOf("NewTable", module)
         <>Gorny</>
         <>Developer</>
       </NewTableRow>
+    </NewTable>
+  ))
+  .add("empty but keeps rhytm", () => (
+    <NewTable titles={["Name", "Surname", "Role"]} keepRhythm>
+      {[]}
     </NewTable>
   ));

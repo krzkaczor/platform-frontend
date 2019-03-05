@@ -20,11 +20,6 @@ export const dummyConfig: IConfig = {
   contractsAddresses: {
     universeContractAddress: "UNIVERSE_ADDRESS",
   },
-  bankTransferDetails: {
-    recipient: "Fifth Force GmbH",
-    iban: "DE1250094039446384529400565",
-    bic: "TLXXXXXXXXX",
-  },
 };
 
 export const dummyNetworkId: EthereumNetworkId = "5" as EthereumNetworkId;

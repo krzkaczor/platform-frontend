@@ -6,12 +6,16 @@ import { withModalBody } from "../../../../utils/storybookHelpers";
 import { BankTransferVerifySummaryLayout } from "./BankTransferVerifySummary";
 
 const detailsData = {
-  recipient: "Fifth Force GmbH",
-  iban: "DE1250094039446384529400565",
-  bic: "TLXXXXXXXXX",
+  quintessenceBankAccount: {
+    name: "Fifth Force GmbH",
+    bankAccountNumber: "DE1250094039446384529400565",
+    swiftCode: "TLXXXXXXXXX",
+    isSepa: false,
+    bankName: "ING",
+  },
   referenceCode: "NF AGHGCmR3u2SuxdyNPIksxTyAhKM REF 123456789011",
   minAmount: "123456781234567812345678",
-  continueToSummary: action("continueToSummary"),
+  continueToSuccess: action("continueToSuccess"),
 };
 
 storiesOf("BankTransferVerifySummary", module)

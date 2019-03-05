@@ -151,9 +151,29 @@ export enum EKycBusinessType {
   PARTNERSHIP = "partnership",
 }
 
-export const KycBankAccountSchema = YupTS.object({
+export const KycBankVerifiedBankAccountSchema = YupTS.object({
   bankAccountNumberLast4: YupTS.string(),
-  holderName: YupTS.string(),
+  bankName: YupTS.string(),
+  isSepa: YupTS.boolean(),
+  name: YupTS.string(),
+  swiftCode: YupTS.string(),
 });
 
+export const KycBankQuintessenceBankAccountSchema = YupTS.object({
+  bankAccountNumber: YupTS.string(),
+  bankName: YupTS.string(),
+  isSepa: YupTS.boolean(),
+  name: YupTS.string(),
+  swiftCode: YupTS.string(),
+});
+
+export const KycBankAccountSchema = YupTS.object({
+  ourAccount: KycBankQuintessenceBankAccountSchema,
+  verifiedUserAccount: KycBankVerifiedBankAccountSchema.optional(),
+});
+
+export type KycBankVerifiedBankAccount = YupTS.TypeOf<typeof KycBankVerifiedBankAccountSchema>;
+export type KycBankQuintessenceBankAccount = YupTS.TypeOf<
+  typeof KycBankQuintessenceBankAccountSchema
+>;
 export type TKycBankAccount = YupTS.TypeOf<typeof KycBankAccountSchema>;

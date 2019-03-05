@@ -2,14 +2,15 @@ import * as cn from "classnames";
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { Container } from "reactstrap";
-import { compose, withProps } from "recompose";
+import { compose } from "recompose";
 
-import { getConfig } from "../../../../config/getConfig";
+import { KycBankQuintessenceBankAccount } from "../../../../lib/api/KycApi.interfaces";
 import { actions } from "../../../../modules/actions";
 import {
   selectBankTransferFlowReference,
   selectBankTransferMinAmount,
 } from "../../../../modules/bank-transfer-flow/selectors";
+import { selectQuintessenceBankAccount } from "../../../../modules/kyc/selectors";
 import { appConnect } from "../../../../store";
 import { ButtonArrowRight } from "../../../shared/buttons";
 import { CopyToClipboardButton } from "../../../shared/CopyToClipboardButton";
@@ -23,19 +24,14 @@ import * as styles from "../../tx-sender/investment-flow/Summary.module.scss";
 interface IStateProps {
   referenceCode: string;
   minAmount: string;
-}
-
-interface IWithProps {
-  recipient: string;
-  iban: string;
-  bic: string;
+  quintessenceBankAccount: KycBankQuintessenceBankAccount;
 }
 
 interface IDispatchProps {
-  continueToSummary: () => void;
+  continueToSuccess: () => void;
 }
 
-type IProps = IStateProps & IDispatchProps & IWithProps;
+type IProps = IStateProps & IDispatchProps;
 
 const CopyToClipboardLabel: React.FunctionComponent<{ label: string }> = ({ label }) => (
   <>
@@ -45,12 +41,10 @@ const CopyToClipboardLabel: React.FunctionComponent<{ label: string }> = ({ labe
 );
 
 const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
-  recipient,
-  bic,
-  iban,
-  continueToSummary,
+  continueToSuccess,
   referenceCode,
   minAmount,
+  quintessenceBankAccount,
 }) => (
   <Container className={styles.container}>
     <Heading className="mb-4">
@@ -65,24 +59,24 @@ const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
       <InfoRow
         caption={<FormattedMessage id="bank-transfer.purchase.summary.min-amount" />}
         value={
-          <Money
-            value={minAmount}
-            currency={ECurrency.EUR}
-            currencySymbol={ECurrencySymbol.SYMBOL}
-          />
+          <Money value={minAmount} currency={ECurrency.EUR} currencySymbol={ECurrencySymbol.CODE} />
         }
       />
       <InfoRow
+        caption={<FormattedMessage id="bank-transfer.summary.purchase-price.caption" />}
+        value={<FormattedMessage id="bank-transfer.summary.purchase-price.value" />}
+      />
+      <InfoRow
         caption={<FormattedMessage id="bank-transfer.summary.recipient" />}
-        value={<CopyToClipboardLabel label={recipient} />}
+        value={<CopyToClipboardLabel label={quintessenceBankAccount.name} />}
       />
       <InfoRow
         caption={<FormattedMessage id="bank-transfer.summary.iban" />}
-        value={<CopyToClipboardLabel label={iban} />}
+        value={<CopyToClipboardLabel label={quintessenceBankAccount.bankAccountNumber} />}
       />
       <InfoRow
         caption={<FormattedMessage id="bank-transfer.summary.bic" />}
-        value={<CopyToClipboardLabel label={bic} />}
+        value={<CopyToClipboardLabel label={quintessenceBankAccount.swiftCode} />}
       />
       <InfoRow
         caption={<FormattedMessage id="bank-transfer.summary.reference-number" />}
@@ -95,7 +89,7 @@ const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
     </p>
 
     <section className="text-center">
-      <ButtonArrowRight onClick={continueToSummary}>
+      <ButtonArrowRight onClick={continueToSuccess}>
         <FormattedMessage id="bank-transfer.summary.transfer-completed" />
       </ButtonArrowRight>
     </section>
@@ -104,22 +98,22 @@ const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
 
 const BankTransferPurchaseSummary = compose<IProps, {}>(
   appConnect<IStateProps, IDispatchProps>({
-    stateToProps: state => ({
-      referenceCode: selectBankTransferFlowReference(state),
-      minAmount: selectBankTransferMinAmount(state),
-    }),
-    dispatchToProps: dispatch => ({
-      continueToSummary: () => dispatch(actions.bankTransferFlow.continueToSummary()),
-    }),
-  }),
-  withProps<IWithProps, {}>(() => {
-    const { bankTransferDetails } = getConfig(process.env);
+    stateToProps: state => {
+      const quintessenceBankAccount = selectQuintessenceBankAccount(state);
 
-    return {
-      recipient: bankTransferDetails.recipient,
-      iban: bankTransferDetails.iban,
-      bic: bankTransferDetails.bic,
-    };
+      if (!quintessenceBankAccount) {
+        throw new Error("Quintessence bank account can't be undefined");
+      }
+
+      return {
+        quintessenceBankAccount,
+        referenceCode: selectBankTransferFlowReference(state),
+        minAmount: selectBankTransferMinAmount(state),
+      };
+    },
+    dispatchToProps: dispatch => ({
+      continueToSuccess: () => dispatch(actions.bankTransferFlow.continueToSuccess()),
+    }),
   }),
 )(BankTransferPurchaseLayout);
 

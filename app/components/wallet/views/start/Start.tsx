@@ -4,8 +4,8 @@ import { branch, renderComponent } from "recompose";
 import { compose } from "redux";
 
 import { actions } from "../../../../modules/actions";
+import { selectIsUserFullyVerified } from "../../../../modules/auth/selectors";
 import { EBankTransferType } from "../../../../modules/bank-transfer-flow/reducer";
-import { selectIsBankFlowEnabled } from "../../../../modules/bank-transfer-flow/selectors";
 import { ETokenType } from "../../../../modules/tx/interfaces";
 import {
   selectICBMLockedEtherBalance,
@@ -47,7 +47,7 @@ interface IStateProps {
   icbmWalletData: IIcbmWalletValues;
   userAddress: string;
   isLoading: boolean;
-  isBankFlowEnabled: boolean;
+  isUserFullyVerified: boolean;
 }
 
 interface IDispatchProps {
@@ -57,6 +57,7 @@ interface IDispatchProps {
   upgradeWalletEuroToken: () => void;
   purchaseNEur: () => void;
   verifyBankAccount: () => void;
+  redeemNEur: () => void;
 }
 
 type TProps = IStateProps & IDispatchProps;
@@ -72,7 +73,8 @@ export const WalletStartComponent: React.FunctionComponent<TProps> = ({
   upgradeWalletEtherToken,
   purchaseNEur,
   verifyBankAccount,
-  isBankFlowEnabled,
+  redeemNEur,
+  isUserFullyVerified,
 }) => (
   <>
     <Row className="row-gutter-top" data-test-id="wallet-start-container">
@@ -94,9 +96,9 @@ export const WalletStartComponent: React.FunctionComponent<TProps> = ({
           neuroAmount={liquidWalletData.neuroAmount}
           neuroEuroAmount={liquidWalletData.neuroEuroAmount}
           onPurchase={purchaseNEur}
-          onRedeem={() => {}}
+          onRedeem={redeemNEur}
           onVerify={verifyBankAccount}
-          isBankFlowEnabled={isBankFlowEnabled}
+          isUserFullyVerified={isUserFullyVerified}
         />
       </Col>
 
@@ -142,7 +144,7 @@ export const WalletStart = compose<React.FunctionComponent>(
       // Wallet Related State
       isLoading: selectIsLoading(state.wallet),
       error: selectWalletError(state.wallet),
-      isBankFlowEnabled: selectIsBankFlowEnabled(state),
+      isUserFullyVerified: selectIsUserFullyVerified(state),
       liquidWalletData: {
         ethAmount: selectLiquidEtherBalance(state.wallet),
         ethEuroAmount: selectLiquidEtherBalanceEuroAmount(state),
@@ -152,7 +154,7 @@ export const WalletStart = compose<React.FunctionComponent>(
       },
       lockedWalletData: {
         hasFunds: selectLockedWalletHasFunds(state),
-        ethAmount: selectLockedEtherBalance(state.wallet),
+        ethAmount: selectLockedEtherBalance(state),
         ethEuroAmount: selectLockedEtherBalanceEuroAmount(state),
         neuroAmount: selectLockedEuroTokenBalance(state.wallet),
         neuroEuroAmount: selectLockedEuroTokenBalance(state.wallet),
@@ -179,6 +181,7 @@ export const WalletStart = compose<React.FunctionComponent>(
         dispatch(actions.bankTransferFlow.startBankTransfer(EBankTransferType.PURCHASE)),
       verifyBankAccount: () =>
         dispatch(actions.bankTransferFlow.startBankTransfer(EBankTransferType.VERIFY)),
+      redeemNEur: () => dispatch(actions.txTransactions.startWithdrawNEuro()),
     }),
   }),
   branch<IStateProps>(props => props.isLoading, renderComponent(LoadingIndicator)),

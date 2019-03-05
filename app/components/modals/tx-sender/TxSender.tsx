@@ -10,6 +10,7 @@ import { ETransactionErrorType, ETxSenderState } from "../../../modules/tx/sende
 import { selectTxSenderModalOpened } from "../../../modules/tx/sender/selectors";
 import { appConnect } from "../../../store";
 import { LoadingIndicator } from "../../shared/loading-indicator";
+import { QuintessenceModal } from "../bank-transfer-flow/QuintessenceModal";
 import { ModalComponentBody } from "../ModalComponentBody";
 import { AccessWalletContainer } from "../wallet-access/AccessWalletModal";
 import { SetEtoDateSummary } from "./eto-flow/SetDateSummary";
@@ -21,10 +22,14 @@ import { InvestorAcceptPayoutSummary } from "./investor-payout/AcceptSummary";
 import { InvestorRedistributePayoutConfirm } from "./investor-payout/RedistributeConfirm";
 import { InvestorRedistributePayoutSuccess } from "./investor-payout/RedistributeSuccess";
 import { InvestorRedistributePayoutSummary } from "./investor-payout/RedistributeSummary";
+import { BankTransferRedeemInit } from "./redeem/BankTransferRedeemInit";
+import { BankTransferRedeemSuccess } from "./redeem/BankTransferRedeemSuccess";
+import { BankTransferRedeemSummary } from "./redeem/BankTransferRedeemSummary";
 import { ErrorMessage } from "./shared/ErrorMessage";
 import { SigningMessage } from "./shared/SigningMessage";
 import { TxPending } from "./shared/TxPending";
 import { WatchPendingTxs } from "./shared/WatchPeningTxs";
+import { UnlockWalletSummary } from "./unlock-wallet-flow/Summary";
 import { UpgradeSummary } from "./upgrade-flow/Summary";
 import { UserClaimSuccess } from "./user-claim/Success";
 import { UserClaimSummary } from "./user-claim/Summary";
@@ -52,17 +57,36 @@ function isBigModal(props: Props): boolean {
   return props.state === ETxSenderState.INIT && props.type === ETxSenderType.INVEST;
 }
 
-const TxSenderModalComponent: React.FunctionComponent<Props> = props => {
-  const { isOpen, onCancel } = props;
+const TxSenderModalSelect: React.FunctionComponent<Props> = props => {
+  if (props.type !== ETxSenderType.NEUR_WITHDRAW) {
+    return <TxSenderModalOuter {...props}>{props.children}</TxSenderModalOuter>;
+  }
 
-  return (
-    <Modal isOpen={isOpen} toggle={onCancel} className={cn({ big: isBigModal(props) })}>
-      <ModalComponentBody onClose={onCancel}>
-        <TxSenderBody {...props} />
-      </ModalComponentBody>
-    </Modal>
-  );
+  switch (props.state) {
+    case ETxSenderState.INIT:
+    case ETxSenderState.SUMMARY:
+    case ETxSenderState.DONE:
+      return (
+        <QuintessenceModal isOpen={props.isOpen} onClose={props.onCancel}>
+          {props.children}
+        </QuintessenceModal>
+      );
+    default:
+      return <TxSenderModalOuter {...props}>{props.children}</TxSenderModalOuter>;
+  }
 };
+
+const TxSenderModalOuter: React.FunctionComponent<Props> = props => (
+  <Modal isOpen={props.isOpen} toggle={props.onCancel} className={cn({ big: isBigModal(props) })}>
+    <ModalComponentBody onClose={props.onCancel}>{props.children}</ModalComponentBody>
+  </Modal>
+);
+
+const TxSenderModalComponent: React.FunctionComponent<Props> = props => (
+  <TxSenderModalSelect {...props}>
+    <TxSenderBody {...props} />
+  </TxSenderModalSelect>
+);
 
 const InitComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ type }) => {
   switch (type) {
@@ -72,6 +96,8 @@ const InitComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ type
       return <Withdraw />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
       return <InvestorRedistributePayoutConfirm />;
+    case ETxSenderType.NEUR_WITHDRAW:
+      return <BankTransferRedeemInit />;
     default:
       return <LoadingIndicator />;
   }
@@ -91,6 +117,10 @@ const SummaryComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ t
       return <InvestorAcceptPayoutSummary />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
       return <InvestorRedistributePayoutSummary />;
+    case ETxSenderType.UNLOCK_FUNDS:
+      return <UnlockWalletSummary />;
+    case ETxSenderType.NEUR_WITHDRAW:
+      return <BankTransferRedeemSummary />;
     default:
       return <WithdrawSummary />;
   }
@@ -109,6 +139,8 @@ const SuccessComponent: React.FunctionComponent<{ type?: ETxSenderType; txHash?:
       return <InvestorAcceptPayoutSuccess />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
       return <InvestorRedistributePayoutSuccess />;
+    case ETxSenderType.NEUR_WITHDRAW:
+      return <BankTransferRedeemSuccess txHash={txHash!} />;
     default:
       return <WithdrawSuccess txHash={txHash!} />;
   }

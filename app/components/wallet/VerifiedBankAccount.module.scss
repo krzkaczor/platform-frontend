@@ -8,6 +8,10 @@
   @include responsive-size(margin-top, $spacing-vertical-sm-1, $spacing-vertical-lg-1);
 }
 
+.framed {
+  font-weight: bold;
+}
+
 .link-button {
   color: $neu-blue;
   text-align: right;

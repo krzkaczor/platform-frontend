@@ -2,9 +2,8 @@ import { expect } from "chai";
 import { shallow } from "enzyme";
 import * as React from "react";
 
-import { MyWalletWidgetComponentBody } from "./MyWalletWidget";
-
 import { tid } from "../../../../test/testUtils";
+import { MyWalletWidgetComponentBody } from "./MyWalletWidget";
 
 describe("<MyWalletWidget />", () => {
   let initialEnvVar: any;

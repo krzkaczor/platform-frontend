@@ -30,7 +30,6 @@ import * as iconFingerprint from "../../assets/img/inline_icons/icon-menu-finger
 import * as iconHelp from "../../assets/img/inline_icons/icon-menu-help.svg";
 import * as iconPortfolio from "../../assets/img/inline_icons/icon-menu-portfolio.svg";
 import * as iconWallet from "../../assets/img/inline_icons/icon-menu-wallet.svg";
-
 import * as styles from "./LayoutAuthorizedMenu.module.scss";
 
 interface IMenuEntry {

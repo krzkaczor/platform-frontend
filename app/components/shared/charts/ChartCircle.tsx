@@ -1,5 +1,6 @@
 import * as cn from "classnames";
 import * as React from "react";
+
 import { TTranslatedString } from "../../../types";
 
 import * as styles from "./ChartCircle.module.scss";

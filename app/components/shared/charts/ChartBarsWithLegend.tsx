@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Bar } from "react-chartjs-2";
-import * as styles from "./ChartBars.module.scss";
+
 import { ChartLegend } from "./ChartLegend";
+
+import * as styles from "./ChartBars.module.scss";
 
 interface IDataset {
   data: number[];

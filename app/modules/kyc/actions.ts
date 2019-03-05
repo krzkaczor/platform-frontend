@@ -6,6 +6,7 @@ import {
   IKycIndividualData,
   IKycLegalRepresentative,
   IKycRequestState,
+  KycBankQuintessenceBankAccount,
 } from "../../lib/api/KycApi.interfaces";
 import { createAction, createActionFactory, createSimpleAction } from "../actionsUtils";
 import { TBankAccount, TClaims } from "./types";
@@ -217,5 +218,10 @@ export const kycActions = {
   setBankAccountDetails: createActionFactory(
     "KYC_SET_BANK_ACCOUNT_DETAILS",
     (bankAccount: TBankAccount) => ({ bankAccount }),
+  ),
+
+  setQuintessenceBankAccountDetails: createActionFactory(
+    "KYC_SET_QUINTESSENCE_BANK_ACCOUNT_DETAILS",
+    (quintessenceBankAccount: KycBankQuintessenceBankAccount) => ({ quintessenceBankAccount }),
   ),
 };

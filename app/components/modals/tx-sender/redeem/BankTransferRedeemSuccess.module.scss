@@ -1,0 +1,11 @@
+.tx-hash {
+  @include font-label-small;
+
+  text-transform: none;
+  color: $neu-slate-grey;
+  margin-top: px-to-rem(28px);
+}
+
+.image {
+  margin-bottom: 1rem;
+}

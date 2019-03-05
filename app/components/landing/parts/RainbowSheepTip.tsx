@@ -1,11 +1,11 @@
 import * as cn from "classnames";
 import * as React from "react";
 
+import { Dictionary } from "../../../types";
 import { ScrollSpy } from "./ScrollSpy";
 
 import * as sheep from "../../../assets/img/landing/rainbowsheep.gif";
 import * as thoughts from "../../../assets/img/landing/thoughts.svg";
-import { Dictionary } from "../../../types";
 import * as styles from "./RainbowSheepTip.module.scss";
 
 interface IProps {

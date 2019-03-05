@@ -1,45 +1,23 @@
 import { Formik } from "formik";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { branch, compose, renderComponent, StateHandler, withStateHandlers } from "recompose";
+import { compose } from "recompose";
 
 import { externalRoutes } from "../../../../config/externalRoutes";
 import * as YupTS from "../../../../lib/yup-ts";
 import { actions } from "../../../../modules/actions";
-import { selectBankTransferMinAmount } from "../../../../modules/bank-transfer-flow/selectors";
 import { appConnect } from "../../../../store";
 import { Button, ButtonArrowRight, EButtonLayout } from "../../../shared/buttons";
 import { ECheckboxLayout, Form, FormFieldBoolean } from "../../../shared/forms";
 import { ExternalLink } from "../../../shared/links";
-import { ECurrency, Money } from "../../../shared/Money";
 import { SectionHeader } from "../../../shared/SectionHeader";
-import { Message } from "../../Message";
-
-import * as bankVaultIcon from "../../../../assets/img/bank-transfer/bankvault.svg";
-
-export enum EBankTransferInitState {
-  INFO,
-  AGREEMENT,
-}
-
-interface IStateProps {
-  minEuroUlps: string;
-}
 
 interface IDispatchProps {
   goToSummary: () => void;
   downloadNEurTokenAgreement: () => void;
 }
 
-interface ILocalState {
-  state: EBankTransferInitState;
-}
-
-type ILocalStateUpdater = {
-  goToAgreement: StateHandler<ILocalState>;
-};
-
-type IProps = IStateProps & IDispatchProps & ILocalStateUpdater;
+type IProps = IDispatchProps;
 
 const AgreementScheme = YupTS.object({
   quintessenceTosApproved: YupTS.onlyTrue(),
@@ -56,7 +34,7 @@ const BankTransferVerifyAgreementLayout: React.FunctionComponent<IProps> = ({
     <SectionHeader
       className="mb-3"
       decorator={false}
-      description={<ExternalLink href={externalRoutes.quintessenseLanding} />}
+      description={<ExternalLink href={externalRoutes.quintessenceLanding} />}
     >
       <FormattedMessage id="bank-verification.agreement.title" />
     </SectionHeader>
@@ -121,7 +99,11 @@ const BankTransferVerifyAgreementLayout: React.FunctionComponent<IProps> = ({
             }
             name="nEurTosApproved"
           />
-          <ButtonArrowRight type="submit" disabled={!isValid}>
+          <ButtonArrowRight
+            data-test-id="bank-verification.agree-with-tos"
+            type="submit"
+            disabled={!isValid}
+          >
             <FormattedMessage id="bank-verification.agreement.continue" />
           </ButtonArrowRight>
         </Form>
@@ -130,51 +112,14 @@ const BankTransferVerifyAgreementLayout: React.FunctionComponent<IProps> = ({
   </section>
 );
 
-const BankTransferVerifyInfoLayout: React.FunctionComponent<IProps> = ({
-  goToAgreement,
-  minEuroUlps,
-}) => (
-  <Message
-    image={<img src={bankVaultIcon} alt="" className="mb-3" />}
-    title={<FormattedMessage id="bank-verification.info.title" />}
-    text={
-      <FormattedMessage
-        id="bank-verification.info.text"
-        values={{ min: <Money value={minEuroUlps} currency={ECurrency.EUR} /> }}
-      />
-    }
-  >
-    <ButtonArrowRight onClick={goToAgreement}>
-      <FormattedMessage id="bank-verification.info.link-now" />
-    </ButtonArrowRight>
-  </Message>
-);
-
-const BankTransferVerifyInit = compose<IProps, {}>(
-  appConnect<IStateProps, IDispatchProps>({
-    stateToProps: state => ({
-      minEuroUlps: selectBankTransferMinAmount(state),
-    }),
+const BankTransferAgreement = compose<IProps, {}>(
+  appConnect<{}, IDispatchProps>({
     dispatchToProps: dispatch => ({
       goToSummary: () => dispatch(actions.bankTransferFlow.continueProcessing()),
       downloadNEurTokenAgreement: () =>
         dispatch(actions.bankTransferFlow.downloadNEurTokenAgreement()),
     }),
   }),
-  withStateHandlers<ILocalState, ILocalStateUpdater>(
-    {
-      state: EBankTransferInitState.INFO,
-    },
-    {
-      goToAgreement: () => () => ({
-        state: EBankTransferInitState.AGREEMENT,
-      }),
-    },
-  ),
-  branch<ILocalState>(
-    props => props.state === EBankTransferInitState.INFO,
-    renderComponent(BankTransferVerifyInfoLayout),
-  ),
 )(BankTransferVerifyAgreementLayout);
 
-export { BankTransferVerifyInit, BankTransferVerifyInfoLayout, BankTransferVerifyAgreementLayout };
+export { BankTransferAgreement, BankTransferVerifyAgreementLayout };
