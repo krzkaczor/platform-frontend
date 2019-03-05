@@ -3,9 +3,9 @@ import { DeepReadonly } from "../../types";
 
 export enum EInvestmentType {
   Eth = "ETH",
-  NEur = "NEURO",
+  NEur = "NEUR",
   ICBMEth = "ICBM_ETH",
-  ICBMnEuro = "ICBM_NEURO",
+  ICBMnEuro = "ICBM_NEUR",
 }
 
 export enum EInvestmentErrorState {
