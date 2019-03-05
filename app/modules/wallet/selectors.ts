@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import { createSelector } from "reselect";
 import * as Web3Utils from "web3-utils";
 
-import { ETHEREUM_ZERO_ADDRESS } from "../../../app/config/constants";
+import { ETHEREUM_ZERO_ADDRESS } from "../../config/constants";
 import { IAppState } from "../../store";
 import { addBigNumbers, multiplyBigNumbers, subtractBigNumbers } from "../../utils/BigNumberUtils";
 import { selectEtherPriceEur, selectNeuPriceEur } from "../shared/tokenPrice/selectors";
@@ -42,14 +42,13 @@ export const selectLiquidEtherBalance = createSelector(
 export const selectLiquidEtherBalanceEuroAmount = (state: IAppState) =>
   multiplyBigNumbers([selectEtherPriceEur(state), selectLiquidEtherBalance(state)]);
 
-export const selectLiquidEuroTokenBalance = (state: IWalletState) =>
-  (state.data && state.data.euroTokenBalance) || "0";
+export const selectLiquidEuroTokenBalance = createSelector(
+  selectWalletData,
+  (data: IWalletStateData | undefined) => (data && data.euroTokenBalance) || "0",
+);
 
 export const selectLiquidEuroTotalAmount = (state: IAppState) =>
-  addBigNumbers([
-    selectLiquidEuroTokenBalance(state.wallet),
-    selectLiquidEtherBalanceEuroAmount(state),
-  ]);
+  addBigNumbers([selectLiquidEuroTokenBalance(state), selectLiquidEtherBalanceEuroAmount(state)]);
 
 /**
  * Locked Wallet Assets
@@ -133,7 +132,7 @@ export const selectTotalEtherBalanceEuroAmount = (state: IAppState) =>
   ]);
 export const selectTotalEuroTokenBalance = (state: IAppState) =>
   addBigNumbers([
-    selectLiquidEuroTokenBalance(state.wallet),
+    selectLiquidEuroTokenBalance(state),
     selectLockedEuroTokenBalance(state),
     selectICBMLockedEuroTokenBalance(state),
   ]);

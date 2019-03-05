@@ -181,8 +181,8 @@ const BankTransferRedeemInit = compose<IProps, {}>(
   }),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => ({
-      neuroAmount: selectLiquidEuroTokenBalance(state.wallet),
-      neuroEuroAmount: selectLiquidEuroTokenBalance(state.wallet),
+      neuroAmount: selectLiquidEuroTokenBalance(state),
+      neuroEuroAmount: selectLiquidEuroTokenBalance(state),
       bankFee: selectBankFeeUlps(state),
       minAmount: selectBankTransferMinAmount(state),
     }),

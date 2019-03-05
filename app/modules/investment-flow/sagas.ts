@@ -104,7 +104,7 @@ function* investEntireBalance(): any {
       break;
 
     case EInvestmentType.NEur:
-      balance = selectLiquidEuroTokenBalance(state.wallet);
+      balance = selectLiquidEuroTokenBalance(state);
       yield computeAndSetCurrencies(balance, ECurrency.EUR_TOKEN);
       break;
 
@@ -151,7 +151,7 @@ function validateInvestment(state: IAppState): EInvestmentErrorState | undefined
   }
 
   if (investmentFlow.investmentType === EInvestmentType.NEur) {
-    if (compareBigNumbers(euroValue, selectLiquidEuroTokenBalance(state.wallet)) > 0) {
+    if (compareBigNumbers(euroValue, selectLiquidEuroTokenBalance(state)) > 0) {
       return EInvestmentErrorState.ExceedsWalletBalance;
     }
   }

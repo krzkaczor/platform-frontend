@@ -148,8 +148,8 @@ export const WalletStart = compose<React.FunctionComponent>(
       liquidWalletData: {
         ethAmount: selectLiquidEtherBalance(state),
         ethEuroAmount: selectLiquidEtherBalanceEuroAmount(state),
-        neuroAmount: selectLiquidEuroTokenBalance(state.wallet),
-        neuroEuroAmount: selectLiquidEuroTokenBalance(state.wallet),
+        neuroAmount: selectLiquidEuroTokenBalance(state),
+        neuroEuroAmount: selectLiquidEuroTokenBalance(state),
         totalEuroAmount: selectLiquidEuroTotalAmount(state),
       },
       lockedWalletData: {

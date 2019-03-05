@@ -26,7 +26,7 @@ import { WalletSelectionData } from "./InvestmentTypeSelector";
 
 export function createWallets(state: IAppState): WalletSelectionData[] {
   const icbmNeuro = selectLockedEuroTokenBalance(state);
-  const balanceNEur = selectLiquidEuroTokenBalance(state.wallet);
+  const balanceNEur = selectLiquidEuroTokenBalance(state);
 
   const wallets: Dictionary<WalletSelectionData> = {
     [EInvestmentType.Eth]: {
