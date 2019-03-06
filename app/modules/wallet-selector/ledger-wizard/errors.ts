@@ -1,6 +1,9 @@
 import { LedgerErrorMessage } from "../../../components/translatedMessages/messages";
 import { createMessage, TMessage } from "../../../components/translatedMessages/utils";
-import { LedgerContractsDisabledError, LedgerLockedError } from "../../../lib/web3/LedgerWallet";
+import {
+  LedgerContractsDisabledError,
+  LedgerLockedError,
+} from "../../../lib/web3/ledger-wallet/errors";
 
 export function mapLedgerErrorToErrorMessage(error: Error): TMessage {
   let messageType = LedgerErrorMessage.GENERIC_ERROR;

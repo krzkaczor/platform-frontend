@@ -29,7 +29,8 @@ import {
   BrowserWalletMissingError,
 } from "../../lib/web3/BrowserWallet";
 import { ContractsService } from "../../lib/web3/ContractsService";
-import { LedgerWallet, LedgerWalletConnector } from "../../lib/web3/LedgerWallet";
+import { LedgerWalletConnector } from "../../lib/web3/ledger-wallet/LedgerConnector";
+import { LedgerWallet } from "../../lib/web3/ledger-wallet/LedgerWallet";
 import { SignerType } from "../../lib/web3/PersonalWeb3";
 import { Web3Adapter } from "../../lib/web3/Web3Adapter";
 import { Web3ManagerMock } from "../../lib/web3/Web3Manager.mock";

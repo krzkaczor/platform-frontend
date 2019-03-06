@@ -1,4 +1,3 @@
-import { mockApiUrl } from "../confirm";
 import {
   acceptTOS,
   assertButtonIsActive,
@@ -19,12 +18,12 @@ describe("Light wallet login / register", () => {
   beforeEach(() => {
     cy.clearLocalStorage();
   });
+
   it("should register user with light-wallet and send email", () => {
     const email = "moe@test.com";
     const password = "strongpassword";
-    clearEmailServer();
 
-    cy.request({ url: mockApiUrl + "sendgrid/session/mails", method: "DELETE" });
+    clearEmailServer();
 
     registerWithLightWallet(email, password);
 

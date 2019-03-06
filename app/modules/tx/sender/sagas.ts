@@ -5,7 +5,7 @@ import { call, put, race, select, take } from "redux-saga/effects";
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { TPendingTxs, TxWithMetadata } from "../../../lib/api/users/interfaces";
 import { BrowserWalletError } from "../../../lib/web3/BrowserWallet";
-import { LedgerContractsDisabledError, LedgerError } from "../../../lib/web3/LedgerWallet";
+import { LedgerContractsDisabledError, LedgerError } from "../../../lib/web3/ledger-wallet/errors";
 import { LightError } from "../../../lib/web3/LightWallet";
 import { ITxData } from "../../../lib/web3/types";
 import {

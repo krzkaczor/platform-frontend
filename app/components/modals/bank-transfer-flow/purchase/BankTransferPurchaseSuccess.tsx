@@ -24,7 +24,10 @@ const BankTransferPurchaseSuccessLayout: React.FunctionComponent<IProps> = ({ go
     }
     text={<FormattedMessage id="bank-transfer.purchase.success.text" />}
   >
-    <ButtonArrowRight onClick={goToWallet}>
+    <ButtonArrowRight
+      onClick={goToWallet}
+      data-test-id="bank-transfer.purchase.success.go-to-wallet"
+    >
       <FormattedMessage id="menu.wallet.view" />
     </ButtonArrowRight>
   </Message>

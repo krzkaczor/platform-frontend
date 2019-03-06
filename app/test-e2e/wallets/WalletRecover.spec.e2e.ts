@@ -1,5 +1,4 @@
 import { recoverRoutes } from "../../components/wallet-selector/wallet-recover/router/recoverRoutes";
-import { mockApiUrl } from "../confirm";
 import {
   acceptTOS,
   assertErrorModal,
@@ -190,7 +189,7 @@ describe("Wallet recover", () => {
 
     typeLightwalletRecoveryPhrase(words);
 
-    cy.request({ url: mockApiUrl + "sendgrid/session/mails", method: "DELETE" });
+    clearEmailServer();
 
     cy.get(tid("wallet-selector-register-email")).type(email);
     cy.get(tid("wallet-selector-register-password")).type("strongpassword");
