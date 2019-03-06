@@ -16,7 +16,7 @@ const statePreview = {
   isOfferingDocumentSubmitted: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 //
 // etoState,
@@ -37,7 +37,7 @@ const statePreviewNoSubmissionSection = {
   isOfferingDocumentSubmitted: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 
 const statePending = {
@@ -48,7 +48,7 @@ const statePending = {
   isOfferingDocumentSubmitted: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 
 const stateListed_1 = {
@@ -59,7 +59,7 @@ const stateListed_1 = {
   isOfferingDocumentSubmitted: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 
 const stateListed_2 = {
@@ -70,7 +70,7 @@ const stateListed_2 = {
   isOfferingDocumentSubmitted: false,
   previewCode: testEto.previewCode,
   isRetailEto: true,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 
 const stateListed_3 = {
@@ -81,7 +81,7 @@ const stateListed_3 = {
   isOfferingDocumentSubmitted: false,
   previewCode: testEto.previewCode,
   isRetailEto: false,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 
 const stateProspectusApproved_1 = {
@@ -92,7 +92,7 @@ const stateProspectusApproved_1 = {
   shouldViewSubmissionSection: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 
 const stateProspectusApproved_2 = {
@@ -103,7 +103,7 @@ const stateProspectusApproved_2 = {
   shouldViewSubmissionSection: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 
 const stateOnChain = {
@@ -114,7 +114,7 @@ const stateOnChain = {
   shouldViewSubmissionSection: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
-  isVerificationSectionDone: true
+  isVerificationSectionDone: true,
 };
 
 storiesOf("ETO-Flow/Dashboard/StateView", module)
