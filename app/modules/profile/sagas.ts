@@ -10,7 +10,12 @@ import { accessWalletAndRunEffect } from "../access-wallet/sagas";
 import { actions, TActionFromCreator } from "../actions";
 import { MessageSignCancelledError } from "../auth/errors";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
-import { selectDoesEmailExist, selectUser } from "../auth/selectors";
+import {
+  selectDoesEmailExist,
+  selectUnverifiedUserEmail,
+  selectUser,
+  selectVerifiedUserEmail,
+} from "../auth/selectors";
 import { updateUser } from "../auth/user/sagas";
 import { neuCall, neuTakeEvery } from "../sagasUtils";
 import { selectLightWalletSalt } from "../web3/selectors";
@@ -23,7 +28,9 @@ function* addNewEmailEffect(
   const salt = yield select(selectLightWalletSalt);
   logger.info("New Email added");
   yield call(updateUser, { ...user, new_email: email, salt: salt });
-  notificationCenter.info(createMessage(ProfileMessage.PROFILE_NEW_EMAIL_ADDED));
+  notificationCenter.info(createMessage(ProfileMessage.PROFILE_NEW_EMAIL_ADDED), {
+    "data-test-id": "profile-email-change-success",
+  });
 }
 
 function* resendEmailEffect({ notificationCenter, logger }: TGlobalDependencies): any {
@@ -48,6 +55,23 @@ export function* addNewEmail(
     ? createMessage(ProfileMessage.PROFILE_UPDATE_EMAIL_TITLE)
     : createMessage(ProfileMessage.PROFILE_ADD_EMAIL_TITLE);
 
+  const actualVerifiedEmail = yield select((s: IAppState) => selectVerifiedUserEmail(s.auth));
+  const actualUnverifiedEmail = yield select((s: IAppState) => selectUnverifiedUserEmail(s.auth));
+
+  if (email === actualVerifiedEmail) {
+    notificationCenter.error(createMessage(ProfileMessage.PROFILE_CHANGE_EMAIL_VERIFIED_EXISTS), {
+      "data-test-id": "profile-email-change-verified-exists",
+    });
+    return;
+  }
+
+  if (email === actualUnverifiedEmail) {
+    notificationCenter.error(createMessage(ProfileMessage.PROFILE_CHANGE_EMAIL_UNVERIFIED_EXISTS), {
+      "data-test-id": "profile.email-change-unverified-exists",
+    });
+    return;
+  }
+
   try {
     yield put(actions.verifyEmail.lockVerifyEmailButton());
     yield neuCall(
@@ -59,7 +83,9 @@ export function* addNewEmail(
     );
   } catch (e) {
     if (e instanceof EmailAlreadyExists)
-      notificationCenter.error(createMessage(ProfileMessage.PROFILE_EMAIL_ALREADY_EXISTS));
+      notificationCenter.error(createMessage(ProfileMessage.PROFILE_EMAIL_ALREADY_EXISTS), {
+        "data-test-id": "profile-email-exists",
+      });
     else {
       logger.error("Failed to Add new email", e);
       notificationCenter.error(createMessage(ProfileMessage.PROFILE_ADD_EMAIL_ERROR));

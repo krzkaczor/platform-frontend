@@ -197,6 +197,8 @@ export enum ProfileMessage {
   PROFILE_EMAIL_VERIFICATION_SENDING_FAILED = "profileEmailVerificationSendingFailed",
   PROFILE_ACCESS_RECOVERY_PHRASE_TITLE = "profileAccessRecoveryPhraseTitle",
   PROFILE_ACCESS_RECOVERY_PHRASE_DESCRIPTION = "profileAccessRecoveryPhraseDescription",
+  PROFILE_CHANGE_EMAIL_VERIFIED_EXISTS = "profileChangeEmailVerifiedAlreadyExists",
+  PROFILE_CHANGE_EMAIL_UNVERIFIED_EXISTS = "profileChangeEmailUnverifiedAlreadyExists",
 }
 
 export enum Web3Message {
@@ -457,6 +459,10 @@ const getMessageTranslation = ({ messageType, messageData }: TMessage): TTransla
       return (
         <FormattedMessage id="modules.settings.sagas.load-seed-return-settings.access-recovery-phrase-description" />
       );
+    case ProfileMessage.PROFILE_CHANGE_EMAIL_VERIFIED_EXISTS:
+      return <FormattedMessage id="modules.settings.sagas.change-email.verified-exists" />;
+    case ProfileMessage.PROFILE_CHANGE_EMAIL_UNVERIFIED_EXISTS:
+      return <FormattedMessage id="modules.settings.sagas.change-email.unverified-exists" />;
 
     case Web3Message.WEB3_ERROR_BROWSER:
       return <FormattedMessage id="modules.web3.flows.web3-error.browser" />;

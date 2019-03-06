@@ -168,13 +168,15 @@ const UnVerifiedUser: React.FunctionComponent<{
         <strong>
           <FormattedMessage id="settings.verify-email-widget.verified-email" />:{" "}
         </strong>
-        {verifiedEmail}
+        <span data-test-id="profile.verify-email-widget.verified-email">{verifiedEmail}</span>
       </p>
     )}
     {unverifiedEmail && (
       <p className={cn(styles.text, "pt-2")}>
         <FormattedMessage id="settings.verify-email-widget.unverified-email" />:{" "}
-        <strong>{unverifiedEmail}</strong>
+        <strong data-test-id="profile.verify-email-widget.unverified-email">
+          {unverifiedEmail}
+        </strong>
       </p>
     )}
 

@@ -104,7 +104,7 @@ export function* ensurePermissionsArePresentAndRunEffect(
     if (error instanceof MessageSignCancelledError) {
       logger.info("Signing Cancelled");
     } else {
-      throw new Error(error);
+      throw error;
     }
   }
 }

@@ -718,6 +718,8 @@
   "modules.settings.sagas.add-new-email.error": "Failed to send email",
   "modules.settings.sagas.add-new-email.new-email-added": "Your email address has been successfully added.",
   "modules.settings.sagas.add-new-email.update-title": "Update email address",
+  "modules.settings.sagas.change-email.unverified-exists": "New email could not be the same as currently pending verification email.",
+  "modules.settings.sagas.change-email.verified-exists": "New email could not be the same as currently verified.",
   "modules.settings.sagas.load-seed-return-settings.access-recovery-phrase-description": "Please confirm to unlock your recovery phrase",
   "modules.settings.sagas.load-seed-return-settings.access-recovery-phrase-title": "Access your recovery phrase",
   "modules.settings.sagas.resend-email.confirmation": "Send me the link again",

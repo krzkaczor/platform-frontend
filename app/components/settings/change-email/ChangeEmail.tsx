@@ -29,7 +29,11 @@ const ChangeEmailForm = injectIntlHelpers<FormikProps<IFormValues>>(
         name={"email"}
       />
       <div className="text-center">
-        <Button type="submit" disabled={!props.values.email}>
+        <Button
+          data-test-id="settings.change-email-component.change-button"
+          type="submit"
+          disabled={!props.values.email}
+        >
           <FormattedMessage id="form.button.submit" />
         </Button>
       </div>
