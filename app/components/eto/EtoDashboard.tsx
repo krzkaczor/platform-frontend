@@ -40,6 +40,7 @@ import { DashboardSection } from "./shared/DashboardSection";
 
 import * as layoutStyles from "../shared/Layout.module.scss";
 import * as styles from "./EtoDashboard.module.scss";
+import { withContainer } from "../../utils/withContainer";
 
 const SUBMIT_PROPOSAL_THRESHOLD = 1;
 
@@ -157,11 +158,11 @@ const EtoDashboardStateViewComponent: React.FunctionComponent<IEtoStateRender> =
           <WidgetGridLayout>
             {canEnableBookbuilding && <BookBuildingWidget layoutClass={layoutStyles.span4} />}
             {!isOfferingDocumentSubmitted &&
-              (isRetailEto ? (
-                <UploadProspectusWidget layoutClass={layoutStyles.span2} />
-              ) : (
-                <UploadInvestmentMemorandum layoutClass={layoutStyles.span2} />
-              ))}
+            (isRetailEto ? (
+              <UploadProspectusWidget layoutClass={layoutStyles.span2} />
+            ) : (
+              <UploadInvestmentMemorandum layoutClass={layoutStyles.span2} />
+            ))}
           </WidgetGridLayout>
           <FormattedHTMLMessage tagName="span" id="eto-dashboard-application-description" />
           <ETOFormsProgressSection />
@@ -195,9 +196,7 @@ const EtoDashboardStateViewComponent: React.FunctionComponent<IEtoStateRender> =
   }
 };
 
-const EtoDashboardComponent: React.FunctionComponent<
-  IComponentStateProps & IComputedProps
-> = props => {
+const EtoDashboardComponent: React.FunctionComponent<IComponentStateProps & IComputedProps> = props => {
   const {
     etoState,
     canEnableBookbuilding,
@@ -211,36 +210,34 @@ const EtoDashboardComponent: React.FunctionComponent<
   } = props;
 
   return (
-    <LayoutAuthorized>
-      <GridBaseLayout dataTestId="eto-dashboard-application">
-        {!isVerificationSectionDone && (
-          <>
-            <DashboardSection
-              step={1}
-              title="VERIFICATION"
-              data-test-id="eto-dashboard-verification"
-            />
-            <WidgetGridLayout>
-              <SettingsWidgets isDynamic={true} {...props} layoutClass={layoutStyles.span3} />
-            </WidgetGridLayout>
-          </>
-        )}
-
-        {shouldEtoDataLoad ? (
-          <EtoDashboardStateViewComponent
-            isTermSheetSubmitted={isTermSheetSubmitted}
-            isOfferingDocumentSubmitted={isOfferingDocumentSubmitted}
-            shouldViewSubmissionSection={shouldViewSubmissionSection}
-            etoState={etoState}
-            canEnableBookbuilding={canEnableBookbuilding}
-            previewCode={previewCode}
-            isRetailEto={isRetailEto}
+    <GridBaseLayout dataTestId="eto-dashboard-application">
+      {!isVerificationSectionDone && (
+        <>
+          <DashboardSection
+            step={1}
+            title="VERIFICATION"
+            data-test-id="eto-dashboard-verification"
           />
-        ) : (
-          <EtoProgressDashboardSection />
-        )}
-      </GridBaseLayout>
-    </LayoutAuthorized>
+          <WidgetGridLayout>
+            <SettingsWidgets isDynamic={true} {...props} layoutClass={layoutStyles.span3} />
+          </WidgetGridLayout>
+        </>
+      )}
+
+      {shouldEtoDataLoad ? (
+        <EtoDashboardStateViewComponent
+          isTermSheetSubmitted={isTermSheetSubmitted}
+          isOfferingDocumentSubmitted={isOfferingDocumentSubmitted}
+          shouldViewSubmissionSection={shouldViewSubmissionSection}
+          etoState={etoState}
+          canEnableBookbuilding={canEnableBookbuilding}
+          previewCode={previewCode}
+          isRetailEto={isRetailEto}
+        />
+      ) : (
+        <EtoProgressDashboardSection />
+      )}
+    </GridBaseLayout>
   );
 };
 
@@ -285,6 +282,7 @@ const EtoDashboard = compose<React.FunctionComponent>(
       }
     },
   }),
+  withContainer(LayoutAuthorized)
 )(EtoDashboardComponent);
 
 export { EtoDashboard, EtoDashboardComponent, EtoDashboardStateViewComponent };

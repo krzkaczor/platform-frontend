@@ -6,7 +6,7 @@ import { testEto } from "../../../test/fixtures";
 import { mockedStore } from "../../../test/fixtures/mockedStore";
 import { EEtoState } from "../../lib/api/eto/EtoApi.interfaces";
 import { withStore } from "../../utils/storeDecorator";
-import { EtoDashboardStateViewComponent } from "./EtoDashboard";
+import { EtoDashboardComponent } from "./EtoDashboard";
 
 const statePreview = {
   etoState: EEtoState.PREVIEW,
@@ -16,7 +16,18 @@ const statePreview = {
   isOfferingDocumentSubmitted: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
+  isVerificationSectionDone: true
 };
+//
+// etoState,
+//   canEnableBookbuilding,
+//   isTermSheetSubmitted,
+//   shouldEtoDataLoad,
+//   isOfferingDocumentSubmitted,
+//   previewCode,
+//   isRetailEto,
+//   isVerificationSectionDone,
+//   shouldViewSubmissionSection,
 
 const statePreviewNoSubmissionSection = {
   etoState: EEtoState.PREVIEW,
@@ -26,6 +37,7 @@ const statePreviewNoSubmissionSection = {
   isOfferingDocumentSubmitted: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
+  isVerificationSectionDone: true
 };
 
 const statePending = {
@@ -36,6 +48,7 @@ const statePending = {
   isOfferingDocumentSubmitted: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
+  isVerificationSectionDone: true
 };
 
 const stateListed_1 = {
@@ -46,6 +59,7 @@ const stateListed_1 = {
   isOfferingDocumentSubmitted: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
+  isVerificationSectionDone: true
 };
 
 const stateListed_2 = {
@@ -56,6 +70,7 @@ const stateListed_2 = {
   isOfferingDocumentSubmitted: false,
   previewCode: testEto.previewCode,
   isRetailEto: true,
+  isVerificationSectionDone: true
 };
 
 const stateListed_3 = {
@@ -66,6 +81,7 @@ const stateListed_3 = {
   isOfferingDocumentSubmitted: false,
   previewCode: testEto.previewCode,
   isRetailEto: false,
+  isVerificationSectionDone: true
 };
 
 const stateProspectusApproved_1 = {
@@ -76,6 +92,7 @@ const stateProspectusApproved_1 = {
   shouldViewSubmissionSection: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
+  isVerificationSectionDone: true
 };
 
 const stateProspectusApproved_2 = {
@@ -86,6 +103,7 @@ const stateProspectusApproved_2 = {
   shouldViewSubmissionSection: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
+  isVerificationSectionDone: true
 };
 
 const stateOnChain = {
@@ -96,52 +114,55 @@ const stateOnChain = {
   shouldViewSubmissionSection: true,
   previewCode: testEto.previewCode,
   isRetailEto: true,
+  isVerificationSectionDone: true
 };
 
 storiesOf("ETO-Flow/Dashboard/StateView", module)
   .addDecorator(withStore(mockedStore))
+  .addDecorator(story => <div style={{ padding: "30px" }}>{story()}</div>)
+
   .add("State PREVIEW with submissionSection", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...statePreview} />
+      <EtoDashboardComponent {...statePreview} />
     </Row>
   ))
   .add("State PREVIEW, no submissionSection", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...statePreviewNoSubmissionSection} />
+      <EtoDashboardComponent {...statePreviewNoSubmissionSection} />
     </Row>
   ))
   .add("State PENDING", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...statePending} />
+      <EtoDashboardComponent {...statePending} />
     </Row>
   ))
   .add("State LISTED, retail eto, canEnableBookbuilding, eto submitted ", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...stateListed_1} />
+      <EtoDashboardComponent {...stateListed_1} />
     </Row>
   ))
   .add("State LISTED, retail eto, eto not submitted", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...stateListed_2} />
+      <EtoDashboardComponent {...stateListed_2} />
     </Row>
   ))
   .add("State LISTED, canEnableBookbuilding, eto not submitted", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...stateListed_3} />
+      <EtoDashboardComponent {...stateListed_3} />
     </Row>
   ))
   .add("State PROSPECTUS_APPROVED", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...stateProspectusApproved_1} />
+      <EtoDashboardComponent {...stateProspectusApproved_1} />
     </Row>
   ))
   .add("State PROSPECTUS_APPROVED, canEnableBookbuilding", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...stateProspectusApproved_2} />
+      <EtoDashboardComponent {...stateProspectusApproved_2} />
     </Row>
   ))
   .add("State OnChain", () => (
     <Row className="row-gutter-top">
-      <EtoDashboardStateViewComponent {...stateOnChain} />
+      <EtoDashboardComponent {...stateOnChain} />
     </Row>
   ));
