@@ -9,11 +9,7 @@ export const selectTxDetails = (state: IAppState) => state.txSender.txDetails;
 
 export const selectTxType = (state: IAppState) => state.txSender.type;
 
-export const selectTxSummaryData = (state: IAppState) =>
-  (state.txSender.summaryData && state.txSender.summaryData.txData) || state.txSender.txDetails;
-
-export const selectTxSummaryAdditionalData = (state: IAppState) =>
-  state.txSender.summaryData && state.txSender.summaryData.additionalData;
+export const selectTxAdditionalData = (state: IAppState) => state.txSender.additionalData;
 
 export const selectTxGasCostEthUlps = (state: IAppState): string => {
   const details = selectTxDetails(state);

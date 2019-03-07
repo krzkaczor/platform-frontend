@@ -41,8 +41,7 @@ export function* startNEuroRedeemGenerator(_: TGlobalDependencies): any {
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(
     actions.txSender.txSenderContinueToSummary({
-      txData: generatedTxDetails,
-      additionalData: { amount: txDataFromUser.value },
+      amount: txDataFromUser.value,
     }),
   );
 }

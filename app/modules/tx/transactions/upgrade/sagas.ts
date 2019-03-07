@@ -87,8 +87,7 @@ export function* upgradeTransactionFlow(_: TGlobalDependencies, tokenType: EToke
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(
     actions.txSender.txSenderContinueToSummary({
-      txData: generatedTxDetails,
-      additionalData: { tokenType },
+      tokenType,
     }),
   );
 }

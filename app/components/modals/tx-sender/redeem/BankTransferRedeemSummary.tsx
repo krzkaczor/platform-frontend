@@ -7,7 +7,7 @@ import { actions } from "../../../../modules/actions";
 import { selectBankFeeUlps } from "../../../../modules/bank-transfer-flow/selectors";
 import { selectBankAccount } from "../../../../modules/kyc/selectors";
 import { TBankAccount } from "../../../../modules/kyc/types";
-import { selectTxSummaryAdditionalData } from "../../../../modules/tx/sender/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { appConnect } from "../../../../store";
 import { DeepReadonly } from "../../../../types";
 import { ButtonArrowRight } from "../../../shared/buttons/Button";
@@ -92,7 +92,7 @@ const BankTransferRedeemSummaryLayout: React.FunctionComponent<IComponentProps> 
 const BankTransferRedeemSummary = compose<IComponentProps, {}>(
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => {
-      const txSummaryData = selectTxSummaryAdditionalData(state);
+      const txSummaryData = selectTxAdditionalData(state);
       return {
         amount: txSummaryData.amount,
         bankAccount: selectBankAccount(state)!,

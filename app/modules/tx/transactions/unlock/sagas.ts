@@ -52,8 +52,8 @@ export function* unlockEtherFundsTransactionGenerator(_: TGlobalDependencies): a
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(
     actions.txSender.txSenderContinueToSummary({
-      txData: generatedTxDetails,
-      additionalData: { etherNeumarksDue, neuBalance },
+      etherNeumarksDue,
+      neuBalance,
     }),
   );
 }

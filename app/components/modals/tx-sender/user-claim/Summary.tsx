@@ -15,9 +15,9 @@ import { selectIsPendingDownload } from "../../../../modules/immutable-file/sele
 import { selectMyInvestorTicketByEtoId } from "../../../../modules/investor-portfolio/selectors";
 import { TETOWithInvestorTicket } from "../../../../modules/investor-portfolio/types";
 import {
+  selectTxAdditionalData,
+  selectTxDetails,
   selectTxGasCostEthUlps,
-  selectTxSummaryAdditionalData,
-  selectTxSummaryData,
 } from "../../../../modules/tx/sender/selectors";
 import { appConnect } from "../../../../store";
 import { getDocumentTitles } from "../../../documents/utils";
@@ -173,9 +173,9 @@ export const UserClaimSummaryComponent: React.FunctionComponent<TComponentProps>
 
 export const UserClaimSummary = appConnect<IStateProps, IDispatchProps, {}>({
   stateToProps: state => {
-    const etoId: string = selectTxSummaryAdditionalData(state);
+    const etoId: string = selectTxAdditionalData(state);
     return {
-      txData: selectTxSummaryData(state)!,
+      txData: selectTxDetails(state)!,
       etoData: selectMyInvestorTicketByEtoId(state, etoId)!,
       txCost: selectTxGasCostEthUlps(state),
       etoId,

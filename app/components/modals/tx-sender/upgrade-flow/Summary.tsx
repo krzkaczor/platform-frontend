@@ -6,9 +6,9 @@ import { ITxData } from "../../../../lib/web3/types";
 import { actions } from "../../../../modules/actions";
 import { ETokenType } from "../../../../modules/tx/interfaces";
 import {
+  selectTxAdditionalData,
+  selectTxDetails,
   selectTxGasCostEthUlps,
-  selectTxSummaryAdditionalData,
-  selectTxSummaryData,
 } from "../../../../modules/tx/sender/selectors";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
@@ -90,9 +90,9 @@ export const UpgradeSummaryComponent: React.FunctionComponent<TComponentProps> =
 
 export const UpgradeSummary = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    txData: selectTxSummaryData(state)!,
+    txData: selectTxDetails(state)!,
     txCost: selectTxGasCostEthUlps(state),
-    additionalData: selectTxSummaryAdditionalData(state),
+    additionalData: selectTxAdditionalData(state),
   }),
   dispatchToProps: d => ({
     onAccept: () => d(actions.txSender.txSenderAccept()),

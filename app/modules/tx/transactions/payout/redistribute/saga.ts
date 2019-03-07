@@ -69,10 +69,5 @@ export function* startInvestorPayoutRedistributionGenerator(
     tokenDisbursals,
   );
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
-  yield put(
-    actions.txSender.txSenderContinueToSummary({
-      txData: generatedTxDetails,
-      additionalData: tokenDisbursals,
-    }),
-  );
+  yield put(actions.txSender.txSenderContinueToSummary(tokenDisbursals));
 }

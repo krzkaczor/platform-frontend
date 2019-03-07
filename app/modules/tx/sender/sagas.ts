@@ -51,6 +51,8 @@ export function* txSendSaga({ type, transactionFlowGenerator, extraParam }: ITxS
     yield take("GAS_API_LOADED");
   }
 
+  yield put(actions.txSender.txSenderShowModal(type));
+
   const { result, cancel } = yield race({
     result: neuCall(txSendProcess, type, transactionFlowGenerator, extraParam),
     cancel: take("TX_SENDER_HIDE_MODAL"),
@@ -74,16 +76,19 @@ export function* txSendProcess(
   extraParam?: any,
 ): any {
   try {
-    yield put(actions.txSender.txSenderShowModal(transactionType));
     yield neuCall(ensureNoPendingTx, transactionType);
-    yield put(actions.txSender.txSenderWatchPendingTxsDone(transactionType));
 
     yield neuRepeatIf("TX_SENDER_CHANGE", "TX_SENDER_ACCEPT", transactionFlowGenerator, extraParam);
     const txData = yield select(selectTxDetails);
 
+    // Check if gas amount is correct
     yield validateGas(txData);
+
+    // accept transaction on wallet
     yield call(connectWallet);
     yield put(actions.txSender.txSenderWalletPlugged());
+
+    // send transaction
     const txHash = yield neuCall(sendTxSubSaga);
 
     yield neuCall(watchTxSubSaga, txHash);
@@ -124,7 +129,9 @@ export function* txSendProcess(
 function* ensureNoPendingTx({ logger }: TGlobalDependencies, type: ETxSenderType): any {
   while (true) {
     yield neuCall(updatePendingTxs);
-    let txs: TPendingTxs = yield select((s: IAppState) => s.txMonitor.txs);
+
+    const txs: TPendingTxs = yield select((s: IAppState) => s.txMonitor.txs);
+
     if (!txs.pendingTransaction && txs.oooTransactions.length === 0) {
       yield put(actions.txSender.txSenderWatchPendingTxsDone(type));
       return;

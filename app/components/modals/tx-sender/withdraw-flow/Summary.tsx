@@ -5,8 +5,8 @@ import { Col, Container, Row } from "reactstrap";
 import { ITxData } from "../../../../lib/web3/types";
 import { actions } from "../../../../modules/actions";
 import {
+  selectTxAdditionalData,
   selectTxGasCostEthUlps,
-  selectTxSummaryData,
 } from "../../../../modules/tx/sender/selectors";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
@@ -43,16 +43,22 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
     <Row>
       <Col>
         <InfoList>
-          <InfoRow caption={<FormattedMessage id="withdraw-flow.to" />} value={txData.to} />
+          <InfoRow
+            caption={<FormattedMessage id="withdraw-flow.to" />}
+            value={txData.to}
+            data-test-id="modals.tx-sender.withdraw-flow.summary.to"
+          />
 
           <InfoRow
             caption={<FormattedMessage id="withdraw-flow.value" />}
             value={<Money currency={ECurrency.ETH} value={txData.value!} />}
+            data-test-id="modals.tx-sender.withdraw-flow.summary.value"
           />
 
           <InfoRow
             caption={<FormattedMessage id="withdraw-flow.transaction-cost" />}
             value={<Money currency={ECurrency.ETH} value={txCost} />}
+            data-test-id="modals.tx-sender.withdraw-flow.summary.cost"
           />
         </InfoList>
       </Col>
@@ -62,7 +68,7 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
         <Button
           onClick={onAccept}
           innerClassName="mt-4"
-          data-test-id="modals.tx-sender.withdraw-flow.summery.withdrawSummery.accept"
+          data-test-id="modals.tx-sender.withdraw-flow.summary.accept"
         >
           <FormattedMessage id="withdraw-flow.confirm" />
         </Button>
@@ -73,7 +79,7 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
 
 export const WithdrawSummary = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    txData: selectTxSummaryData(state)!,
+    txData: selectTxAdditionalData(state),
     txCost: selectTxGasCostEthUlps(state),
   }),
   dispatchToProps: d => ({
