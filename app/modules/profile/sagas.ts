@@ -67,7 +67,7 @@ export function* addNewEmail(
 
   if (email === actualUnverifiedEmail) {
     notificationCenter.error(createMessage(ProfileMessage.PROFILE_CHANGE_EMAIL_UNVERIFIED_EXISTS), {
-      "data-test-id": "profile.email-change-unverified-exists",
+      "data-test-id": "profile-email-change-unverified-exists",
     });
     return;
   }

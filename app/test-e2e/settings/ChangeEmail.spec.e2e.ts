@@ -73,8 +73,6 @@ describe("Change Email", () => {
       "settings.change-email-component.change-button": { type: "submit" },
     });
 
-    acceptWallet();
-
     // assert if error message is present and new email has not been set
     cy.get(notificationTid("profile-email-change-verified-exists")).should("exist");
     cy.get(tid("profile.verify-email-widget.unverified-email")).should("not.exist");
@@ -102,6 +100,6 @@ describe("Change Email", () => {
     });
 
     // assert if error message pooped in
-    cy.get(notificationTid("profile.email-change-unverified-exists")).should("exist");
+    cy.get(notificationTid("profile-email-change-unverified-exists")).should("exist");
   });
 });
