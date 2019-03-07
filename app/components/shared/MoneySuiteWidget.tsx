@@ -2,6 +2,7 @@ import * as cn from "classnames";
 import * as React from "react";
 
 import { TDataTestId, TTranslatedString } from "../../types";
+import { ERoundingMode } from "../../utils/Money.utils";
 import { makeTid } from "../../utils/tidUtils";
 import { ECurrency, Money } from "./Money";
 
@@ -22,6 +23,15 @@ export interface IMoneySuiteWidgetProps {
   walletName?: TTranslatedString;
 }
 
+// For now round down only nEUR
+const selectRoundingMethod = (currency: ECurrency): ERoundingMode | undefined => {
+  if (currency === ECurrency.EUR_TOKEN) {
+    return ERoundingMode.DOWN;
+  }
+
+  return undefined;
+};
+
 export const MoneySuiteWidget: React.FunctionComponent<IMoneySuiteWidgetProps & TDataTestId> = ({
   icon,
   currency,
@@ -41,10 +51,19 @@ export const MoneySuiteWidget: React.FunctionComponent<IMoneySuiteWidgetProps & 
     </div>
     <div>
       <div className={styles.money} data-test-id={makeTid(dataTestId, "large-value")}>
-        <Money value={largeNumber} currency={currency} />
+        <Money
+          value={largeNumber}
+          currency={currency}
+          roundingMode={selectRoundingMethod(currency)}
+        />
       </div>
       <div className={styles.totalMoney} data-test-id={makeTid(dataTestId, "value")}>
-        = <Money value={value} currency={currencyTotal} />
+        ={" "}
+        <Money
+          value={value}
+          currency={currencyTotal}
+          roundingMode={selectRoundingMethod(currency)}
+        />
         {percentage && (
           <span className={`${parseInt(percentage, 10) > 0 ? styles.green : styles.red}`}>
             {" "}

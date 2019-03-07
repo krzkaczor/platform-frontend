@@ -45,7 +45,7 @@ export const doesUserHaveEnoughNEuro = (
   maxNEuro: TBigNumberVariant,
 ): boolean => {
   if (value === "") return false;
-  const formattedMax = formatMoney(maxNEuro, MONEY_DECIMALS, 2, ERoundingMode.HALF_UP);
+  const formattedMax = formatMoney(maxNEuro, MONEY_DECIMALS, 2, ERoundingMode.DOWN);
 
   return compareBigNumbers(convertToBigInt(value || "0"), convertToBigInt(formattedMax)) <= 0;
 };

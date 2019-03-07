@@ -116,7 +116,13 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
               onClick={() => {
                 setFieldValue(
                   "amount",
-                  getFormattedMoney(neuroAmount, ECurrency.EUR, EMoneyFormat.WEI),
+                  getFormattedMoney(
+                    neuroAmount,
+                    ECurrency.EUR,
+                    EMoneyFormat.WEI,
+                    false,
+                    ERoundingMode.DOWN,
+                  ),
                   true,
                 );
                 setFieldTouched("amount", true, true);
@@ -133,7 +139,13 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
               name="amount"
               suffix="EUR"
               maxLength={15}
-              placeholder={`${getFormattedMoney(neuroAmount, ECurrency.EUR, EMoneyFormat.WEI)}`}
+              placeholder={`${getFormattedMoney(
+                neuroAmount,
+                ECurrency.EUR,
+                EMoneyFormat.WEI,
+                false,
+                ERoundingMode.DOWN,
+              )}`}
             />
             <section className={styles.section}>
               <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
