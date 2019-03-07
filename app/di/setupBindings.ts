@@ -29,7 +29,7 @@ import { TWalletMetadata } from "../lib/persistence/WalletMetadataObjectStorage"
 import { WalletStorage } from "../lib/persistence/WalletStorage";
 import { BrowserWalletConnector } from "../lib/web3/BrowserWallet";
 import { ContractsService } from "../lib/web3/ContractsService";
-import { LedgerWalletConnector } from "../lib/web3/LedgerWallet";
+import { LedgerWalletConnector } from "../lib/web3/ledger-wallet/LedgerConnector";
 import { LightWalletConnector, LightWalletUtil } from "../lib/web3/LightWallet";
 import { IEthereumNetworkConfig } from "../lib/web3/types";
 import {

@@ -24,7 +24,7 @@ import { Storage } from "../app/lib/persistence/Storage";
 import { createMockStorage } from "../app/lib/persistence/Storage.mock";
 import { BrowserWalletConnector } from "../app/lib/web3/BrowserWallet";
 import { ContractsService } from "../app/lib/web3/ContractsService";
-import { LedgerWalletConnector } from "../app/lib/web3/LedgerWallet";
+import { LedgerWalletConnector } from "../app/lib/web3/ledger-wallet/LedgerConnector";
 import { Web3ManagerMock } from "../app/lib/web3/Web3Manager.mock";
 import { rootSaga } from "../app/modules/sagas";
 import { generateRootReducer, IAppState } from "../app/store";

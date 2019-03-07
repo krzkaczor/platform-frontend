@@ -1,3 +1,4 @@
+import * as cn from "classnames";
 import * as React from "react";
 import Dropzone from "react-dropzone";
 import { compose } from "redux";
@@ -24,6 +25,7 @@ export const ETOAddDocumentsComponent: React.FunctionComponent<IDispatchProps & 
   disabled,
 }) => {
   const onDrop = (accepted: File[]) => accepted[0] && onDropFile(accepted[0], documentType);
+
   return (
     <Dropzone
       data-test-id="eto-add-document-drop-zone"
@@ -32,8 +34,8 @@ export const ETOAddDocumentsComponent: React.FunctionComponent<IDispatchProps & 
       activeClassName={styles.invisible}
       acceptClassName={styles.invisible}
       rejectClassName={styles.invisible}
-      disabledClassName={styles.invisible}
-      className={styles.invisible}
+      disabledClassName={cn(styles.dropzoneDisabled, styles.invisible)}
+      className={cn(styles.dropzone, styles.invisible)}
       disabled={disabled}
     >
       {children}
@@ -47,7 +49,7 @@ export const ETOAddDocuments = compose<React.FunctionComponent<IOwnProps>>(
       onDropFile: (file: File, documentType: EEtoDocumentType) =>
         dispatch(
           actions.etoDocuments.showIpfsModal(() =>
-            dispatch(actions.etoDocuments.etoUploadDocument(file, documentType)),
+            dispatch(actions.etoDocuments.etoUploadDocumentStart(file, documentType)),
           ),
         ),
     }),

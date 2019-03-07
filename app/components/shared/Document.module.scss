@@ -25,6 +25,7 @@
 }
 
 .tile {
+  position: relative;
   background-color: $neu-white-two;
   color: $gray5;
   border: 1px solid $gray10;
@@ -65,7 +66,6 @@
 }
 
 .enabled {
-  cursor: pointer;
 
   &:active,
   &:hover,
@@ -76,12 +76,15 @@
 
 .active {
   border: 1px solid $green-light;
-  cursor: pointer;
 
   &:active,
   &:hover {
     box-shadow: 0 0 px-to-rem(5px) px-to-rem(1px) $green-light;
   }
+}
+
+.busy {
+  cursor: default;
 }
 
 .clickable-area {
@@ -106,4 +109,35 @@
     text-decoration: underline;
     text-decoration-color: $neu-piss-yellow;
   }
+}
+
+.download-link-disabled {
+  color: $gray10;
+  cursor: default;
+
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.document-busy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+.document-not-busy {
+  display: none;
+}
+
+.text-busy {
+  opacity: .5;
+}
+
+.document-icon-busy {
+  filter: grayscale(100%);
+  opacity: .5;
 }

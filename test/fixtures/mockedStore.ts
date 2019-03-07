@@ -1,6 +1,32 @@
+import BigNumber from "bignumber.js";
+
 import { testEto } from "../fixtures";
 
 export const mockedStore = {
+  etoFlow: {
+    etoPreviewCode: testEto.previewCode,
+  },
+  contracts: {
+    platformTermsConstants: {
+      IS_ICBM_INVESTOR_WHITELISTED: true,
+      MIN_TICKET_EUR_ULPS: new BigNumber("100000000000000000000"),
+      PLATFORM_NEUMARK_SHARE: new BigNumber("2"),
+      TOKEN_PARTICIPATION_FEE_FRACTION: new BigNumber("20000000000000000"),
+      PLATFORM_FEE_FRACTION: new BigNumber("30000000000000000"),
+      DATE_TO_WHITELIST_MIN_DURATION: new BigNumber("604800"),
+      TOKEN_RATE_EXPIRES_AFTER: new BigNumber("14400"),
+      MIN_WHITELIST_DURATION: new BigNumber("0"),
+      MAX_WHITELIST_DURATION: new BigNumber("2592000"),
+      MIN_OFFER_DURATION: new BigNumber("86400"),
+      MAX_OFFER_DURATION: new BigNumber("7776000"),
+      MIN_PUBLIC_DURATION: new BigNumber("0"),
+      MAX_PUBLIC_DURATION: new BigNumber("5184000"),
+      MIN_SIGNING_DURATION: new BigNumber("1209600"),
+      MAX_SIGNING_DURATION: new BigNumber("5184000"),
+      MIN_CLAIM_DURATION: new BigNumber("604800"),
+      MAX_CLAIM_DURATION: new BigNumber("2592000"),
+    },
+  },
   web3: {
     connected: true,
     wallet: {
@@ -63,5 +89,13 @@ export const mockedStore = {
     companies: { [testEto.companyId]: testEto.company },
     contracts: { [testEto.previewCode]: testEto.contract },
     displayOrder: [testEto.previewCode],
+  },
+  bookBuildingFlow: {
+    bookbuildingStats: {
+      [testEto.etoId]: {
+        investorsCount: 10,
+        pledgedAmount: 500,
+      },
+    },
   },
 } as any;

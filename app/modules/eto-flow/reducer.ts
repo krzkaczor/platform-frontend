@@ -1,5 +1,6 @@
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
+import { actions } from "../actions";
 import { IEtoFlowState } from "./types";
 
 export const etoFlowInitialState: IEtoFlowState = {
@@ -7,6 +8,8 @@ export const etoFlowInitialState: IEtoFlowState = {
   loading: false,
   saving: false,
   bookbuildingStats: [],
+  signedInvestmentAgreementUrlLoading: false,
+  signedInvestmentAgreementUrl: null,
 };
 
 export const etoFlowReducer: AppReducer<IEtoFlowState> = (
@@ -43,6 +46,17 @@ export const etoFlowReducer: AppReducer<IEtoFlowState> = (
       return {
         ...state,
         ...action.payload,
+      };
+    case actions.etoFlow.loadSignedInvestmentAgreement.getType():
+      return {
+        ...state,
+        signedInvestmentAgreementUrlLoading: true,
+      };
+    case actions.etoFlow.setInvestmentAgreementHash.getType():
+      return {
+        ...state,
+        signedInvestmentAgreementUrlLoading: false,
+        signedInvestmentAgreementUrl: action.payload.signedInvestmentAgreementUrl,
       };
   }
   return state;

@@ -5,7 +5,7 @@ import {
 import { createMessage, TMessage } from "../../components/translatedMessages/utils";
 import { BrowserWalletError } from "../../lib/web3/BrowserWallet";
 import { mapSignerErrorToErrorMessage } from "../../lib/web3/errors";
-import { LedgerError } from "../../lib/web3/LedgerWallet";
+import { LedgerError } from "../../lib/web3/ledger-wallet/errors";
 import { LightWalletError } from "../../lib/web3/LightWallet";
 import { SignerError } from "../../lib/web3/Web3Manager";
 import { EthereumAddress } from "../../types";

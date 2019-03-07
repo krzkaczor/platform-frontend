@@ -13,7 +13,7 @@ import {
 import { delay } from "../../utils/delay";
 import { noopLogger } from "../dependencies/logger";
 import { ILedgerWalletMetadata } from "../persistence/WalletMetadataObjectStorage";
-import { LedgerWallet } from "./LedgerWallet";
+import { LedgerWallet } from "./ledger-wallet/LedgerWallet";
 import {
   EWeb3ManagerEvents,
   WalletNotConnectedError,

@@ -10,12 +10,10 @@ import { createMessage } from "../../../components/translatedMessages/utils";
 import { Neumark } from "../../../lib/contracts/Neumark";
 import { ILedgerWalletMetadata } from "../../../lib/persistence/WalletMetadataObjectStorage";
 import { ContractsService } from "../../../lib/web3/ContractsService";
-import {
-  IDerivationPathToAddress,
-  LedgerNotAvailableError,
-  LedgerWallet,
-  LedgerWalletConnector,
-} from "../../../lib/web3/LedgerWallet";
+import { LedgerNotAvailableError } from "../../../lib/web3/ledger-wallet/errors";
+import { LedgerWalletConnector } from "../../../lib/web3/ledger-wallet/LedgerConnector";
+import { LedgerWallet } from "../../../lib/web3/ledger-wallet/LedgerWallet";
+import { IDerivationPathToAddress } from "../../../lib/web3/ledger-wallet/types";
 import { Web3Adapter } from "../../../lib/web3/Web3Adapter";
 import { Web3Manager } from "../../../lib/web3/Web3Manager";
 import { IAppState } from "../../../store";

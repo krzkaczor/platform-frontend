@@ -27,8 +27,10 @@ const BankAccount: React.FunctionComponent<IExternalProps> = ({ details, withBor
   <section className={cn(styles.bankDetails, { [styles.framed]: withBorder })}>
     <img className={styles.icon} src={bankIcon} alt="" />
     <div>
-      <p className={cn(styles.kycData, "m-0")}>{details.name}</p>
-      <p className={cn(styles.bankNumber, "m-0")}>
+      <p className={cn(styles.kycData, "m-0")} data-test-id="wallet.bank-account.name">
+        {details.name}
+      </p>
+      <p className={cn(styles.bankNumber, "m-0")} data-test-id="wallet.bank-account.details">
         <BankNumber last4={details.bankAccountNumberLast4} bank={details.bankName} />
       </p>
     </div>

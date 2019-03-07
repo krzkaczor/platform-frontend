@@ -49,7 +49,7 @@ describe("sagasUtils", () => {
 
   describe("neuTakeOnly", () => {
     it("should return action on payload match", () => {
-      const action = { type: "INIT_START", payload: { init: "app" } };
+      const action = { type: "INIT_START", payload: { init: "app", foo: "bar" } };
 
       return expectSaga(neuTakeOnly, "INIT_START", { init: "app" })
         .dispatch(action)

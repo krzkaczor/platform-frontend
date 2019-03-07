@@ -10,7 +10,7 @@ import {
   ILightWalletRetrieveMetadata,
 } from "../../lib/persistence/WalletMetadataObjectStorage";
 import { BrowserWalletConnector } from "../../lib/web3/BrowserWallet";
-import { LedgerWalletConnector } from "../../lib/web3/LedgerWallet";
+import { LedgerWalletConnector } from "../../lib/web3/ledger-wallet/LedgerConnector";
 import { LightWalletConnector, LightWalletUtil } from "../../lib/web3/LightWallet";
 import { IPersonalWallet } from "../../lib/web3/PersonalWeb3";
 import { SignerError, Web3Manager } from "../../lib/web3/Web3Manager";

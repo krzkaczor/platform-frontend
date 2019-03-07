@@ -4,6 +4,7 @@ import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ETOCommitment } from "../../../../lib/contracts/ETOCommitment";
 import { ITxData } from "../../../../lib/web3/types";
 import { IAppState } from "../../../../store";
+import { EthereumAddressWithChecksum } from "../../../../types";
 import { actions } from "../../../actions";
 import {
   selectIsNewPreEtoStartDateValid,
@@ -52,8 +53,56 @@ export function* generateSetStartDateTransaction({
   return txDetails;
 }
 
+export function* generateSignInvestmentAgreementTx(
+  { contractsService, web3Manager }: TGlobalDependencies,
+  extraParam: { etoId: string; agreementHash: string },
+): any {
+  const { etoId, agreementHash } = extraParam;
+  const state: IAppState = yield select();
+
+  if (etoId && agreementHash) {
+    const userAddress: EthereumAddressWithChecksum = yield selectEthereumAddressWithChecksum(state);
+    const gasPriceWithOverhead: string = yield selectStandardGasPriceWithOverHead(state);
+
+    const contract: ETOCommitment = yield contractsService.getETOCommitmentContract(etoId);
+    const txData: string = yield contract
+      .companySignsInvestmentAgreementTx(`ifps:${agreementHash}`)
+      .getData();
+
+    const txInitialDetails = {
+      to: contract.address,
+      from: userAddress,
+      data: txData,
+      value: "0",
+      gasPrice: gasPriceWithOverhead,
+    };
+
+    const estimatedGasWithOverhead: string = yield web3Manager.estimateGasWithOverhead(
+      txInitialDetails,
+    );
+
+    const txDetails: ITxData = {
+      ...txInitialDetails,
+      gas: estimatedGasWithOverhead,
+    };
+
+    return txDetails;
+  } else {
+    throw new Error("cannot generate transaction, etoId or agreementUrl missing");
+  }
+}
+
 export function* etoSetDateGenerator(_: TGlobalDependencies): any {
   const generatedTxDetails = yield neuCall(generateSetStartDateTransaction);
+  yield put(actions.txSender.setTransactionData(generatedTxDetails));
+  yield put(actions.txSender.txSenderContinueToSummary());
+}
+
+export function* etoSignInvestmentAgreementGenerator(
+  _: TGlobalDependencies,
+  extraParam: { etoId: string; agreementHash: string },
+): any {
+  const generatedTxDetails = yield neuCall(generateSignInvestmentAgreementTx, extraParam);
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(actions.txSender.txSenderContinueToSummary());
 }

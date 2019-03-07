@@ -5,12 +5,14 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { EEtoDocumentType, IEtoDocument } from "../../lib/api/eto/EtoFileApi.interfaces";
 import { TTranslatedString } from "../../types";
 import { ETOAddDocuments } from "../eto/shared/EtoAddDocument";
+import { LoadingIndicator } from "./loading-indicator/LoadingIndicator";
 
 import * as styles from "./Document.module.scss";
 
 interface IDocumentProps {
   extension: string;
   blank?: boolean;
+  className?: string;
 }
 
 interface IDocumentTileProps {
@@ -19,14 +21,17 @@ interface IDocumentTileProps {
   onlyDownload?: boolean;
   blank?: boolean;
   active?: boolean;
+  busy?: boolean;
 }
 
 interface IUploadableDocumentTileProps {
   documentKey: EEtoDocumentType;
-  canUpload: boolean;
+  active: boolean;
   typedFileName: TTranslatedString;
   isFileUploaded: boolean;
-  downloadDocumentByType: (documentType: EEtoDocumentType) => void;
+  downloadDocumentStart: (documentType: EEtoDocumentType) => void;
+  documentDownloadLinkInactive: boolean;
+  busy?: boolean;
 }
 
 interface IClickableDocumentTileProps {
@@ -34,7 +39,11 @@ interface IClickableDocumentTileProps {
   document: IEtoDocument;
 }
 
-export const Document: React.FunctionComponent<IDocumentProps> = ({ extension, blank }) => {
+export const Document: React.FunctionComponent<IDocumentProps> = ({
+  extension,
+  blank,
+  className,
+}) => {
   const labelHeight = 24;
   const labelWidth = 50;
 
@@ -44,7 +53,7 @@ export const Document: React.FunctionComponent<IDocumentProps> = ({ extension, b
   return (
     <svg
       viewBox="0 0 61 73"
-      className={cn("document-icon", styles.document, !blank && computedExtension)}
+      className={cn("document-icon", styles.document, { [computedExtension]: !blank }, className)}
     >
       <path
         className={styles.file}
@@ -67,40 +76,64 @@ export const DocumentTile: React.FunctionComponent<IDocumentProps & IDocumentTil
   blank,
   onlyDownload,
   active,
+  busy,
 }) => {
   return (
-    <div className={cn(styles.tile, active && styles.active, !blank && styles.enabled, className)}>
-      <Document extension={extension} blank={blank} />
+    <div
+      className={cn(
+        styles.tile,
+        {
+          [styles.busy]: busy,
+          [styles.enabled]: !blank,
+          [styles.active]: active,
+        },
+        className,
+      )}
+    >
+      <LoadingIndicator className={busy ? styles.documentBusy : styles.documentNotBusy} />
+
+      <Document extension={extension} blank={blank} className={busy && styles.documentIconBusy} />
       <p
-        className={cn(
-          styles.title,
-          blank && styles.blankTitle,
-          !onlyDownload && !active && styles.disabledTitle,
-        )}
+        className={cn(styles.title, {
+          [styles.blankTitle]: blank,
+          [styles.disabledTitle]: !onlyDownload && !active,
+          [styles.textBusy]: busy,
+        })}
       >
         {title}
       </p>
       {!onlyDownload &&
         blank &&
         active && (
-          <p className={cn(styles.subTitle)}>Drag and drop or Click to upload high quality PDF</p>
+          <p className={cn(styles.subTitle, { [styles.textBusy]: busy })}>
+            <FormattedMessage id="documents.drag-n-drop" />
+          </p>
         )}
     </div>
   );
 };
 
+DocumentTile.defaultProps = {
+  busy: false,
+};
+
 export const ClickableDocumentTile: React.FunctionComponent<
   IDocumentProps & IDocumentTileProps & IClickableDocumentTileProps
-> = ({ generateTemplate, title, document, extension }) => {
+> = ({ generateTemplate, title, document, extension, busy }) => {
   return (
     <div>
       <button
+        disabled={busy}
         className={styles.clickableArea}
-        onClick={() => {
-          generateTemplate(document);
-        }}
+        onClick={() => generateTemplate(document)}
       >
-        <DocumentTile title={title} extension={extension} blank={false} onlyDownload={true} />
+        <DocumentTile
+          title={title}
+          extension={extension}
+          blank={false}
+          onlyDownload={true}
+          busy={busy}
+        />
       </button>
     </div>
   );
@@ -108,28 +141,38 @@ export const ClickableDocumentTile: React.FunctionComponent<
 
 export const UploadableDocumentTile: React.FunctionComponent<IUploadableDocumentTileProps> = ({
   documentKey,
-  canUpload,
+  active,
   typedFileName,
   isFileUploaded,
-  downloadDocumentByType,
+  downloadDocumentStart,
+  documentDownloadLinkInactive,
+  busy,
 }) => {
+  const linkDisabled = documentDownloadLinkInactive || busy;
+
   return (
     <div data-test-id={`form.name.${documentKey}`}>
-      <ETOAddDocuments documentType={documentKey} disabled={!canUpload}>
+      <ETOAddDocuments documentType={documentKey} disabled={!active || busy}>
         <DocumentTile
           title={typedFileName}
           extension={".pdf"}
-          active={canUpload}
+          active={active}
           blank={!isFileUploaded}
+          busy={busy}
         />
       </ETOAddDocuments>
       {isFileUploaded && (
         <button
           data-test-id="documents-download-document"
-          onClick={() => downloadDocumentByType(documentKey)}
-          className={cn(styles.subTitleDownload)}
+          onClick={() => downloadDocumentStart(documentKey)}
+          className={cn(styles.subTitleDownload, linkDisabled && styles.downloadLinkDisabled)}
+          disabled={linkDisabled}
         >
-          <FormattedMessage id="documents.download-document" />
+          {linkDisabled ? (
+            <FormattedMessage id="documents.download-document-busy" />
+          ) : (
+            <FormattedMessage id="documents.download-document" />
+          )}
         </button>
       )}
     </div>

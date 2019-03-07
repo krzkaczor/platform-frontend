@@ -1,3 +1,11 @@
+.dropzone {
+  cursor: pointer;
+}
+
+.dropzone-disabled {
+  cursor: default;
+}
+
 .invisible {
   width: inherit;
   height: inherit;
