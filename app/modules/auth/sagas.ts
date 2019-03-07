@@ -50,7 +50,7 @@ function* handleSignInUser({ logger }: TGlobalDependencies): Iterator<any> {
     yield neuCall(signInUser);
   } catch (e) {
     logger.error("User Sign in error", e);
-    yield put(actions.auth.logout());
+
     if (e instanceof SignerRejectConfirmationError) {
       yield put(
         actions.walletSelector.messageSigningError(

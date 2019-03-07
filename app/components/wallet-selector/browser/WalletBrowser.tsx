@@ -4,11 +4,10 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
-import { BROWSER_WALLET_RECONNECT_INTERVAL } from "../../../config/constants";
 import { actions } from "../../../modules/actions";
 import { selectIsLoginRoute } from "../../../modules/wallet-selector/selectors";
 import { appConnect } from "../../../store";
-import { withActionWatcher } from "../../../utils/withActionWatcher";
+import { onEnterAction } from "../../../utils/OnEnterAction";
 import { Button } from "../../shared/buttons";
 import { HiResImage } from "../../shared/HiResImage";
 import { HorizontalLine } from "../../shared/HorizontalLine";
@@ -117,8 +116,7 @@ export const WalletBrowser = compose<React.FunctionComponent>(
       handleReset: () => dispatch(actions.walletSelector.browserWalletResetApprovalRequest()),
     }),
   }),
-  withActionWatcher({
+  onEnterAction({
     actionCreator: dispatch => dispatch(actions.walletSelector.tryConnectingWithBrowserWallet()),
-    interval: BROWSER_WALLET_RECONNECT_INTERVAL,
   }),
 )(WalletBrowserComponent);
