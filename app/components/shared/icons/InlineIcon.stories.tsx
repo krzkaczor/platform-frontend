@@ -32,7 +32,7 @@ import * as wallet_confirm_icon from "../../../assets/img/wallet_selector/wallet
 import * as wallet_icon from "../../../assets/img/wallet_selector/wallet_icon.svg";
 
 // Load all inline icons
-const context = require.context("../../assets/img/inline_icons/", true, /\.(svg)$/);
+const context = require.context("../../../assets/img/inline_icons/", true, /\.(svg)$/);
 const allInlineIcons: ReadonlyArray<string> = context.keys().map<string>(context);
 
 storiesOf("Icons", module)
