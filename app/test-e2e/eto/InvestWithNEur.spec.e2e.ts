@@ -11,7 +11,8 @@ import { tid } from "../utils/selectors";
 import { createAndLoginNewUser } from "../utils/userHelpers";
 
 describe("Invest with nEur", () => {
-  it("invest 1000 nEuro", () => {
+  // TODO: Add fixture with nEur
+  it.skip("invest 1000 nEuro", () => {
     const PUBLIC_ETO_ID = etoFixtureAddressByName("ETOInPublicState");
 
     createAndLoginNewUser({
