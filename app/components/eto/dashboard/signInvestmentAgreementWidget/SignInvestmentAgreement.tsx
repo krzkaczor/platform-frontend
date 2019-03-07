@@ -38,10 +38,12 @@ interface ISignComponentStateProps {
   signedInvestmentAgreementUrl: string | null;
 }
 
-export const SignInvestmentAgreementLayout: React.FunctionComponent<
-  ISignComponentStateProps & IDispatchProps
-> = ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
-  if (signedInvestmentAgreementUrl === null) {
+export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignComponentStateProps & IDispatchProps> =
+  ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
+  if (
+    signedInvestmentAgreementUrl === null
+    || (signedInvestmentAgreementUrl !== null && signedInvestmentAgreementUrl !== `ifps:${uploadedAgreement.ipfsHash}`)
+  ) {
     //uploaded, not signed
     // widget says sign me
     return (
@@ -88,6 +90,8 @@ export const SignInvestmentAgreement = compose<React.FunctionComponent>(
       const uploadedAgreement = selectUploadedInvestmentAgreement(state);
 
       const etoId = selectEtoId(state);
+      //there is another widget showing up if there's no agreement uploaded,
+      // so uploadedAgreement=== null is an invalid case
       if (etoId && uploadedAgreement) {
         return {
           etoId,
