@@ -1,13 +1,12 @@
 import * as cn from "classnames";
 import * as React from "react";
 
-import { CommonHtmlProps, TTranslatedString } from "../../types";
-import { PanelBase } from "./PanelBase";
-import { PanelHeader } from "./PanelHeader";
+import { CommonHtmlProps, TDataTestId, TTranslatedString } from "../../types";
+import { EHeadingSize, Heading } from "./Heading";
 
 import * as styles from "./Panel.module.scss";
 
-export interface IPanelProps extends CommonHtmlProps {
+export interface IPanelProps {
   headerText?: TTranslatedString;
   rightComponent?: React.ReactNode;
   icon?: string;
@@ -15,7 +14,7 @@ export interface IPanelProps extends CommonHtmlProps {
   centerContent?: boolean;
 }
 
-const Panel: React.FunctionComponent<IPanelProps> = ({
+const Panel: React.FunctionComponent<IPanelProps & CommonHtmlProps & TDataTestId> = ({
   headerText,
   rightComponent,
   icon,
@@ -23,20 +22,25 @@ const Panel: React.FunctionComponent<IPanelProps> = ({
   children,
   narrow,
   centerContent,
-  ...props
-}) => {
-  const hasHeader = !!(headerText || rightComponent || icon);
-
-  return (
-    <PanelBase {...props} className={className} narrow={narrow}>
-      {hasHeader && (
-        <PanelHeader icon={icon} headerText={headerText} rightComponent={rightComponent} />
-      )}
-      <div className={cn(styles.content, centerContent ? "justify-content-center" : null)}>
-        {children}
+  "data-test-id": dataTestId,
+}) => (
+  <section
+    className={cn(styles.panel, className, { [styles.narrow]: narrow })}
+    data-test-id={dataTestId}
+  >
+    {(headerText || rightComponent) && (
+      <div className={cn(styles.header)}>
+        {headerText && (
+          <Heading level={3} size={EHeadingSize.SMALL} decorator={icon}>
+            {headerText}
+          </Heading>
+        )}
+        {rightComponent}
       </div>
-    </PanelBase>
-  );
-};
+    )}
+
+    <div className={cn(styles.content, centerContent ? "text-center" : null)}>{children}</div>
+  </section>
+);
 
 export { Panel };

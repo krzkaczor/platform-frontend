@@ -12,7 +12,7 @@ import {
 import { selectQuintessenceBankAccount } from "../../../../modules/kyc/selectors";
 import { appConnect } from "../../../../store";
 import { ButtonArrowRight } from "../../../shared/buttons";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, ECurrencySymbol, Money } from "../../../shared/Money";
 import { InfoList } from "../../tx-sender/shared/InfoList";
 import { InfoRow } from "../../tx-sender/shared/InfoRow";
@@ -36,7 +36,7 @@ const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
   quintessenceBankAccount,
 }) => (
   <Container>
-    <Heading className="mb-4">
+    <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
       <FormattedMessage id="bank-transfer.purchase.summary.title" />
     </Heading>
 

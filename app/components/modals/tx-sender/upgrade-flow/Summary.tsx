@@ -13,7 +13,7 @@ import {
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
 import { DocumentTemplateButton } from "../../../shared/DocumentLink";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, Money } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
@@ -41,7 +41,7 @@ export const UpgradeSummaryComponent: React.FunctionComponent<TComponentProps> =
   <Container>
     <Row className="mb-4">
       <Col>
-        <Heading>
+        <Heading size={EHeadingSize.SMALL} level={4}>
           <FormattedMessage id="upgrade-flow.summary" />
         </Heading>
       </Col>

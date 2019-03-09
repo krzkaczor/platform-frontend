@@ -1,9 +1,8 @@
 import * as cn from "classnames";
-import { isEqual } from "lodash/fp";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
-import { compose, lifecycle, withState } from "recompose";
+import { compose } from "recompose";
 
 import { externalRoutes } from "../../config/externalRoutes";
 import { actions } from "../../modules/actions";
@@ -15,9 +14,9 @@ import { appConnect } from "../../store";
 import { multiplyBigNumbers } from "../../utils/BigNumberUtils";
 import { withParams } from "../../utils/withParams";
 import { Button, ButtonLink, ButtonSize, EButtonLayout } from "../shared/buttons";
+import { Heading } from "../shared/Heading";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../shared/Money";
 import { NumberFormat } from "../shared/NumberFormat";
-import { SectionHeader } from "../shared/SectionHeader";
 import { ENewTableCellLayout, NewTable, NewTableRow } from "../shared/table";
 
 import * as arrowRight from "../../assets/img/inline_icons/arrow_right.svg";
@@ -38,7 +37,6 @@ interface IStateProps {
 
 interface IDispatchProps {
   showDownloadAgreementModal: (etoId: string, isRetailEto: boolean) => void;
-  loadTokensData: (walletAddress: string) => void;
 }
 
 interface IAdditionalProps {
@@ -58,13 +56,14 @@ const PortfolioMyAssetsComponent: React.FunctionComponent<TComponentProps> = ({
   walletAddress,
 }) => (
   <>
-    <SectionHeader
+    <Heading
+      level={3}
       decorator={false}
       className="mb-4"
       description={<FormattedMessage id="portfolio.section.your-assets.description" />}
     >
       <FormattedMessage id="portfolio.section.your-assets.title" />
-    </SectionHeader>
+    </Heading>
 
     <Row>
       <Col>
@@ -175,32 +174,7 @@ const PortfolioMyAssets = compose<TComponentProps, IExternalProps>(
       showDownloadAgreementModal: (etoId: string, isRetailEto: boolean) => {
         dispatch(actions.portfolio.showDownloadAgreementModal(etoId, isRetailEto));
       },
-      loadTokensData: (walletAddress: string) => {
-        dispatch(actions.publicEtos.loadTokensData(walletAddress));
-      },
     }),
-  }),
-  withState("tokenLoaded", "setTokenLoaded", false),
-  lifecycle<TComponentProps, IStateProps>({
-    componentDidUpdate(prevProps): void {
-      const prevAssets = prevProps.myAssets;
-      const actualAssets = this.props.myAssets;
-
-      if (this.props.myAssets.length === 0 && prevProps.myAssets.length > 0) {
-        this.props.setTokenLoaded(false);
-        return;
-      }
-
-      if (
-        (!this.props.tokenLoaded &&
-          this.props.myAssets.length > 0 &&
-          isEqual(prevAssets, actualAssets)) ||
-        (this.props.myAssets.length > 0 && !isEqual(prevAssets, actualAssets))
-      ) {
-        this.props.loadTokensData(this.props.walletAddress);
-        this.props.setTokenLoaded(true);
-      }
-    },
   }),
 )(PortfolioMyAssetsComponent);
 

@@ -9,9 +9,9 @@ import {
 import { myEtherWalletUrl } from "../../../utils/myEtherWallet";
 import { ButtonArrowRight } from "../../shared/buttons";
 import { ConfettiEthereum, SpinningEthereum } from "../../shared/ethererum";
+import { Heading } from "../../shared/Heading";
 import { HighlightedStripField } from "../../shared/HighlightedStripField";
 import { ExternalLink } from "../../shared/links";
-import { SectionHeader } from "../../shared/SectionHeader";
 
 import * as iconMyEtherWallet from "../../../assets/img/myEtherWallet.svg";
 import * as styles from "./IcbmWalletBalanceModal.module.scss";
@@ -88,9 +88,9 @@ const MigrateHeader: React.FunctionComponent<{ step: number }> = ({ step }) => (
     </p>
     {step === 1 && (
       <>
-        <SectionHeader className={styles.header}>
+        <Heading level={3} className={styles.header}>
           <FormattedMessage id="settings.modal.icbm-wallet-balance.body.migrate.step.1.title" />
-        </SectionHeader>
+        </Heading>
         <p className={styles.description}>
           <FormattedHTMLMessage
             tagName="span"
@@ -101,11 +101,11 @@ const MigrateHeader: React.FunctionComponent<{ step: number }> = ({ step }) => (
     )}
     {step === 2 && (
       <>
-        <SectionHeader className={styles.header}>
+        <Heading level={3} className={styles.header}>
           <div data-test-id="modals.icbm-balance-modal.migrate-body.step-2">
             <FormattedMessage id="settings.modal.icbm-wallet-balance.body.migrate.step.2.title" />
           </div>
-        </SectionHeader>
+        </Heading>
         <p className={styles.description}>
           <FormattedHTMLMessage
             tagName="span"
@@ -180,9 +180,9 @@ export const MigrateModal: React.FunctionComponent<IMigrationModal> = ({
 }) => {
   return (
     <>
-      <SectionHeader className={styles.header}>
+      <Heading level={3} className={styles.header}>
         <FormattedMessage id="settings.modal.icbm-wallet-balance.title.migrate" />
-      </SectionHeader>
+      </Heading>
 
       <MigrateHeader step={migrationStep} />
 

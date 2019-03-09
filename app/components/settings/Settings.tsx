@@ -20,7 +20,7 @@ import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
 import { GridBaseLayout, WidgetGridLayout } from "../shared/Layout";
-import { SectionHeader } from "../shared/SectionHeader";
+import { Heading } from "../shared/Heading";
 import { ChangeEmail } from "./change-email/ChangeEmail";
 import { YourEthereumAddressWidget } from "./ethereum-address-widget/YourEthereumAddressWidget";
 import { CheckYourICBMWalletWidget } from "./icbm-wallet-widget/CheckYourICBMWalletWidget";
@@ -83,9 +83,9 @@ export const SettingsComponent: React.FunctionComponent<IStateProps> = ({
             isPersonalDataProcessed && <PersonalAccountDetails layoutClass={layoutStyles.span3} />}
         </WidgetGridLayout>
 
-        <SectionHeader>
+        <Heading level={3}>
           <FormattedMessage id="settings.personal-settings.title" />
-        </SectionHeader>
+        </Heading>
         <WidgetGridLayout>
           {process.env.NF_FEATURE_EMAIL_CHANGE_ENABLED === "1" && (
             <ChangeEmail layoutClass={layoutStyles.span3} />

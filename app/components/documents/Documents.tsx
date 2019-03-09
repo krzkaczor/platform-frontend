@@ -45,8 +45,8 @@ import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
 import { ClickableDocumentTile, UploadableDocumentTile } from "../shared/Document";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
+import { Heading } from "../shared/Heading";
 import { LoadingIndicator } from "../shared/loading-indicator";
-import { SectionHeader } from "../shared/SectionHeader";
 import { SingleColDocuments } from "../shared/SingleColDocumentWidget";
 import { getDocumentTitles } from "./utils";
 
@@ -194,9 +194,9 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
   return (
     <>
       <div data-test-id="eto-documents" className={styles.layout}>
-        <SectionHeader className={cn(styles.header)}>
+        <Heading level={3} className={cn(styles.header)}>
           <FormattedMessage id="documents.legal-documents" />
-        </SectionHeader>
+        </Heading>
 
         <section className={styles.documentSection}>
           <h4 className={cn(styles.groupName)}>

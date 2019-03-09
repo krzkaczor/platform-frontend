@@ -10,7 +10,6 @@ import { TTranslatedString } from "../../../types";
 import { onEnterAction } from "../../../utils/OnEnterAction";
 import { Button, EButtonLayout } from "../../shared/buttons";
 import { Panel } from "../../shared/Panel";
-import { ResponsiveImage } from "../../shared/ResponsiveImage";
 
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as personImage from "../../../assets/img/person@3x.png";
@@ -51,7 +50,7 @@ const Record: React.FunctionComponent<IRecordProps> = ({ value, label }) => {
   );
 };
 
-class AccountDetailsComponent extends React.Component<IStateProps & IExternalProps, IOwnState> {
+class PersonalAccountDetailsLayout extends React.Component<IStateProps, IOwnState> {
   state = {
     isDataHidden: true,
   };
@@ -68,14 +67,7 @@ class AccountDetailsComponent extends React.Component<IStateProps & IExternalPro
       <Panel
         className={cn("h-100", this.props.layoutClass)}
         headerText={<FormattedMessage id="settings.account-details.title" />}
-        rightComponent={
-          <ResponsiveImage
-            theme="transparent"
-            srcSet={{ "1x": personImage }}
-            alt="person image"
-            className={styles.image}
-          />
-        }
+        rightComponent={<img src={personImage} className={styles.image} alt="" />}
       >
         <div className={styles.content}>
           <div>
@@ -139,9 +131,7 @@ class AccountDetailsComponent extends React.Component<IStateProps & IExternalPro
   }
 }
 
-export const PersonalAccountDetails: React.FunctionComponent<IExternalProps> = compose<
-  React.FunctionComponent
->(
+const PersonalAccountDetails = compose<React.FunctionComponent>(
   appConnect<IStateProps>({
     stateToProps: s => ({
       personalData: s.kyc.individualData || {},
@@ -150,4 +140,6 @@ export const PersonalAccountDetails: React.FunctionComponent<IExternalProps> = c
   onEnterAction({
     actionCreator: dispatch => dispatch(actions.kyc.kycLoadIndividualData()),
   }),
-)(AccountDetailsComponent);
+)(PersonalAccountDetailsLayout);
+
+export { PersonalAccountDetails, PersonalAccountDetailsLayout };

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ESectionHeaderSize, SectionHeader } from "../../shared/SectionHeader";
+import { EHeadingSize, Heading } from "../../shared/Heading";
 
 interface IProps {
   title: string | React.ReactNode;
@@ -8,7 +8,7 @@ interface IProps {
   "data-test-id"?: string;
   hasDecorator?: boolean;
   className?: string;
-  size?: ESectionHeaderSize;
+  size?: EHeadingSize;
 }
 
 const DashboardSection: React.FunctionComponent<IProps> = ({
@@ -19,14 +19,15 @@ const DashboardSection: React.FunctionComponent<IProps> = ({
   className = "my-4",
   size,
 }) => (
-  <SectionHeader
+  <Heading
+    level={3}
     className={className}
     decorator={hasDecorator}
     size={size}
     data-test-id={dataTestId}
   >
     {step && <>STEP {step}:</>} {title}
-  </SectionHeader>
+  </Heading>
 );
 
 export { DashboardSection };

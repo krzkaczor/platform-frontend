@@ -1,14 +1,14 @@
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 
-import { SectionHeader } from "../shared/SectionHeader";
+import { Heading } from "../shared/Heading";
 
 const ICBMWalletHelpTextModal: React.FunctionComponent = () => {
   return (
     <section data-test-id="wallet-selector-icbm-wallet-help-text-modal">
-      <SectionHeader className="mb-4">
+      <Heading level={3} className="mb-4">
         <FormattedMessage id="icbm-help-modal.title" />
-      </SectionHeader>
+      </Heading>
 
       <p className="mb-0">
         <FormattedHTMLMessage tagName="span" id="icbm-help-modal.paragraph" />
