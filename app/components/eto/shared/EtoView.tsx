@@ -12,8 +12,8 @@ import { PersonProfileModal } from "../../modals/PersonProfileModal";
 import { Accordion, AccordionElement } from "../../shared/Accordion";
 import { ButtonLink } from "../../shared/buttons";
 import { ChartDoughnut } from "../../shared/charts/ChartDoughnut";
-import { GridBaseLayout } from "../../shared/Layout";
 import { Heading } from "../../shared/Heading";
+import { GridBaseLayout } from "../../shared/Layout";
 import { ExternalLink } from "../../shared/links";
 import { ILink, MediaLinksWidget, normalizedUrl } from "../../shared/MediaLinksWidget";
 import { Panel } from "../../shared/Panel";
@@ -130,14 +130,14 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             <div className={styles.headerWithButton}>
               <FormattedMessage id="eto.public-view.eto-timeline" />
               {process.env.NF_MAY_SHOW_INVESTOR_STATS === "1" &&
-              !isInSetupState && (
-                <ButtonLink
-                  to={withParams(externalRoutes.icoMonitorEto, { etoId: eto.etoId })}
-                  target="_blank"
-                >
-                  <FormattedMessage id="eto.public-view.fundraising-statistics-button" />
-                </ButtonLink>
-              )}
+                !isInSetupState && (
+                  <ButtonLink
+                    to={withParams(externalRoutes.icoMonitorEto, { etoId: eto.etoId })}
+                    target="_blank"
+                  >
+                    <FormattedMessage id="eto.public-view.fundraising-statistics-button" />
+                  </ButtonLink>
+                )}
             </div>
           </Heading>
           <Panel>
@@ -172,9 +172,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             </Panel>
           )}
 
-            <Heading level={3} decorator={false} className="mb-4">
-              <FormattedMessage id="eto.public-view.legal-information.title" />
-            </Heading>
+          <Heading level={3} decorator={false} className="mb-4">
+            <FormattedMessage id="eto.public-view.legal-information.title" />
+          </Heading>
 
           <LegalInformationWidget companyData={eto.company} />
         </section>

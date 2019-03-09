@@ -50,7 +50,10 @@ const Record: React.FunctionComponent<IRecordProps> = ({ value, label }) => {
   );
 };
 
-class PersonalAccountDetailsLayout extends React.Component<IStateProps, IOwnState> {
+class PersonalAccountDetailsLayout extends React.Component<
+  IStateProps & IExternalProps,
+  IOwnState
+> {
   state = {
     isDataHidden: true,
   };
@@ -131,7 +134,7 @@ class PersonalAccountDetailsLayout extends React.Component<IStateProps, IOwnStat
   }
 }
 
-const PersonalAccountDetails = compose<React.FunctionComponent>(
+const PersonalAccountDetails = compose<React.FunctionComponent<IExternalProps>>(
   appConnect<IStateProps>({
     stateToProps: s => ({
       personalData: s.kyc.individualData || {},
