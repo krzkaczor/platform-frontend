@@ -7,6 +7,7 @@ import { DepositEthModal } from "../modals/DepositEthModal";
 import { DownloadTokenAgreementModal } from "../modals/download-token-agreements-modal/DownloadTokenAgreementModal";
 import { IcbmWalletBalanceModal } from "../modals/icbm-wallet-balance-modal/IcbmWalletBalanceModal";
 import { TxSenderModal } from "../modals/tx-sender/TxSender";
+import { LoadingIndicator } from "../shared/loading-indicator/LoadingIndicator";
 import { NotificationWidget } from "../shared/notification-widget/NotificationWidget";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -26,7 +27,9 @@ export const LayoutAuthorized: React.FunctionComponent = ({ children }) => (
       <div className="layout-container">
         <NotificationWidget />
         <Row>
-          <Col className={styles.content}>{children}</Col>
+          <Col className={styles.content}>
+            <React.Suspense fallback={<LoadingIndicator />}>{children}</React.Suspense>
+          </Col>
         </Row>
       </div>
     </div>

@@ -9,7 +9,10 @@ import { appConnect } from "../../../store";
 import { createErrorBoundary } from "../../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
 import { LoadingIndicator } from "../../shared/loading-indicator";
-import { BackupSeedFlowContainer } from "./BackupSeedFlowContainer";
+
+const BackupSeedFlowContainer = React.lazy(() =>
+  import("./BackupSeedFlowContainer").then(imp => ({ default: imp.BackupSeedFlowContainer })),
+);
 
 interface IDispatchProps {
   verifyBackupPhrase: () => void;

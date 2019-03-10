@@ -7,7 +7,7 @@ import { ChartDoughnut } from "../../shared/charts/ChartDoughnut";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../../shared/Money";
 import { NumberFormat } from "../../shared/NumberFormat";
 import { Panel } from "../../shared/Panel";
-import { FUNDING_ROUNDS } from "../registration/pages/LegalInformation";
+import { FUNDING_ROUNDS } from "../constants";
 import { CHART_COLORS } from "../shared/EtoView";
 
 import * as styles from "./LegalInformationWidget.module.scss";

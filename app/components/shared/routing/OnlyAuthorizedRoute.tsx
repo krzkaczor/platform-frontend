@@ -111,8 +111,6 @@ class OnlyAuthorizedRouteComponent extends React.Component<TProps, IState> {
             }
           />
         );
-      default:
-        return <div />;
     }
   }
 }

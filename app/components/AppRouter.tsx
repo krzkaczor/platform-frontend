@@ -34,6 +34,8 @@ import { Wallet } from "./wallet/Wallet";
 
 export const AppRouter: React.FunctionComponent = () => (
   <SwitchConnected>
+    {/* routes that are available for all users */}
+
     <Route
       path={appRoutes.etoPublicView}
       render={({ match }) => <EtoPublicView previewCode={match.params.previewCode} />}
@@ -49,6 +51,9 @@ export const AppRouter: React.FunctionComponent = () => (
       render={({ match }) => <EtoWidgetView previewCode={match.params.previewCode} />}
       exact
     />
+
+    {/* routes that are available for not logged in users */}
+
     <OnlyPublicRoute path={appRoutes.root} component={Landing} exact />
     <OnlyPublicRoute path={appRoutes.register} component={WalletSelector} />
     <OnlyPublicRoute path={appRoutes.login} component={WalletSelector} />
@@ -75,6 +80,7 @@ export const AppRouter: React.FunctionComponent = () => (
         component={WalletRecoverMain}
       />,
     ]}
+
     {/* only investors routes */}
     {process.env.NF_PORTFOLIO_PAGE_VISIBLE === "1" && (
       <OnlyAuthorizedRoute path={appRoutes.portfolio} investorComponent={Portfolio} />
@@ -89,6 +95,7 @@ export const AppRouter: React.FunctionComponent = () => (
     <OnlyAuthorizedRoute path={appRoutes.documents} issuerComponent={Documents} />
     <OnlyAuthorizedRoute path={appRoutes.etoRegister} issuerComponent={EtoRegister} />
     <OnlyAuthorizedRoute path={appRoutes.etoIssuerView} issuerComponent={EtoIssuerView} exact />
+
     {/* common routes for both investors and issuers */}
     <OnlyAuthorizedRoute
       path={appRoutes.wallet}

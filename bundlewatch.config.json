@@ -2,11 +2,11 @@
   "files": [
     {
       "path": "dist/*.vendors*.js",
-      "maxSize": "1000kB"
+      "maxSize": "900kB"
     },
     {
       "path": "dist/*.main*.js",
-      "maxSize": "350kB"
+      "maxSize": "320kB"
     },
     {
       "path": "dist/*.main*.css",

@@ -12,7 +12,6 @@ import { actions } from "../../../../modules/actions";
 import { selectIssuerCompany } from "../../../../modules/eto-flow/selectors";
 import { EEtoFormTypes } from "../../../../modules/eto-flow/types";
 import { appConnect } from "../../../../store";
-import { TTranslatedString } from "../../../../types";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import {
   ArrayOfKeyValueFields,
@@ -21,6 +20,7 @@ import {
   FormSelectField,
 } from "../../../shared/forms";
 import { FormHighlightGroup } from "../../../shared/forms/FormHighlightGroup";
+import { FUNDING_ROUNDS } from "../../constants";
 import {
   convert,
   convertInArray,
@@ -46,23 +46,6 @@ interface IExternalProps {
 interface IDispatchProps {
   saveData: (values: TPartialCompanyEtoData) => void;
 }
-
-interface IRounds {
-  [key: string]: TTranslatedString;
-}
-
-export const FUNDING_ROUNDS: IRounds = {
-  NONE_KEY: <FormattedMessage id="form.select.please-select" />,
-  pre_seed: "Pre-Seed",
-  seed: "Seed",
-  a_round: "Series A",
-  b_round: "Series B",
-  c_round: "Series C",
-  d_round: "Series D",
-  e_round: "Series E",
-  pre_ipo: "Pre-IPO",
-  public: "PUBLIC",
-};
 
 const NUMBER_OF_EMPLOYEES = {
   NONE_KEY: <FormattedMessage id="form.select.please-select" />,

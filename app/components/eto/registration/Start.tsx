@@ -8,7 +8,10 @@ import { LayoutAuthorized } from "../../layouts/LayoutAuthorized";
 import { createErrorBoundary } from "../../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
 import { LoadingIndicator } from "../../shared/loading-indicator";
-import { EtoRegistrationPanel } from "./EtoRegistrationPanel";
+
+const EtoRegistrationPanel = React.lazy(() =>
+  import("./EtoRegistrationPanel").then(imp => ({ default: imp.EtoRegistrationPanel })),
+);
 
 interface IStateProps {
   isLoading: boolean;
