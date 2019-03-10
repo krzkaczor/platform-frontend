@@ -5,7 +5,6 @@ import { Col, Row } from "reactstrap";
 
 import { IWalletPrivateData } from "../../../modules/web3/reducer";
 import { TTranslatedString } from "../../../types";
-import { LayoutAuthorized } from "../../layouts/LayoutAuthorized";
 import { HeaderProgressStepper } from "../../shared/HeaderProgressStepper";
 import { Panel } from "../../shared/Panel";
 import { BackupSeedDisplay } from "./BackupSeedDisplay";
@@ -95,24 +94,22 @@ class BackupSeedFlowContainerLayout extends React.Component<
   render(): React.ReactNode {
     const steps = this.props.backupCodesVerified ? 3 : 4;
     return (
-      <LayoutAuthorized>
-        <Row>
-          <Col md={12} lg={{ size: 10, offset: 1 }} xl={{ size: 8, offset: 2 }}>
-            <Panel>
-              <HeaderProgressStepper
-                steps={steps}
-                currentStep={this.state.backupStep}
-                headerText={
-                  <FormattedMessage id="settings.backup-seed-flow-container.safety-message" />
-                }
-                descText={this.renderDescriptionText(this.state.backupStep)}
-                warning
-              />
-              {this.renderBackupPage(this.state.backupStep)}
-            </Panel>
-          </Col>
-        </Row>
-      </LayoutAuthorized>
+      <Row>
+        <Col md={12} lg={{ size: 10, offset: 1 }} xl={{ size: 8, offset: 2 }}>
+          <Panel>
+            <HeaderProgressStepper
+              steps={steps}
+              currentStep={this.state.backupStep}
+              headerText={
+                <FormattedMessage id="settings.backup-seed-flow-container.safety-message" />
+              }
+              descText={this.renderDescriptionText(this.state.backupStep)}
+              warning
+            />
+            {this.renderBackupPage(this.state.backupStep)}
+          </Panel>
+        </Col>
+      </Row>
     );
   }
 }
