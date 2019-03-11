@@ -80,6 +80,10 @@ export const WalletBrowserComponent: React.FunctionComponent<
             img={lockIcon}
             text={<FormattedMessage id="wallet-selector.browser.steps.3" />}
           />
+          <StepCard
+            img={lockIcon}
+            text={<FormattedMessage id="wallet-selector.browser.steps.4" />}
+          />
         </div>
 
         <HorizontalLine className="mb-4" />
@@ -113,7 +117,10 @@ export const WalletBrowser = compose<React.FunctionComponent>(
       approvalRejected: state.browserWalletWizardState.approvalRejected,
     }),
     dispatchToProps: dispatch => ({
-      handleReset: () => dispatch(actions.walletSelector.browserWalletResetApprovalRequest()),
+      handleReset: () => {
+        dispatch(actions.walletSelector.browserWalletResetApprovalRequest());
+        dispatch(actions.walletSelector.tryConnectingWithBrowserWallet())
+      }
     }),
   }),
   onEnterAction({

@@ -22,6 +22,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   cancelSigning: () => void;
+  retrySigning: () => void;
 }
 
 interface IOwnProps {
@@ -31,6 +32,7 @@ interface IOwnProps {
 export const MessageSignerComponent: React.FunctionComponent<IStateProps & IDispatchProps> = ({
   errorMsg,
   cancelSigning,
+  retrySigning,
   isLightWallet,
 }) =>
   // short circuit process for light wallet since it will be automatic
@@ -51,6 +53,13 @@ export const MessageSignerComponent: React.FunctionComponent<IStateProps & IDisp
         <LoadingIndicator className={styles.spinner} />
       )}
       <Row>
+        {!isLightWallet && errorMsg &&
+        <Col className="text-center">
+          <Button onClick={retrySigning}>
+            <FormattedMessage id="form.button.retry" />
+          </Button>
+        </Col>
+        }
         <Col className="text-center">
           <Button onClick={cancelSigning}>
             <FormattedMessage id="form.button.cancel" />
@@ -73,6 +82,9 @@ export const WalletMessageSigner = compose(
         dispatch(actions.walletSelector.reset());
         dispatch(actions.routing.goTo(ownProps.rootPath));
       },
+      retrySigning: () => {
+        dispatch(actions.walletSelector.tryConnectingWithBrowserWallet());
+      }
     }),
   }),
 )(MessageSignerComponent);

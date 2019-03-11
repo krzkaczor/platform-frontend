@@ -26,7 +26,6 @@ export function* browserWalletConnectionWatcher(): any {
   yield cancel()
 }
 
-
 export function* tryConnectingWithBrowserWallet(
   {
     browserWalletConnector,
@@ -39,19 +38,14 @@ export function* tryConnectingWithBrowserWallet(
   if(timeout){
     yield delay(timeout)
   }
-  yield console.log("after delay")
   if (!state.browserWalletWizardState.approvalRejected) {
     try {
-      yield console.log("trying")
       const browserWallet: BrowserWallet = yield browserWalletConnector.connect(
         web3Manager.networkId,
       );
-      yield console.log("browserWallet", browserWallet)
-      const r = yield web3Manager.plugPersonalWallet(browserWallet);
-      yield console.log("connect", r)
+      yield web3Manager.plugPersonalWallet(browserWallet);
       yield put(actions.walletSelector.connected());
     } catch (e) {
-      yield console.log("catching", e)
       if (e instanceof BrowserWalletAccountApprovalRejectedError) {
         yield put(actions.walletSelector.browserWalletAccountApprovalRejectedError());
       } else {
@@ -60,7 +54,6 @@ export function* tryConnectingWithBrowserWallet(
         if (error.messageType === BrowserWalletErrorMessage.GENERIC_ERROR) {
           logger.error("Error while trying to connect with browser wallet", e);
         }
-
       }
     }
   }

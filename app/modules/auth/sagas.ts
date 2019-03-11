@@ -41,7 +41,6 @@ function* setUser({ logger }: TGlobalDependencies, action: TAction): Iterator<an
   if (action.type !== "AUTH_SET_USER") return;
 
   const user = action.payload.user;
-
   logger.setUser({ id: user.userId, type: user.type, walletType: user.walletType });
 }
 
@@ -64,6 +63,7 @@ function* handleSignInUser({ logger }: TGlobalDependencies): Iterator<any> {
         ),
       );
     } else {
+      yield put(actions.auth.logout(undefined, false));
       yield put(
         actions.walletSelector.messageSigningError(
           createMessage(SignInUserErrorMessage.MESSAGE_SIGNING_SERVER_CONNECTION_FAILURE),

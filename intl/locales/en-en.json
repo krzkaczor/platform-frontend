@@ -1016,6 +1016,7 @@
   "wallet-selector.browser.register-prompt": "Register with MetaMask",
   "wallet-selector.browser.steps.2": "1. Turn on the MetaMask extension in your browser.",
   "wallet-selector.browser.steps.3": "2. Login to your wallet.",
+  "wallet-selector.browser.steps.4": "2. Reload this page.",
   "wallet-selector.browser.supports": "MetaMask also supports:",
   "wallet-selector.help-link.login.label": "Wallet Recovery",
   "wallet-selector.help-link.register.label": "Help",
