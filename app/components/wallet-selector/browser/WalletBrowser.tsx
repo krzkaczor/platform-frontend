@@ -119,8 +119,8 @@ export const WalletBrowser = compose<React.FunctionComponent>(
     dispatchToProps: dispatch => ({
       handleReset: () => {
         dispatch(actions.walletSelector.browserWalletResetApprovalRequest());
-        dispatch(actions.walletSelector.tryConnectingWithBrowserWallet())
-      }
+        dispatch(actions.walletSelector.tryConnectingWithBrowserWallet());
+      },
     }),
   }),
   onEnterAction({

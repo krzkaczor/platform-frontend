@@ -1,7 +1,8 @@
-import { fork, put, select, cancel, take, takeLatest } from "redux-saga/effects";
 import { delay } from "redux-saga";
+import { cancel, fork, put, select, take, takeLatest } from "redux-saga/effects";
 
 import { BrowserWalletErrorMessage } from "../../../components/translatedMessages/messages";
+import { BROWSER_WALLET_RECONNECT_INTERVAL } from "../../../config/constants";
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import {
   BrowserWallet,
@@ -11,32 +12,28 @@ import { IAppState } from "../../../store";
 import { actions } from "../../actions";
 import { neuCall, neuTakeEvery } from "../../sagasUtils";
 import { mapBrowserWalletErrorToErrorMessage } from "./errors";
-import { BROWSER_WALLET_RECONNECT_INTERVAL } from "../../../config/constants";
 
 export function* browserWalletConnectionWatcher(): any {
   yield fork(neuCall, tryConnectingWithBrowserWallet);
 
   const connectionRetry = yield takeLatest(
     "BROWSER_WALLET_CONNECTION_ERROR",
-    neuCall, tryConnectingWithBrowserWallet,
-    BROWSER_WALLET_RECONNECT_INTERVAL
+    neuCall,
+    tryConnectingWithBrowserWallet,
+    BROWSER_WALLET_RECONNECT_INTERVAL,
   );
-  yield take(["@@router/LOCATION_CHANGE","WALLET_SELECTOR_CONNECTED"]);
+  yield take(["@@router/LOCATION_CHANGE", "WALLET_SELECTOR_CONNECTED"]);
   yield cancel(connectionRetry);
-  yield cancel()
+  yield cancel();
 }
 
 export function* tryConnectingWithBrowserWallet(
-  {
-    browserWalletConnector,
-    web3Manager,
-    logger,
-  }: TGlobalDependencies,
-  timeout?: number
+  { browserWalletConnector, web3Manager, logger }: TGlobalDependencies,
+  timeout?: number,
 ): any {
   const state: IAppState = yield select();
-  if(timeout){
-    yield delay(timeout)
+  if (timeout) {
+    yield delay(timeout);
   }
   if (!state.browserWalletWizardState.approvalRejected) {
     try {
@@ -61,5 +58,4 @@ export function* tryConnectingWithBrowserWallet(
 
 export function* browserWalletSagas(): Iterator<any> {
   yield fork(neuTakeEvery, "BROWSER_WALLET_TRY_CONNECTING", browserWalletConnectionWatcher);
-
 }

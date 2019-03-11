@@ -53,13 +53,14 @@ export const MessageSignerComponent: React.FunctionComponent<IStateProps & IDisp
         <LoadingIndicator className={styles.spinner} />
       )}
       <Row>
-        {!isLightWallet && errorMsg &&
-        <Col className="text-center">
-          <Button onClick={retrySigning}>
-            <FormattedMessage id="form.button.retry" />
-          </Button>
-        </Col>
-        }
+        {!isLightWallet &&
+          errorMsg && (
+            <Col className="text-center">
+              <Button onClick={retrySigning}>
+                <FormattedMessage id="form.button.retry" />
+              </Button>
+            </Col>
+          )}
         <Col className="text-center">
           <Button onClick={cancelSigning}>
             <FormattedMessage id="form.button.cancel" />
@@ -84,7 +85,7 @@ export const WalletMessageSigner = compose(
       },
       retrySigning: () => {
         dispatch(actions.walletSelector.tryConnectingWithBrowserWallet());
-      }
+      },
     }),
   }),
 )(MessageSignerComponent);
