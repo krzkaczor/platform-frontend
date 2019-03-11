@@ -1,9 +1,8 @@
 import * as cn from "classnames";
-import { isEqual } from "lodash/fp";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
-import { compose, lifecycle, withState } from "recompose";
+import { compose } from "recompose";
 
 import { externalRoutes } from "../../config/externalRoutes";
 import { actions } from "../../modules/actions";
@@ -38,7 +37,6 @@ interface IStateProps {
 
 interface IDispatchProps {
   showDownloadAgreementModal: (etoId: string, isRetailEto: boolean) => void;
-  loadTokensData: (walletAddress: string) => void;
 }
 
 interface IAdditionalProps {
@@ -176,32 +174,7 @@ const PortfolioMyAssets = compose<TComponentProps, IExternalProps>(
       showDownloadAgreementModal: (etoId: string, isRetailEto: boolean) => {
         dispatch(actions.portfolio.showDownloadAgreementModal(etoId, isRetailEto));
       },
-      loadTokensData: (walletAddress: string) => {
-        dispatch(actions.publicEtos.loadTokensData(walletAddress));
-      },
     }),
-  }),
-  withState("tokenLoaded", "setTokenLoaded", false),
-  lifecycle<TComponentProps, IStateProps>({
-    componentDidUpdate(prevProps): void {
-      const prevAssets = prevProps.myAssets;
-      const actualAssets = this.props.myAssets;
-
-      if (this.props.myAssets.length === 0 && prevProps.myAssets.length > 0) {
-        this.props.setTokenLoaded(false);
-        return;
-      }
-
-      if (
-        (!this.props.tokenLoaded &&
-          this.props.myAssets.length > 0 &&
-          isEqual(prevAssets, actualAssets)) ||
-        (this.props.myAssets.length > 0 && !isEqual(prevAssets, actualAssets))
-      ) {
-        this.props.loadTokensData(this.props.walletAddress);
-        this.props.setTokenLoaded(true);
-      }
-    },
   }),
 )(PortfolioMyAssetsComponent);
 
