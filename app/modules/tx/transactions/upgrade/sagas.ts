@@ -12,7 +12,7 @@ import {
   selectIsEuroUpgradeTargetSet,
 } from "../../../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
-import { ETokenType } from "../../interfaces";
+import { ETokenType } from "../../types";
 
 export function* generateEuroUpgradeTransaction({
   contractsService,

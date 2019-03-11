@@ -9,8 +9,10 @@ import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
 import { selectEtherTokenBalanceAsBigNumber } from "../../../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
-import { IWithdrawDraftType } from "../../interfaces";
+import { selectTxGasCostEthUlps } from "../../sender/selectors";
+import { IWithdrawDraftType } from "../../types";
 import { calculateGasLimitWithOverhead, EMPTY_DATA } from "../../utils";
+import { TWithdrawAdditionalData } from "./types";
 
 const SIMPLE_WITHDRAW_TRANSACTION = "21000";
 
@@ -67,7 +69,9 @@ export function* ethWithdrawFlow(_: TGlobalDependencies): any {
   // in case of ether token withdrawal `to` points to contract address and `value` is empty
   const additionalData = {
     value: Q18.mul(txDataFromUser.value!).toString(),
-    to: txDataFromUser.to,
+    to: txDataFromUser.to!,
+    cost: yield select(selectTxGasCostEthUlps),
   };
-  yield put(actions.txSender.txSenderContinueToSummary(additionalData));
+
+  yield put(actions.txSender.txSenderContinueToSummary<TWithdrawAdditionalData>(additionalData));
 }

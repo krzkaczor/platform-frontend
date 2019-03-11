@@ -9,7 +9,7 @@ import { TGlobalDependencies } from "../../di/setupBindings";
 import { actions, TAction, TActionFromCreator } from "../actions";
 import { downloadLink } from "../immutable-file/utils";
 import { neuCall, neuTakeEvery, neuTakeUntil } from "../sagasUtils";
-import { ETokenType } from "../tx/interfaces";
+import { ETokenType } from "../tx/types";
 import { ILockedWallet, IWalletStateData } from "../wallet/reducer";
 import { loadWalletDataAsync } from "../wallet/sagas";
 import { selectLockedWalletConnected } from "../wallet/selectors";

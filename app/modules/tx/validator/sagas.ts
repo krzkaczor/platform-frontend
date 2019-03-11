@@ -11,10 +11,10 @@ import {
 import { actions, TAction } from "../../actions";
 import { neuCall, neuTakeEvery } from "../../sagasUtils";
 import { selectEtherBalance } from "../../wallet/selectors";
-import { ETxSenderType } from "../interfaces";
 import { EValidationState } from "../sender/reducer";
 import { generateInvestmentTransaction } from "../transactions/investment/sagas";
 import { generateEthWithdrawTransaction } from "../transactions/withdraw/sagas";
+import { ETxSenderType } from "../types";
 
 export function* txValidateSaga({ logger }: TGlobalDependencies, action: TAction): any {
   if (action.type !== "TX_SENDER_VALIDATE_DRAFT") return;

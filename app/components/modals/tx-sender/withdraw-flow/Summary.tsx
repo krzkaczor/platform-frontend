@@ -2,33 +2,27 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Container, Row } from "reactstrap";
 
-import { ITxData } from "../../../../lib/web3/types";
 import { actions } from "../../../../modules/actions";
-import {
-  selectTxAdditionalData,
-  selectTxGasCostEthUlps,
-} from "../../../../modules/tx/sender/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
+import { TWithdrawAdditionalData } from "../../../../modules/tx/transactions/withdraw/types";
+import { TTxAdditionalData } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
-import { ECurrency, Money } from "../../../shared/Money";
-import { InfoList } from "../shared/InfoList";
-import { InfoRow } from "../shared/InfoRow";
+import { WithdrawTransactionDetails } from "./WithdrawTransactionDetails";
 
 interface IStateProps {
-  txData: Partial<ITxData>;
-  txCost: string;
+  txData: TTxAdditionalData<TWithdrawAdditionalData>;
 }
 
 interface IDispatchProps {
-  onAccept: () => any;
+  onAccept: () => void;
 }
 
 type TComponentProps = IStateProps & IDispatchProps;
 
 export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> = ({
   txData,
-  txCost,
   onAccept,
 }) => (
   <Container>
@@ -42,25 +36,7 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
 
     <Row>
       <Col>
-        <InfoList>
-          <InfoRow
-            caption={<FormattedMessage id="withdraw-flow.to" />}
-            value={txData.to}
-            data-test-id="modals.tx-sender.withdraw-flow.summary.to"
-          />
-
-          <InfoRow
-            caption={<FormattedMessage id="withdraw-flow.value" />}
-            value={<Money currency={ECurrency.ETH} value={txData.value!} />}
-            data-test-id="modals.tx-sender.withdraw-flow.summary.value"
-          />
-
-          <InfoRow
-            caption={<FormattedMessage id="withdraw-flow.transaction-cost" />}
-            value={<Money currency={ECurrency.ETH} value={txCost} />}
-            data-test-id="modals.tx-sender.withdraw-flow.summary.cost"
-          />
-        </InfoList>
+        <WithdrawTransactionDetails additionalData={txData} />
       </Col>
     </Row>
     <Row>
@@ -80,7 +56,6 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
 export const WithdrawSummary = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
     txData: selectTxAdditionalData(state),
-    txCost: selectTxGasCostEthUlps(state),
   }),
   dispatchToProps: d => ({
     onAccept: () => d(actions.txSender.txSenderAccept()),

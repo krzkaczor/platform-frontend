@@ -1,6 +1,6 @@
 import { createAction, createActionFactory, createSimpleAction } from "../../actionsUtils";
 import { ITokenDisbursal } from "../../investor-portfolio/types";
-import { ETokenType } from "../interfaces";
+import { ETokenType } from "../types";
 
 export const txTransactionsActions = {
   /* Transaction Flows */

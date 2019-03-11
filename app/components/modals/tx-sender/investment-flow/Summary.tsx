@@ -19,8 +19,8 @@ import {
 } from "../../../../modules/investor-portfolio/selectors";
 import { selectEtoWithCompanyAndContractById } from "../../../../modules/public-etos/selectors";
 import { selectEtherPriceEur } from "../../../../modules/shared/tokenPrice/selectors";
-import { ETxSenderType } from "../../../../modules/tx/interfaces";
 import { selectTxGasCostEthUlps } from "../../../../modules/tx/sender/selectors";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { addBigNumbers, multiplyBigNumbers } from "../../../../utils/BigNumberUtils";
 import { formatThousands } from "../../../../utils/Number.utils";

@@ -16,10 +16,9 @@
 }
 
 .transaction-history {
-  @include font-label-small;
+  @include font-small;
 
   color: $neu-silver;
-  text-transform: none;
 }
 
 .address-wrapper {

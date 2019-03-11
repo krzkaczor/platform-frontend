@@ -6,7 +6,7 @@ import { compose } from "redux";
 import { actions } from "../../../../modules/actions";
 import { selectIsUserFullyVerified } from "../../../../modules/auth/selectors";
 import { EBankTransferType } from "../../../../modules/bank-transfer-flow/reducer";
-import { ETokenType } from "../../../../modules/tx/interfaces";
+import { ETokenType } from "../../../../modules/tx/types";
 import {
   selectICBMLockedEtherBalance,
   selectICBMLockedEtherBalanceEuroAmount,

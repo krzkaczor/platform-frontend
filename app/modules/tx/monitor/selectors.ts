@@ -1,3 +1,4 @@
+import { IAppState } from "../../../store";
 import { ITxMonitorState } from "./reducer";
 
 export const selectAmountOfPendingTxs = (state: ITxMonitorState): number => {
@@ -6,4 +7,13 @@ export const selectAmountOfPendingTxs = (state: ITxMonitorState): number => {
 
 export const selectAreTherePendingTxs = (state: ITxMonitorState): boolean => {
   return !!(state.txs.pendingTransaction || state.txs.oooTransactions.length);
+};
+
+export const selectMonitoredTxAdditionalData = (state: IAppState): any | undefined => {
+  const pendingTransaction = state.txMonitor.txs.pendingTransaction;
+  if (pendingTransaction) {
+    return pendingTransaction.transactionAdditionalData;
+  }
+
+  return undefined;
 };

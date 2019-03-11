@@ -12,6 +12,11 @@
   font-weight: 300;
 }
 
+@mixin font-small {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(9px);
+}
+
 // Headline
 
 @mixin headline-huge {
@@ -100,8 +105,8 @@
 }
 
 @mixin font-label-small {
-  font-family: $headings-font-family;
-  font-size: px-to-rem(9px);
+  @include font-small;
+
   text-transform: uppercase;
 }
 

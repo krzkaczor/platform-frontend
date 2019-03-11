@@ -1,9 +1,7 @@
-import { BigNumber } from "bignumber.js";
-import { addHexPrefix } from "ethereumjs-util";
 import { call, put, race, select, take } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
-import { TPendingTxs, TxWithMetadata } from "../../../lib/api/users/interfaces";
+import { TPendingTxs } from "../../../lib/api/users/interfaces";
 import { BrowserWalletError } from "../../../lib/web3/BrowserWallet";
 import { LedgerContractsDisabledError, LedgerError } from "../../../lib/web3/ledger-wallet/errors";
 import { LightError } from "../../../lib/web3/LightWallet";
@@ -24,17 +22,18 @@ import { actions } from "../../actions";
 import { IGasState } from "../../gas/reducer";
 import { selectGasPrice } from "../../gas/selectors";
 import { neuCall, neuRepeatIf } from "../../sagasUtils";
-import { ETxSenderType } from "../interfaces";
 import {
   createWatchTxChannel,
   EEventEmitterChannelEvents,
+  markTransactionAsPending,
   TEventEmitterChannelEvents,
   updatePendingTxs,
 } from "../monitor/sagas";
 import { UserCannotUnlockFunds } from "../transactions/unlock/errors";
+import { ETxSenderType } from "../types";
 import { validateGas } from "../validator/sagas";
 import { ETransactionErrorType } from "./reducer";
-import { selectTxDetails, selectTxType } from "./selectors";
+import { selectTxAdditionalData, selectTxDetails, selectTxType } from "./selectors";
 
 export interface ITxSendParams {
   type: ETxSenderType;
@@ -158,38 +157,23 @@ function* ensureNoPendingTx({ logger }: TGlobalDependencies, type: ETxSenderType
   }
 }
 
-function* sendTxSubSaga({ web3Manager, apiUserService }: TGlobalDependencies): any {
-  const txData: ITxData = yield select(selectTxDetails);
+function* sendTxSubSaga({ web3Manager }: TGlobalDependencies): any {
   const type = yield select(selectTxType);
+  const txData: ITxData = yield select(selectTxDetails);
+  const txAdditionalData: ITxData = yield select(selectTxAdditionalData);
+
   if (!txData) {
     throw new Error("Tx data is not defined");
   }
+
   try {
     yield validateGas(txData);
 
     const txHash: string = yield web3Manager.sendTransaction(txData);
-    yield put(actions.txSender.txSenderSigned(txHash, type));
 
-    const txWithMetadata: TxWithMetadata = {
-      transaction: {
-        from: addHexPrefix(txData.from),
-        gas: addHexPrefix(new BigNumber(txData.gas).toString(16)),
-        gasPrice: addHexPrefix(new BigNumber(txData.gasPrice).toString(16)),
-        hash: addHexPrefix(txHash),
-        input: addHexPrefix(txData.data || "0x0"),
-        nonce: addHexPrefix("0"),
-        to: addHexPrefix(txData.to),
-        value: addHexPrefix(new BigNumber(txData.value).toString(16)),
-        blockHash: undefined,
-        blockNumber: undefined,
-        chainId: undefined,
-        status: undefined,
-        transactionIndex: undefined,
-      },
-      transactionType: type,
-    };
-    yield apiUserService.addPendingTx(txWithMetadata);
-    yield neuCall(updatePendingTxs);
+    yield neuCall(markTransactionAsPending, { txHash, type, txData, txAdditionalData });
+
+    yield put(actions.txSender.txSenderSigned(txHash, type));
 
     return txHash;
   } catch (error) {

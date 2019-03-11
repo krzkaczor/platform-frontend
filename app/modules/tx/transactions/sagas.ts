@@ -7,8 +7,8 @@ import { selectIsBankAccountVerified } from "../../bank-transfer-flow/selectors"
 import { etoFlowActions } from "../../eto-flow/actions";
 import { onInvestmentTxModalHide } from "../../investment-flow/sagas";
 import { neuTakeLatest } from "../../sagasUtils";
-import { ETxSenderType } from "../interfaces";
 import { ITxSendParams, txSendSaga } from "../sender/sagas";
+import { ETxSenderType } from "../types";
 import { startClaimGenerator } from "./claim/saga";
 import { etoSetDateGenerator, etoSignInvestmentAgreementGenerator } from "./eto-flow/saga";
 import { investmentFlowGenerator } from "./investment/sagas";

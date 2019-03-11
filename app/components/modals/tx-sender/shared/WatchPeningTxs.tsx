@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { SpinningEthereum } from "../../../shared/ethererum";
 import { EtherscanTxLink } from "../../../shared/links";
 
-import * as styles from "./TxPending.module.scss";
+import * as styles from "./TxHashAndBlock.module.scss";
 
 export interface IProps {
   txHash?: string;
@@ -25,13 +25,13 @@ export const WatchPendingTxs: React.FunctionComponent<IProps> = ({ txHash, block
 
     {txHash && (
       <EtherscanTxLink txHash={txHash} className={styles.txHash}>
-        <FormattedMessage id="tx-sender.tx-pending.hash-label" /> {txHash}
+        <FormattedMessage id="tx-monitor.details.hash-label" /> {txHash}
       </EtherscanTxLink>
     )}
 
     {blockId && (
       <p>
-        <FormattedMessage id="tx-sender.tx-pending.block-number-label" />
+        <FormattedMessage id="tx-monitor.details.block-number-label" />
         {": "}
         <span className={styles.blockId}>{blockId}</span>
       </p>

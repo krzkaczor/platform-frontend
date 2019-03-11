@@ -1,5 +1,5 @@
 import { createAction, createActionFactory, createSimpleAction } from "../actionsUtils";
-import { ETokenType } from "../tx/interfaces";
+import { ETokenType } from "../tx/types";
 import { ILockedWallet } from "../wallet/reducer";
 import { IWalletMigrationData } from "./reducer";
 

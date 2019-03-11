@@ -4,12 +4,12 @@ import { Col, Container, Row } from "reactstrap";
 
 import { ITxData } from "../../../../lib/web3/types";
 import { actions } from "../../../../modules/actions";
-import { ETokenType } from "../../../../modules/tx/interfaces";
 import {
   selectTxAdditionalData,
   selectTxDetails,
   selectTxGasCostEthUlps,
 } from "../../../../modules/tx/sender/selectors";
+import { ETokenType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
 import { DocumentTemplateButton } from "../../../shared/DocumentLink";

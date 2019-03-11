@@ -1,12 +1,16 @@
+import { BigNumber } from "bignumber.js";
+import { addHexPrefix } from "ethereumjs-util";
 import { delay, END, eventChannel } from "redux-saga";
 import { put } from "redux-saga/effects";
 import * as Web3 from "web3";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
-import { TPendingTxs } from "../../../lib/api/users/interfaces";
+import { TPendingTxs, TxWithMetadata } from "../../../lib/api/users/interfaces";
+import { ITxData } from "../../../lib/web3/types";
 import { OutOfGasError, RevertedTransactionError } from "../../../lib/web3/Web3Adapter";
 import { actions } from "../../actions";
 import { neuCall, neuTakeUntil } from "../../sagasUtils";
+import { ETxSenderType } from "../types";
 
 const TX_MONITOR_DELAY = 60000;
 
@@ -38,6 +42,43 @@ async function cleanPendingTransactionsPromise(
     }
   }
   return apiPendingTx;
+}
+
+export function* markTransactionAsPending(
+  { apiUserService }: TGlobalDependencies,
+  {
+    txHash,
+    type,
+    txData,
+    txAdditionalData,
+  }: { txHash: string; type: ETxSenderType; txData: ITxData; txAdditionalData?: any },
+): any {
+  const txWithMetadata: TxWithMetadata = {
+    transaction: {
+      from: addHexPrefix(txData.from),
+      gas: addHexPrefix(new BigNumber(txData.gas).toString(16)),
+      gasPrice: addHexPrefix(new BigNumber(txData.gasPrice).toString(16)),
+      hash: addHexPrefix(txHash),
+      input: addHexPrefix(txData.data || "0x0"),
+      nonce: addHexPrefix("0"),
+      to: addHexPrefix(txData.to),
+      value: addHexPrefix(new BigNumber(txData.value).toString(16)),
+      blockHash: undefined,
+      blockNumber: undefined,
+      chainId: undefined,
+      status: undefined,
+      transactionIndex: undefined,
+    },
+    transactionType: type,
+    transactionAdditionalData: {
+      ...txAdditionalData,
+      timestamp: Date.now(),
+    },
+  };
+
+  yield apiUserService.addPendingTx(txWithMetadata);
+
+  yield neuCall(updatePendingTxs);
 }
 
 export function* updatePendingTxs(): any {

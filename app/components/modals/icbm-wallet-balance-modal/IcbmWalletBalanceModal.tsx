@@ -18,7 +18,7 @@ import {
   selectWalletMigrationData,
 } from "../../../modules/icbm-wallet-balance-modal/selectors";
 import { SelectIsVerificationFullyDone } from "../../../modules/selectors";
-import { ETokenType } from "../../../modules/tx/interfaces";
+import { ETokenType } from "../../../modules/tx/types";
 import {
   selectIsEtherUpgradeTargetSet,
   selectLockedWalletConnected,

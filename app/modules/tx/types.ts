@@ -32,3 +32,7 @@ export enum ETokenType {
   ETHER = "ETHER",
   EURO = "EURO",
 }
+
+export type TTxAdditionalData<T extends object> = {
+  timestamp?: number;
+} & T;

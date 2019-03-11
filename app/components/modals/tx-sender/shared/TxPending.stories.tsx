@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { Container } from "reactstrap";
 
-import { ETxSenderType } from "../../../../modules/tx/interfaces";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { ITxPendingProps, TxPending } from "./TxPending";
 import { WatchPendingTxs } from "./WatchPeningTxs";
 

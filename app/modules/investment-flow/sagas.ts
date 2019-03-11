@@ -20,9 +20,9 @@ import { selectEtoOnChainStateById, selectPublicEtoById } from "../public-etos/s
 import { EETOStateOnChain } from "../public-etos/types";
 import { neuCall } from "../sagasUtils";
 import { selectEtherPriceEur, selectEurPriceEther } from "../shared/tokenPrice/selectors";
-import { ETxSenderType } from "../tx/interfaces";
 import { selectTxGasCostEthUlps } from "../tx/sender/selectors";
 import { generateInvestmentTransaction } from "../tx/transactions/investment/sagas";
+import { ETxSenderType } from "../tx/types";
 import { txValidateSaga } from "../tx/validator/sagas";
 import {
   selectLiquidEtherBalance,

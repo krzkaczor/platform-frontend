@@ -1,6 +1,6 @@
 import { ITxData } from "../../../lib/web3/types";
 import { AppReducer } from "../../../store";
-import { ETxSenderType } from "../interfaces";
+import { ETxSenderType } from "../types";
 
 export enum ETransactionErrorType {
   // Flow Specific Errors
@@ -38,8 +38,6 @@ export enum ETxSenderState {
   DONE = "DONE",
   ERROR_SIGN = "ERROR_SIGN",
 }
-
-export type TAdditionalData = any;
 
 export interface ITxSenderState {
   state: ETxSenderState;

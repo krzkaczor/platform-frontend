@@ -1,11 +1,19 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
+import { compose } from "recompose";
 
-import { ETxSenderType } from "../../../../modules/tx/interfaces";
+import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { ETxSenderType } from "../../../../modules/tx/types";
+import { appConnect } from "../../../../store";
 import { SpinningEthereum } from "../../../shared/ethererum";
-import { EtherscanTxLink } from "../../../shared/links";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
+import { TxDetails } from "../TxDetails";
+import { TxName } from "../TxName";
+import { TxHashAndBlock } from "./TxHashAndBlock";
 
-import * as styles from "./TxPending.module.scss";
+export interface IStateProps {
+  additionalData?: any;
+}
 
 export interface ITxPendingProps {
   blockId: number;
@@ -13,26 +21,38 @@ export interface ITxPendingProps {
   type: ETxSenderType;
 }
 
-export const TxPending: React.FunctionComponent<ITxPendingProps> = ({ blockId, txHash }) => (
-  <div className="text-center" test-data-id="modals.shared.tx-pending.modal">
+const TxPendingLayout: React.FunctionComponent<ITxPendingProps & IStateProps> = ({
+  blockId,
+  txHash,
+  type,
+  additionalData,
+}) => (
+  <section className="text-center" test-data-id="modals.shared.tx-pending.modal">
     <SpinningEthereum className="mb-3" />
 
-    <h3 className={styles.title}>
-      <FormattedMessage id="tx-sender.tx-pending.title" />
-    </h3>
+    <Heading level={3} decorator={false} size={EHeadingSize.SMALL} className="mb-3">
+      <FormattedMessage
+        id="tx-sender.tx-pending.title"
+        values={{ transaction: <TxName type={type} /> }}
+      />
+    </Heading>
 
     <p>
       <FormattedMessage id="tx-sender.tx-pending.description" />
     </p>
 
-    <EtherscanTxLink txHash={txHash} className={styles.txHash}>
-      <FormattedMessage id="tx-sender.tx-pending.hash-label" /> {txHash}
-    </EtherscanTxLink>
+    {additionalData && <TxDetails type={type} additionalData={additionalData} />}
 
-    <p>
-      <FormattedMessage id="tx-sender.tx-pending.block-number-label" />
-      {": "}
-      <span className={styles.blockId}>{blockId}</span>
-    </p>
-  </div>
+    <TxHashAndBlock txHash={txHash} blockId={blockId} />
+  </section>
 );
+
+const TxPending = compose<IStateProps & ITxPendingProps, ITxPendingProps>(
+  appConnect<IStateProps>({
+    stateToProps: state => ({
+      additionalData: selectMonitoredTxAdditionalData(state),
+    }),
+  }),
+)(TxPendingLayout);
+
+export { TxPending, TxPendingLayout };

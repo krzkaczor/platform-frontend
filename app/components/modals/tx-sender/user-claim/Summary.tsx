@@ -173,7 +173,9 @@ export const UserClaimSummaryComponent: React.FunctionComponent<TComponentProps>
 
 export const UserClaimSummary = appConnect<IStateProps, IDispatchProps, {}>({
   stateToProps: state => {
-    const etoId: string = selectTxAdditionalData(state);
+    const additionalData = selectTxAdditionalData(state);
+    const etoId: string = additionalData.etoId;
+
     return {
       txData: selectTxDetails(state)!,
       etoData: selectMyInvestorTicketByEtoId(state, etoId)!,
