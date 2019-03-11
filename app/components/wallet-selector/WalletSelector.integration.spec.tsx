@@ -187,6 +187,7 @@ describe("Wallet selector integration", () => {
     expect(ledgerWalletConnectorMock.finishConnecting).to.be.calledOnce;
     expect(ledgerWalletConnectorMock.finishConnecting).to.be.calledWithExactly(
       expectedDerivationPath,
+      dummyNetworkId,
     );
     expect(dispatchSpy).calledWithExactly(
       actions.web3.newPersonalWalletPlugged(

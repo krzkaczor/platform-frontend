@@ -23,7 +23,7 @@ import { appConnect } from "../../../../store";
 import { getDocumentTitles } from "../../../documents/utils";
 import { ButtonIcon } from "../../../shared/buttons";
 import { DocumentTemplateLabel } from "../../../shared/DocumentLink";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, ECurrencySymbol, Money } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
@@ -61,7 +61,7 @@ export const UserClaimSummaryComponent: React.FunctionComponent<TComponentProps>
     <Container>
       <Row className="mb-4">
         <Col>
-          <Heading>
+          <Heading size={EHeadingSize.SMALL} level={4}>
             <FormattedMessage id="user-claim-flow.summary" />
           </Heading>
         </Col>

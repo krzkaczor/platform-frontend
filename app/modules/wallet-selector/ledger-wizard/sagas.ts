@@ -13,10 +13,9 @@ export const LEDGER_WIZARD_SIMPLE_DERIVATION_PATHS = ["44'/60'/0'/0", "44'/60'/0
 
 export function* tryEstablishingConnectionWithLedger({
   ledgerWalletConnector,
-  web3Manager,
 }: TGlobalDependencies): any {
   try {
-    yield ledgerWalletConnector.connect(web3Manager.networkId);
+    yield ledgerWalletConnector.connect();
     yield put(actions.walletSelector.ledgerConnectionEstablished());
   } catch (e) {
     yield put(
@@ -37,7 +36,6 @@ export function* loadLedgerAccounts({
     numberOfAccountsPerPage,
     derivationPathPrefix,
   } = state.ledgerWizardState;
-
   try {
     const derivationPathToAddressMap = advanced
       ? yield ledgerWalletConnector.getMultipleAccountsFromDerivationPrefix(
@@ -106,7 +104,10 @@ export function* finishSettingUpLedgerConnector(
   action: TAction,
 ): any {
   if (action.type !== "LEDGER_FINISH_SETTING_UP_LEDGER_CONNECTOR") return;
-  const ledgerWallet = yield ledgerWalletConnector.finishConnecting(action.payload.derivationPath);
+  const ledgerWallet = yield ledgerWalletConnector.finishConnecting(
+    action.payload.derivationPath,
+    web3Manager.networkId,
+  );
   yield web3Manager.plugPersonalWallet(ledgerWallet);
   yield put(actions.walletSelector.connected());
 }

@@ -17,7 +17,6 @@ export const YourEthereumAddressWidgetComponent: React.FunctionComponent<IStateP
 }) => (
   <Panel
     className="h-100"
-    centerContent={false}
     headerText={<FormattedMessage id="your-ethereum-address-widget.header" />}
   >
     <p>

@@ -10,60 +10,15 @@
   }
 }
 
-.header,
-.left,
-.right {
+.header {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
-}
-
-
-.header {
-  @include font-label;
-
-  color: $color-black;
-  font-weight: $font-weight-bold;
   justify-content: space-between;
   margin-bottom: $spacing-vertical-sm-1;
-  text-transform: uppercase;
-  position: relative;
-
-  &.has-icon {
-    &::before {
-      display: none;
-    }
-  }
-
-  &::before {
-    @include rect(2px, 12px);
-
-    background-color: $neu-piss-yellow;
-    content: "";
-    margin-right: 12px;
-  }
 }
 
 .content {
   display: flex;
   flex: 1 1 100%;
   flex-direction: column;
-}
-
-.left {
-  margin-right: auto;
-}
-
-.right {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.icon {
-  @include rect(22px);
-
-  margin-right: px-to-rem(10px);
-  margin-left: px-to-rem(-14px);
 }

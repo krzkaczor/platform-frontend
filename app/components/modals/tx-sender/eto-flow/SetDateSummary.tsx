@@ -17,8 +17,8 @@ import {
 } from "../../../../modules/eto-flow/selectors";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { EtherscanAddressLink, ExternalLink } from "../../../shared/links";
-import { Heading } from "../../../shared/modals/Heading";
 import { TimeLeft } from "../../../shared/TimeLeft";
 import { localTime, utcTime, weekdayLocal, weekdayUTC } from "../../../shared/utils";
 import { InfoList } from "../shared/InfoList";
@@ -53,7 +53,7 @@ const SetEtoDateSummaryComponent: React.FunctionComponent<IProps> = ({
   return (
     <Container>
       <Row>
-        <Heading>
+        <Heading size={EHeadingSize.SMALL} level={4}>
           <FormattedMessage id="eto.settings.eto-start-date-summary.dates-title" />
         </Heading>
       </Row>
@@ -91,7 +91,7 @@ const SetEtoDateSummaryComponent: React.FunctionComponent<IProps> = ({
       </Row>
 
       <Row className="mt-4">
-        <Heading>
+        <Heading size={EHeadingSize.SMALL} level={4}>
           <FormattedMessage id="eto.settings.eto-start-date-summary.contracts-title" />
         </Heading>
       </Row>

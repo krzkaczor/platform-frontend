@@ -75,8 +75,11 @@ async function connectLedger(
   web3Manager: Web3Manager,
   metadata: ILedgerWalletMetadata,
 ): Promise<IPersonalWallet> {
-  await ledgerWalletConnector.connect(web3Manager.networkId);
-  return await ledgerWalletConnector.finishConnecting(metadata.derivationPath);
+  await ledgerWalletConnector.connect();
+  return await ledgerWalletConnector.finishConnecting(
+    metadata.derivationPath,
+    web3Manager.networkId,
+  );
 }
 
 async function connectBrowser(

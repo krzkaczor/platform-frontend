@@ -11,7 +11,7 @@ import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors"
 import { appConnect } from "../../../../store";
 import { DeepReadonly } from "../../../../types";
 import { ButtonArrowRight } from "../../../shared/buttons/Button";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../../../shared/Money";
 import { BankNumber } from "../../../wallet/BankAccount";
 import { InfoList } from "../shared/InfoList";
@@ -40,7 +40,7 @@ const BankTransferRedeemSummaryLayout: React.FunctionComponent<IComponentProps> 
   bankFee,
 }) => (
   <Container className={styles.container}>
-    <Heading className="mb-4">
+    <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
       <FormattedMessage id="bank-transfer.redeem.summary.title" />
     </Heading>
 

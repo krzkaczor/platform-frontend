@@ -11,8 +11,8 @@ import { appConnect } from "../../../store";
 import { onEnterAction } from "../../../utils/OnEnterAction";
 import { EtoOverviewStatus } from "../../eto/overview/EtoOverviewStatus";
 import { EtosComingSoon } from "../../eto/overview/EtoOverviewStatus/EtosComingSoon";
+import { Heading } from "../../shared/Heading";
 import { LoadingIndicator } from "../../shared/loading-indicator";
-import { SectionHeader } from "../../shared/SectionHeader";
 
 import * as styles from "./EtoList.module.scss";
 
@@ -23,9 +23,9 @@ interface IStateProps {
 const EtoListComponent: React.FunctionComponent<IStateProps> = ({ etos }) => (
   <>
     <Col xs={12}>
-      <SectionHeader>
+      <Heading level={3}>
         <FormattedMessage id="dashboard.eto-opportunities" />
-      </SectionHeader>
+      </Heading>
     </Col>
     <Col xs={12}>
       <p className={styles.opportunitiesDescription}>
