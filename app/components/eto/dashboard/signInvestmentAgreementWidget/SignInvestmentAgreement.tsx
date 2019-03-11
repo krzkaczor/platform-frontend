@@ -42,7 +42,7 @@ export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignCompone
   ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
   if (
     signedInvestmentAgreementUrl === null
-    || (signedInvestmentAgreementUrl !== null && signedInvestmentAgreementUrl !== `ifps:${uploadedAgreement.ipfsHash}`)
+    || signedInvestmentAgreementUrl !== `ifps:${uploadedAgreement.ipfsHash}`
   ) {
     //uploaded, not signed
     // widget says sign me
@@ -64,7 +64,7 @@ export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignCompone
         </div>
       </Panel>
     );
-  } else if (signedInvestmentAgreementUrl === `ifps:${uploadedAgreement.ipfsHash}`) {
+  } else {
     // uploaded, signed
     // widget says wait for nominee to sign it
     return (
@@ -79,8 +79,6 @@ export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignCompone
         </div>
       </Panel>
     );
-  } else {
-    return <>bla</>;
   }
 };
 
@@ -120,8 +118,3 @@ export const SignInvestmentAgreement = compose<React.FunctionComponent>(
     renderComponent(LoadingIndicator),
   ),
 )(SignInvestmentAgreementLayout);
-
-//invalid state, props invalid
-//signed agreement loading
-//signed agreement loaded, it's null
-//signed agreemtn loaded, it's a string
