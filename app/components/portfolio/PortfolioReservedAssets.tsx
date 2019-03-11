@@ -11,9 +11,9 @@ import { EETOStateOnChain } from "../../modules/public-etos/types";
 import { withParams } from "../../utils/withParams";
 import { appRoutes } from "../appRoutes";
 import { EProjectStatusSize, ETOState } from "../shared/ETOState";
+import { Heading } from "../shared/Heading";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../shared/Money";
 import { NumberFormat } from "../shared/NumberFormat";
-import { SectionHeader } from "../shared/SectionHeader";
 import { ENewTableCellLayout, NewTable, NewTableRow } from "../shared/table";
 import { PortfolioAssetAction } from "./PortfolioAssetAction";
 
@@ -26,13 +26,14 @@ interface IExternalProps {
 
 const PortfolioReservedAssets: React.FunctionComponent<IExternalProps> = ({ pendingAssets }) => (
   <>
-    <SectionHeader
+    <Heading
+      level={3}
       decorator={false}
       className="mb-4"
       description={<FormattedMessage id="portfolio.section.reserved-assets.description" />}
     >
       <FormattedMessage id="portfolio.section.reserved-assets.title" />
-    </SectionHeader>
+    </Heading>
 
     <Row>
       <Col>

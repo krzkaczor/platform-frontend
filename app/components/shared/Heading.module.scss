@@ -1,4 +1,4 @@
-.section-header {
+.heading-wrapper {
   position: relative;
 
   &.has-decorator {
@@ -17,7 +17,7 @@
   }
 
   &.small {
-    .header {
+    .heading {
       @include font-label;
     }
 
@@ -26,7 +26,7 @@
     }
   }
 
-  .header {
+  .heading {
     @include font-default;
 
     position: relative;
@@ -40,8 +40,8 @@
     }
 
     .icon {
-      // should match header height + 2px
-      // but not change overall header height
+      // should match heading height + 2px
+      // but not change overall heading height
       position: absolute;
       left: 0;
       top: -1px;

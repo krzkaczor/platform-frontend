@@ -1,5 +1,5 @@
 import { delay } from "redux-saga";
-import { call, cancel, fork, put, select, take } from "redux-saga/effects";
+import { all, call, cancel, fork, put, select, take } from "redux-saga/effects";
 
 import { KycFlowMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
@@ -20,7 +20,7 @@ import {
 } from "../../lib/api/KycApi.interfaces";
 import { IUser } from "../../lib/api/users/interfaces";
 import { IdentityRegistry } from "../../lib/contracts/IdentityRegistry";
-import { IAppAction, IAppState } from "../../store";
+import { IAppState } from "../../store";
 import { actions, TAction } from "../actions";
 import { ensurePermissionsArePresentAndRunEffect } from "../auth/jwt/sagas";
 import { selectIsUserVerified, selectUser } from "../auth/selectors";
@@ -649,20 +649,10 @@ export function* loadKycRequestData(): any {
 
   yield put(actions.kyc.kycLoadClaims());
 
-  // we block init until all requests are done. This avoids flickering of various elements in the app.
-  yield loadForOneOfTheKYCRequestsToLoad();
-  yield loadForOneOfTheKYCRequestsToLoad();
-}
-
-function* loadForOneOfTheKYCRequestsToLoad(): any {
-  yield take([
-    (action: IAppAction) =>
-      action.type === "KYC_UPDATE_INDIVIDUAL_REQUEST_STATE" &&
-      !action.payload.individualRequestStateLoading,
-
-    (action: IAppAction) =>
-      action.type === "KYC_UPDATE_BUSINESS_REQUEST_STATE" &&
-      !action.payload.businessRequestStateLoading,
+  yield all([
+    neuTakeOnly("KYC_UPDATE_INDIVIDUAL_REQUEST_STATE", { individualRequestStateLoading: false }),
+    neuTakeOnly("KYC_UPDATE_BUSINESS_REQUEST_STATE", { businessRequestStateLoading: false }),
+    take("KYC_SET_CLAIMS"),
   ]);
 }
 

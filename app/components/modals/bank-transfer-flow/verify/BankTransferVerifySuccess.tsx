@@ -17,7 +17,6 @@ type IProps = IDispatchProps;
 
 const BankTransferVerifySuccessLayout: React.FunctionComponent<IProps> = ({ goToWallet }) => (
   <Message
-    data-test-id="bank-transfer.success"
     image={
       <Confetti theme={EConfettiTheme.GREEN} className="mb-3">
         <img src={bankIcon} alt="" />
@@ -25,7 +24,7 @@ const BankTransferVerifySuccessLayout: React.FunctionComponent<IProps> = ({ goTo
     }
     text={<FormattedMessage id="bank-verification.success.text" />}
   >
-    <ButtonArrowRight onClick={goToWallet}>
+    <ButtonArrowRight onClick={goToWallet} data-test-id="bank-transfer.verify.success.go-to-wallet">
       <FormattedMessage id="menu.wallet.view" />
     </ButtonArrowRight>
   </Message>

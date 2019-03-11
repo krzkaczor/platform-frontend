@@ -47,7 +47,7 @@ import { appRoutes } from "../../../appRoutes";
 import { InfoAlert } from "../../../shared/Alerts";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { FormFieldRaw } from "../../../shared/forms/fields/FormFieldRaw";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, Money } from "../../../shared/Money";
 import { InvestmentTypeSelector, WalletSelectionData } from "./InvestmentTypeSelector";
 import {
@@ -136,7 +136,7 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
     <Container className={styles.container} fluid>
       <Row className="mt-0">
         <Col>
-          <Heading>
+          <Heading size={EHeadingSize.SMALL} level={4}>
             <FormattedMessage id="investment-flow.select-wallet-and-currency" />
           </Heading>
         </Col>
@@ -150,7 +150,7 @@ export const InvestmentSelectionComponent: React.FunctionComponent<IProps> = ({
       </Row>
       <Row>
         <Col>
-          <Heading>
+          <Heading size={EHeadingSize.SMALL} level={4}>
             <FormattedMessage id="investment-flow.calculate-investment" />
           </Heading>
         </Col>

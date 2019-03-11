@@ -1,6 +1,6 @@
-import { TTranslatedString } from "../types";
+import * as React from "react";
 
-export const copyToClipboard = (str: TTranslatedString) => {
+export const copyToClipboard = (str: React.ReactNode) => {
   const el = document.createElement("textarea");
 
   el.value = str as string;

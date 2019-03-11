@@ -9,7 +9,7 @@ import { showInfoToast } from "./Toast";
 import * as clipboardIcon from "../../assets/img/inline_icons/icon-clipboard.svg";
 
 interface IProps {
-  value: TTranslatedString;
+  value: React.ReactNode;
   alt?: TTranslatedString;
   message?: TTranslatedString;
   className?: string;

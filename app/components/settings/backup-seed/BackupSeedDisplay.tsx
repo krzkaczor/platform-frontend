@@ -5,7 +5,7 @@ import { Col, Row } from "reactstrap";
 
 import { IWalletPrivateData } from "../../../modules/web3/reducer";
 import { Button, EButtonLayout } from "../../shared/buttons";
-import { SectionHeader } from "../../shared/SectionHeader";
+import { Heading } from "../../shared/Heading";
 import { PrivateKeyDisplay } from "./PrivateKeyDisplay";
 
 import * as arrowLeft from "../../../assets/img/inline_icons/arrow_left.svg";
@@ -28,9 +28,9 @@ const BackupSeedDisplay: React.FunctionComponent<IBackupSeedDisplayProps> = ({
       <Row>
         <Col xs={{ size: 10, offset: 1 }}>
           <section className="mb-4">
-            <SectionHeader data-test-id="eto-dashboard-application" className="mb-3">
+            <Heading level={3} data-test-id="eto-dashboard-application" className="mb-3">
               <FormattedMessage id="components.settings.backup-seed-display.backup-seed" />
-            </SectionHeader>
+            </Heading>
             <Row className="justify-content-around no-gutters">
               {walletPrivateData.seed.map((word, index) => (
                 <Col

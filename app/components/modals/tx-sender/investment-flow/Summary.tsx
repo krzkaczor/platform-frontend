@@ -27,7 +27,7 @@ import { formatThousands } from "../../../../utils/Number.utils";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { CustomTooltip } from "../../../shared/CustomTooltip";
 import { DocumentTemplateButton } from "../../../shared/DocumentLink";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
 import {
@@ -118,7 +118,7 @@ const InvestmentSummaryComponent: React.FunctionComponent<IProps> = ({
   return (
     <Container className={styles.container}>
       <Row className="mt-0">
-        <Heading>
+        <Heading size={EHeadingSize.SMALL} level={4}>
           <FormattedMessage id="investment-flow.investment-summary" />
         </Heading>
       </Row>

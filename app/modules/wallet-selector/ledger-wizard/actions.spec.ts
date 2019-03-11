@@ -10,12 +10,10 @@ import { createMessage } from "../../../components/translatedMessages/utils";
 import { Neumark } from "../../../lib/contracts/Neumark";
 import { ILedgerWalletMetadata } from "../../../lib/persistence/WalletMetadataObjectStorage";
 import { ContractsService } from "../../../lib/web3/ContractsService";
-import {
-  IDerivationPathToAddress,
-  LedgerNotAvailableError,
-  LedgerWallet,
-  LedgerWalletConnector,
-} from "../../../lib/web3/LedgerWallet";
+import { LedgerNotAvailableError } from "../../../lib/web3/ledger-wallet/errors";
+import { LedgerWalletConnector } from "../../../lib/web3/ledger-wallet/LedgerConnector";
+import { LedgerWallet } from "../../../lib/web3/ledger-wallet/LedgerWallet";
+import { IDerivationPathToAddress } from "../../../lib/web3/ledger-wallet/types";
 import { Web3Adapter } from "../../../lib/web3/Web3Adapter";
 import { Web3Manager } from "../../../lib/web3/Web3Manager";
 import { IAppState } from "../../../store";
@@ -52,7 +50,7 @@ describe("Wallet selector > Ledger wizard > actions", () => {
         .put(actions.walletSelector.ledgerConnectionEstablished())
         .run();
 
-      expect(ledgerWalletConnectorMock.connect).to.be.calledWithExactly(expectedNetworkId);
+      expect(ledgerWalletConnectorMock.connect).to.be.calledWithExactly();
     });
 
     it("should send error action on error", async () => {
@@ -78,7 +76,7 @@ describe("Wallet selector > Ledger wizard > actions", () => {
         )
         .run();
 
-      expect(ledgerWalletConnectorMock.connect).to.be.calledWithExactly(expectedNetworkId);
+      expect(ledgerWalletConnectorMock.connect).to.be.calledWithExactly();
     });
   });
 
@@ -232,6 +230,8 @@ describe("Wallet selector > Ledger wizard > actions", () => {
 
   describe("finishSettingUpLedgerConnectorAction", () => {
     it("should work when ledger wallet is connected", async () => {
+      const expectedNetworkId = dummyNetworkId;
+
       const expectedDerivationPath = "44'/60'/0'/2";
       const dummyMetadata: ILedgerWalletMetadata = {
         address: dummyEthereumAddress,
@@ -246,8 +246,10 @@ describe("Wallet selector > Ledger wizard > actions", () => {
       const ledgerWalletConnectorMock = createMock(LedgerWalletConnector, {
         finishConnecting: async () => ledgerWalletMock,
       });
+
       const web3ManagerMock = createMock(Web3Manager, {
         plugPersonalWallet: async () => {},
+        networkId: expectedNetworkId,
       });
 
       await expectSaga(
@@ -263,6 +265,7 @@ describe("Wallet selector > Ledger wizard > actions", () => {
 
       expect(ledgerWalletConnectorMock.finishConnecting).to.be.calledWithExactly(
         expectedDerivationPath,
+        expectedNetworkId,
       );
       expect(web3ManagerMock.plugPersonalWallet).to.be.calledWithExactly(ledgerWalletMock);
     });

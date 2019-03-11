@@ -82,6 +82,16 @@ export const RESTRICTED_COUNTRIES = [
   "BS",
   "GH",
   "BW",
+  "AF", //Afghanistan
+  "AS", //American Samoa
+  "GU", //Guam
+  "IQ", //Iraq
+  "LY", //Libya
+  "NG", //Nigeria
+  "PK", //Pakistan
+  "PA", //Panama
+  "PR", //Puerto Rico
+  "VI", //Virgin Islands, U.S.
 ];
 
 export const restrictedCountry = countryCode.test(

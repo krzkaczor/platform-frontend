@@ -22,7 +22,7 @@ import {
 } from "../../portfolio/selectors";
 import { ButtonIcon } from "../../shared/buttons";
 import { DocumentTemplateLabel } from "../../shared/DocumentLink";
-import { Heading } from "../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../shared/Heading";
 import { ModalComponentBody } from "../ModalComponentBody";
 import { InfoList } from "../tx-sender/shared/InfoList";
 import { InfoRow } from "../tx-sender/shared/InfoRow";
@@ -58,7 +58,7 @@ const DownloadTokenAgreementModalComponent: React.FunctionComponent<IComponentPr
         <Container>
           <Row className="mb-4">
             <Col>
-              <Heading>
+              <Heading size={EHeadingSize.SMALL} level={4}>
                 <FormattedMessage id="portfolio.section.my-assets.modal.header" />
               </Heading>
             </Col>

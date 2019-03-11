@@ -9,8 +9,8 @@ import { actions } from "../../../../modules/actions";
 import { appConnect } from "../../../../store";
 import { Button, ButtonArrowRight, EButtonLayout } from "../../../shared/buttons";
 import { ECheckboxLayout, Form, FormFieldBoolean } from "../../../shared/forms";
+import { Heading } from "../../../shared/Heading";
 import { ExternalLink } from "../../../shared/links";
-import { SectionHeader } from "../../../shared/SectionHeader";
 
 interface IDispatchProps {
   goToSummary: () => void;
@@ -31,13 +31,14 @@ const BankTransferVerifyAgreementLayout: React.FunctionComponent<IProps> = ({
   downloadNEurTokenAgreement,
 }) => (
   <section className="text-center">
-    <SectionHeader
+    <Heading
+      level={3}
       className="mb-3"
       decorator={false}
       description={<ExternalLink href={externalRoutes.quintessenceLanding} />}
     >
       <FormattedMessage id="bank-verification.agreement.title" />
-    </SectionHeader>
+    </Heading>
 
     <p className="mb-3">
       <FormattedMessage id="bank-verification.agreement.text" />

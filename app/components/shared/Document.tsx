@@ -149,6 +149,7 @@ export const UploadableDocumentTile: React.FunctionComponent<IUploadableDocument
   busy,
 }) => {
   const linkDisabled = documentDownloadLinkInactive || busy;
+
   return (
     <div data-test-id={`form.name.${documentKey}`}>
       <ETOAddDocuments documentType={documentKey} disabled={!active || busy}>

@@ -1,4 +1,4 @@
-import { isEqual } from "lodash/fp";
+import { isMatch } from "lodash/fp";
 import {
   call,
   Effect,
@@ -61,12 +61,18 @@ export function* neuTakeUntil(
 }
 
 /**
- *  Awaits an Action with specific payload
+ *  Awaits an Action with specific payload.
+ *  You can pass only a part of the payload that you want to match.
  */
-export function* neuTakeOnly<T extends TActionType>(type: T, payload: TActionPayload<T>): any {
+export function* neuTakeOnly<T extends TActionType>(
+  type: T,
+  payload: Partial<TActionPayload<T>>,
+): any {
   while (true) {
     const takenAction = yield take(type);
-    if (isEqual(takenAction.payload, payload)) return takenAction;
+    if (isMatch(payload, takenAction.payload)) {
+      return takenAction;
+    }
   }
 }
 

@@ -24,7 +24,6 @@ export const selectIssuerEtoPreviewCode = (state: IAppState) => state.etoFlow.et
 
 export const selectIssuerEto = (state: IAppState) => {
   const issuerEtoPreviewCode = selectIssuerEtoPreviewCode(state);
-
   if (issuerEtoPreviewCode) {
     return selectPublicEto(state, issuerEtoPreviewCode);
   }

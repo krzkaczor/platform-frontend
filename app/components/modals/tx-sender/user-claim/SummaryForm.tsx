@@ -20,7 +20,7 @@ const SummaryForm: React.FunctionComponent<IExternalProps> = ({ onSubmit }) => (
   <Formik<any>
     validationSchema={getSummaryFormSchema()}
     isInitialValid={false}
-    initialValues={{}}
+    initialValues={{ readDocuments: false }}
     onSubmit={onSubmit}
   >
     {({ isValid }) => {

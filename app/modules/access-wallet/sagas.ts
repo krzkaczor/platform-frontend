@@ -10,7 +10,7 @@ import {
   ILightWalletRetrieveMetadata,
 } from "../../lib/persistence/WalletMetadataObjectStorage";
 import { BrowserWalletConnector } from "../../lib/web3/BrowserWallet";
-import { LedgerWalletConnector } from "../../lib/web3/LedgerWallet";
+import { LedgerWalletConnector } from "../../lib/web3/ledger-wallet/LedgerConnector";
 import { LightWalletConnector, LightWalletUtil } from "../../lib/web3/LightWallet";
 import { IPersonalWallet } from "../../lib/web3/PersonalWeb3";
 import { SignerError, Web3Manager } from "../../lib/web3/Web3Manager";
@@ -75,8 +75,11 @@ async function connectLedger(
   web3Manager: Web3Manager,
   metadata: ILedgerWalletMetadata,
 ): Promise<IPersonalWallet> {
-  await ledgerWalletConnector.connect(web3Manager.networkId);
-  return await ledgerWalletConnector.finishConnecting(metadata.derivationPath);
+  await ledgerWalletConnector.connect();
+  return await ledgerWalletConnector.finishConnecting(
+    metadata.derivationPath,
+    web3Manager.networkId,
+  );
 }
 
 async function connectBrowser(

@@ -16,7 +16,7 @@ import { getUnlockedWalletEtherAmountAfterFee } from "../../../../modules/wallet
 import { appConnect } from "../../../../store";
 import { getCurrentUTCTimestamp } from "../../../../utils/Date.utils";
 import { Button } from "../../../shared/buttons";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, Money } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
@@ -50,7 +50,7 @@ export const UnlockFundsSummaryComponent: React.FunctionComponent<TComponentProp
     <Container>
       <Row className="mb-4">
         <Col>
-          <Heading>
+          <Heading size={EHeadingSize.SMALL} level={4}>
             <FormattedMessage id="unlock-funds-flow.summary" />
           </Heading>
         </Col>

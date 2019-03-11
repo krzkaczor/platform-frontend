@@ -1,4 +1,5 @@
-import { branch, compose, renderComponent } from "recompose";
+import { isEqual } from "lodash/fp";
+import { branch, compose, lifecycle, renderComponent } from "recompose";
 
 import { actions } from "../../modules/actions";
 import { selectIsVerifiedInvestor } from "../../modules/auth/selectors";
@@ -16,7 +17,7 @@ import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
 import { LoadingIndicator } from "../shared/loading-indicator";
-import { PortfolioLayout, TPortfolioLayoutProps } from "./PortfolioLayout";
+import { IPortfolioDispatchProps, PortfolioLayout, TPortfolioLayoutProps } from "./PortfolioLayout";
 
 export type TStateProps = Partial<TPortfolioLayoutProps>;
 
@@ -31,7 +32,7 @@ export const Portfolio = compose<TPortfolioLayoutProps, {}>(
       }
     },
   }),
-  appConnect<TStateProps, {}>({
+  appConnect<TStateProps, IPortfolioDispatchProps>({
     stateToProps: state => ({
       myAssets: selectMyAssets(state),
       pendingAssets: selectMyPendingAssets(state),
@@ -39,6 +40,21 @@ export const Portfolio = compose<TPortfolioLayoutProps, {}>(
       tokensDisbursal: selectTokensDisbursal(state),
       isVerifiedInvestor: selectIsVerifiedInvestor(state),
     }),
+    dispatchToProps: dispatch => ({
+      loadTokensData: (walletAddress: string) => {
+        dispatch(actions.publicEtos.loadTokensData(walletAddress));
+      },
+    }),
+  }),
+  lifecycle<TPortfolioLayoutProps & IPortfolioDispatchProps, {}>({
+    componentDidUpdate(prevProps): void {
+      const prevAssets = prevProps.myAssets;
+      const actualAssets = this.props.myAssets;
+
+      if (!isEqual(prevAssets, actualAssets)) {
+        this.props.loadTokensData(this.props.walletAddress);
+      }
+    },
   }),
   withContainer(LayoutAuthorized),
   branch(

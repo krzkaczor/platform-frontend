@@ -9,7 +9,7 @@ const loadAppEnv = require("./loadAppEnv");
 const applicationEnv = loadAppEnv(process.env);
 
 module.exports = {
-  entry: ["./app/index.tsx"],
+  entry: ["babel-regenerator-runtime", "./app/index.tsx"],
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },

@@ -1,4 +1,3 @@
-import * as cn from "classnames";
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { Container } from "reactstrap";
@@ -13,13 +12,10 @@ import {
 import { selectQuintessenceBankAccount } from "../../../../modules/kyc/selectors";
 import { appConnect } from "../../../../store";
 import { ButtonArrowRight } from "../../../shared/buttons";
-import { CopyToClipboardButton } from "../../../shared/CopyToClipboardButton";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, ECurrencySymbol, Money } from "../../../shared/Money";
 import { InfoList } from "../../tx-sender/shared/InfoList";
 import { InfoRow } from "../../tx-sender/shared/InfoRow";
-
-import * as styles from "../../tx-sender/investment-flow/Summary.module.scss";
 
 interface IStateProps {
   referenceCode: string;
@@ -33,21 +29,14 @@ interface IDispatchProps {
 
 type IProps = IStateProps & IDispatchProps;
 
-const CopyToClipboardLabel: React.FunctionComponent<{ label: string }> = ({ label }) => (
-  <>
-    &nbsp; {label}
-    <CopyToClipboardButton className={cn(styles.copyToClipboard, "ml-2")} value={label} />
-  </>
-);
-
 const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
   continueToSuccess,
   referenceCode,
   minAmount,
   quintessenceBankAccount,
 }) => (
-  <Container className={styles.container}>
-    <Heading className="mb-4">
+  <Container>
+    <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
       <FormattedMessage id="bank-transfer.purchase.summary.title" />
     </Heading>
 
@@ -57,6 +46,7 @@ const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
 
     <InfoList className="mb-4">
       <InfoRow
+        data-test-id="bank-transfer.purchase.summary.min-amount"
         caption={<FormattedMessage id="bank-transfer.purchase.summary.min-amount" />}
         value={
           <Money value={minAmount} currency={ECurrency.EUR} currencySymbol={ECurrencySymbol.CODE} />
@@ -67,20 +57,28 @@ const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
         value={<FormattedMessage id="bank-transfer.summary.purchase-price.value" />}
       />
       <InfoRow
+        data-test-id="bank-transfer.purchase.summary.recipient"
         caption={<FormattedMessage id="bank-transfer.summary.recipient" />}
-        value={<CopyToClipboardLabel label={quintessenceBankAccount.name} />}
+        allowClipboardCopy={true}
+        value={quintessenceBankAccount.name}
       />
       <InfoRow
+        data-test-id="bank-transfer.purchase.summary.iban"
         caption={<FormattedMessage id="bank-transfer.summary.iban" />}
-        value={<CopyToClipboardLabel label={quintessenceBankAccount.bankAccountNumber} />}
+        allowClipboardCopy={true}
+        value={quintessenceBankAccount.bankAccountNumber}
       />
       <InfoRow
+        data-test-id="bank-transfer.purchase.summary.bic"
         caption={<FormattedMessage id="bank-transfer.summary.bic" />}
-        value={<CopyToClipboardLabel label={quintessenceBankAccount.swiftCode} />}
+        allowClipboardCopy={true}
+        value={quintessenceBankAccount.swiftCode}
       />
       <InfoRow
         caption={<FormattedMessage id="bank-transfer.summary.reference-number" />}
-        value={<CopyToClipboardLabel label={referenceCode} />}
+        data-test-id="bank-transfer.purchase.summary.reference-number"
+        allowClipboardCopy={true}
+        value={referenceCode}
       />
     </InfoList>
 
@@ -89,7 +87,10 @@ const BankTransferPurchaseLayout: React.FunctionComponent<IProps> = ({
     </p>
 
     <section className="text-center">
-      <ButtonArrowRight onClick={continueToSuccess}>
+      <ButtonArrowRight
+        onClick={continueToSuccess}
+        data-test-id="bank-transfer.purchase.summary.transfer-completed"
+      >
         <FormattedMessage id="bank-transfer.summary.transfer-completed" />
       </ButtonArrowRight>
     </section>

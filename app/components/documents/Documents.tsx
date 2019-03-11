@@ -44,8 +44,8 @@ import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
 import { ClickableDocumentTile, UploadableDocumentTile } from "../shared/Document";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
+import { Heading } from "../shared/Heading";
 import { LoadingIndicator } from "../shared/loading-indicator";
-import { SectionHeader } from "../shared/SectionHeader";
 import { SingleColDocuments } from "../shared/SingleColDocumentWidget";
 import { getDocumentTitles, isBusy, isFileUploaded, renameDocuments, uploadAllowed } from "./utils";
 
@@ -78,7 +78,98 @@ interface IDispatchProps {
   startDocumentDownload: (documentType: EEtoDocumentType) => void;
 }
 
+interface IGeneratedDocumentProps {
+  document: IEtoDocument;
+  generateTemplate: (document: IEtoDocument) => void;
+  documentTitle?: TTranslatedString;
+  busy: boolean;
+}
+
+interface IUploadableDocumentProps {
+  documentTitle: TTranslatedString;
+  documentKey: EEtoDocumentType;
+  etoDocuments: TEtoDocumentTemplates;
+  stateInfo: DeepReadonly<TStateInfo>;
+  etoState: EEtoState;
+  startDocumentDownload: (documentType: EEtoDocumentType) => void;
+  onChainState: EETOStateOnChain;
+  documentUploading: boolean;
+  documentDownloading: boolean;
+  transactionPending: boolean;
+}
+
 export type TDocumentTitles = { [key in EEtoDocumentType]: TTranslatedString };
+
+export const GeneratedDocument: React.FunctionComponent<IGeneratedDocumentProps> = ({
+  document,
+  generateTemplate,
+  documentTitle,
+  busy,
+}) => {
+  return (
+    <ClickableDocumentTile
+      document={document}
+      generateTemplate={generateTemplate}
+      title={documentTitle}
+      extension={".doc"}
+      busy={busy}
+    />
+  );
+};
+
+const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
+  documentTitle,
+  documentKey,
+  etoDocuments,
+  stateInfo,
+  etoState,
+  onChainState,
+  startDocumentDownload,
+  documentUploading,
+  documentDownloading,
+  transactionPending,
+}) => {
+  const canUploadInOnChainStates = (
+    etoState: EEtoState,
+    documentKey: EEtoDocumentType,
+    onChainState: EETOStateOnChain,
+  ) =>
+    etoState === EEtoState.ON_CHAIN
+      ? onChainState === EETOStateOnChain.Signing &&
+        documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
+      : true;
+
+  const canUpload =
+    stateInfo &&
+    etoState &&
+    stateInfo.canUploadInStates[EtoStateToCamelcase[etoState]].some(
+      (fileName: string) => fileName === documentKey,
+    ) &&
+    canUploadInOnChainStates(etoState, documentKey, onChainState);
+
+  const mayBeSignedNow = (documentKey: EEtoDocumentType, transactionPending: boolean) => {
+    return documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
+      ? !transactionPending
+      : true;
+  };
+
+  const busy = !mayBeSignedNow(documentKey, transactionPending) || documentUploading;
+
+  const isFileUploaded = Object.keys(etoDocuments).some(
+    uploadedKey => etoDocuments[uploadedKey].documentType === documentKey,
+  );
+  return (
+    <UploadableDocumentTile
+      documentKey={documentKey}
+      active={canUpload}
+      busy={busy}
+      typedFileName={documentTitle}
+      isFileUploaded={isFileUploaded}
+      downloadDocumentStart={startDocumentDownload}
+      documentDownloadLinkInactive={documentUploading || documentDownloading}
+    />
+  );
+};
 
 const DocumentsLayout: React.FunctionComponent<IProps> = ({
   etoFilesData,
@@ -102,9 +193,9 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
   return (
     <>
       <div data-test-id="eto-documents" className={styles.layout}>
-        <SectionHeader className={cn(styles.header)}>
+        <Heading level={3} className={cn(styles.header)}>
           <FormattedMessage id="documents.legal-documents" />
-        </SectionHeader>
+        </Heading>
 
         <section className={styles.documentSection}>
           <h4 className={cn(styles.groupName)}>

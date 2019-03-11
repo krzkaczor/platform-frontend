@@ -4,7 +4,7 @@ import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 
 import { copyToClipboard } from "../../../utils/copyToClipboard";
 import { Button, ButtonGroup, EButtonLayout } from "../../shared/buttons";
-import { SectionHeader } from "../../shared/SectionHeader";
+import { Heading } from "../../shared/Heading";
 import { showInfoToast } from "../../shared/Toast";
 
 import * as blindIcon from "../../../assets/img/inline_icons/blind.svg";
@@ -44,9 +44,9 @@ class PrivateKeyDisplay extends React.Component<TProps, TState> {
 
     return (
       <section className="mb-4">
-        <SectionHeader data-test-id="eto-dashboard-application" className="mb-3">
+        <Heading level={3} data-test-id="eto-dashboard-application" className="mb-3">
           <FormattedMessage id="components.settings.private-key-display.header" />
-        </SectionHeader>
+        </Heading>
         <p>
           <FormattedHTMLMessage
             tagName="span"
