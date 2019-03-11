@@ -6,7 +6,7 @@ import { compose, setDisplayName } from "recompose";
 import { actions } from "../../../../modules/actions";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ResponsiveImage } from "../../../shared/ResponsiveImage";
 
 import * as signGraphic from "../../../../assets/img/sign-agreement.svg";
@@ -21,7 +21,7 @@ const SignInvestmentAgreementComponent: React.FunctionComponent<IDispatchProps> 
   return (
     <Container>
       <Row>
-        <Heading>
+        <Heading size={EHeadingSize.SMALL} level={4}>
           <FormattedMessage id="eto.settings.eto-start-date-summary.dates-title" />
         </Heading>
       </Row>

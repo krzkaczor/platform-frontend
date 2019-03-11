@@ -15,9 +15,9 @@ import {
 import { appConnect } from "../../../../store";
 import { onEnterAction } from "../../../../utils/OnEnterAction";
 import { ButtonArrowRight } from "../../../shared/buttons/Button";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { LoadingIndicator } from "../../../shared/loading-indicator/LoadingIndicator";
 import { Panel } from "../../../shared/Panel";
-import { PanelHeader } from "../../../shared/PanelHeader";
 
 import * as styles from "../../EtoContentWidget.module.scss";
 
@@ -38,22 +38,27 @@ interface ISignComponentStateProps {
   signedInvestmentAgreementUrl: string | null;
 }
 
-export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignComponentStateProps & IDispatchProps> =
-  ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
+export const SignInvestmentAgreementLayout: React.FunctionComponent<
+  ISignComponentStateProps & IDispatchProps
+> = ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
   if (
-    signedInvestmentAgreementUrl === null
-    || signedInvestmentAgreementUrl !== `ifps:${uploadedAgreement.ipfsHash}`
+    signedInvestmentAgreementUrl === null ||
+    signedInvestmentAgreementUrl !== `ifps:${uploadedAgreement.ipfsHash}`
   ) {
     //uploaded, not signed
     // widget says sign me
     return (
       <Panel>
-        <PanelHeader
-          headerText={<FormattedMessage id="download-agreement-widget.sign-on-ethereum" />}
-        />
+        <Heading size={EHeadingSize.SMALL} level={4}>
+          <FormattedMessage id="download-agreement-widget.sign-on-ethereum" />
+        </Heading>
         <div className={styles.content}>
           <p className={cn(styles.text, "pt-2")}>
-            <FormattedMessage id="download-agreement-widget.sign-on-ethereum-text" />
+            {signedInvestmentAgreementUrl === null ? (
+              <FormattedMessage id="download-agreement-widget.sign-on-ethereum-text" />
+            ) : (
+              <FormattedMessage id="download-agreement-widget.sign-again-text" />
+            )}
           </p>
           <ButtonArrowRight
             data-test-id="eto-dashboard-submit-proposal"
@@ -69,9 +74,9 @@ export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignCompone
     // widget says wait for nominee to sign it
     return (
       <Panel>
-        <PanelHeader
-          headerText={<FormattedMessage id="download-agreement-widget.wait-for-nominee-to-sign" />}
-        />
+        <Heading size={EHeadingSize.SMALL} level={4}>
+          <FormattedMessage id="download-agreement-widget.wait-for-nominee-to-sign" />
+        </Heading>
         <div className={styles.content}>
           <p className={cn(styles.text, "pt-2")}>
             <FormattedMessage id="download-agreement-widget.wait-for-nominee-to-sign-text" />

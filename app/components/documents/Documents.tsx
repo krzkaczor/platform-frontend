@@ -85,19 +85,6 @@ interface IGeneratedDocumentProps {
   busy: boolean;
 }
 
-interface IUploadableDocumentProps {
-  documentTitle: TTranslatedString;
-  documentKey: EEtoDocumentType;
-  etoDocuments: TEtoDocumentTemplates;
-  stateInfo: DeepReadonly<TStateInfo>;
-  etoState: EEtoState;
-  startDocumentDownload: (documentType: EEtoDocumentType) => void;
-  onChainState: EETOStateOnChain;
-  documentUploading: boolean;
-  documentDownloading: boolean;
-  transactionPending: boolean;
-}
-
 export type TDocumentTitles = { [key in EEtoDocumentType]: TTranslatedString };
 
 export const GeneratedDocument: React.FunctionComponent<IGeneratedDocumentProps> = ({
@@ -113,60 +100,6 @@ export const GeneratedDocument: React.FunctionComponent<IGeneratedDocumentProps>
       title={documentTitle}
       extension={".doc"}
       busy={busy}
-    />
-  );
-};
-
-const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
-  documentTitle,
-  documentKey,
-  etoDocuments,
-  stateInfo,
-  etoState,
-  onChainState,
-  startDocumentDownload,
-  documentUploading,
-  documentDownloading,
-  transactionPending,
-}) => {
-  const canUploadInOnChainStates = (
-    etoState: EEtoState,
-    documentKey: EEtoDocumentType,
-    onChainState: EETOStateOnChain,
-  ) =>
-    etoState === EEtoState.ON_CHAIN
-      ? onChainState === EETOStateOnChain.Signing &&
-        documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
-      : true;
-
-  const canUpload =
-    stateInfo &&
-    etoState &&
-    stateInfo.canUploadInStates[EtoStateToCamelcase[etoState]].some(
-      (fileName: string) => fileName === documentKey,
-    ) &&
-    canUploadInOnChainStates(etoState, documentKey, onChainState);
-
-  const mayBeSignedNow = (documentKey: EEtoDocumentType, transactionPending: boolean) => {
-    return documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
-      ? !transactionPending
-      : true;
-  };
-
-  const busy = !mayBeSignedNow(documentKey, transactionPending) || documentUploading;
-
-  const isFileUploaded = Object.keys(etoDocuments).some(
-    uploadedKey => etoDocuments[uploadedKey].documentType === documentKey,
-  );
-  return (
-    <UploadableDocumentTile
-      documentKey={documentKey}
-      active={canUpload}
-      busy={busy}
-      typedFileName={documentTitle}
-      isFileUploaded={isFileUploaded}
-      downloadDocumentStart={startDocumentDownload}
-      documentDownloadLinkInactive={documentUploading || documentDownloading}
     />
   );
 };

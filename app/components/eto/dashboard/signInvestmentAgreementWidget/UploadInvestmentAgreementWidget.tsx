@@ -17,8 +17,8 @@ import { appConnect } from "../../../../store";
 import { ButtonArrowRight } from "../../../shared/buttons/Button";
 import { createErrorBoundary } from "../../../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryPanel } from "../../../shared/errorBoundary/ErrorBoundaryPanel";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { Panel } from "../../../shared/Panel";
-import { PanelHeader } from "../../../shared/PanelHeader";
 import { SignInvestmentAgreement } from "./SignInvestmentAgreement";
 
 import * as styles from "../../EtoContentWidget.module.scss";
@@ -43,7 +43,9 @@ export const UploadInvestmentAgreementLayout: React.FunctionComponent<
 > = ({ downloadAgreementTemplate, agreementTemplate }) => {
   return (
     <Panel>
-      <PanelHeader headerText={<FormattedMessage id="download-agreement-widget.signing-title" />} />
+      <Heading size={EHeadingSize.SMALL} level={4}>
+        <FormattedMessage id="download-agreement-widget.signing-title" />
+      </Heading>
       <div className={styles.content}>
         <p className={cn(styles.text, "pt-2")}>
           <FormattedMessage id="download-agreement-widget.signing-text" />
@@ -61,7 +63,9 @@ export const UploadInvestmentAgreementLayout: React.FunctionComponent<
 
 export const EtoCompletedWidgetLayout: React.ComponentType<any> = ({ goToWallet }) => (
   <Panel>
-    <PanelHeader headerText={<FormattedMessage id="download-agreement-widget.success-title" />} />
+    <Heading size={EHeadingSize.SMALL} level={4}>
+      <FormattedMessage id="download-agreement-widget.success-title" />
+    </Heading>
     <div className={styles.content}>
       <ButtonArrowRight data-test-id="eto-dashboard-submit-proposal" onClick={goToWallet}>
         <FormattedMessage id="download-agreement-widget.go-to-wallet" />
