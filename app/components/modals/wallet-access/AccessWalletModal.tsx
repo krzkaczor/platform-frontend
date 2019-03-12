@@ -1,7 +1,6 @@
 import * as cn from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { Modal } from "reactstrap";
 
 import { actions } from "../../../modules/actions";
 import { selectIsUnlocked, selectWalletType } from "../../../modules/web3/selectors";
@@ -102,11 +101,9 @@ interface IModalDispatchProps {
 const AccessWalletModalComponent: React.FunctionComponent<
   IModalStateProps & IModalDispatchProps
 > = props => (
-  <Modal isOpen={props.isOpen} toggle={props.onCancel} centered>
-    <ModalComponentBody onClose={props.onCancel}>
-      <AccessWalletContainer />
-    </ModalComponentBody>
-  </Modal>
+  <ModalComponentBody isOpen={props.isOpen} onClose={props.onCancel}>
+    <AccessWalletContainer />
+  </ModalComponentBody>
 );
 
 export const AccessWalletModal = appConnect<IModalStateProps, IModalDispatchProps>({

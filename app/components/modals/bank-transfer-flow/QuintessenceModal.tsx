@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Modal } from "reactstrap";
 
 import { ModalComponentBody } from "../ModalComponentBody";
 
@@ -12,10 +11,10 @@ type TProps = {
 };
 
 const QuintessenceModal: React.FunctionComponent<TProps> = ({ isOpen, onClose, children }) => (
-  <Modal isOpen={isOpen} toggle={onClose}>
-    <ModalComponentBody onClose={onClose}>{children}</ModalComponentBody>
+  <ModalComponentBody isOpen={isOpen} onClose={onClose}>
+    {children}
     <img className={styles.logo} src={quintessenceIcon} alt="" />
-  </Modal>
+  </ModalComponentBody>
 );
 
 export { QuintessenceModal };

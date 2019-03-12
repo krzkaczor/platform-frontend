@@ -986,6 +986,7 @@
   "signing.browser-wallet.message": "Please provide your signature on MetaMask to connect to Neufund.",
   "signing.ledger-wallet.header": "Confirm your Ledger Nano ownership",
   "signing.ledger-wallet.message": "To connect to Neufund, please provide your signature on your Ledger Nano by clicking on the right button.",
+  "support-desk.link.text": "Support Desk",
   "transaction-state.confirmed": "Success! Your transaction is complete.",
   "transaction-state.pending": "Your transaction is in process",
   "transaction-state.reverted": "Transaction reverted",
@@ -1121,6 +1122,5 @@
   "withdraw-flow.transaction-cost": "Transaction cost",
   "withdraw-flow.value": "Amount sent",
   "your-ethereum-address-widget.explanation": "This is the wallet address you are registered with on Neufund.",
-  "your-ethereum-address-widget.header": "Wallet address",
-  "support-desk.link.text": "Support Desk"
+  "your-ethereum-address-widget.header": "Wallet address"
 }

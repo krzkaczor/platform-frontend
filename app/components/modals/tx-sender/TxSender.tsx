@@ -1,7 +1,6 @@
 import * as cn from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { Modal } from "reactstrap";
 
 import { ITxData } from "../../../lib/web3/types";
 import { actions } from "../../../modules/actions";
@@ -77,9 +76,13 @@ const TxSenderModalSelect: React.FunctionComponent<Props> = props => {
 };
 
 const TxSenderModalOuter: React.FunctionComponent<Props> = props => (
-  <Modal isOpen={props.isOpen} toggle={props.onCancel} className={cn({ big: isBigModal(props) })}>
-    <ModalComponentBody onClose={props.onCancel}>{props.children}</ModalComponentBody>
-  </Modal>
+  <ModalComponentBody
+    isOpen={props.isOpen}
+    onClose={props.onCancel}
+    className={cn({ big: isBigModal(props) })}
+  >
+    {props.children}
+  </ModalComponentBody>
 );
 
 const TxSenderModalComponent: React.FunctionComponent<Props> = props => (

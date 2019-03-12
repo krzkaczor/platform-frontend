@@ -14,7 +14,7 @@ import { wallets } from "./InvestmentTypeSelector.stories";
 const Investment = injectIntlHelpers(InvestmentSelectionComponent);
 
 storiesOf("Investment/Form", module)
-  .addDecorator(withModalBody("47.5rem"))
+  .addDecorator(withModalBody())
   .add("default with error", () => (
     <Container>
       <Investment

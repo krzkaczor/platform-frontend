@@ -16,8 +16,8 @@ export interface IStateProps {
 }
 
 export interface ITxPendingProps {
-  blockId: number;
-  txHash: string;
+  blockId?: number;
+  txHash?: string;
   type: ETxSenderType;
 }
 

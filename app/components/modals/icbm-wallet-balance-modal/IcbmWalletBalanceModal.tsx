@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Modal } from "reactstrap";
 import { compose } from "recompose";
 
 import { actions } from "../../../modules/actions";
@@ -108,11 +107,9 @@ export const IcbmWalletBalanceComponentInner: React.FunctionComponent<IProps> = 
 
 const IcbmWalletBalanceComponent: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
-    <Modal isOpen={props.isOpen} toggle={props.onCancel}>
-      <ModalComponentBody onClose={props.onCancel}>
-        <IcbmWalletBalanceComponentInner {...props} />
-      </ModalComponentBody>
-    </Modal>
+    <ModalComponentBody isOpen={props.isOpen} onClose={props.onCancel}>
+      <IcbmWalletBalanceComponentInner {...props} />
+    </ModalComponentBody>
   );
 };
 

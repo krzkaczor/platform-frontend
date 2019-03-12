@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { Modal, Row } from "reactstrap";
+import { Row } from "reactstrap";
 import { compose, setDisplayName, withHandlers } from "recompose";
 
 import { actions } from "../../modules/actions";
@@ -48,40 +48,38 @@ const GenericModalLayout: React.FunctionComponent<IStateProps & IHandlersProps> 
   component: Component,
 }) => {
   return (
-    <Modal isOpen={isOpen} toggle={closeModal} centered>
-      <ModalComponentBody onClose={closeModal}>
-        {Component ? (
-          <Component closeModal={closeModal} />
-        ) : (
-          <>
-            <Row className="mt-5 justify-content-center">
-              <h5 data-test-id="components.modals.generic-modal.title">
-                {genericModalObj && getMessageTranslation(genericModalObj.title)}
-              </h5>
-            </Row>
+    <ModalComponentBody isOpen={isOpen} onClose={closeModal}>
+      {Component ? (
+        <Component closeModal={closeModal} />
+      ) : (
+        <>
+          <Row className="mt-5 justify-content-center">
+            <h5 data-test-id="components.modals.generic-modal.title">
+              {genericModalObj && getMessageTranslation(genericModalObj.title)}
+            </h5>
+          </Row>
 
-            <Row className="mb-5 justify-content-center">
-              <div className={styles.content}>
-                {genericModalObj && genericModalObj.icon && genericModalIcons[genericModalObj.icon]}{" "}
-                {genericModalObj &&
-                  genericModalObj.description &&
-                  getMessageTranslation(genericModalObj.description)}
-              </div>
-            </Row>
+          <Row className="mb-5 justify-content-center">
+            <div className={styles.content}>
+              {genericModalObj && genericModalObj.icon && genericModalIcons[genericModalObj.icon]}{" "}
+              {genericModalObj &&
+                genericModalObj.description &&
+                getMessageTranslation(genericModalObj.description)}
+            </div>
+          </Row>
 
-            <Row className="mb-5 justify-content-center">
-              <Button onClick={onClick} data-test-id="generic-modal-dismiss-button">
-                {genericModalObj && genericModalObj.actionLinkText ? (
-                  getMessageTranslation(genericModalObj.actionLinkText)
-                ) : (
-                  <FormattedMessage id="modal.generic.button.dismiss" />
-                )}
-              </Button>
-            </Row>
-          </>
-        )}
-      </ModalComponentBody>
-    </Modal>
+          <Row className="mb-5 justify-content-center">
+            <Button onClick={onClick} data-test-id="generic-modal-dismiss-button">
+              {genericModalObj && genericModalObj.actionLinkText ? (
+                getMessageTranslation(genericModalObj.actionLinkText)
+              ) : (
+                <FormattedMessage id="modal.generic.button.dismiss" />
+              )}
+            </Button>
+          </Row>
+        </>
+      )}
+    </ModalComponentBody>
   );
 };
 

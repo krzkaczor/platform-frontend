@@ -3,10 +3,10 @@ import * as React from "react";
 
 import { ModalComponentBody } from "../components/modals/ModalComponentBody";
 
-export const withModalBody = (maxWidth = "37.5rem") => (story: any) => (
-  <div style={{ maxWidth }}>
-    <ModalComponentBody onClose={() => {}}>{story()}</ModalComponentBody>
-  </div>
+export const withModalBody = () => (story: any) => (
+  <ModalComponentBody isOpen={true} onClose={() => {}}>
+    {story()}
+  </ModalComponentBody>
 );
 
 export const withMockedDate = (testDate: Date) => {

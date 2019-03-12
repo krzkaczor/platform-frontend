@@ -12,7 +12,7 @@ const data = {
 };
 
 storiesOf("ETO/FileIPFSModal", module)
-  .addDecorator(withModalBody("47.5rem"))
+  .addDecorator(withModalBody())
   .add("default", () => (
     <Container>
       <EtoFileIpfsModalComponent {...data} />

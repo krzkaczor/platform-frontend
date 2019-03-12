@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
-import { Modal } from "reactstrap";
 
 import { EUserType } from "../../../lib/api/users/interfaces";
 import { actions } from "../../../modules/actions";
@@ -80,11 +79,9 @@ export const AcceptTosModalInner: React.ComponentType<IStateProps & IDispatchPro
 };
 
 const AcceptTosModalComponent: React.FunctionComponent<IStateProps & IDispatchProps> = props => (
-  <Modal isOpen={props.isOpen} centered>
-    <ModalComponentBody>
-      <AcceptTosModalInner {...props} />
-    </ModalComponentBody>
-  </Modal>
+  <ModalComponentBody isOpen={props.isOpen}>
+    <AcceptTosModalInner {...props} />
+  </ModalComponentBody>
 );
 
 export const AcceptTosModal = appConnect<IStateProps, IDispatchProps>({
