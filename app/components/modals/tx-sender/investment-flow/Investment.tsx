@@ -11,7 +11,6 @@ import { createNumberMask } from "text-mask-addons";
 
 import { actions } from "../../../../modules/actions";
 import {
-  EInvestmentCurrency,
   EInvestmentErrorState,
   EInvestmentType,
 } from "../../../../modules/investment-flow/reducer";
@@ -350,9 +349,9 @@ export const InvestmentSelection: React.FunctionComponent = compose<any>(
     dispatchToProps: dispatch => ({
       sendTransaction: () => dispatch(actions.txSender.txSenderAcceptDraft()),
       changeEthValue: value =>
-        dispatch(actions.investmentFlow.submitCurrencyValue(value, EInvestmentCurrency.Ether)),
+        dispatch(actions.investmentFlow.submitCurrencyValue(value, ECurrency.ETH)),
       changeEuroValue: value =>
-        dispatch(actions.investmentFlow.submitCurrencyValue(value, EInvestmentCurrency.Euro)),
+        dispatch(actions.investmentFlow.submitCurrencyValue(value, ECurrency.EUR_TOKEN)),
       changeInvestmentType: (type: EInvestmentType) =>
         dispatch(actions.investmentFlow.selectInvestmentType(type)),
       investEntireBalance: () => dispatch(actions.investmentFlow.investEntireBalance()),

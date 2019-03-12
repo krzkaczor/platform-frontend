@@ -9,7 +9,7 @@ import { appConnect } from "../../store";
 import { TTranslatedString } from "../../types";
 import { getDocumentTemplateTitles } from "../documents/utils";
 import { DocumentTemplateButton } from "./DocumentLink";
-import { InlineIcon } from "./InlineIcon";
+import { InlineIcon } from "./icons";
 
 import * as link from "../../assets/img/inline_icons/social_link.svg";
 import * as styles from "./SingleColDocumentWidget.module.scss";

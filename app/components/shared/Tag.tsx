@@ -3,7 +3,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { TTranslatedString } from "../../types";
-import { InlineIcon } from "./InlineIcon";
+import { InlineIcon } from "./icons";
 
 import * as styles from "./Tag.module.scss";
 

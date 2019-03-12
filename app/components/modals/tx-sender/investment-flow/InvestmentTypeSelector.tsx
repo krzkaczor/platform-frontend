@@ -3,24 +3,24 @@ import * as React from "react";
 import { Col, FormGroup } from "reactstrap";
 
 import { EInvestmentType } from "../../../../modules/investment-flow/reducer";
+import { getCurrencyByInvestmentType } from "../../../../modules/investment-flow/utils";
+import { CurrencyIcon } from "../../../shared/icons/CurrencyIcon";
 import { ECurrency, Money } from "../../../shared/Money";
 
 import * as styles from "./InvestmentTypeSelector.module.scss";
 
 interface IEthWallet {
-  type: EInvestmentType.ICBMEth | EInvestmentType.InvestmentWallet;
+  type: EInvestmentType.ICBMEth | EInvestmentType.Eth;
   balanceEth: string;
   balanceEur: string;
   name: string;
-  icon: string;
 }
 
 interface InEuroWallet {
-  type: EInvestmentType.ICBMnEuro;
+  type: EInvestmentType.ICBMnEuro | EInvestmentType.NEur;
   balanceNEuro: string;
   balanceEur: string;
   name: string;
-  icon: string;
 }
 export type WalletSelectionData = IEthWallet | InEuroWallet;
 
@@ -41,7 +41,7 @@ const WalletBalance: React.FunctionComponent<WalletSelectionData> = wallet => (
 const WalletBalanceValues: React.FunctionComponent<WalletSelectionData> = wallet => {
   switch (wallet.type) {
     case EInvestmentType.ICBMEth:
-    case EInvestmentType.InvestmentWallet:
+    case EInvestmentType.Eth:
       return (
         <>
           <Money currency={ECurrency.ETH} value={wallet.balanceEth} />
@@ -51,6 +51,7 @@ const WalletBalanceValues: React.FunctionComponent<WalletSelectionData> = wallet
         </>
       );
 
+    case EInvestmentType.NEur:
     case EInvestmentType.ICBMnEuro:
       return (
         <>
@@ -84,9 +85,10 @@ export class InvestmentTypeSelector extends React.Component<IProps> {
                     data-test-id={`investment-type.selector.${wallet.type}`}
                   />
                   <div className={styles.box}>
-                    <div className={styles.icon}>
-                      <img src={wallet.icon} alt="" />
-                    </div>
+                    <CurrencyIcon
+                      currency={getCurrencyByInvestmentType(wallet.type)}
+                      className={styles.icon}
+                    />
                     <div className={styles.label}>{wallet.name}</div>
                     <WalletBalance {...wallet} />
                   </div>

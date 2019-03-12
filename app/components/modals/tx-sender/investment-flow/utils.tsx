@@ -12,6 +12,7 @@ import { EValidationState } from "../../../../modules/tx/sender/reducer";
 import {
   selectLiquidEtherBalance,
   selectLiquidEtherBalanceEuroAmount,
+  selectLiquidEuroTokenBalance,
   selectLockedEtherBalance,
   selectLockedEtherBalanceEuroAmount,
   selectLockedEuroTokenBalance,
@@ -23,35 +24,34 @@ import { formatMoney } from "../../../../utils/Money.utils";
 import { formatThousands } from "../../../../utils/Number.utils";
 import { WalletSelectionData } from "./InvestmentTypeSelector";
 
-import * as ethIcon from "../../../../assets/img/eth_icon.svg";
-import * as neuroIcon from "../../../../assets/img/nEUR_icon.svg";
-
 export function createWallets(state: IAppState): WalletSelectionData[] {
-  const w = state.wallet;
-  const icbmEther = selectLockedEtherBalance(state);
-  const icbmNeuro = selectLockedEuroTokenBalance(w);
+  const icbmNeuro = selectLockedEuroTokenBalance(state);
+  const balanceNEur = selectLiquidEuroTokenBalance(state);
 
   const wallets: Dictionary<WalletSelectionData> = {
-    [EInvestmentType.InvestmentWallet]: {
-      balanceEth: selectLiquidEtherBalance(w),
+    [EInvestmentType.Eth]: {
+      balanceEth: selectLiquidEtherBalance(state),
       balanceEur: selectLiquidEtherBalanceEuroAmount(state),
-      type: EInvestmentType.InvestmentWallet,
-      name: "Investment Wallet",
-      icon: ethIcon,
+      type: EInvestmentType.Eth,
+      name: "Eth Wallet",
+    },
+    [EInvestmentType.NEur]: {
+      balanceNEuro: balanceNEur,
+      balanceEur: balanceNEur,
+      type: EInvestmentType.NEur,
+      name: "nEuro Wallet",
     },
     [EInvestmentType.ICBMnEuro]: {
       type: EInvestmentType.ICBMnEuro,
       name: "ICBM Wallet",
       balanceNEuro: icbmNeuro,
       balanceEur: icbmNeuro,
-      icon: neuroIcon,
     },
     [EInvestmentType.ICBMEth]: {
       type: EInvestmentType.ICBMEth,
       name: "ICBM Wallet",
-      balanceEth: icbmEther,
+      balanceEth: selectLockedEtherBalance(state),
       balanceEur: selectLockedEtherBalanceEuroAmount(state),
-      icon: ethIcon,
     },
   };
 

@@ -2,14 +2,10 @@ import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 
 export enum EInvestmentType {
-  InvestmentWallet = "INVESTMENT_WALLET",
+  Eth = "ETH",
+  NEur = "NEUR",
   ICBMEth = "ICBM_ETH",
-  ICBMnEuro = "ICBM_NEURO",
-}
-
-export enum EInvestmentCurrency {
-  Ether = "ETH",
-  Euro = "EUR",
+  ICBMnEuro = "ICBM_NEUR",
 }
 
 export enum EInvestmentErrorState {
@@ -33,7 +29,7 @@ export const investmentFlowInitialState: IInvestmentFlowState = {
   etoId: "",
   euroValueUlps: "",
   ethValueUlps: "",
-  investmentType: EInvestmentType.InvestmentWallet,
+  investmentType: EInvestmentType.Eth,
   activeInvestmentTypes: [],
   isValidatedInput: false,
 };
