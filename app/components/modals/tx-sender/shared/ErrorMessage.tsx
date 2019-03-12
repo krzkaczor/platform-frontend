@@ -1,14 +1,32 @@
+import * as cn from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
+import { compose } from "recompose";
 
+import { externalRoutes } from "../../../../config/externalRoutes";
+import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
 import { ETransactionErrorType } from "../../../../modules/tx/sender/reducer";
+import { ETxSenderType } from "../../../../modules/tx/types";
+import { appConnect } from "../../../../store";
+import { ExternalLink } from "../../../shared/links/ExternalLink";
 import { Message } from "../../Message";
+import { TxDetails } from "../TxDetails";
+import { TxName } from "../TxName";
+import { TxHashAndBlock } from "./TxHashAndBlock";
+import { IStateProps } from "./TxPending";
 
 import * as failedImg from "../../../../assets/img/ether_fail.svg";
 import * as styles from "./ErrorMessage.module.scss";
 
+export interface IStateProps {
+  additionalData?: any;
+}
+
 interface IProps {
-  type?: ETransactionErrorType;
+  type: ETxSenderType;
+  error?: ETransactionErrorType;
+  blockId?: number;
+  txHash?: string;
 }
 
 const getErrorMessageByType = (type?: ETransactionErrorType) => {
@@ -44,30 +62,64 @@ const getErrorMessageByType = (type?: ETransactionErrorType) => {
     case ETransactionErrorType.LEDGER_CONTRACTS_DISABLED:
       return <FormattedMessage id="modal.txsender.error-message.ledger-contracts-disabled" />;
     default:
-      return <FormattedMessage id="modal.shared.signing-message.transaction-error.hint" />;
+      return (
+        <FormattedMessage
+          id="modal.shared.signing-message.transaction-error.text"
+          values={{
+            supportDesk: (
+              <ExternalLink href={externalRoutes.neufundSupport}>
+                <FormattedMessage id="support-desk.link.text" />
+              </ExternalLink>
+            ),
+          }}
+        />
+      );
   }
 };
 
-const getErrorTitleByType = (type?: ETransactionErrorType) => {
-  switch (type) {
+const getErrorTitleByType = (type: ETxSenderType, error?: ETransactionErrorType) => {
+  switch (error) {
     case ETransactionErrorType.NOT_ENOUGH_NEUMARKS_TO_UNLOCK:
       return (
         <FormattedMessage id="modal.txsender.error-message.error-not-enough-neu-to-unlock.title" />
       );
     default:
-      return <FormattedMessage id="modal.shared.signing-message.transaction-error.title" />;
+      return (
+        <FormattedMessage
+          id="modal.shared.signing-message.transaction-error.title"
+          values={{ transaction: <TxName type={type} /> }}
+        />
+      );
   }
 };
 
-const ErrorMessage: React.FunctionComponent<IProps> = ({ type }) => {
+const ErrorMessageLayout: React.FunctionComponent<IProps & IStateProps> = ({
+  type,
+  error,
+  additionalData,
+  txHash,
+  blockId,
+}) => {
   return (
     <Message
       data-test-id="modals.shared.signing-message.modal"
-      image={<img src={failedImg} className={styles.eth} />}
-      title={getErrorTitleByType(type)}
-      hint={getErrorMessageByType(type)}
-    />
+      image={<img src={failedImg} className={cn(styles.eth, "mb-3")} alt="" />}
+      title={getErrorTitleByType(type, error)}
+      text={getErrorMessageByType(error)}
+    >
+      {additionalData && <TxDetails type={type} additionalData={additionalData} />}
+
+      <TxHashAndBlock txHash={txHash} blockId={blockId} />
+    </Message>
   );
 };
+
+const ErrorMessage = compose<IStateProps & IProps, IProps>(
+  appConnect<IStateProps>({
+    stateToProps: state => ({
+      additionalData: selectMonitoredTxAdditionalData(state),
+    }),
+  }),
+)(ErrorMessageLayout);
 
 export { ErrorMessage };

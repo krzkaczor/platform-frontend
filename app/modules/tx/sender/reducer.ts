@@ -117,7 +117,7 @@ export const txSenderReducer: AppReducer<ITxSenderState> = (
 
     case "TX_SENDER_ERROR":
       return {
-        ...initialState,
+        ...state,
         state: ETxSenderState.ERROR_SIGN,
         error: action.payload.error,
       };

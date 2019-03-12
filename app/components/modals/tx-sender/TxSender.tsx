@@ -172,13 +172,21 @@ const TxSenderBody: React.FunctionComponent<Props> = ({ state, blockId, txHash, 
       return <SigningMessage />;
 
     case ETxSenderState.MINING:
-      return <TxPending blockId={blockId!} txHash={txHash!} type={type!} />;
+      if (!type) {
+        throw new Error("Transaction type needs to be set at transaction mining state");
+      }
+
+      return <TxPending blockId={blockId} txHash={txHash} type={type} />;
 
     case ETxSenderState.DONE:
       return <SuccessComponent type={type} txHash={txHash!} />;
 
     case ETxSenderState.ERROR_SIGN:
-      return <ErrorMessage type={error} />;
+      if (!type) {
+        throw new Error("Transaction type needs to be set at transaction error state");
+      }
+
+      return <ErrorMessage blockId={blockId} txHash={txHash} type={type} error={error} />;
 
     default:
       return null;

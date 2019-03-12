@@ -677,8 +677,8 @@
   "modal.sent-eth.to-address": "Send ETH to address:",
   "modal.shared.signing-message.hint": "Please provide your signature on your Ledger Nano or on MetaMask to confirm the transaction.",
   "modal.shared.signing-message.title": "Confirm your transaction",
-  "modal.shared.signing-message.transaction-error.hint": "Oops! It looks like an error has occurred with your transaction. Please check if you are logged in on your Ledger Nano or MetaMask and try again.",
-  "modal.shared.signing-message.transaction-error.title": "Transaction error",
+  "modal.shared.signing-message.transaction-error.text": "Unfortunately, your transaction was unable to be processed by the Ethereum Network. Please try again, or contact our {supportDesk} for help.",
+  "modal.shared.signing-message.transaction-error.title": "{transaction} unsuccessful",
   "modal.txsender.error-message.error-not-enough-neu-to-unlock.message": "It seems that you don't have enough neumarks in this wallet to unlock the funds. Please transfer all the neumarks taken from the ICBM to this wallet and conduct the operation again",
   "modal.txsender.error-message.error-not-enough-neu-to-unlock.title": "Unlocking Funds Error",
   "modal.txsender.error-message.error-while-watching-tx": "Error while watching transaction.",
@@ -1121,5 +1121,6 @@
   "withdraw-flow.transaction-cost": "Transaction cost",
   "withdraw-flow.value": "Amount sent",
   "your-ethereum-address-widget.explanation": "This is the wallet address you are registered with on Neufund.",
-  "your-ethereum-address-widget.header": "Wallet address"
+  "your-ethereum-address-widget.header": "Wallet address",
+  "support-desk.link.text": "Support Desk"
 }
