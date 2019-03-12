@@ -2,8 +2,7 @@ import * as cn from "classnames";
 import * as React from "react";
 
 import { TTranslatedString } from "../../types";
-
-import * as styles from "./Message.module.scss";
+import { EHeadingSize, Heading } from "../shared/Heading";
 
 type TProps = {
   "data-test-id"?: string;
@@ -22,11 +21,11 @@ const Message: React.FunctionComponent<TProps> = ({
   children,
 }) => {
   return (
-    <section className="text-center" data-test-id={dataTestId}>
+    <section className={cn("text-center", "mx-sm-5")} data-test-id={dataTestId}>
       {image}
-      {title && <h3 className={styles.title}>{title}</h3>}
-      {hint && <p className={cn(styles.text, "text-warning")}>{hint}</p>}
-      {text && <p className={styles.text}>{text}</p>}
+      {title && <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>{title}</Heading>}
+      {hint && <p className={cn("text-warning", "mx-sm-4", "mt-3")}>{hint}</p>}
+      {text && <p className={cn("mx-sm-4", "mt-3")}>{text}</p>}
       {children}
     </section>
   );

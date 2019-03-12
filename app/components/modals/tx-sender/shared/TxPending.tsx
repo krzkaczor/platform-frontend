@@ -6,7 +6,7 @@ import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { SpinningEthereum } from "../../../shared/ethererum";
-import { EHeadingSize, Heading } from "../../../shared/Heading";
+import { Message } from "../../Message";
 import { TxDetails } from "../TxDetails";
 import { TxName } from "../TxName";
 import { TxHashAndBlock } from "./TxHashAndBlock";
@@ -27,24 +27,21 @@ const TxPendingLayout: React.FunctionComponent<ITxPendingProps & IStateProps> = 
   type,
   additionalData,
 }) => (
-  <section className="text-center" test-data-id="modals.shared.tx-pending.modal">
-    <SpinningEthereum className="mb-3" />
-
-    <Heading level={3} decorator={false} size={EHeadingSize.SMALL} className="mb-3">
+  <Message
+    data-test-id="modals.shared.tx-pending.modal"
+    image={<SpinningEthereum className="mb-3" />}
+    title={
       <FormattedMessage
         id="tx-sender.tx-pending.title"
         values={{ transaction: <TxName type={type} /> }}
       />
-    </Heading>
-
-    <p>
-      <FormattedMessage id="tx-sender.tx-pending.description" />
-    </p>
-
+    }
+    text={<FormattedMessage id="tx-sender.tx-pending.description" />}
+  >
     {additionalData && <TxDetails type={type} additionalData={additionalData} />}
 
     <TxHashAndBlock txHash={txHash} blockId={blockId} />
-  </section>
+  </Message>
 );
 
 const TxPending = compose<IStateProps & ITxPendingProps, ITxPendingProps>(
