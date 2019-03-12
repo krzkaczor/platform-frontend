@@ -23,7 +23,7 @@ import {
 import { ButtonIcon } from "../../shared/buttons";
 import { DocumentTemplateLabel } from "../../shared/DocumentLink";
 import { EHeadingSize, Heading } from "../../shared/Heading";
-import { ModalComponentBody } from "../ModalComponentBody";
+import { Modal } from "../Modal";
 import { InfoList } from "../tx-sender/shared/InfoList";
 import { InfoRow } from "../tx-sender/shared/InfoRow";
 
@@ -53,7 +53,7 @@ const DownloadTokenAgreementModalComponent: React.FunctionComponent<IComponentPr
   isPendingDownload,
 }) => {
   return (
-    <ModalComponentBody isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <Container>
         <Row className="mb-4">
           <Col>
@@ -134,7 +134,7 @@ const DownloadTokenAgreementModalComponent: React.FunctionComponent<IComponentPr
           </InfoList>
         )}
       </Container>
-    </ModalComponentBody>
+    </Modal>
   );
 };
 

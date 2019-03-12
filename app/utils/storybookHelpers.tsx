@@ -1,12 +1,12 @@
 import * as MockDate from "mockdate";
 import * as React from "react";
 
-import { ModalComponentBody } from "../components/modals/ModalComponentBody";
+import { Modal } from "../components/modals/Modal";
 
 export const withModalBody = () => (story: any) => (
-  <ModalComponentBody isOpen={true} onClose={() => {}}>
+  <Modal isOpen={true} onClose={() => {}}>
     {story()}
-  </ModalComponentBody>
+  </Modal>
 );
 
 export const withMockedDate = (testDate: Date) => {

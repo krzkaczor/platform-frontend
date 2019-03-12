@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ModalComponentBody } from "../ModalComponentBody";
+import { Modal } from "../Modal";
 
 import * as quintessenceIcon from "../../../assets/img/bank-transfer/quintessence.png";
 import * as styles from "./QuintessenceModal.module.scss";
@@ -11,10 +11,10 @@ type TProps = {
 };
 
 const QuintessenceModal: React.FunctionComponent<TProps> = ({ isOpen, onClose, children }) => (
-  <ModalComponentBody isOpen={isOpen} onClose={onClose}>
+  <Modal isOpen={isOpen} onClose={onClose}>
     {children}
     <img className={styles.logo} src={quintessenceIcon} alt="" />
-  </ModalComponentBody>
+  </Modal>
 );
 
 export { QuintessenceModal };

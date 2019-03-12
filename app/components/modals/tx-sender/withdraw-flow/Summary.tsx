@@ -41,10 +41,7 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
     </Row>
     <Row>
       <Col className="text-center">
-        <Button
-          onClick={onAccept}
-          data-test-id="modals.tx-sender.withdraw-flow.summary.accept"
-        >
+        <Button onClick={onAccept} data-test-id="modals.tx-sender.withdraw-flow.summary.accept">
           <FormattedMessage id="withdraw-flow.confirm" />
         </Button>
       </Col>

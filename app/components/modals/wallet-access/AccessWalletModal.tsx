@@ -9,7 +9,7 @@ import { appConnect } from "../../../store";
 import { TTranslatedString } from "../../../types";
 import { HiResImage } from "../../shared/HiResImage";
 import { getMessageTranslation } from "../../translatedMessages/messages";
-import { ModalComponentBody } from "../ModalComponentBody";
+import { Modal } from "../Modal";
 import { AccessLightWalletPrompt } from "./AccessLightWalletPrompt";
 
 import * as ledgerConfirm from "../../../assets/img/wallet_selector/ledger_confirm.svg";
@@ -101,9 +101,9 @@ interface IModalDispatchProps {
 const AccessWalletModalComponent: React.FunctionComponent<
   IModalStateProps & IModalDispatchProps
 > = props => (
-  <ModalComponentBody isOpen={props.isOpen} onClose={props.onCancel}>
+  <Modal isOpen={props.isOpen} onClose={props.onCancel}>
     <AccessWalletContainer />
-  </ModalComponentBody>
+  </Modal>
 );
 
 export const AccessWalletModal = appConnect<IModalStateProps, IModalDispatchProps>({

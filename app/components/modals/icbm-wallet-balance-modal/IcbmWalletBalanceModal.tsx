@@ -24,7 +24,7 @@ import {
 } from "../../../modules/wallet/selectors";
 import { appConnect } from "../../../store";
 import { LoadingIndicator } from "../../shared/loading-indicator";
-import { ModalComponentBody } from "../ModalComponentBody";
+import { Modal } from "../Modal";
 import { BalanceModal } from "./BalanceModal";
 import { MigrateModal } from "./MigrateModal";
 
@@ -107,9 +107,9 @@ export const IcbmWalletBalanceComponentInner: React.FunctionComponent<IProps> = 
 
 const IcbmWalletBalanceComponent: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
-    <ModalComponentBody isOpen={props.isOpen} onClose={props.onCancel}>
+    <Modal isOpen={props.isOpen} onClose={props.onCancel}>
       <IcbmWalletBalanceComponentInner {...props} />
-    </ModalComponentBody>
+    </Modal>
   );
 };
 

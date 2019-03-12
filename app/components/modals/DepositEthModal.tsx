@@ -6,7 +6,7 @@ import { selectEthereumAddressWithChecksum } from "../../modules/web3/selectors"
 import { appConnect } from "../../store";
 import { AccountAddress } from "../shared/AccountAddress";
 import { EthereumQRCode } from "../shared/EthereumQRCode";
-import { ModalComponentBody } from "./ModalComponentBody";
+import { Modal } from "./Modal";
 
 import * as styles from "./DepositEthModal.module.scss";
 
@@ -21,7 +21,7 @@ interface IDispatchProps {
 
 const DepositEthModalComponent: React.FunctionComponent<IStateProps & IDispatchProps> = props => {
   return (
-    <ModalComponentBody isOpen={props.isOpen} onClose={props.onCancel}>
+    <Modal isOpen={props.isOpen} onClose={props.onCancel}>
       <div className={styles.contentWrapper}>
         <div className={styles.qrCodeWrapper}>
           <EthereumQRCode
@@ -43,7 +43,7 @@ const DepositEthModalComponent: React.FunctionComponent<IStateProps & IDispatchP
           data-test-id="wallet-balance.ether.deposit.address"
         />
       </div>
-    </ModalComponentBody>
+    </Modal>
   );
 };
 

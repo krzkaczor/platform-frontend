@@ -10,7 +10,7 @@ import { appConnect } from "../../store";
 import { DeepReadonly } from "../../types";
 import { ExternalLink } from "../shared/links";
 import { SlidePerson } from "../shared/SlidePerson";
-import { ModalComponentBody } from "./ModalComponentBody";
+import { Modal } from "./Modal";
 
 import * as styles from "./PersonProfileModal.module.scss";
 
@@ -29,7 +29,7 @@ const PersonProfileModalComponent: React.FunctionComponent<IStateProps & IDispat
   personProfileModalObj,
 }) => {
   return (
-    <ModalComponentBody isOpen={isOpen} onClose={onDismiss}>
+    <Modal isOpen={isOpen} onClose={onDismiss}>
       <SlidePerson
         description={(personProfileModalObj && personProfileModalObj.description) || ""}
         socialChannels={(personProfileModalObj && personProfileModalObj.socialChannels) || []}
@@ -48,7 +48,7 @@ const PersonProfileModalComponent: React.FunctionComponent<IStateProps & IDispat
           </ExternalLink>
         </div>
       )}
-    </ModalComponentBody>
+    </Modal>
   );
 };
 

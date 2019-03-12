@@ -23,7 +23,11 @@ const Message: React.FunctionComponent<TProps> = ({
   return (
     <section className={cn("text-center", "mx-sm-5")} data-test-id={dataTestId}>
       {image}
-      {title && <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>{title}</Heading>}
+      {title && (
+        <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
+          {title}
+        </Heading>
+      )}
       {hint && <p className={cn("text-warning", "mx-sm-4", "mt-3")}>{hint}</p>}
       {text && <p className={cn("mx-sm-4", "mt-3")}>{text}</p>}
       {children}

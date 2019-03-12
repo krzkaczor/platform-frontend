@@ -8,7 +8,7 @@ import {
   selectIsIpfsModalOpen,
 } from "../../../modules/eto-documents/selectors";
 import { appConnect } from "../../../store";
-import { ModalComponentBody } from "../../modals/ModalComponentBody";
+import { Modal } from "../../modals/Modal";
 import { ButtonArrowRight } from "../../shared/buttons";
 import { ResponsiveImage } from "../../shared/ResponsiveImage";
 
@@ -30,7 +30,7 @@ export const EtoFileIpfsModalComponent: React.FunctionComponent<IStateProps & ID
   onContinue,
 }) => {
   return (
-    <ModalComponentBody isOpen={isOpen} onClose={onDismiss}>
+    <Modal isOpen={isOpen} onClose={onDismiss}>
       <Row className="mb-5 justify-content-center">
         <Col xs={11} className="d-flex justify-content-center">
           <ResponsiveImage
@@ -52,7 +52,7 @@ export const EtoFileIpfsModalComponent: React.FunctionComponent<IStateProps & ID
           <FormattedMessage id="modal.ipfs-eto.button.continue" />
         </ButtonArrowRight>
       </Row>
-    </ModalComponentBody>
+    </Modal>
   );
 };
 

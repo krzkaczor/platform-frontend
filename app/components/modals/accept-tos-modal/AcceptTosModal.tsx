@@ -11,7 +11,7 @@ import {
 } from "../../../modules/auth/selectors";
 import { appConnect } from "../../../store";
 import { Button, EButtonLayout } from "../../shared/buttons";
-import { ModalComponentBody } from "../ModalComponentBody";
+import { Modal } from "../Modal";
 
 interface IStateProps {
   isOpen: boolean;
@@ -79,9 +79,9 @@ export const AcceptTosModalInner: React.ComponentType<IStateProps & IDispatchPro
 };
 
 const AcceptTosModalComponent: React.FunctionComponent<IStateProps & IDispatchProps> = props => (
-  <ModalComponentBody isOpen={props.isOpen}>
+  <Modal isOpen={props.isOpen}>
     <AcceptTosModalInner {...props} />
-  </ModalComponentBody>
+  </Modal>
 );
 
 export const AcceptTosModal = appConnect<IStateProps, IDispatchProps>({

@@ -10,7 +10,7 @@ import { ETxSenderType } from "../../../modules/tx/types";
 import { appConnect } from "../../../store";
 import { LoadingIndicator } from "../../shared/loading-indicator";
 import { QuintessenceModal } from "../bank-transfer-flow/QuintessenceModal";
-import { ModalComponentBody } from "../ModalComponentBody";
+import { Modal } from "../Modal";
 import { AccessWalletContainer } from "../wallet-access/AccessWalletModal";
 import { SetEtoDateSummary } from "./eto-flow/SetDateSummary";
 import { InvestmentSelection } from "./investment-flow/Investment";
@@ -76,13 +76,9 @@ const TxSenderModalSelect: React.FunctionComponent<Props> = props => {
 };
 
 const TxSenderModalOuter: React.FunctionComponent<Props> = props => (
-  <ModalComponentBody
-    isOpen={props.isOpen}
-    onClose={props.onCancel}
-    className={cn({ big: isBigModal(props) })}
-  >
+  <Modal isOpen={props.isOpen} onClose={props.onCancel} className={cn({ big: isBigModal(props) })}>
     {props.children}
-  </ModalComponentBody>
+  </Modal>
 );
 
 const TxSenderModalComponent: React.FunctionComponent<Props> = props => (

@@ -14,7 +14,7 @@ import { appConnect, AppDispatch } from "../../store";
 import { DeepReadonly } from "../../types";
 import { Button } from "../shared/buttons";
 import { getMessageTranslation } from "../translatedMessages/messages";
-import { ModalComponentBody } from "./ModalComponentBody";
+import { Modal } from "./Modal";
 
 import * as successIcon from "../../assets/img/notifications/success.svg";
 import * as warningIcon from "../../assets/img/notifications/warning.svg";
@@ -48,7 +48,7 @@ const GenericModalLayout: React.FunctionComponent<IStateProps & IHandlersProps> 
   component: Component,
 }) => {
   return (
-    <ModalComponentBody isOpen={isOpen} onClose={closeModal}>
+    <Modal isOpen={isOpen} onClose={closeModal}>
       {Component ? (
         <Component closeModal={closeModal} />
       ) : (
@@ -79,7 +79,7 @@ const GenericModalLayout: React.FunctionComponent<IStateProps & IHandlersProps> 
           </Row>
         </>
       )}
-    </ModalComponentBody>
+    </Modal>
   );
 };
 
