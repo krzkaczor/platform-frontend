@@ -119,14 +119,20 @@ const PortfolioMyAssetsComponent: React.FunctionComponent<TComponentProps> = ({
               .filter(v => v.tokenData.balance !== "0")
               .map(({ equityTokenImage, equityTokenName, etoId, tokenData, equityTokenSymbol }) => {
                 return (
-                  <NewTableRow key={etoId} cellLayout={ENewTableCellLayout.MIDDLE}>
+                  <NewTableRow
+                    key={etoId}
+                    cellLayout={ENewTableCellLayout.MIDDLE}
+                    data-test-id={`portfolio-my-assets-token-${etoId}`}
+                  >
                     <>
                       <img src={equityTokenImage} alt="" className={cn("mr-2", styles.token)} />
                       <span className={styles.tokenName}>
                         {equityTokenName} ({equityTokenSymbol})
                       </span>
                     </>
-                    <NumberFormat value={tokenData.balance} />
+                    <span data-test-id="portfolio-my-assets-token-balance">
+                      <NumberFormat value={tokenData.balance} />
+                    </span>
                     <Money
                       value={multiplyBigNumbers([tokenData.tokenPrice, tokenData.balance])}
                       currency={ECurrency.EUR}
