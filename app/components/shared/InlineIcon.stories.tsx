@@ -22,6 +22,8 @@ import * as safe from "../../assets/img/seed_backup/safe.svg";
 import * as write from "../../assets/img/seed_backup/write.svg";
 import * as token_icon from "../../assets/img/token_icon.svg";
 import * as browser_icon from "../../assets/img/wallet_selector/browser_icon.svg";
+import * as check_metamask from "../../assets/img/wallet_selector/check_metamask.svg";
+import * as enter_password from "../../assets/img/wallet_selector/enter_password.svg";
 import * as ledger_confirm from "../../assets/img/wallet_selector/ledger_confirm.svg";
 import * as ledger_login_step_1 from "../../assets/img/wallet_selector/ledger_login_step_1.svg";
 import * as ledger_login_step_2 from "../../assets/img/wallet_selector/ledger_login_step_2.svg";
@@ -32,6 +34,7 @@ import * as ledger_login_step_6 from "../../assets/img/wallet_selector/ledger_lo
 import * as lock_icon from "../../assets/img/wallet_selector/lock_icon.svg";
 import * as logo_chrome from "../../assets/img/wallet_selector/logo_chrome.svg";
 import * as logo_firefox from "../../assets/img/wallet_selector/logo_firefox.svg";
+import * as reload from "../../assets/img/wallet_selector/reload.svg";
 import * as wallet_confirm_icon from "../../assets/img/wallet_selector/wallet_confirm_icon.svg";
 import * as wallet_icon from "../../assets/img/wallet_selector/wallet_icon.svg";
 
@@ -80,6 +83,9 @@ storiesOf("Icons", module)
         logo_firefox,
         wallet_confirm_icon,
         wallet_icon,
+        check_metamask,
+        enter_password,
+        reload,
       ].map(svg => (
         <span style={{ display: "inline-block" }} className="m-1">
           <img src={svg} />

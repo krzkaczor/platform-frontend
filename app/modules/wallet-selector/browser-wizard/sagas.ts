@@ -1,5 +1,5 @@
 import { delay } from "redux-saga";
-import { cancel, fork, put, select, take, takeLatest } from "redux-saga/effects";
+import { fork, put, race, select, take } from "redux-saga/effects";
 
 import { BrowserWalletErrorMessage } from "../../../components/translatedMessages/messages";
 import { BROWSER_WALLET_RECONNECT_INTERVAL } from "../../../config/constants";
@@ -14,27 +14,29 @@ import { neuCall, neuTakeEvery } from "../../sagasUtils";
 import { mapBrowserWalletErrorToErrorMessage } from "./errors";
 
 export function* browserWalletConnectionWatcher(): any {
-  yield fork(neuCall, tryConnectingWithBrowserWallet);
+  while (true) {
+    yield neuCall(tryConnectingWithBrowserWallet);
 
-  const connectionRetry = yield takeLatest(
-    "BROWSER_WALLET_CONNECTION_ERROR",
-    neuCall,
-    tryConnectingWithBrowserWallet,
-    BROWSER_WALLET_RECONNECT_INTERVAL,
-  );
-  yield take(["@@router/LOCATION_CHANGE", "WALLET_SELECTOR_CONNECTED"]);
-  yield cancel(connectionRetry);
-  yield cancel();
+    const { success } = yield race({
+      fail: take("BROWSER_WALLET_CONNECTION_ERROR"),
+      success: take(["@@router/LOCATION_CHANGE", "WALLET_SELECTOR_CONNECTED"]),
+    });
+
+    if (success) {
+      return;
+    }
+
+    yield delay(BROWSER_WALLET_RECONNECT_INTERVAL);
+  }
 }
 
-export function* tryConnectingWithBrowserWallet(
-  { browserWalletConnector, web3Manager, logger }: TGlobalDependencies,
-  timeout?: number,
-): any {
+export function* tryConnectingWithBrowserWallet({
+  browserWalletConnector,
+  web3Manager,
+  logger,
+}: TGlobalDependencies): any {
   const state: IAppState = yield select();
-  if (timeout) {
-    yield delay(timeout);
-  }
+
   if (!state.browserWalletWizardState.approvalRejected) {
     try {
       const browserWallet: BrowserWallet = yield browserWalletConnector.connect(

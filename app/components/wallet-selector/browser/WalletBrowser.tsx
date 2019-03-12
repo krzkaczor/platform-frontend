@@ -17,8 +17,9 @@ import { WarningAlert } from "../../shared/WarningAlert";
 import { getMessageTranslation } from "../../translatedMessages/messages";
 import { TMessage } from "../../translatedMessages/utils";
 
-import * as browserIcon from "../../../assets/img/wallet_selector/browser_icon.svg";
-import * as lockIcon from "../../../assets/img/wallet_selector/lock_icon.svg";
+import * as check_metamask from "../../../assets/img/wallet_selector/check_metamask.svg";
+import * as enter_password from "../../../assets/img/wallet_selector/enter_password.svg";
+import * as reload from "../../../assets/img/wallet_selector/reload.svg";
 import * as styles from "./WalletBrowser.module.scss";
 
 interface IWalletBrowserProps {
@@ -73,17 +74,14 @@ export const WalletBrowserComponent: React.FunctionComponent<
         )}
         <div className={styles.stepCardWrapper}>
           <StepCard
-            img={browserIcon}
+            img={check_metamask}
             text={<FormattedMessage id="wallet-selector.browser.steps.1" />}
           />
           <StepCard
-            img={lockIcon}
+            img={enter_password}
             text={<FormattedMessage id="wallet-selector.browser.steps.2" />}
           />
-          <StepCard
-            img={lockIcon}
-            text={<FormattedMessage id="wallet-selector.browser.steps.3" />}
-          />
+          <StepCard img={reload} text={<FormattedMessage id="wallet-selector.browser.steps.3" />} />
         </div>
 
         <HorizontalLine className="mb-4" />

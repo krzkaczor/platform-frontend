@@ -60,7 +60,6 @@ export const MessageSignerComponent: React.FunctionComponent<IStateProps & IDisp
           </Col>
         </Row>
       )}
-
     </>
   );
 
@@ -76,7 +75,7 @@ export const WalletMessageSigner = compose(
       cancelSigning: () => {
         dispatch(actions.walletSelector.reset());
         dispatch(actions.routing.goTo(ownProps.rootPath));
-      }
+      },
     }),
   }),
 )(MessageSignerComponent);
