@@ -1,12 +1,12 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { PanelBase } from "../PanelBase";
+import { Panel } from "../Panel";
 
 import * as styles from "./ErrorBoundary.module.scss";
 
 export const ErrorBoundaryPanel: React.FunctionComponent = () => (
-  <PanelBase className={styles.panel}>
+  <Panel className={styles.panel} centerContent={true}>
     <FormattedMessage id="error-boundary.widget-error-message" />
-  </PanelBase>
+  </Panel>
 );

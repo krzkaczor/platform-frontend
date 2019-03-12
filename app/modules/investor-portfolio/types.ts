@@ -37,7 +37,7 @@ export type TETOWithInvestorTicket = TEtoWithCompanyAndContract & {
   investorTicket: IInvestorTicket;
 };
 
-export type TETOWithTokenData = TETOWithInvestorTicket & {
+export type TETOWithTokenData = TEtoWithCompanyAndContract & {
   tokenData: IEtoTokenData;
 };
 

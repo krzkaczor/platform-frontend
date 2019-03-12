@@ -7,7 +7,7 @@ import { getShareAndTokenPrice } from "../../lib/api/eto/EtoUtils";
 import { IAppState } from "../../store";
 import { isZero } from "../../utils/Number.utils";
 import { selectPublicEtoById, selectPublicEtos, selectTokenData } from "../public-etos/selectors";
-import { EETOStateOnChain } from "../public-etos/types";
+import { EETOStateOnChain, TEtoWithCompanyAndContract } from "../public-etos/types";
 import { isOnChain } from "../public-etos/utils";
 import { selectLockedWalletConnected } from "../wallet/selectors";
 import { ICalculatedContribution, TETOWithInvestorTicket, TETOWithTokenData } from "./types";
@@ -51,15 +51,11 @@ export const selectEtoWithInvestorTickets = (
   return undefined;
 };
 
-export const selectMyAssets = (state: IAppState): TETOWithInvestorTicket[] | undefined => {
-  const etos = selectEtoWithInvestorTickets(state);
+export const selectMyAssets = (state: IAppState): TEtoWithCompanyAndContract[] | undefined => {
+  const etos = selectPublicEtos(state);
 
   if (etos) {
-    return etos.filter(
-      eto =>
-        eto.contract!.timedState === EETOStateOnChain.Claim ||
-        eto.contract!.timedState === EETOStateOnChain.Payout,
-    );
+    return etos.filter(eto => eto.contract && eto.contract.timedState === EETOStateOnChain.Payout);
   }
 
   return undefined;
@@ -172,7 +168,7 @@ export const selectTokensDisbursal = createSelector(selectInvestorTicketsState, 
 export const selectMyAssetsWithTokenData = (state: IAppState): TETOWithTokenData[] | undefined => {
   const myAsssets = selectMyAssets(state);
   if (myAsssets) {
-    return myAsssets.map((asset: TETOWithInvestorTicket) => ({
+    return myAsssets.map((asset: TEtoWithCompanyAndContract) => ({
       ...asset,
       tokenData: selectTokenData(state.publicEtos, asset.previewCode)!,
     }));

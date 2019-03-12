@@ -52,10 +52,7 @@ const LinkAccount: React.FunctionComponent<IComponentProps> = ({
 );
 
 const LinkedBankAccountComponent: React.FunctionComponent<IComponentProps> = props => (
-  <Panel
-    centerContent={false}
-    headerText={<FormattedMessage id="linked-bank-account-widget.header" />}
-  >
+  <Panel headerText={<FormattedMessage id="linked-bank-account-widget.header" />}>
     <section className={styles.panelBody}>
       {props.isBankAccountVerified && props.bankAccount && props.bankAccount.hasBankAccount ? (
         <BankAccount details={props.bankAccount.details} />

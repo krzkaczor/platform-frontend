@@ -21,10 +21,9 @@ import { Button, ButtonSize, EButtonLayout } from "../../../shared/buttons/Butto
 import { ButtonArrowRight } from "../../../shared/buttons/index";
 import { FormField } from "../../../shared/forms/fields/FormField";
 import { Form } from "../../../shared/forms/Form";
-import { Heading } from "../../../shared/modals/Heading";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, EMoneyFormat, getFormattedMoney } from "../../../shared/Money";
 import { MoneySuiteWidget } from "../../../shared/MoneySuiteWidget";
-import { ESectionHeaderSize, SectionHeader } from "../../../shared/SectionHeader";
 import { VerifiedBankAccount } from "../../../wallet/VerifiedBankAccount";
 import { CalculatedFee } from "./CalculatedFee";
 import { TotalRedeemed } from "./TotalRedeemed";
@@ -79,7 +78,7 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
   bankFee,
 }) => (
   <>
-    <Heading className="mb-4">
+    <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
       <FormattedMessage id="bank-transfer.redeem.init.title" />
     </Heading>
 
@@ -88,9 +87,9 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
     </p>
 
     <section className={styles.section}>
-      <SectionHeader decorator={false} size={ESectionHeaderSize.SMALL}>
+      <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
         <FormattedMessage id="bank-transfer.redeem.init.neur-balance" />
-      </SectionHeader>
+      </Heading>
     </section>
 
     <section className={styles.section}>
@@ -109,9 +108,9 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
       {({ values, setFieldValue, isValid, setFieldTouched }: FormikProps<IReedemData>) => (
         <>
           <section className={styles.section}>
-            <SectionHeader decorator={false} size={ESectionHeaderSize.SMALL}>
+            <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
               <FormattedMessage id="bank-transfer.redeem.init.redeem-amount" />
-            </SectionHeader>
+            </Heading>
             <Button
               className={styles.linkButton}
               onClick={() => {
@@ -137,18 +136,18 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
               placeholder={`${getFormattedMoney(neuroAmount, ECurrency.EUR, EMoneyFormat.WEI)}`}
             />
             <section className={styles.section}>
-              <SectionHeader decorator={false} size={ESectionHeaderSize.SMALL}>
+              <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
                 <FormattedMessage id="bank-transfer.redeem.init.redeem-fee" />
-              </SectionHeader>
+              </Heading>
 
               <span className="text-warning">
                 {"-"} {isValid && <CalculatedFee bankFee={bankFee} amount={values.amount} />}
               </span>
             </section>
             <section className={styles.section}>
-              <SectionHeader decorator={false} size={ESectionHeaderSize.SMALL}>
+              <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
                 <FormattedMessage id="bank-transfer.redeem.init.total-reedemed" />
-              </SectionHeader>
+              </Heading>
               <span className="text-success">
                 {isValid ? <TotalRedeemed bankFee={bankFee} amount={values.amount} /> : "-"}
               </span>

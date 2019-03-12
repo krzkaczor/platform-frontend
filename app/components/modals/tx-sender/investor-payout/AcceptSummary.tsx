@@ -11,8 +11,8 @@ import { appConnect } from "../../../../store";
 import { EthereumAddressWithChecksum } from "../../../../types";
 import { withParams } from "../../../../utils/withParams";
 import { Button } from "../../../shared/buttons";
+import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ExternalLink } from "../../../shared/links";
-import { Heading } from "../../../shared/modals/Heading";
 import { Money, selectCurrencyCode } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
@@ -35,7 +35,7 @@ const InvestorAcceptPayoutSummaryLayout: React.FunctionComponent<TComponentProps
 }) => {
   return (
     <Container>
-      <Heading className="mb-4">
+      <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
         <FormattedMessage id="investor-payout.accept.summary.title" />
       </Heading>
 

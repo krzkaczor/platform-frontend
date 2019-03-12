@@ -3,9 +3,9 @@ import { FormattedMessage } from "react-intl-phraseapp";
 
 import { Button, EButtonLayout } from "../../shared/buttons";
 import { DocumentTemplateButton } from "../../shared/DocumentLink";
+import { Heading } from "../../shared/Heading";
 import { HighlightedField } from "../../shared/HighlightedField";
 import { ECurrency, Money } from "../../shared/Money";
-import { SectionHeader } from "../../shared/SectionHeader";
 
 import * as iconEth from "../../../assets/img/eth_icon.svg";
 import * as iconNeu from "../../../assets/img/neu_icon.svg";
@@ -62,9 +62,9 @@ export const BalanceModal: React.FunctionComponent<IBalanceModal> = ({
 }) => {
   return (
     <>
-      <SectionHeader className={styles.header}>
+      <Heading level={3} className={styles.header}>
         <FormattedMessage id="settings.modal.icbm-wallet-balance.title.balance" />
-      </SectionHeader>
+      </Heading>
       <HighlightedField
         label={
           <FormattedMessage id="settings.modal.icbm-wallet-balance.icbm-wallet-address.label" />

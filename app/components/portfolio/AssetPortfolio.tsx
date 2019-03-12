@@ -8,11 +8,11 @@ import { actions } from "../../modules/actions";
 import { ITokenDisbursal } from "../../modules/investor-portfolio/types";
 import { appConnect } from "../../store";
 import { Button, ButtonSize, EButtonLayout } from "../shared/buttons";
+import { Heading } from "../shared/Heading";
 import { CurrencyIcon } from "../shared/icons/CurrencyIcon";
 import { LoadingIndicator } from "../shared/loading-indicator";
 import { ETheme, Money, selectCurrencyCode } from "../shared/Money";
 import { Panel } from "../shared/Panel";
-import { SectionHeader } from "../shared/SectionHeader";
 import { NewTable, NewTableRow } from "../shared/table";
 
 import * as neuIcon from "../../assets/img/neu_icon.svg";
@@ -34,14 +34,15 @@ interface IDispatchToProps {
 }
 
 const AssetPortfolioLayoutNoPayouts: React.FunctionComponent = () => (
-  <SectionHeader
+  <Heading
+    level={3}
     data-test-id="asset-portfolio.no-payouts"
     decorator={false}
     className="mb-4"
     description={<FormattedMessage id="portfolio.asset.payouts-from-neu.no-payouts" />}
   >
     <FormattedMessage id="portfolio.section.asset-portfolio.title" />
-  </SectionHeader>
+  </Heading>
 );
 
 const AssetPortfolioLayout: React.FunctionComponent<ILayoutProps & IDispatchToProps> = ({
@@ -53,9 +54,9 @@ const AssetPortfolioLayout: React.FunctionComponent<ILayoutProps & IDispatchToPr
 }) => (
   <Row className="mb-4">
     <Col md={5} lg={4} sm={12}>
-      <SectionHeader decorator={false} className="mb-4">
+      <Heading level={3} decorator={false} className="mb-4">
         <FormattedMessage id="portfolio.section.asset-portfolio.title" />
-      </SectionHeader>
+      </Heading>
 
       <Panel>
         <p>
@@ -89,9 +90,9 @@ const AssetPortfolioLayout: React.FunctionComponent<ILayoutProps & IDispatchToPr
       </Panel>
     </Col>
     <Col md={7} lg={8} sm={12} className="mt-4 mt-md-0">
-      <SectionHeader decorator={neuIcon} className="mb-4">
+      <Heading level={3} decorator={neuIcon} className="mb-4">
         <FormattedMessage id="portfolio.asset.payouts-from-neu.title" />
-      </SectionHeader>
+      </Heading>
 
       <NewTable
         titles={[

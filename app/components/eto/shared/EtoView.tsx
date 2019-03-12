@@ -13,11 +13,11 @@ import { PersonProfileModal } from "../../modals/PersonProfileModal";
 import { Accordion, AccordionElement } from "../../shared/Accordion";
 import { ButtonLink } from "../../shared/buttons";
 import { ChartDoughnut } from "../../shared/charts/ChartDoughnut";
+import { Heading } from "../../shared/Heading";
 import { ExternalLink } from "../../shared/links";
 import { ILink, MediaLinksWidget, normalizedUrl } from "../../shared/MediaLinksWidget";
 import { Panel } from "../../shared/Panel";
 import { IPerson, PeopleSwiperWidget } from "../../shared/PeopleSwiperWidget";
-import { SectionHeader } from "../../shared/SectionHeader";
 import { Slides } from "../../shared/Slides";
 import { IEtoSocialProfile, SocialProfilesList } from "../../shared/SocialProfilesList";
 import { TabContent, Tabs } from "../../shared/Tabs";
@@ -123,7 +123,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
         <EtoOverviewStatus eto={eto} className="mb-3" publicView={true} />
         <Row>
           <Col className="mb-4">
-            <SectionHeader decorator={false} className="mb-3">
+            <Heading level={3} decorator={false} className="mb-3">
               <div className={styles.headerWithButton}>
                 <FormattedMessage id="eto.public-view.eto-timeline" />
                 {process.env.NF_MAY_SHOW_INVESTOR_STATS === "1" &&
@@ -136,7 +136,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                     </ButtonLink>
                   )}
               </div>
-            </SectionHeader>
+            </Heading>
             <Panel>
               <EtoTimeline
                 startOfStates={isOnChain(eto) ? eto.contract.startOfStates : undefined}
@@ -157,7 +157,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             }
             className="mb-4"
           >
-            <SectionHeader decorator={false} className="mb-4">
+            <Heading level={3} decorator={false} className="mb-4">
               <div className={styles.headerWithButton}>
                 {brandName}
                 {companyWebsite && (
@@ -166,7 +166,7 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
                   </ExternalLink>
                 )}
               </div>
-            </SectionHeader>
+            </Heading>
 
             {(companyDescription || keyQuoteInvestor) && (
               <Panel className="mb-4">
@@ -175,9 +175,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
               </Panel>
             )}
 
-            <SectionHeader decorator={false} className="mb-4">
+            <Heading level={3} decorator={false} className="mb-4">
               <FormattedMessage id="eto.public-view.legal-information.title" />
-            </SectionHeader>
+            </Heading>
 
             <LegalInformationWidget companyData={eto.company} />
           </Col>
@@ -205,9 +205,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
               </div>
               {isTwitterFeedEnabled && (
                 <>
-                  <SectionHeader decorator={false} className="mt-4 mb-4">
+                  <Heading level={3} decorator={false} className="mt-4 mb-4">
                     Twitter
-                  </SectionHeader>
+                  </Heading>
                   <Panel
                     narrow
                     className={cn(styles.twitterPanel, "align-self-stretch", "flex-grow-1")}
@@ -221,9 +221,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
         </Row>
         <Row>
           <Col className="mb-4">
-            <SectionHeader decorator={false} className="mb-4">
+            <Heading level={3} decorator={false} className="mb-4">
               <FormattedMessage id="eto.public-view.token-terms.title" />
-            </SectionHeader>
+            </Heading>
 
             <EtoInvestmentTermsWidget etoData={eto} />
           </Col>
@@ -231,9 +231,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
         {areThereIndividuals(team) && (
           <Row>
             <Col className="mb-4">
-              <SectionHeader decorator={false} className="mb-4">
+              <Heading level={3} decorator={false} className="mb-4">
                 <FormattedMessage id="eto.public-view.carousel.team" />
-              </SectionHeader>
+              </Heading>
               <Panel>
                 <PeopleSwiperWidget
                   people={(team && (team.members as IPerson[])) || []}
@@ -346,9 +346,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
               targetMarketAndIndustry ||
               keyBenefitsForInvestors) && (
               <>
-                <SectionHeader decorator={false} className="mb-4">
+                <Heading level={3} decorator={false} className="mb-4">
                   <FormattedMessage id="eto.public-view.product-vision.title" />
-                </SectionHeader>
+                </Heading>
                 <Panel>
                   <Accordion>
                     {inspiration && (
@@ -491,9 +491,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
           <Col sm={12} md={4}>
             {marketingLinks && (
               <>
-                <SectionHeader decorator={false} className="mb-4">
+                <Heading level={3} decorator={false} className="mb-4">
                   <FormattedMessage id="eto.form.documents.title" />
-                </SectionHeader>
+                </Heading>
 
                 <DocumentsWidget
                   className="mb-4"
@@ -508,9 +508,9 @@ const EtoViewLayout: React.FunctionComponent<IProps> = ({ eto }) => {
             {companyNews &&
               !!companyNews[0].url && (
                 <>
-                  <SectionHeader decorator={false} className="mb-4">
+                  <Heading level={3} decorator={false} className="mb-4">
                     <FormattedMessage id="eto.form.media-links.title" />
-                  </SectionHeader>
+                  </Heading>
                   <MediaLinksWidget links={[...companyNews].reverse() as ILink[]} />
                 </>
               )}

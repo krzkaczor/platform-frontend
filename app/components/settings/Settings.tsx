@@ -20,7 +20,7 @@ import { DashboardSection } from "../eto/shared/DashboardSection";
 import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
-import { SectionHeader } from "../shared/SectionHeader";
+import { Heading } from "../shared/Heading";
 import { ChangeEmail } from "./change-email/ChangeEmail";
 import { YourEthereumAddressWidget } from "./ethereum-address-widget/YourEthereumAddressWidget";
 import { CheckYourICBMWalletWidget } from "./icbm-wallet-widget/CheckYourICBMWalletWidget";
@@ -88,9 +88,9 @@ export const SettingsComponent: React.FunctionComponent<IStateProps> = ({
           <>
             {/* TODO: Remove message */}
             <Col xs={12}>
-              <SectionHeader>
+              <Heading level={3}>
                 <FormattedMessage id="settings.personal-settings.title" />
-              </SectionHeader>
+              </Heading>
             </Col>
             <Col lg={8} xs={12}>
               <ChangeEmail />

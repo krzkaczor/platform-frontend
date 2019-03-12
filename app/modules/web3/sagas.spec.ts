@@ -34,7 +34,6 @@ describe("Web3 sagas", () => {
         logger: noopLogger,
       })
         .put(actions.web3.walletLocked())
-        .put(actions.web3.clearWalletPrivateDataFromState())
         .call(delay, LIGHT_WALLET_PASSWORD_CACHE_TIME)
         .provide([[call(delay, LIGHT_WALLET_PASSWORD_CACHE_TIME), undefined]])
         .run();
