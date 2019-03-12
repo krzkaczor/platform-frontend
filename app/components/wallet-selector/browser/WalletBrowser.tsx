@@ -74,15 +74,15 @@ export const WalletBrowserComponent: React.FunctionComponent<
         <div className={styles.stepCardWrapper}>
           <StepCard
             img={browserIcon}
+            text={<FormattedMessage id="wallet-selector.browser.steps.1" />}
+          />
+          <StepCard
+            img={lockIcon}
             text={<FormattedMessage id="wallet-selector.browser.steps.2" />}
           />
           <StepCard
             img={lockIcon}
             text={<FormattedMessage id="wallet-selector.browser.steps.3" />}
-          />
-          <StepCard
-            img={lockIcon}
-            text={<FormattedMessage id="wallet-selector.browser.steps.4" />}
           />
         </div>
 

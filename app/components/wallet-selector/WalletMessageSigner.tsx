@@ -4,7 +4,8 @@ import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
 import { actions } from "../../modules/actions";
-import { selectIsLightWallet } from "../../modules/web3/selectors";
+import { selectWalletType } from "../../modules/web3/selectors";
+import { EWalletType } from "../../modules/web3/types";
 import { appConnect } from "../../store";
 import { Button } from "../shared/buttons";
 import { LoadingIndicator } from "../shared/loading-indicator";
@@ -17,7 +18,7 @@ import * as styles from "./WalletMessageSigner.module.scss";
 
 interface IStateProps {
   errorMsg?: TMessage;
-  isLightWallet: boolean;
+  walletType: EWalletType;
 }
 
 interface IDispatchProps {
@@ -33,10 +34,10 @@ export const MessageSignerComponent: React.FunctionComponent<IStateProps & IDisp
   errorMsg,
   cancelSigning,
   retrySigning,
-  isLightWallet,
+  walletType,
 }) =>
   // short circuit process for light wallet since it will be automatic
-  !errorMsg && isLightWallet ? (
+  !errorMsg && walletType === EWalletType.LIGHT ? (
     <LoadingIndicator className={styles.spinner} />
   ) : (
     <>
@@ -53,7 +54,7 @@ export const MessageSignerComponent: React.FunctionComponent<IStateProps & IDisp
         <LoadingIndicator className={styles.spinner} />
       )}
       <Row>
-        {!isLightWallet &&
+        {walletType === EWalletType.BROWSER &&
           errorMsg && (
             <Col className="text-center">
               <Button onClick={retrySigning}>
@@ -76,7 +77,7 @@ export const WalletMessageSigner = compose(
   appConnect<IStateProps, IDispatchProps, IOwnProps>({
     stateToProps: state => ({
       errorMsg: state.walletSelector.messageSigningError as TMessage,
-      isLightWallet: selectIsLightWallet(state.web3),
+      walletType: selectWalletType(state.web3)!,
     }),
     dispatchToProps: (dispatch, ownProps) => ({
       cancelSigning: () => {
