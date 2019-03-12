@@ -1,4 +1,4 @@
-import { delay, Effect, effects } from "redux-saga";
+import { delay, Effect } from "redux-saga";
 import { call, put, race, select, take } from "redux-saga/effects";
 
 import { GenericErrorMessage } from "../../components/translatedMessages/messages";
@@ -7,42 +7,45 @@ import { TGlobalDependencies } from "../../di/setupBindings";
 import { EUserType } from "../../lib/api/users/interfaces";
 import {
   ILedgerWalletMetadata,
+  ILightWalletMetadata,
   ILightWalletRetrieveMetadata,
 } from "../../lib/persistence/WalletMetadataObjectStorage";
 import { BrowserWalletConnector } from "../../lib/web3/BrowserWallet";
 import { LedgerWalletConnector } from "../../lib/web3/ledger-wallet/LedgerConnector";
-import { LightWalletConnector, LightWalletUtil } from "../../lib/web3/LightWallet";
+import { LightWalletConnector, LightWalletWrongPassword } from "../../lib/web3/LightWallet";
+import {
+  deserializeLightWalletVault,
+  ILightWalletInstance,
+  testWalletPassword,
+} from "../../lib/web3/LightWalletUtils";
 import { IPersonalWallet } from "../../lib/web3/PersonalWeb3";
 import { SignerError, Web3Manager } from "../../lib/web3/Web3Manager";
 import { IAppState } from "../../store";
 import { invariant } from "../../utils/invariant";
-import { actions, TAction } from "../actions";
+import { actions, TActionFromCreator } from "../actions";
 import { MessageSignCancelledError } from "../auth/errors";
 import { selectUserType } from "../auth/selectors";
 import { neuCall } from "../sagasUtils";
-import { unlockWallet } from "../web3/sagas";
-import { selectIsLightWallet, selectIsUnlocked } from "../web3/selectors";
+import { retrieveMetadataFromVaultAPI } from "../wallet-selector/light-wizard/metadata/sagas";
+import { selectWalletType } from "../web3/selectors";
 import { EWalletType } from "../web3/types";
 import { mapSignMessageErrorToErrorMessage, MismatchedWalletAddressError } from "./errors";
 import { selectIsSigning } from "./reducer";
 
-export function* ensureWalletConnection({
-  web3Manager,
-  walletStorage,
-  lightWalletConnector,
-  ledgerWalletConnector,
-  browserWalletConnector,
-}: TGlobalDependencies): any {
-  if (web3Manager.personalWallet) {
-    return;
-  }
-
+export function* ensureWalletConnection(
+  {
+    web3Manager,
+    walletStorage,
+    lightWalletConnector,
+    ledgerWalletConnector,
+    browserWalletConnector,
+  }: TGlobalDependencies,
+  password?: string,
+): any {
   const userType: EUserType = yield select(selectUserType);
-  /* tslint:disable: no-useless-cast */
-  const metadata = walletStorage.get(userType)!;
-  /* tslint:enable: no-useless-cast */
+  const metadata = walletStorage.get(userType);
 
-  invariant(metadata, "User has JWT but doesn't have wallet metadata!");
+  if (!metadata) return invariant(metadata, "User has JWT but doesn't have wallet metadata!");
 
   let wallet: IPersonalWallet;
   switch (metadata.walletType) {
@@ -53,7 +56,8 @@ export function* ensureWalletConnection({
       wallet = yield connectBrowser(browserWalletConnector, web3Manager);
       break;
     case EWalletType.LIGHT:
-      wallet = yield connectLightWallet(lightWalletConnector, metadata);
+      if (!password) return invariant(metadata, "Light Wallet user without a password");
+      wallet = yield connectLightWallet(lightWalletConnector, metadata, password);
       break;
     default:
       return invariant(false, "Wallet type unrecognized");
@@ -75,8 +79,11 @@ async function connectLedger(
   web3Manager: Web3Manager,
   metadata: ILedgerWalletMetadata,
 ): Promise<IPersonalWallet> {
-  await ledgerWalletConnector.connect(web3Manager.networkId);
-  return await ledgerWalletConnector.finishConnecting(metadata.derivationPath);
+  await ledgerWalletConnector.connect();
+  return await ledgerWalletConnector.finishConnecting(
+    metadata.derivationPath,
+    web3Manager.networkId,
+  );
 }
 
 async function connectBrowser(
@@ -86,18 +93,23 @@ async function connectBrowser(
   return await browserWalletConnector.connect(web3Manager.networkId);
 }
 
-export async function connectLightWallet(
+export function* connectLightWallet(
   lightWalletConnector: LightWalletConnector,
-  metadata: ILightWalletRetrieveMetadata,
-  password?: string,
-): Promise<IPersonalWallet> {
-  const lightWalletUtils = new LightWalletUtil();
-  const walletInstance = await lightWalletUtils.deserializeLightWalletVault(
-    metadata.vault,
+  metadata: ILightWalletMetadata,
+  password: string,
+): any {
+  const walletVault: ILightWalletRetrieveMetadata = yield neuCall(
+    retrieveMetadataFromVaultAPI,
+    password,
+    metadata.salt,
+    metadata.email,
+  );
+  const walletInstance: ILightWalletInstance = yield deserializeLightWalletVault(
+    walletVault.vault,
     metadata.salt,
   );
 
-  return await lightWalletConnector.connect(
+  const wallet = yield lightWalletConnector.connect(
     {
       walletInstance,
       salt: metadata.salt,
@@ -105,35 +117,35 @@ export async function connectLightWallet(
     metadata.email,
     password,
   );
-}
-
-function* unlockLightWallet(): any {
-  const acceptAction: TAction = yield take("ACCESS_WALLET_ACCEPT");
-  if (acceptAction.type !== "ACCESS_WALLET_ACCEPT") {
-    return;
+  const isValidPassword: boolean = yield testWalletPassword(wallet.vault.walletInstance, password);
+  if (!isValidPassword) {
+    throw new LightWalletWrongPassword();
   }
-  const isUnlocked = yield select((s: IAppState) => selectIsUnlocked(s.web3));
-
-  if (!isUnlocked) {
-    yield neuCall(unlockWallet, acceptAction.payload.password);
-  }
+  return wallet;
 }
 
 export function* connectWalletAndRunEffect(effect: Effect | Iterator<Effect>): any {
   while (true) {
     try {
-      yield neuCall(ensureWalletConnection);
+      yield put(actions.accessWallet.clearSigningError());
+      const walletType: EWalletType | undefined = yield select((state: IAppState) =>
+        selectWalletType(state.web3),
+      );
 
-      yield effects.put(actions.signMessageModal.clearSigningError());
-
-      const isLightWallet = yield select((s: IAppState) => selectIsLightWallet(s.web3));
-      if (isLightWallet) {
-        yield call(unlockLightWallet);
+      if (walletType === EWalletType.LIGHT) {
+        const { payload }: TActionFromCreator<typeof actions.accessWallet.accept> = yield take(
+          actions.accessWallet.accept.getType(),
+        );
+        yield neuCall(ensureWalletConnection, payload.password);
+      } else {
+        // Password can be undefined if its Metamask or Ledger
+        yield neuCall(ensureWalletConnection);
       }
+
       return yield effect;
     } catch (e) {
       const error = mapSignMessageErrorToErrorMessage(e);
-      yield effects.put(actions.signMessageModal.signingError(error));
+      yield put(actions.accessWallet.signingError(error));
 
       if (e instanceof SignerError || error.messageType === GenericErrorMessage.GENERIC_ERROR)
         throw e;
@@ -153,7 +165,7 @@ export function* accessWalletAndRunEffect(
   if (isSigning) {
     throw new Error("Signing already in progress");
   }
-  yield put(actions.signMessageModal.showAccessWalletModal(title, message));
+  yield put(actions.accessWallet.showAccessWalletModal(title, message));
 
   // do required operation, or finish in case cancel button was hit
   const { result, cancel } = yield race({
@@ -162,7 +174,7 @@ export function* accessWalletAndRunEffect(
   });
 
   // always hide the current modal
-  yield effects.put(actions.signMessageModal.hideAccessWalletModal());
+  yield put(actions.accessWallet.hideAccessWalletModal());
 
   // if the cancel action was called
   // throw here

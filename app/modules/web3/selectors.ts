@@ -41,8 +41,7 @@ export const isLightWalletReadyToLogin = (state: IWeb3State): boolean =>
     state.previousConnectedWallet &&
     state.previousConnectedWallet.walletType === EWalletType.LIGHT &&
     state.previousConnectedWallet.email &&
-    state.previousConnectedWallet.salt &&
-    state.previousConnectedWallet.vault
+    state.previousConnectedWallet.salt
   );
 
 /**

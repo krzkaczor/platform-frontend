@@ -9,6 +9,7 @@ import { Web3Adapter } from "../Web3Adapter";
 import { LedgerError, LedgerNotAvailableError, LedgerUnknownError } from "./errors";
 import {
   connectToLedger,
+  createWeb3WithLedgerProvider,
   obtainPathComponentsFromDerivationPath,
   testConnection,
 } from "./ledgerUtils";
@@ -19,19 +20,15 @@ import { IDerivationPathToAddress, ILedgerCustomProvider } from "./types";
 export class LedgerWalletConnector {
   private web3?: Web3;
   private ledgerInstance?: ILedgerCustomProvider;
+  private getTransport?: () => any;
 
   public constructor(
     @inject(symbols.ethereumNetworkConfig) public readonly web3Config: IEthereumNetworkConfig,
   ) {}
 
-  public async connect(networkId: EthereumNetworkId): Promise<void> {
+  public async connect(): Promise<void> {
     try {
-      const { ledgerWeb3, ledgerInstance } = await connectToLedger(
-        networkId,
-        this.web3Config.rpcUrl,
-      );
-      this.web3 = ledgerWeb3;
-      this.ledgerInstance = ledgerInstance;
+      this.getTransport = await connectToLedger();
     } catch (e) {
       if (e instanceof LedgerError) {
         throw e;
@@ -41,16 +38,34 @@ export class LedgerWalletConnector {
     }
   }
 
-  public async finishConnecting(derivationPath: string): Promise<LedgerWallet> {
-    if (!this.web3) {
+  public async finishConnecting(
+    derivationPath: string,
+    networkId: EthereumNetworkId,
+  ): Promise<LedgerWallet> {
+    if (!this.getTransport) {
       throw new Error("Can't finish not started connection");
     }
-    const web3Adapter = new Web3Adapter(this.web3);
-
-    // note: in future we may want to solve locking issue on a lower level
-    const address = await web3Adapter.getAccountAddress();
-
-    return new LedgerWallet(web3Adapter, address, this.ledgerInstance, derivationPath);
+    let providerEngine: any;
+    try {
+      const { ledgerWeb3, ledgerInstance } = await createWeb3WithLedgerProvider(
+        networkId,
+        this.web3Config.rpcUrl,
+        this.getTransport,
+        derivationPath,
+      );
+      providerEngine = ledgerWeb3.currentProvider;
+      this.web3 = ledgerWeb3;
+      this.ledgerInstance = { ...ledgerInstance, getTransport: this.getTransport };
+      const web3Adapter = new Web3Adapter(this.web3);
+      const address = await web3Adapter.getAccountAddress();
+      return new LedgerWallet(web3Adapter, address, this.ledgerInstance, derivationPath);
+    } catch (e) {
+      // we need to explicitly stop Web3 Provider engine
+      if (providerEngine) {
+        providerEngine.stop();
+      }
+      throw e;
+    }
   }
 
   public async getMultipleAccountsFromHdPath(
@@ -60,9 +75,9 @@ export class LedgerWalletConnector {
   ): Promise<{
     [index: string]: string;
   }> {
-    if (!this.ledgerInstance) throw new LedgerNotAvailableError();
+    if (!this.getTransport) throw new LedgerNotAvailableError();
     {
-      const Transport = await this.ledgerInstance.getTransport();
+      const Transport = await this.getTransport();
       try {
         const pathComponents = obtainPathComponentsFromDerivationPath(derivationPaths);
 
@@ -86,7 +101,7 @@ export class LedgerWalletConnector {
     const accounts: IDerivationPathToAddress = {};
 
     for (const derivationPath of derivationPaths) {
-      if (!this.ledgerInstance) throw new LedgerNotAvailableError();
+      if (!this.getTransport) throw new LedgerNotAvailableError();
 
       const account = await this.getMultipleAccountsFromHdPath(derivationPath, 0, 1);
       Object.assign(accounts, account);
@@ -109,8 +124,8 @@ export class LedgerWalletConnector {
     );
   }
   public async testConnection(): Promise<boolean> {
-    if (!this.ledgerInstance) throw new LedgerNotAvailableError();
+    if (!this.getTransport) throw new LedgerNotAvailableError();
 
-    return testConnection(this.ledgerInstance);
+    return testConnection(this.getTransport);
   }
 }

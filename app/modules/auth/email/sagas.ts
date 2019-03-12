@@ -24,3 +24,11 @@ export async function verifyUserEmailPromise(
     else notificationCenter.error(createMessage(AuthMessage.AUTH_EMAIL_VERIFICATION_FAILED));
   }
 }
+
+export async function checkEmailPromise(
+  { apiUserService }: TGlobalDependencies,
+  email: string,
+): Promise<boolean> {
+  const emailStatus = await apiUserService.emailStatus(email);
+  return emailStatus.isAvailable;
+}
