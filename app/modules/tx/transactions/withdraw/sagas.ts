@@ -65,7 +65,7 @@ export function* ethWithdrawFlow(_: TGlobalDependencies): any {
   const generatedTxDetails = yield neuCall(generateEthWithdrawTransaction, txDataFromUser);
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
 
-  // Internally we represent eth withdraw in to different modes (normal ether withdrawal and ether token withdrawal)
+  // Internally we represent eth withdraw in two different modes (normal ether withdrawal and ether token withdrawal)
   // in case of ether token withdrawal `to` points to contract address and `value` is empty
   const additionalData = {
     value: Q18.mul(txDataFromUser.value!).toString(),

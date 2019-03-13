@@ -13,7 +13,7 @@ export interface ITxPendingProps {
 }
 const AcceptTransactionDetails: React.FunctionComponent<ITxPendingProps> = ({ additionalData }) => (
   <InfoList className="mb-4">
-    {additionalData.tokensDisbursals.map((disbursal: any) => (
+    {additionalData.tokensDisbursals.map(disbursal => (
       <InfoRow
         data-test-id={`investor-payout.accept-summary.${disbursal.token}-total-payout`}
         key={disbursal.token}

@@ -145,8 +145,6 @@ export class UsersApi {
     const response = await this.httpClient.get<Array<TxWithMetadata>>({
       baseUrl: USER_API_ROOT,
       url: "/pending_transactions/me",
-      // TODO: uncomment later
-      // responseSchema: TxWithMetadataListValidator,
     });
     if (response.statusCode === 200) {
       return {
@@ -158,7 +156,7 @@ export class UsersApi {
           .map(tx => tx.transaction),
       };
     }
-    throw new Error();
+    throw new Error("Error while fetching pending transaction");
   }
 
   public async addPendingTx(tx: TxWithMetadata): Promise<void> {
