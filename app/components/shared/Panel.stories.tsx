@@ -13,7 +13,6 @@ const lorem =
 storiesOf("Basic UI/Panel", module)
   .add("default", () => <Panel>{lorem}</Panel>)
   .add("narrow", () => <Panel narrow={true}>{lorem}</Panel>)
-  .add("with centered content", () => <Panel centerContent={true}>{lorem}</Panel>)
   .add("with header text", () => <Panel headerText="Sample header text">{lorem}</Panel>)
   .add("with header text and icon", () => (
     <Panel headerText="Sample header text" icon={icon}>
