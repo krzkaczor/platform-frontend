@@ -2,11 +2,11 @@ import * as cn from "classnames";
 import * as React from "react";
 import { withSizes } from "react-sizes";
 
-import { ExternalLink } from "./links";
-import { Proportion } from "./Proportion";
-import { IResponsiveImage, ResponsiveImage } from "./ResponsiveImage";
-import { IResponsiveVideo, ResponsiveVideo } from "./ResponsiveVideo";
-import { ITag, Tag } from "./Tag";
+import { ExternalLink } from "../shared/links";
+import { Proportion } from "../shared/Proportion";
+import { IResponsiveImage, ResponsiveImage } from "../shared/ResponsiveImage";
+import { IResponsiveVideo, ResponsiveVideo } from "../shared/ResponsiveVideo";
+import { ITag, Tag } from "../shared/Tag";
 
 import * as QuestionMark from "!url-loader!../../assets/img/inline_icons/questionmark_huge.svg";
 import * as AppStoreIcon from "../../assets/img/eto_offers/appstore.png";

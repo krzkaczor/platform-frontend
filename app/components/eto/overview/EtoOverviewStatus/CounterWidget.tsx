@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { EETOStateOnChain } from "../../../../modules/public-etos/types";
 import { TTranslatedString } from "../../../../types";
 import { Counter } from "../../../shared/Counter";
-import { statusToName } from "../../../shared/ETOState";
+import { statusToName } from "../../shared/ETOState";
 
 import * as styles from "./CounterWidget.module.scss";
 
