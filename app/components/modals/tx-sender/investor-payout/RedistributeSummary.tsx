@@ -4,8 +4,8 @@ import { Container } from "reactstrap";
 
 import { externalRoutes } from "../../../../config/externalRoutes";
 import { actions } from "../../../../modules/actions";
-import { ITokenDisbursal } from "../../../../modules/investor-portfolio/types";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
+import { TRedistributePayoutAdditionalData } from "../../../../modules/tx/transactions/payout/redistribute/types";
 import { selectEthereumAddressWithChecksum } from "../../../../modules/web3/selectors";
 import { appConnect } from "../../../../store";
 import { EthereumAddressWithChecksum } from "../../../../types";
@@ -13,12 +13,10 @@ import { withParams } from "../../../../utils/withParams";
 import { Button } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ExternalLink } from "../../../shared/links";
-import { Money } from "../../../shared/Money";
-import { InfoList } from "../shared/InfoList";
-import { InfoRow } from "../shared/InfoRow";
+import { RedistributeTransactionDetails } from "./RedistributeTransactionDetails";
 
 interface IStateProps {
-  tokenDisbursal: ITokenDisbursal;
+  additionalData: TRedistributePayoutAdditionalData;
   walletAddress: EthereumAddressWithChecksum;
 }
 
@@ -30,7 +28,7 @@ type TComponentProps = IStateProps & IDispatchProps;
 
 const InvestorRedistributePayoutSummaryLayout: React.FunctionComponent<TComponentProps> = ({
   walletAddress,
-  tokenDisbursal,
+  additionalData,
   onAccept,
 }) => {
   return (
@@ -42,15 +40,9 @@ const InvestorRedistributePayoutSummaryLayout: React.FunctionComponent<TComponen
       <p className="mb-3">
         <FormattedMessage id="investor-payout.redistribute.summary.description" />
       </p>
-      <InfoList className="mb-4">
-        <InfoRow
-          key={tokenDisbursal.token}
-          caption={
-            <FormattedMessage id="investor-payout.redistribute.summary.total-redistributed" />
-          }
-          value={<Money value={tokenDisbursal.amountToBeClaimed} currency={tokenDisbursal.token} />}
-        />
-      </InfoList>
+
+      <RedistributeTransactionDetails additionalData={additionalData} />
+
       <section className="text-center">
         <ExternalLink
           className="d-inline-block mb-3"
@@ -72,7 +64,7 @@ const InvestorRedistributePayoutSummaryLayout: React.FunctionComponent<TComponen
 const InvestorRedistributePayoutSummary = appConnect<IStateProps, IDispatchProps, {}>({
   stateToProps: state => ({
     walletAddress: selectEthereumAddressWithChecksum(state),
-    tokenDisbursal: selectTxAdditionalData(state),
+    additionalData: selectTxAdditionalData(state),
   }),
   dispatchToProps: d => ({
     onAccept: () => d(actions.txSender.txSenderAccept()),

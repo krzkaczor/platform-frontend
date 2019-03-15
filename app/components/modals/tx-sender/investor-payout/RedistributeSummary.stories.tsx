@@ -27,14 +27,14 @@ storiesOf("InvestorPayout/RedistributeSummary", module)
   .add("ETH", () => (
     <InvestorRedistributePayoutSummaryLayout
       walletAddress={"0x00b30CC2cc22c9820d47a4E0C9E1A54455bA0883" as EthereumAddressWithChecksum}
-      tokenDisbursal={ethTokenDisbursal}
+      additionalData={{ tokenDisbursals: ethTokenDisbursal }}
       onAccept={action("onAccept")}
     />
   ))
   .add("nEur", () => (
     <InvestorRedistributePayoutSummaryLayout
       walletAddress={"0x00b30CC2cc22c9820d47a4E0C9E1A54455bA0883" as EthereumAddressWithChecksum}
-      tokenDisbursal={nEurTokenDisbursal}
+      additionalData={{ tokenDisbursals: nEurTokenDisbursal }}
       onAccept={action("onAccept")}
     />
   ));

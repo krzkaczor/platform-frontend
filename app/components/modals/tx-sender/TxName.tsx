@@ -13,6 +13,8 @@ const TxName: React.FunctionComponent<IProps> = ({ type }) => {
       return <FormattedMessage id="withdraw-flow.name" />;
     case ETxSenderType.INVESTOR_ACCEPT_PAYOUT:
       return <FormattedMessage id="investor-payout.accept.name" />;
+    case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
+      return <FormattedMessage id="investor-payout.redistribute.name" />;
     case ETxSenderType.USER_CLAIM:
       return <FormattedMessage id="modals.tx-sender.user-claim.title" />;
     case ETxSenderType.UNLOCK_FUNDS:

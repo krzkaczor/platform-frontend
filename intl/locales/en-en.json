@@ -578,6 +578,7 @@
   "investor-payout.redistribute.confirm.deny": "Decide later",
   "investor-payout.redistribute.confirm.text": "As a NEU token holder, you are entitled to payouts after each successful ETO. If you choose to redistribute, you agree that your current payout will be automatically redistributed to all other NEU token holders.",
   "investor-payout.redistribute.confirm.title": "REDISTRIBUTE YOUR PAYOUT FROM NEU",
+  "investor-payout.redistribute.name": "Payout Redistribute",
   "investor-payout.redistribute.success.text": "Thank you, your transaction is completed. You have rejected your current NEU payout and the proceeds will be automatically distributed to all other NEU token holders. Your pending payouts have been updated.",
   "investor-payout.redistribute.summary.accept": "Redistribute",
   "investor-payout.redistribute.summary.description": "By clicking redistribute, you agree to forfeit the amount displayed below. Your current payout will be automatically redistributed to all other NEU token holders. For reference, we have attached your NEU Token Holder Agreement.",
