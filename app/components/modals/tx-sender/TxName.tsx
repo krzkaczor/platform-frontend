@@ -15,6 +15,8 @@ const TxName: React.FunctionComponent<IProps> = ({ type }) => {
       return <FormattedMessage id="investor-payout.accept.name" />;
     case ETxSenderType.USER_CLAIM:
       return <FormattedMessage id="modals.tx-sender.user-claim.title" />;
+    case ETxSenderType.UNLOCK_FUNDS:
+      return <FormattedMessage id="unlock-funds-flow.title" />;
     default:
       return <>transaction</>;
   }

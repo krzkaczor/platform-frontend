@@ -2,20 +2,28 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
-import { Q18 } from "../../../../config/constants";
+import { ITxData } from "../../../../lib/web3/types";
 import { withModalBody } from "../../../../utils/storybookHelpers";
 import { UnlockFundsSummaryComponent } from "./Summary";
 
-storiesOf("Upgrade Summary", module)
+const txData: ITxData = {
+  to: "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+  value: "5500000000000000000",
+  gas: "12000",
+  gasPrice: "57000000000",
+  from: "0x8e75544b848f0a32a1ab119e3916ec7138f3bed2",
+};
+
+storiesOf("Unlock Wallet Summary", module)
   .addDecorator(withModalBody())
   .add("default", () => (
     <UnlockFundsSummaryComponent
-      txCost={"123456"}
       onAccept={action("Accept Summary")}
-      neumarksDue="123"
-      etherLockedBalance={Q18.mul(1234).toString()}
-      returnedEther={Q18.mul(10)}
-      unlockDate={"1569888000"}
-      updateReturnedFunds={() => {}}
+      txData={txData}
+      additionalData={{
+        lockedEtherBalance: "5500000000000000000",
+        lockedEtherUnlockDate: "120000000000000000",
+        etherNeumarksDue: "5500000000000000000",
+      }}
     />
   ));

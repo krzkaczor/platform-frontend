@@ -1003,6 +1003,7 @@
   "unlock-funds-flow.fee": "-%${fee} Fee",
   "unlock-funds-flow.neumarks-due": "Amount of Neu returned",
   "unlock-funds-flow.summary": "Unlock Funds Summary",
+  "unlock-funds-flow.title": "Unlock",
   "unlock-funds-flow.transaction-cost": "Transaction cost",
   "upgrade-flow.summary": "ICBM WALLET ENABLEMENT",
   "upgrade-flow.to": "TO ADDRESS",
