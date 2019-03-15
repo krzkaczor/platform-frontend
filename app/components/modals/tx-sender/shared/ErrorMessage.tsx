@@ -4,7 +4,11 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "recompose";
 
 import { externalRoutes } from "../../../../config/externalRoutes";
-import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { Tx } from "../../../../lib/api/users/interfaces";
+import {
+  selectMonitoredTxAdditionalData,
+  selectMonitoredTxData,
+} from "../../../../modules/tx/monitor/selectors";
 import { ETransactionErrorType } from "../../../../modules/tx/sender/reducer";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
@@ -19,6 +23,7 @@ import * as failedImg from "../../../../assets/img/ether_fail.svg";
 import * as styles from "./ErrorMessage.module.scss";
 
 export interface IStateProps {
+  txData?: Tx;
   additionalData?: any;
 }
 
@@ -99,6 +104,7 @@ const ErrorMessageLayout: React.FunctionComponent<IProps & IStateProps> = ({
   additionalData,
   txHash,
   blockId,
+  txData,
 }) => {
   return (
     <Message
@@ -107,7 +113,7 @@ const ErrorMessageLayout: React.FunctionComponent<IProps & IStateProps> = ({
       title={getErrorTitleByType(type, error)}
       text={getErrorMessageByType(error)}
     >
-      {additionalData && <TxDetails type={type} additionalData={additionalData} />}
+      {txData && <TxDetails txData={txData} type={type} additionalData={additionalData} />}
 
       <TxHashAndBlock txHash={txHash} blockId={blockId} />
     </Message>
@@ -117,6 +123,7 @@ const ErrorMessageLayout: React.FunctionComponent<IProps & IStateProps> = ({
 const ErrorMessage = compose<IStateProps & IProps, IProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
+      txData: selectMonitoredTxData(state),
       additionalData: selectMonitoredTxAdditionalData(state),
     }),
   }),

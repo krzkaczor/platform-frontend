@@ -19,7 +19,6 @@ storiesOf("Upgrade Summary", module)
   .add("default", () => (
     <UpgradeSummaryComponent
       txData={txData}
-      txCost={"123456"}
       onAccept={() => {}}
       downloadICBMAgreement={() => {}}
       additionalData={{ tokenType: ETokenType.ETHER }}

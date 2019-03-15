@@ -85,8 +85,6 @@ export const PendingTxsSchema = YupTS.object({
   oooTransactions: YupTS.array(TxSchema),
 });
 
+export type Tx = YupTS.TypeOf<typeof TxSchema>;
 export type TxWithMetadata = YupTS.TypeOf<typeof TxWithMetadataSchema>;
 export type TPendingTxs = YupTS.TypeOf<typeof PendingTxsSchema>;
-export const TxWithMetadataValidator = TxWithMetadataSchema.toYup();
-export const TPendingTxsValidator = PendingTxsSchema.toYup();
-export const TxWithMetadataListValidator = YupTS.array(TxWithMetadataSchema).toYup();
