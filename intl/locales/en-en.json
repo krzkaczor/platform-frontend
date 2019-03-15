@@ -697,6 +697,7 @@
   "modals.tx-sender.confirm-description": "Please confirm that you would like to accept this transaction",
   "modals.tx-sender.confirm-title": "Accept transaction",
   "modals.tx-sender.user-claim-summary.download-confirmation": "I have downloaded the above agreements",
+  "modals.tx-sender.user-claim.title": "Claim",
   "modals.tx-sender.withdraw-flow.withdraw-component.errors.not-ethereum-address": "This Ethereum Address is invalid",
   "modals.tx-sender.withdraw-flow.withdraw-component.errors.value-higher-than-balance": "The amount exceeds your wallet balance",
   "module.kyc.sagas.beneficial-owners": "Your beneficial owners have a combined ownership of more than 100%. Please make sure this is 100% or less.",
