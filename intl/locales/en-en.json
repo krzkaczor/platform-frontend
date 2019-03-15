@@ -439,6 +439,7 @@
   "eto.settings.eto-start-date-summary.new-start-date-local": "presale start date (local time)",
   "eto.settings.eto-start-date-summary.new-start-date-utc": "presale start date (UTC)",
   "eto.settings.eto-start-date-summary.time-to-start-date": "time to presale",
+  "eto.settings.eto-start-date.title": "Eto start date",
   "eto.settings.hours": "{hours, plural, =0 {hours} one {hour} other {hours}}",
   "eto.settings.minutes": "{minutes, plural, =0 {minutes} one {minute} other {minutes}}",
   "eto.settings.seconds": "{timeLeft, plural, =0 {seconds} one {second} other {seconds}}",

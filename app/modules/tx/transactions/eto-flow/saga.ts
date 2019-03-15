@@ -9,11 +9,13 @@ import { actions } from "../../../actions";
 import {
   selectIsNewPreEtoStartDateValid,
   selectIssuerEto,
+  selectNewPreEtoStartDate,
   selectPreEtoStartDate,
 } from "../../../eto-flow/selectors";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
+import { TEtoFlowAdditionalData } from "./types";
 
 export function* generateSetStartDateTransaction({
   contractsService,
@@ -53,9 +55,11 @@ export function* generateSetStartDateTransaction({
   return txDetails;
 }
 
+type TExtraParams = { etoId: string; agreementHash: string };
+
 export function* generateSignInvestmentAgreementTx(
   { contractsService, web3Manager }: TGlobalDependencies,
-  extraParam: { etoId: string; agreementHash: string },
+  extraParam: TExtraParams,
 ): any {
   const { etoId, agreementHash } = extraParam;
   const state: IAppState = yield select();
@@ -95,12 +99,19 @@ export function* generateSignInvestmentAgreementTx(
 export function* etoSetDateGenerator(_: TGlobalDependencies): any {
   const generatedTxDetails = yield neuCall(generateSetStartDateTransaction);
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
-  yield put(actions.txSender.txSenderContinueToSummary());
+
+  const newStartDate: Date = yield select(selectNewPreEtoStartDate);
+
+  yield put(
+    actions.txSender.txSenderContinueToSummary<TEtoFlowAdditionalData>({
+      newStartDate: newStartDate.getTime(),
+    }),
+  );
 }
 
 export function* etoSignInvestmentAgreementGenerator(
   _: TGlobalDependencies,
-  extraParam: { etoId: string; agreementHash: string },
+  extraParam: TExtraParams,
 ): any {
   const generatedTxDetails = yield neuCall(generateSignInvestmentAgreementTx, extraParam);
   yield put(actions.txSender.setTransactionData(generatedTxDetails));

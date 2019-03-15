@@ -2,7 +2,7 @@ import { find } from "lodash";
 import * as moment from "moment";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { Container, Row } from "reactstrap";
+import { Container } from "reactstrap";
 import { compose, setDisplayName } from "recompose";
 
 import {
@@ -11,21 +11,20 @@ import {
 } from "../../../../lib/api/eto/EtoFileApi.interfaces";
 import { actions } from "../../../../modules/actions";
 import { selectPlatformTermsConstants } from "../../../../modules/contracts/selectors";
-import {
-  selectIssuerEtoWithCompanyAndContract,
-  selectNewPreEtoStartDate,
-} from "../../../../modules/eto-flow/selectors";
+import { selectIssuerEtoWithCompanyAndContract } from "../../../../modules/eto-flow/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
+import { TEtoFlowAdditionalData } from "../../../../modules/tx/transactions/eto-flow/types";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { EtherscanAddressLink, ExternalLink } from "../../../shared/links";
 import { TimeLeft } from "../../../shared/TimeLeft";
-import { localTime, utcTime, weekdayLocal, weekdayUTC } from "../../../shared/utils";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
+import { SetDateDetails } from "./SetDateDetails";
 
 interface IStateProps {
-  newDate: Date;
+  additionalData: TEtoFlowAdditionalData;
   changeableTill: moment.Moment;
   etoTermsAddress: string;
   etoCommitmentAddress: string;
@@ -47,111 +46,78 @@ const SetEtoDateSummaryComponent: React.FunctionComponent<IProps> = ({
   offeringAgreementIPFSLink,
   etoCommitmentAddress,
   termsAgreementIPFSLink,
-  newDate,
+  additionalData,
   changeableTill,
 }) => {
   return (
     <Container>
-      <Row>
-        <Heading size={EHeadingSize.SMALL} level={4}>
-          <FormattedMessage id="eto.settings.eto-start-date-summary.dates-title" />
-        </Heading>
-      </Row>
+      <Heading className="mb-4" size={EHeadingSize.SMALL} level={4}>
+        <FormattedMessage id="eto.settings.eto-start-date-summary.dates-title" />
+      </Heading>
 
-      <Row className="mt-4">
-        <p>
-          <FormattedMessage id="eto.status.onchain.change-eto-date-countdown-text" />{" "}
-          <i>
-            <TimeLeft refresh={false} asUtc={true} finalTime={changeableTill.utc().toDate()} />
-          </i>
-        </p>
-      </Row>
-      <Row className="mt-0">
-        <InfoList>
-          <InfoRow
-            caption={
-              <FormattedMessage id="eto.settings.eto-start-date-summary.time-to-start-date" />
-            }
-            value={<TimeLeft refresh={false} asUtc={false} finalTime={newDate} />}
-            data-test-id="set-eto-date-summary-time-to-eto"
-          />
-          <InfoRow
-            caption={
-              <FormattedMessage id="eto.settings.eto-start-date-summary.new-start-date-utc" />
-            }
-            value={`${weekdayUTC(newDate)}, ${utcTime(newDate)}`}
-          />
-          <InfoRow
-            caption={
-              <FormattedMessage id="eto.settings.eto-start-date-summary.new-start-date-local" />
-            }
-            value={`${weekdayLocal(newDate)}, ${localTime(newDate)}`}
-          />
-        </InfoList>
-      </Row>
+      <p className="mb-4">
+        <FormattedMessage id="eto.status.onchain.change-eto-date-countdown-text" />{" "}
+        <i>
+          <TimeLeft refresh={false} asUtc={true} finalTime={changeableTill.utc().toDate()} />
+        </i>
+      </p>
 
-      <Row className="mt-4">
-        <Heading size={EHeadingSize.SMALL} level={4}>
-          <FormattedMessage id="eto.settings.eto-start-date-summary.contracts-title" />
-        </Heading>
-      </Row>
+      <SetDateDetails additionalData={additionalData} />
 
-      <Row className="mt-4">
-        <p>
-          <FormattedMessage id="eto.settings.eto-start-date-summary.contracts-description" />
-        </p>
-      </Row>
+      <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
+        <FormattedMessage id="eto.settings.eto-start-date-summary.contracts-title" />
+      </Heading>
 
-      <Row className="mt-0">
-        <InfoList>
-          <InfoRow
-            caption={
-              <FormattedMessage id="eto.settings.eto-start-date-summary.eto-commitment-contract-address" />
-            }
-            value={
-              <EtherscanAddressLink address={etoCommitmentAddress}>
-                {etoCommitmentAddress}
-              </EtherscanAddressLink>
-            }
-          />
-          <InfoRow
-            caption={
-              <FormattedMessage id="eto.settings.eto-start-date-summary.eto-terms-contract-address" />
-            }
-            value={
-              <EtherscanAddressLink address={etoTermsAddress}>
-                {etoTermsAddress}
-              </EtherscanAddressLink>
-            }
-          />
-          <InfoRow
-            caption={
-              <FormattedMessage id="eto.settings.eto-start-date-summary.equity-token-address" />
-            }
-            value={
-              <EtherscanAddressLink address={equityTokenAddress}>
-                {equityTokenAddress}
-              </EtherscanAddressLink>
-            }
-          />
-          <InfoRow
-            caption={immutableDocumentName[EEtoDocumentType.APPROVED_INVESTOR_OFFERING_DOCUMENT]}
-            value={
-              <ExternalLink href={offeringAgreementIPFSLink}>
-                {offeringAgreementIPFSLink}
-              </ExternalLink>
-            }
-          />
-          <InfoRow
-            caption={immutableDocumentName[EEtoDocumentType.SIGNED_TERMSHEET]}
-            value={
-              <ExternalLink href={termsAgreementIPFSLink}>{termsAgreementIPFSLink}</ExternalLink>
-            }
-          />
-        </InfoList>
-      </Row>
+      <p className="mb-4">
+        <FormattedMessage id="eto.settings.eto-start-date-summary.contracts-description" />
+      </p>
 
-      <Row className="justify-content-center mt-4">
+      <InfoList className="mb-4">
+        <InfoRow
+          caption={
+            <FormattedMessage id="eto.settings.eto-start-date-summary.eto-commitment-contract-address" />
+          }
+          value={
+            <EtherscanAddressLink address={etoCommitmentAddress}>
+              {etoCommitmentAddress}
+            </EtherscanAddressLink>
+          }
+        />
+        <InfoRow
+          caption={
+            <FormattedMessage id="eto.settings.eto-start-date-summary.eto-terms-contract-address" />
+          }
+          value={
+            <EtherscanAddressLink address={etoTermsAddress}>{etoTermsAddress}</EtherscanAddressLink>
+          }
+        />
+        <InfoRow
+          caption={
+            <FormattedMessage id="eto.settings.eto-start-date-summary.equity-token-address" />
+          }
+          value={
+            <EtherscanAddressLink address={equityTokenAddress}>
+              {equityTokenAddress}
+            </EtherscanAddressLink>
+          }
+        />
+        <InfoRow
+          caption={immutableDocumentName[EEtoDocumentType.APPROVED_INVESTOR_OFFERING_DOCUMENT]}
+          value={
+            <ExternalLink href={offeringAgreementIPFSLink}>
+              {offeringAgreementIPFSLink}
+            </ExternalLink>
+          }
+        />
+        <InfoRow
+          caption={immutableDocumentName[EEtoDocumentType.SIGNED_TERMSHEET]}
+          value={
+            <ExternalLink href={termsAgreementIPFSLink}>{termsAgreementIPFSLink}</ExternalLink>
+          }
+        />
+      </InfoList>
+
+      <div className="text-center">
         <Button
           layout={EButtonLayout.PRIMARY}
           type="button"
@@ -160,7 +126,7 @@ const SetEtoDateSummaryComponent: React.FunctionComponent<IProps> = ({
         >
           <FormattedMessage id="eto.settings.confirm" />
         </Button>
-      </Row>
+      </div>
     </Container>
   );
 };
@@ -169,9 +135,9 @@ const SetEtoDateSummary = compose<IProps, {}>(
   setDisplayName("SetEtoDateSummary"),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => {
-      const newDate = selectNewPreEtoStartDate(state)!;
+      const additionalData: TEtoFlowAdditionalData = selectTxAdditionalData(state);
       const constants = selectPlatformTermsConstants(state);
-      const changeableTill = moment(newDate).subtract(
+      const changeableTill = moment(additionalData.newStartDate).subtract(
         constants.DATE_TO_WHITELIST_MIN_DURATION.toNumber(),
         "seconds",
       );
@@ -190,10 +156,10 @@ const SetEtoDateSummary = compose<IProps, {}>(
       const termsAgreementIPFSLink = termsDoc && ipfsUrl + (termsDoc.ipfsHash as string);
 
       return {
-        newDate,
         etoTermsAddress: eto.contract!.etoTermsAddress,
         equityTokenAddress: eto.contract!.equityTokenAddress,
         etoCommitmentAddress: eto.contract!.etoCommitmentAddress,
+        additionalData,
         offeringAgreementIPFSLink,
         termsAgreementIPFSLink,
         changeableTill,

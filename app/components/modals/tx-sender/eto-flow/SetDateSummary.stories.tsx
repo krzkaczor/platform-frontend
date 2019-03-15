@@ -1,3 +1,4 @@
+import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as moment from "moment";
 import * as React from "react";
@@ -15,8 +16,10 @@ const data = {
   offeringAgreementIPFSLink: "https://ipfs.io/123123",
   etoCommitmentAddress: "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
   termsAgreementIPFSLink: "https://ipfs.io/789789",
-  newDate: date.toDate(),
-  onAccept: () => {},
+  additionalData: {
+    newStartDate: date.valueOf(),
+  },
+  onAccept: action("onAccept"),
   changeableTill,
 };
 

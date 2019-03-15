@@ -5,7 +5,7 @@ import { CommonHtmlProps } from "../../types";
 import { ButtonClose } from "../shared/buttons";
 import { Panel } from "../shared/Panel";
 
-import * as styles from "./ModalComponentBody.module.scss";
+import * as styles from "./Modal.module.scss";
 
 export interface IModalComponentProps {
   onClose?: () => void;

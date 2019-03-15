@@ -19,6 +19,8 @@ const TxName: React.FunctionComponent<IProps> = ({ type }) => {
       return <FormattedMessage id="modals.tx-sender.user-claim.title" />;
     case ETxSenderType.UNLOCK_FUNDS:
       return <FormattedMessage id="unlock-funds-flow.title" />;
+    case ETxSenderType.ETO_SET_DATE:
+      return <FormattedMessage id="eto.settings.eto-start-date.title" />;
     default:
       return <>transaction</>;
   }

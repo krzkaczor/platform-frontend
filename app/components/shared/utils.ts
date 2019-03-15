@@ -19,11 +19,11 @@ const calculateTimeLeft = (value: moment.Moment | Date, asUtc: boolean) => {
     : moment(value).diff(moment(), "seconds");
 };
 
-const utcTime = (value: Date) => moment.utc(value).format("MMMM Do YYYY, HH:mm");
-const localTime = (value: Date) => moment(value).format("MMMM Do YYYY, HH:mm");
+const utcTime = (value: moment.MomentInput) => moment.utc(value).format("MMMM Do YYYY, HH:mm");
+const localTime = (value: moment.MomentInput) => moment(value).format("MMMM Do YYYY, HH:mm");
 const timeZone = () => jstz.determine().name();
-const weekdayLocal = (date: Date) => moment(date).format("ddd");
-const weekdayUTC = (date: Date) => moment.utc(date).format("ddd");
+const weekdayLocal = (date: moment.MomentInput) => moment(date).format("ddd");
+const weekdayUTC = (date: moment.MomentInput) => moment.utc(date).format("ddd");
 
 export {
   calculateTimeLeftUnits,
