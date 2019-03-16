@@ -160,7 +160,7 @@ export function* neurRedeemSaga({ logger }: TGlobalDependencies): any {
 
   try {
     yield txSendSaga({
-      type: ETxSenderType.NEUR_WITHDRAW,
+      type: ETxSenderType.NEUR_REDEEM,
       transactionFlowGenerator: startNEuroRedeemGenerator,
     });
 

@@ -26,6 +26,7 @@ import { SummaryForm } from "./SummaryForm";
 
 import * as iconDownload from "../../../../assets/img/inline_icons/download.svg";
 import * as styles from "./Summary.module.scss";
+import { ETxSenderType } from "../../../../modules/tx/types";
 
 interface IStateProps {
   additionalData: TClaimAdditionalData;
@@ -135,7 +136,7 @@ export const UserClaimSummaryComponent: React.FunctionComponent<TComponentProps>
 
 export const UserClaimSummary = appConnect<IStateProps, IDispatchProps, {}>({
   stateToProps: state => {
-    const additionalData = selectTxAdditionalData(state);
+    const additionalData = selectTxAdditionalData<ETxSenderType.USER_CLAIM>(state)!;
 
     return {
       additionalData,

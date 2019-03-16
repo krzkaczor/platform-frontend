@@ -1,3 +1,13 @@
+import { TClaimAdditionalData } from "./transactions/claim/types";
+import { TEtoSetDateAdditionalData } from "./transactions/eto-flow/types";
+import { TInvestmentAdditionalData } from "./transactions/investment/types";
+import { TAcceptPayoutAdditionalData } from "./transactions/payout/accept/types";
+import { TRedistributePayoutAdditionalData } from "./transactions/payout/redistribute/types";
+import { TNEurRedeemAdditionalDetails } from "./transactions/redeem/types";
+import { TUnlockAdditionalData } from "./transactions/unlock/types";
+import { TUpgradeAdditionalData } from "./transactions/upgrade/types";
+import { TWithdrawAdditionalData } from "./transactions/withdraw/types";
+
 export interface IWithdrawDraftType {
   type: ETxSenderType.WITHDRAW;
   to: string;
@@ -25,8 +35,53 @@ export enum ETxSenderType {
   USER_CLAIM = "USER_CLAIM",
   INVESTOR_ACCEPT_PAYOUT = "INVESTOR_ACCEPT_PAYOUT",
   INVESTOR_REDISTRIBUTE_PAYOUT = "INVESTOR_REDISTRIBUTE_PAYOUT",
-  NEUR_WITHDRAW = "NEUR_WITHDRAW",
+  NEUR_REDEEM = "NEUR_REDEEM",
 }
+
+export interface ITxTypeWithData<T, P> {
+  type: T;
+  additionalData: P;
+}
+
+type TTxSenderWithdrawState = ITxTypeWithData<ETxSenderType.WITHDRAW, TWithdrawAdditionalData>;
+
+type TTxSenderClaimState = ITxTypeWithData<ETxSenderType.USER_CLAIM, TClaimAdditionalData>;
+
+type TTxSenderEtoSetDateState = ITxTypeWithData<ETxSenderType.ETO_SET_DATE, TEtoSetDateAdditionalData>;
+
+type TTxSenderInvestState = ITxTypeWithData<ETxSenderType.INVEST, TInvestmentAdditionalData>;
+type TTxSenderAcceptPayoutState = ITxTypeWithData<
+  ETxSenderType.INVESTOR_ACCEPT_PAYOUT,
+  TAcceptPayoutAdditionalData
+  >;
+
+type TTxSenderRedistributePayoutState = ITxTypeWithData<
+  ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT,
+  TRedistributePayoutAdditionalData
+  >;
+
+type TTxSenderNEurRedeemState = ITxTypeWithData<
+  ETxSenderType.NEUR_REDEEM,
+  TNEurRedeemAdditionalDetails
+  >;
+
+type TTxSenderUnlockState = ITxTypeWithData<ETxSenderType.UNLOCK_FUNDS, TUnlockAdditionalData>;
+
+type TTxSenderUpgradeState = ITxTypeWithData<ETxSenderType.UPGRADE, TUpgradeAdditionalData>;
+
+type TTxSenderSignInvestmentAgreementState = ITxTypeWithData<ETxSenderType.SIGN_INVESTMENT_AGREEMENT, undefined>;
+
+export type TSpecificTransactionState =
+  | TTxSenderSignInvestmentAgreementState
+  | TTxSenderUpgradeState
+  | TTxSenderUnlockState
+  | TTxSenderNEurRedeemState
+  | TTxSenderRedistributePayoutState
+  | TTxSenderAcceptPayoutState
+  | TTxSenderInvestState
+  | TTxSenderEtoSetDateState
+  | TTxSenderWithdrawState
+  | TTxSenderClaimState;
 
 export enum ETokenType {
   ETHER = "ETHER",

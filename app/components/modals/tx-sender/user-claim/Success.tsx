@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { actions } from "../../../../modules/actions";
 import { selectEtoTokenName } from "../../../../modules/public-etos/selectors";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { ConfettiEthereum } from "../../../shared/ethererum";
@@ -42,7 +43,7 @@ export const UserClaimSuccessComponent: React.FunctionComponent<IProps> = ({
 
 export const UserClaimSuccess = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => {
-    const etoId: string = selectTxAdditionalData(state);
+    const { etoId } = selectTxAdditionalData<ETxSenderType.USER_CLAIM>(state)!;
     return {
       tokenName: selectEtoTokenName(state, etoId),
     };

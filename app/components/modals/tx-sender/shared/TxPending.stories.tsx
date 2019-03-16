@@ -1,10 +1,9 @@
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { Container } from "reactstrap";
 
 import { ETxSenderType } from "../../../../modules/tx/types";
+import { withModalBody } from "../../../../utils/storybookHelpers";
 import { ITxPendingProps, TxPending } from "./TxPending";
-import { WatchPendingTxs } from "./WatchPeningTxs";
 
 const txData: ITxPendingProps = {
   blockId: 4623487932,
@@ -13,13 +12,5 @@ const txData: ITxPendingProps = {
 };
 
 storiesOf("TxPending", module)
-  .add("default", () => (
-    <Container>
-      <TxPending {...txData} />
-    </Container>
-  ))
-  .add("watching pending", () => (
-    <Container>
-      <WatchPendingTxs {...txData} />
-    </Container>
-  ));
+  .addDecorator(withModalBody())
+  .add("default", () => <TxPending {...txData} />);

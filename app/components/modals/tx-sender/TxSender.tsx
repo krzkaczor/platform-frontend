@@ -27,7 +27,7 @@ import { BankTransferRedeemSummary } from "./redeem/BankTransferRedeemSummary";
 import { SigningMessage } from "./shared/SigningMessage";
 import { TxError } from "./shared/TxError";
 import { TxPending } from "./shared/TxPending";
-import { WatchPendingTxs } from "./shared/WatchPeningTxs";
+import { WatchPendingTxs } from "./shared/WatchPendingTxs";
 import { UnlockWalletSummary } from "./unlock-wallet-flow/Summary";
 import { UpgradeSummary } from "./upgrade-flow/Summary";
 import { UserClaimSuccess } from "./user-claim/Success";
@@ -57,7 +57,7 @@ function isBigModal(props: Props): boolean {
 }
 
 const TxSenderModalSelect: React.FunctionComponent<Props> = props => {
-  if (props.type !== ETxSenderType.NEUR_WITHDRAW) {
+  if (props.type !== ETxSenderType.NEUR_REDEEM) {
     return <TxSenderModalOuter {...props}>{props.children}</TxSenderModalOuter>;
   }
 
@@ -95,7 +95,7 @@ const InitComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ type
       return <Withdraw />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
       return <InvestorRedistributePayoutConfirm />;
-    case ETxSenderType.NEUR_WITHDRAW:
+    case ETxSenderType.NEUR_REDEEM:
       return <BankTransferRedeemInit />;
     default:
       return <LoadingIndicator />;
@@ -118,7 +118,7 @@ const SummaryComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ t
       return <InvestorRedistributePayoutSummary />;
     case ETxSenderType.UNLOCK_FUNDS:
       return <UnlockWalletSummary />;
-    case ETxSenderType.NEUR_WITHDRAW:
+    case ETxSenderType.NEUR_REDEEM:
       return <BankTransferRedeemSummary />;
     default:
       return <WithdrawSummary />;
@@ -138,7 +138,7 @@ const SuccessComponent: React.FunctionComponent<{ type?: ETxSenderType; txHash?:
       return <InvestorAcceptPayoutSuccess />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
       return <InvestorRedistributePayoutSuccess />;
-    case ETxSenderType.NEUR_WITHDRAW:
+    case ETxSenderType.NEUR_REDEEM:
       return <BankTransferRedeemSuccess txHash={txHash!} />;
     default:
       return <WithdrawSuccess txHash={txHash!} />;

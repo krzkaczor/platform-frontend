@@ -5,14 +5,14 @@ import { Col, Container, Row } from "reactstrap";
 import { actions } from "../../../../modules/actions";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TWithdrawAdditionalData } from "../../../../modules/tx/transactions/withdraw/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { WithdrawTransactionDetails } from "./WithdrawTransactionDetails";
 
 interface IStateProps {
-  txData: TTxAdditionalData<TWithdrawAdditionalData>;
+  txData: TWithdrawAdditionalData;
 }
 
 interface IDispatchProps {
@@ -51,7 +51,7 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
 
 export const WithdrawSummary = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    txData: selectTxAdditionalData(state),
+    txData: selectTxAdditionalData<ETxSenderType.WITHDRAW>(state)!,
   }),
   dispatchToProps: d => ({
     onAccept: () => d(actions.txSender.txSenderAccept()),

@@ -11,7 +11,7 @@ import { selectBankAccount } from "../../../kyc/selectors";
 import { TBankAccount } from "../../../kyc/types";
 import { neuCall } from "../../../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
-import { TRedeemAdditionalDetails } from "./types";
+import { ETxSenderType } from "../../types";
 
 export function* generateNeuWithdrawTransaction(
   { contractsService, web3Manager }: TGlobalDependencies,
@@ -62,6 +62,6 @@ export function* startNEuroRedeemGenerator(_: TGlobalDependencies): any {
   };
 
   yield put(
-    actions.txSender.txSenderContinueToSummary<TRedeemAdditionalDetails>(additionalDetails),
+    actions.txSender.txSenderContinueToSummary<ETxSenderType.NEUR_REDEEM>(additionalDetails),
   );
 }

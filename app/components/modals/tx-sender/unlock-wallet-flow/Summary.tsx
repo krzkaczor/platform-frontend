@@ -7,7 +7,7 @@ import { ITxData } from "../../../../lib/web3/types";
 import { actions } from "../../../../modules/actions";
 import { selectTxAdditionalData, selectTxDetails } from "../../../../modules/tx/sender/selectors";
 import { TUnlockAdditionalData } from "../../../../modules/tx/transactions/unlock/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
@@ -15,7 +15,7 @@ import { UnlockWalletTransactionDetails } from "./UnlockWalletTransactionDetails
 
 interface IStateProps {
   txData: Readonly<ITxData>;
-  additionalData: TTxAdditionalData<TUnlockAdditionalData>;
+  additionalData: TUnlockAdditionalData;
 }
 
 interface IDispatchProps {
@@ -54,7 +54,7 @@ export const UnlockWalletSummary = compose<TComponentProps, any>(
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => ({
       txData: selectTxDetails(state)!,
-      additionalData: selectTxAdditionalData(state),
+      additionalData: selectTxAdditionalData<ETxSenderType.UNLOCK_FUNDS>(state)!,
     }),
     dispatchToProps: d => ({
       onAccept: () => d(actions.txSender.txSenderAccept()),

@@ -75,7 +75,7 @@ const InvestmentSummary = compose<IProps, {}>(
   setDisplayName("InvestmentSummary"),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => ({
-      additionalData: selectTxAdditionalData(state),
+      additionalData: selectTxAdditionalData<ETxSenderType.INVEST>(state)!,
     }),
     dispatchToProps: d => ({
       onAccept: () => d(actions.txSender.txSenderAccept()),

@@ -16,7 +16,7 @@ import { WithdrawTransactionDetails } from "./withdraw-flow/WithdrawTransactionD
 interface IProps {
   additionalData?: any;
   type: ETxSenderType;
-  txData: Readonly<Tx>;
+  txData?: Readonly<Tx>;
 }
 
 /**
@@ -45,7 +45,7 @@ const TxDetails: React.FunctionComponent<IProps> = ({ type, additionalData, txDa
       return <SetDateDetails additionalData={additionalData} />;
     case ETxSenderType.INVEST:
       return <InvestmentTransactionDetails additionalData={additionalData} />;
-    case ETxSenderType.NEUR_WITHDRAW:
+    case ETxSenderType.NEUR_REDEEM:
       return <BankTransferRedeemDetails additionalData={additionalData} />;
     case ETxSenderType.SIGN_INVESTMENT_AGREEMENT:
       return null;

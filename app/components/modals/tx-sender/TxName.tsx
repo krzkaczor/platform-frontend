@@ -27,7 +27,7 @@ const TxName: React.FunctionComponent<IProps> = ({ type }) => {
       return <FormattedMessage id="eto.settings.eto-start-date.title" />;
     case ETxSenderType.INVEST:
       return <FormattedMessage id="investment-flow.title" />;
-    case ETxSenderType.NEUR_WITHDRAW:
+    case ETxSenderType.NEUR_REDEEM:
       return <FormattedMessage id="bank-transfer.redeem.title" />;
     case ETxSenderType.SIGN_INVESTMENT_AGREEMENT:
       return <FormattedMessage id="investment-agreement.title" />;

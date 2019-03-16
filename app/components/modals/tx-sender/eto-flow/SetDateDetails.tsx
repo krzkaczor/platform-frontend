@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TEtoFlowAdditionalData } from "../../../../modules/tx/transactions/eto-flow/types";
+import { TEtoSetDateAdditionalData } from "../../../../modules/tx/transactions/eto-flow/types";
 import { TTxAdditionalData } from "../../../../modules/tx/types";
 import { TimeLeft } from "../../../shared/TimeLeft";
 import { localTime, utcTime, weekdayLocal, weekdayUTC } from "../../../shared/utils";
@@ -9,7 +9,7 @@ import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
 
 export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TEtoFlowAdditionalData>;
+  additionalData: TTxAdditionalData<TEtoSetDateAdditionalData>;
 }
 const SetDateDetails: React.FunctionComponent<ITxPendingProps> = ({ additionalData }) => {
   const newStartDate = additionalData.newStartDate;

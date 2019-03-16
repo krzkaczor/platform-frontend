@@ -32,7 +32,7 @@ import {
 import { UserCannotUnlockFunds } from "../transactions/unlock/errors";
 import { ETxSenderType } from "../types";
 import { validateGas } from "../validator/sagas";
-import { ETransactionErrorType } from "./reducer";
+import { ETransactionErrorType, TAdditionalDataByType } from "./reducer";
 import { selectTxAdditionalData, selectTxDetails, selectTxType } from "./selectors";
 
 export interface ITxSendParams {
@@ -158,9 +158,11 @@ function* ensureNoPendingTx({ logger }: TGlobalDependencies, type: ETxSenderType
 }
 
 function* sendTxSubSaga({ web3Manager }: TGlobalDependencies): any {
-  const type = yield select(selectTxType);
+  const type: ETxSenderType = yield select(selectTxType);
   const txData: ITxData = yield select(selectTxDetails);
-  const txAdditionalData: ITxData = yield select(selectTxAdditionalData);
+  const txAdditionalData: TAdditionalDataByType<typeof type> = yield select(
+    (state: IAppState) => selectTxAdditionalData<typeof type>(state),
+  );
 
   if (!txData) {
     throw new Error("Tx data is not defined");

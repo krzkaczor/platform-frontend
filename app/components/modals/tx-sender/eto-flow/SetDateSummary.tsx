@@ -13,7 +13,7 @@ import { actions } from "../../../../modules/actions";
 import { selectPlatformTermsConstants } from "../../../../modules/contracts/selectors";
 import { selectIssuerEtoWithCompanyAndContract } from "../../../../modules/eto-flow/selectors";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
-import { TEtoFlowAdditionalData } from "../../../../modules/tx/transactions/eto-flow/types";
+import { TEtoSetDateAdditionalData } from "../../../../modules/tx/transactions/eto-flow/types";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
@@ -22,9 +22,10 @@ import { TimeLeft } from "../../../shared/TimeLeft";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
 import { SetDateDetails } from "./SetDateDetails";
+import { ETxSenderType } from "../../../../modules/tx/types";
 
 interface IStateProps {
-  additionalData: TEtoFlowAdditionalData;
+  additionalData: TEtoSetDateAdditionalData;
   changeableTill: moment.Moment;
   etoTermsAddress: string;
   etoCommitmentAddress: string;
@@ -135,7 +136,12 @@ const SetEtoDateSummary = compose<IProps, {}>(
   setDisplayName("SetEtoDateSummary"),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => {
-      const additionalData: TEtoFlowAdditionalData = selectTxAdditionalData(state);
+      const additionalData = selectTxAdditionalData<ETxSenderType.ETO_SET_DATE>(state);
+
+      if (!additionalData) {
+        throw new Error("Addfjfds")
+      }
+
       const constants = selectPlatformTermsConstants(state);
       const changeableTill = moment(additionalData.newStartDate).subtract(
         constants.DATE_TO_WHITELIST_MIN_DURATION.toNumber(),

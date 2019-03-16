@@ -5,7 +5,8 @@ import { compose } from "recompose";
 
 import { actions } from "../../../../modules/actions";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
-import { TRedeemAdditionalDetails } from "../../../../modules/tx/transactions/redeem/types";
+import { TNEurRedeemAdditionalDetails } from "../../../../modules/tx/transactions/redeem/types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { ButtonArrowRight } from "../../../shared/buttons/Button";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
@@ -14,7 +15,7 @@ import { BankTransferRedeemDetails } from "./BankTransferRedeemDetails";
 import * as styles from "../investment-flow/Summary.module.scss";
 
 interface IStateProps {
-  additionalData: TRedeemAdditionalDetails;
+  additionalData: TNEurRedeemAdditionalDetails;
 }
 
 interface IDispatchProps {
@@ -49,7 +50,7 @@ const BankTransferRedeemSummaryLayout: React.FunctionComponent<IComponentProps> 
 const BankTransferRedeemSummary = compose<IComponentProps, {}>(
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => ({
-      additionalData: selectTxAdditionalData(state),
+      additionalData: selectTxAdditionalData<ETxSenderType.NEUR_REDEEM>(state)!,
     }),
     dispatchToProps: dispatch => ({
       confirm: () => dispatch(actions.txSender.txSenderAccept()),

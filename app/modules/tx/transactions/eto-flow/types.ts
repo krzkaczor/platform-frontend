@@ -1,3 +1,3 @@
-export type TEtoFlowAdditionalData = {
+export type TEtoSetDateAdditionalData = {
   newStartDate: number;
 };

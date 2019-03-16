@@ -44,9 +44,7 @@ const TxPendingLayout: React.FunctionComponent<ITxPendingProps & IStateProps> = 
     }
     text={<FormattedMessage id="tx-sender.tx-pending.description" />}
   >
-    {/* TODO: check why txData is empty when we load this component */}
-    {txData && <TxDetails txData={txData} type={type} additionalData={additionalData} />}
-
+    <TxDetails txData={txData} type={type} additionalData={additionalData} />
     <TxHashAndBlock txHash={txHash} blockId={blockId} />
   </Message>
 );

@@ -10,7 +10,7 @@ import { selectMyInvestorTicketByEtoId } from "../../../investor-portfolio/selec
 import { neuCall } from "../../../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { selectTxGasCostEthUlps } from "../../sender/selectors";
-import { TClaimAdditionalData } from "./types";
+import { ETxSenderType } from "../../types";
 
 export function* generateGetClaimTransaction(
   { contractsService, web3Manager }: TGlobalDependencies,
@@ -46,7 +46,7 @@ export function* startClaimGenerator(_: TGlobalDependencies, etoId: string): any
 
   const etoData = yield select((state: IAppState) => selectMyInvestorTicketByEtoId(state, etoId));
   yield put(
-    actions.txSender.txSenderContinueToSummary<TClaimAdditionalData>({
+    actions.txSender.txSenderContinueToSummary<ETxSenderType.USER_CLAIM>({
       etoId,
       tokenName: etoData.equityTokenName,
       tokenQuantity: etoData.investorTicket.equityTokenInt.toString(),

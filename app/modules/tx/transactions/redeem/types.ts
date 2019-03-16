@@ -1,4 +1,4 @@
-export type TRedeemAdditionalDetails = {
+export type TNEurRedeemAdditionalDetails = {
   amount: string;
   bankAccount: {
     bankName: string;

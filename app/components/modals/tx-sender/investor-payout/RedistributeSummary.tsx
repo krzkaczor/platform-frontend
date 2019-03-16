@@ -14,6 +14,7 @@ import { Button } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ExternalLink } from "../../../shared/links";
 import { RedistributeTransactionDetails } from "./RedistributeTransactionDetails";
+import { ETxSenderType } from "../../../../modules/tx/types";
 
 interface IStateProps {
   additionalData: TRedistributePayoutAdditionalData;
@@ -64,7 +65,7 @@ const InvestorRedistributePayoutSummaryLayout: React.FunctionComponent<TComponen
 const InvestorRedistributePayoutSummary = appConnect<IStateProps, IDispatchProps, {}>({
   stateToProps: state => ({
     walletAddress: selectEthereumAddressWithChecksum(state),
-    additionalData: selectTxAdditionalData(state),
+    additionalData: selectTxAdditionalData<ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT>(state)!,
   }),
   dispatchToProps: d => ({
     onAccept: () => d(actions.txSender.txSenderAccept()),

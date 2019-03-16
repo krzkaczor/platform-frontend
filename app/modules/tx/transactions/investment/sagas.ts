@@ -29,7 +29,7 @@ import { selectEtherTokenBalance } from "../../../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { selectTxGasCostEthUlps } from "../../sender/selectors";
 import { calculateGasLimitWithOverhead } from "../../utils";
-import { TInvestmentAdditionalData } from "./types";
+import { ETxSenderType } from "../../types";
 
 export const INVESTMENT_GAS_AMOUNT = "600000";
 
@@ -173,5 +173,5 @@ export function* investmentFlowGenerator(_: TGlobalDependencies): any {
     isIcbm,
   };
 
-  yield put(actions.txSender.txSenderContinueToSummary<TInvestmentAdditionalData>(additionalData));
+  yield put(actions.txSender.txSenderContinueToSummary<ETxSenderType.INVEST>(additionalData));
 }

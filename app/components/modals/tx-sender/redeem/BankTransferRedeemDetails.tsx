@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TRedeemAdditionalDetails } from "../../../../modules/tx/transactions/redeem/types";
+import { TNEurRedeemAdditionalDetails } from "../../../../modules/tx/transactions/redeem/types";
 import { TTxAdditionalData } from "../../../../modules/tx/types";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../../../shared/Money";
 import { BankNumber } from "../../../wallet/BankAccount";
@@ -11,7 +11,7 @@ import { CalculatedFee } from "./CalculatedFee";
 import { TotalRedeemed } from "./TotalRedeemed";
 
 export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TRedeemAdditionalDetails>;
+  additionalData: TTxAdditionalData<TNEurRedeemAdditionalDetails>;
 }
 const BankTransferRedeemDetails: React.FunctionComponent<ITxPendingProps> = ({
   additionalData,

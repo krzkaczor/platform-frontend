@@ -15,7 +15,7 @@ import {
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { UserCannotUnlockFunds } from "./errors";
 import { selectCanUnlockWallet } from "./selectors";
-import { TUnlockAdditionalData } from "./types";
+import { ETxSenderType } from "../../types";
 
 export function* generateUnlockEuroTransaction({
   contractsService,
@@ -57,7 +57,7 @@ export function* unlockEtherFundsTransactionGenerator(_: TGlobalDependencies): a
 
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(
-    actions.txSender.txSenderContinueToSummary<TUnlockAdditionalData>({
+    actions.txSender.txSenderContinueToSummary<ETxSenderType.UNLOCK_FUNDS>({
       etherNeumarksDue,
       lockedEtherUnlockDate,
       lockedEtherBalance,
