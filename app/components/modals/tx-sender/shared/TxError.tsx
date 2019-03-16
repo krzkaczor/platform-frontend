@@ -20,7 +20,7 @@ import { TxHashAndBlock } from "./TxHashAndBlock";
 import { IStateProps } from "./TxPending";
 
 import * as failedImg from "../../../../assets/img/ether_fail.svg";
-import * as styles from "./ErrorMessage.module.scss";
+import * as styles from "./TxError.module.scss";
 
 export interface IStateProps {
   txData?: Tx;
@@ -98,35 +98,33 @@ const getErrorTitleByType = (type: ETxSenderType, error?: ETransactionErrorType)
   }
 };
 
-const ErrorMessageLayout: React.FunctionComponent<IProps & IStateProps> = ({
+const TxErrorLayout: React.FunctionComponent<IProps & IStateProps> = ({
   type,
   error,
   additionalData,
   txHash,
   blockId,
   txData,
-}) => {
-  return (
-    <Message
-      data-test-id="modals.shared.signing-message.modal"
-      image={<img src={failedImg} className={cn(styles.eth, "mb-3")} alt="" />}
-      title={getErrorTitleByType(type, error)}
-      text={getErrorMessageByType(error)}
-    >
-      {txData && <TxDetails txData={txData} type={type} additionalData={additionalData} />}
+}) => (
+  <Message
+    data-test-id="modals.shared.signing-message.modal"
+    image={<img src={failedImg} className={cn(styles.eth, "mb-3")} alt="" />}
+    title={getErrorTitleByType(type, error)}
+    text={getErrorMessageByType(error)}
+  >
+    {txData && <TxDetails txData={txData} type={type} additionalData={additionalData} />}
 
-      <TxHashAndBlock txHash={txHash} blockId={blockId} />
-    </Message>
-  );
-};
+    <TxHashAndBlock txHash={txHash} blockId={blockId} />
+  </Message>
+);
 
-const ErrorMessage = compose<IStateProps & IProps, IProps>(
+const TxError = compose<IStateProps & IProps, IProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
       txData: selectMonitoredTxData(state),
       additionalData: selectMonitoredTxAdditionalData(state),
     }),
   }),
-)(ErrorMessageLayout);
+)(TxErrorLayout);
 
-export { ErrorMessage };
+export { TxError };

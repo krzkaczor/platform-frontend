@@ -24,8 +24,8 @@ import { InvestorRedistributePayoutSummary } from "./investor-payout/Redistribut
 import { BankTransferRedeemInit } from "./redeem/BankTransferRedeemInit";
 import { BankTransferRedeemSuccess } from "./redeem/BankTransferRedeemSuccess";
 import { BankTransferRedeemSummary } from "./redeem/BankTransferRedeemSummary";
-import { ErrorMessage } from "./shared/ErrorMessage";
 import { SigningMessage } from "./shared/SigningMessage";
+import { TxError } from "./shared/TxError";
 import { TxPending } from "./shared/TxPending";
 import { WatchPendingTxs } from "./shared/WatchPeningTxs";
 import { UnlockWalletSummary } from "./unlock-wallet-flow/Summary";
@@ -185,7 +185,7 @@ const TxSenderBody: React.FunctionComponent<Props> = ({ state, blockId, txHash, 
         throw new Error("Transaction type needs to be set at transaction error state");
       }
 
-      return <ErrorMessage blockId={blockId} txHash={txHash} type={type} error={error} />;
+      return <TxError blockId={blockId} txHash={txHash} type={type} error={error} />;
 
     default:
       return null;

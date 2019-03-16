@@ -7,6 +7,11 @@ import { actions } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
 import { neuCall } from "../../../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
+import { TRedeemAdditionalDetails } from "./types";
+import { selectBankAccount } from "../../../kyc/selectors";
+import { TBankAccount } from "../../../kyc/types";
+import { DeepReadonly } from "../../../../types";
+import { selectBankFeeUlps } from "../../../bank-transfer-flow/selectors";
 
 export function* generateNeuWithdrawTransaction(
   { contractsService, web3Manager }: TGlobalDependencies,
@@ -39,9 +44,24 @@ export function* startNEuroRedeemGenerator(_: TGlobalDependencies): any {
     txDataFromUser.value,
   );
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
+
+  const bankAccount: DeepReadonly<TBankAccount> = yield select(selectBankAccount);
+  if (!bankAccount.hasBankAccount) {
+    throw new Error("During redeem process user should have bank account");
+  }
+
+  const bankFee: string = yield select(selectBankFeeUlps);
+
+  const additionalDetails = {
+    bankFee,
+    amount: txDataFromUser.value,
+    bankAccount: {
+      bankName: bankAccount.details.bankName,
+      accountNumberLast4: bankAccount.details.bankAccountNumberLast4,
+    },
+  };
+
   yield put(
-    actions.txSender.txSenderContinueToSummary({
-      amount: txDataFromUser.value,
-    }),
+    actions.txSender.txSenderContinueToSummary<TRedeemAdditionalDetails>(additionalDetails),
   );
 }

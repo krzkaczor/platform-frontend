@@ -24,6 +24,7 @@
   "bank-transfer.redeem.summary.continue": "CONTINUE",
   "bank-transfer.redeem.summary.note": "It may take between 4-6 business days to complete the transaction. Your bank may charge you additional fees for incoming transfers.",
   "bank-transfer.redeem.summary.return-amount": "Return amount",
+  "bank-transfer.redeem.title": "REDEEM NEUR",
   "bank-transfer.redeem.summary.title": "REDEEM NEUR summary",
   "bank-transfer.redeem.summary.to-bank-account": "To bank account",
   "bank-transfer.redeem.summary.total-return-amount": "Total return amount",

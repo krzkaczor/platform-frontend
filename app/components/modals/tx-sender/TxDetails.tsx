@@ -10,6 +10,7 @@ import { UnlockWalletTransactionDetails } from "./unlock-wallet-flow/UnlockWalle
 import { UpgradeTransactionDetails } from "./upgrade-flow/UpgradeTransactionDetails";
 import { ClaimTransactionDetails } from "./user-claim/ClaimTransactionDetails";
 import { WithdrawTransactionDetails } from "./withdraw-flow/WithdrawTransactionDetails";
+import { BankTransferRedeemDetails } from "./redeem/BankTransferRedeemDetails";
 
 interface IProps {
   additionalData?: any;
@@ -40,6 +41,8 @@ const TxDetails: React.FunctionComponent<IProps> = ({ type, additionalData, txDa
       return <SetDateDetails additionalData={additionalData} />;
     case ETxSenderType.INVEST:
       return <InvestmentTransactionDetails additionalData={additionalData} />;
+    case ETxSenderType.NEUR_WITHDRAW:
+      return <BankTransferRedeemDetails additionalData={additionalData} />;
     default:
       return null;
   }

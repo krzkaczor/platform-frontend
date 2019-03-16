@@ -7,6 +7,9 @@ interface IProps {
   type: ETxSenderType;
 }
 
+/**
+ * Generate transaction name used for title inside TxPending and TxError modals
+ */
 const TxName: React.FunctionComponent<IProps> = ({ type }) => {
   switch (type) {
     case ETxSenderType.WITHDRAW:
@@ -23,6 +26,8 @@ const TxName: React.FunctionComponent<IProps> = ({ type }) => {
       return <FormattedMessage id="eto.settings.eto-start-date.title" />;
     case ETxSenderType.INVEST:
       return <FormattedMessage id="investment-flow.title" />;
+    case ETxSenderType.NEUR_WITHDRAW:
+      return <FormattedMessage id="bank-transfer.redeem.title" />;
     default:
       return <>transaction</>;
   }
