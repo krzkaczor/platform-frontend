@@ -3,6 +3,7 @@ import * as React from "react";
 import { Tx } from "../../../lib/api/users/interfaces";
 import { ETxSenderType } from "../../../modules/tx/types";
 import { SetDateDetails } from "./eto-flow/SetDateDetails";
+import { InvestmentTransactionDetails } from "./investment-flow/InvestmentTransactionDetails";
 import { AcceptTransactionDetails } from "./investor-payout/AcceptTransactionDetails";
 import { RedistributeTransactionDetails } from "./investor-payout/RedistributeTransactionDetails";
 import { UnlockWalletTransactionDetails } from "./unlock-wallet-flow/UnlockWalletTransactionDetails";
@@ -37,6 +38,8 @@ const TxDetails: React.FunctionComponent<IProps> = ({ type, additionalData, txDa
       return <RedistributeTransactionDetails additionalData={additionalData} />;
     case ETxSenderType.ETO_SET_DATE:
       return <SetDateDetails additionalData={additionalData} />;
+    case ETxSenderType.INVEST:
+      return <InvestmentTransactionDetails additionalData={additionalData} />;
     default:
       return null;
   }

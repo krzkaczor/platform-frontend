@@ -5,14 +5,31 @@ import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ContractsService } from "../../../../lib/web3/ContractsService";
 import { ITxData } from "../../../../lib/web3/types";
 import { IAppState } from "../../../../store";
+import { compareBigNumbers } from "../../../../utils/BigNumberUtils";
+import { actions } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
-import { selectPublicEtoById } from "../../../public-etos/selectors";
+import { EInvestmentType } from "../../../investment-flow/reducer";
+import {
+  selectInvestmentEthValueUlps,
+  selectInvestmentEtoId,
+  selectInvestmentEurValueUlps,
+  selectIsICBMInvestment,
+} from "../../../investment-flow/selectors";
+import {
+  selectEquityTokenCountByEtoId,
+  selectNeuRewardUlpsByEtoId,
+} from "../../../investor-portfolio/selectors";
+import {
+  selectEtoWithCompanyAndContractById,
+  selectPublicEtoById,
+} from "../../../public-etos/selectors";
+import { TEtoWithCompanyAndContract } from "../../../public-etos/types";
+import { selectEtherPriceEur } from "../../../shared/tokenPrice/selectors";
+import { selectEtherTokenBalance } from "../../../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
+import { selectTxGasCostEthUlps } from "../../sender/selectors";
 import { calculateGasLimitWithOverhead } from "../../utils";
-import { compareBigNumbers } from "./../../../../utils/BigNumberUtils";
-import { actions } from "./../../../actions";
-import { EInvestmentType } from "./../../../investment-flow/reducer";
-import { selectEtherTokenBalance } from "./../../../wallet/selectors";
+import { TInvestmentAdditionalData } from "./types";
 
 export const INVESTMENT_GAS_AMOUNT = "600000";
 
@@ -106,5 +123,40 @@ export function* generateInvestmentTransaction({ contractsService }: TGlobalDepe
 export function* investmentFlowGenerator(_: TGlobalDependencies): any {
   yield take(actions.txSender.txSenderAcceptDraft);
 
-  yield put(actions.txSender.txSenderContinueToSummary());
+  const etoId: string = yield select(selectInvestmentEtoId);
+  const eto: TEtoWithCompanyAndContract = yield select((state: IAppState) =>
+    selectEtoWithCompanyAndContractById(state, etoId),
+  );
+
+  const investmentEth: string = yield select(selectInvestmentEthValueUlps);
+  const investmentEur: string = yield select(selectInvestmentEurValueUlps);
+  const gasCostEth: string = yield select(selectTxGasCostEthUlps);
+  const equityTokens: string = yield select((state: IAppState) =>
+    selectEquityTokenCountByEtoId(state, etoId),
+  );
+  const estimatedReward: string = yield select((state: IAppState) =>
+    selectNeuRewardUlpsByEtoId(state, etoId),
+  );
+
+  const etherPriceEur: string = yield select(selectEtherPriceEur);
+  const isIcbm: boolean = yield select(selectIsICBMInvestment);
+
+  const additionalData = {
+    eto: {
+      etoId,
+      companyName: eto.company.name,
+      existingCompanyShares: eto.existingCompanyShares,
+      equityTokensPerShare: eto.equityTokensPerShare,
+      preMoneyValuationEur: eto.preMoneyValuationEur,
+    },
+    investmentEth,
+    investmentEur,
+    gasCostEth,
+    equityTokens,
+    estimatedReward,
+    etherPriceEur,
+    isIcbm,
+  };
+
+  yield put(actions.txSender.txSenderContinueToSummary<TInvestmentAdditionalData>(additionalData));
 }

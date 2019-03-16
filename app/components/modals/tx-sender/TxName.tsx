@@ -21,6 +21,8 @@ const TxName: React.FunctionComponent<IProps> = ({ type }) => {
       return <FormattedMessage id="unlock-funds-flow.title" />;
     case ETxSenderType.ETO_SET_DATE:
       return <FormattedMessage id="eto.settings.eto-start-date.title" />;
+    case ETxSenderType.INVEST:
+      return <FormattedMessage id="investment-flow.title" />;
     default:
       return <>transaction</>;
   }

@@ -258,7 +258,7 @@ function* watchTxSubSaga({ logger }: TGlobalDependencies, txHash: string): any {
         case EEventEmitterChannelEvents.TX_MINED:
           yield neuCall(updatePendingTxs);
           return yield put(actions.txSender.txSenderTxMined());
-        // Non terminal errors - Tx Mining should continue
+        // // Non terminal errors - Tx Mining should continue
         case EEventEmitterChannelEvents.ERROR:
           logger.error("Error while tx watching: ", result.error, { txHash });
           break;

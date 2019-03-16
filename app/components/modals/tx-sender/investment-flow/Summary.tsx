@@ -1,57 +1,23 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { Container, Row } from "reactstrap";
+import { Container } from "reactstrap";
 import { compose, setDisplayName } from "recompose";
 
-import { TEtoSpecsData } from "../../../../lib/api/eto/EtoApi.interfaces";
 import { EEtoDocumentType } from "../../../../lib/api/eto/EtoFileApi.interfaces";
-import { getShareAndTokenPrice } from "../../../../lib/api/eto/EtoUtils";
 import { actions } from "../../../../modules/actions";
-import {
-  selectInvestmentEthValueUlps,
-  selectInvestmentEtoId,
-  selectInvestmentEurValueUlps,
-  selectIsICBMInvestment,
-} from "../../../../modules/investment-flow/selectors";
-import {
-  selectEquityTokenCountByEtoId,
-  selectNeuRewardUlpsByEtoId,
-} from "../../../../modules/investor-portfolio/selectors";
-import { selectEtoWithCompanyAndContractById } from "../../../../modules/public-etos/selectors";
-import { selectEtherPriceEur } from "../../../../modules/shared/tokenPrice/selectors";
-import { selectTxGasCostEthUlps } from "../../../../modules/tx/sender/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
+import { TInvestmentAdditionalData } from "../../../../modules/tx/transactions/investment/types";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
-import { addBigNumbers, multiplyBigNumbers } from "../../../../utils/BigNumberUtils";
-import { formatThousands } from "../../../../utils/Number.utils";
 import { Button, EButtonLayout } from "../../../shared/buttons";
-import { CustomTooltip } from "../../../shared/CustomTooltip";
 import { DocumentTemplateButton } from "../../../shared/DocumentLink";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
-import { InfoList } from "../shared/InfoList";
-import { InfoRow } from "../shared/InfoRow";
-import {
-  formatEthTsd,
-  formatEurTsd,
-  formatSummaryTokenPrice,
-  getActualTokenPriceEur,
-} from "./utils";
+import { InvestmentTransactionDetails } from "./InvestmentTransactionDetails";
 
-import * as neuIcon from "../../../../assets/img/neu_icon.svg";
-import * as info from "../../../../assets/img/notifications/info.svg";
-import * as tokenIcon from "../../../../assets/img/token_icon.svg";
 import * as styles from "./Summary.module.scss";
 
 interface IStateProps {
-  companyName: string;
-  eto: TEtoSpecsData;
-  investmentEur: string;
-  investmentEth: string;
-  gasCostEth: string;
-  equityTokens: string;
-  estimatedReward: string;
-  etherPriceEur: string;
-  isIcbm?: boolean;
+  additionalData: TInvestmentAdditionalData;
 }
 
 type IDispatchProps = {
@@ -62,111 +28,28 @@ type IDispatchProps = {
 
 type IProps = IStateProps & IDispatchProps;
 
-const NeuRewardCaption: React.FunctionComponent<{ isIcbm?: boolean }> = ({ isIcbm }) => {
-  const neuMsg = <FormattedMessage id="investment-flow.summary.estimated-reward" />;
-  const icbmMsg = (
-    <>
-      {neuMsg}
-      <img className={styles.infoIcon} id="tooltip-target-neu" src={info} alt="" />
-      <CustomTooltip target="tooltip-target-neu">
-        <FormattedMessage id="investment-flow.message.no-icbm-neu-reward" />
-      </CustomTooltip>
-    </>
-  );
-  return isIcbm ? icbmMsg : neuMsg;
-};
-
 const InvestmentSummaryComponent: React.FunctionComponent<IProps> = ({
   onAccept,
   onChange,
   downloadAgreement,
-  gasCostEth,
-  etherPriceEur,
-  isIcbm,
-  eto,
-  equityTokens,
-  investmentEth,
-  investmentEur,
-  estimatedReward,
-  companyName,
+  additionalData,
 }) => {
-  const equityTokensValue = (
-    <span>
-      {/* TODO: Change to actual custom token icon */}
-      <img src={tokenIcon} alt="" /> {formatThousands(equityTokens)}
-    </span>
-  );
-  const estimatedRewardValue = (
-    <span>
-      <img src={neuIcon} alt="" /> {formatEurTsd(estimatedReward)} NEU
-    </span>
-  );
-  const investment = `€ ${formatEurTsd(investmentEur)} ≈ ${formatEthTsd(investmentEth)} ETH`;
-
-  const gasCostEuro = multiplyBigNumbers([gasCostEth, etherPriceEur]);
-  const totalCostEth = addBigNumbers([gasCostEth, investmentEth]);
-  const totalCostEur = addBigNumbers([gasCostEuro, investmentEur]);
-
-  const total = `€ ${formatEurTsd(totalCostEur)} ≈ ${formatEthTsd(totalCostEth)} ETH`;
-  const actualTokenPrice = getActualTokenPriceEur(investmentEur, equityTokens);
-  const { tokenPrice: fullTokenPrice } = getShareAndTokenPrice(eto);
-  const formattedTokenPrice = `€ ${formatSummaryTokenPrice(
-    fullTokenPrice.toString(),
-    actualTokenPrice,
-  )}`;
-
   return (
     <Container className={styles.container}>
-      <Row className="mt-0">
-        <Heading size={EHeadingSize.SMALL} level={4}>
-          <FormattedMessage id="investment-flow.investment-summary" />
-        </Heading>
-      </Row>
+      <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
+        <FormattedMessage id="investment-flow.investment-summary" />
+      </Heading>
 
-      <Row>
-        <InfoList>
-          <InfoRow
-            caption={<FormattedMessage id="investment-flow.summary.company" />}
-            value={companyName}
-          />
-          <InfoRow
-            data-test-id="investment-summary-token-price"
-            caption={<FormattedMessage id="investment-flow.summary.token-price" />}
-            value={formattedTokenPrice}
-          />
-          <InfoRow
-            caption={<FormattedMessage id="investment-flow.summary.eto-address" />}
-            value={eto.etoId}
-          />
-          <InfoRow
-            caption={<FormattedMessage id="investment-flow.summary.your-investment" />}
-            value={investment}
-            data-test-id="invest-modal-summary-your-investment"
-          />
-          <InfoRow
-            caption={<FormattedMessage id="investment-flow.summary.transaction-cost" />}
-            value={`${formatEthTsd(gasCostEth)} ETH`}
-          />
-          <InfoRow
-            caption={<FormattedMessage id="investment-flow.summary.equity-tokens" />}
-            value={equityTokensValue}
-          />
-          <InfoRow caption={<NeuRewardCaption isIcbm={isIcbm} />} value={estimatedRewardValue} />
-          <InfoRow
-            caption={<FormattedMessage id="investment-flow.summary.transaction-value" />}
-            value={total}
-          />
-        </InfoList>
-      </Row>
+      <InvestmentTransactionDetails additionalData={additionalData} />
 
-      <Row className="justify-content-center">
+      <div className="text-center mb-4">
         <DocumentTemplateButton
-          onClick={() => downloadAgreement(eto.etoId)}
+          onClick={() => downloadAgreement(additionalData.eto.etoId)}
           title={<FormattedMessage id="investment-flow.summary.download-agreement" />}
         />
-      </Row>
+      </div>
 
-      <Row className="justify-content-center mb-0 mt-0">
+      <div className="text-center">
         <Button
           layout={EButtonLayout.PRIMARY}
           type="button"
@@ -183,7 +66,7 @@ const InvestmentSummaryComponent: React.FunctionComponent<IProps> = ({
         >
           <FormattedMessage id="investment-flow.change" />
         </Button>
-      </Row>
+      </div>
     </Container>
   );
 };
@@ -191,24 +74,9 @@ const InvestmentSummaryComponent: React.FunctionComponent<IProps> = ({
 const InvestmentSummary = compose<IProps, {}>(
   setDisplayName("InvestmentSummary"),
   appConnect<IStateProps, IDispatchProps>({
-    stateToProps: state => {
-      const etoId = selectInvestmentEtoId(state);
-      // eto and computed values are guaranteed to be present at investment summary state
-      const eto = selectEtoWithCompanyAndContractById(state, etoId)!;
-
-      return {
-        eto,
-        companyName: eto.company.name,
-        investmentEth: selectInvestmentEthValueUlps(state),
-        investmentEur: selectInvestmentEurValueUlps(state),
-        gasCostEth: selectTxGasCostEthUlps(state),
-        // tslint:disable: no-useless-cast
-        equityTokens: selectEquityTokenCountByEtoId(state, etoId)!,
-        estimatedReward: selectNeuRewardUlpsByEtoId(state, etoId)!,
-        etherPriceEur: selectEtherPriceEur(state),
-        isIcbm: selectIsICBMInvestment(state),
-      };
-    },
+    stateToProps: state => ({
+      additionalData: selectTxAdditionalData(state),
+    }),
     dispatchToProps: d => ({
       onAccept: () => d(actions.txSender.txSenderAccept()),
       onChange: () => d(actions.txSender.txSenderChange(ETxSenderType.INVEST)),
