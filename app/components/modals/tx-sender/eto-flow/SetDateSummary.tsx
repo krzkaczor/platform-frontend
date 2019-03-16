@@ -14,6 +14,7 @@ import { selectPlatformTermsConstants } from "../../../../modules/contracts/sele
 import { selectIssuerEtoWithCompanyAndContract } from "../../../../modules/eto-flow/selectors";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TEtoSetDateAdditionalData } from "../../../../modules/tx/transactions/eto-flow/types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
@@ -22,7 +23,6 @@ import { TimeLeft } from "../../../shared/TimeLeft";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
 import { SetDateDetails } from "./SetDateDetails";
-import { ETxSenderType } from "../../../../modules/tx/types";
 
 interface IStateProps {
   additionalData: TEtoSetDateAdditionalData;
@@ -63,7 +63,7 @@ const SetEtoDateSummaryComponent: React.FunctionComponent<IProps> = ({
         </i>
       </p>
 
-      <SetDateDetails additionalData={additionalData} />
+      <SetDateDetails additionalData={additionalData} className="mb-4" />
 
       <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
         <FormattedMessage id="eto.settings.eto-start-date-summary.contracts-title" />
@@ -139,7 +139,7 @@ const SetEtoDateSummary = compose<IProps, {}>(
       const additionalData = selectTxAdditionalData<ETxSenderType.ETO_SET_DATE>(state);
 
       if (!additionalData) {
-        throw new Error("Addfjfds")
+        throw new Error("Addfjfds");
       }
 
       const constants = selectPlatformTermsConstants(state);

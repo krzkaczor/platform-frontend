@@ -38,7 +38,7 @@ export enum ETxSenderType {
   NEUR_REDEEM = "NEUR_REDEEM",
 }
 
-export interface ITxTypeWithData<T, P> {
+export interface ITxTypeWithData<T extends ETxSenderType, P> {
   type: T;
   additionalData: P;
 }
@@ -47,29 +47,36 @@ type TTxSenderWithdrawState = ITxTypeWithData<ETxSenderType.WITHDRAW, TWithdrawA
 
 type TTxSenderClaimState = ITxTypeWithData<ETxSenderType.USER_CLAIM, TClaimAdditionalData>;
 
-type TTxSenderEtoSetDateState = ITxTypeWithData<ETxSenderType.ETO_SET_DATE, TEtoSetDateAdditionalData>;
+type TTxSenderEtoSetDateState = ITxTypeWithData<
+  ETxSenderType.ETO_SET_DATE,
+  TEtoSetDateAdditionalData
+>;
 
 type TTxSenderInvestState = ITxTypeWithData<ETxSenderType.INVEST, TInvestmentAdditionalData>;
+
 type TTxSenderAcceptPayoutState = ITxTypeWithData<
   ETxSenderType.INVESTOR_ACCEPT_PAYOUT,
   TAcceptPayoutAdditionalData
-  >;
+>;
 
 type TTxSenderRedistributePayoutState = ITxTypeWithData<
   ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT,
   TRedistributePayoutAdditionalData
-  >;
+>;
 
 type TTxSenderNEurRedeemState = ITxTypeWithData<
   ETxSenderType.NEUR_REDEEM,
   TNEurRedeemAdditionalDetails
-  >;
+>;
 
 type TTxSenderUnlockState = ITxTypeWithData<ETxSenderType.UNLOCK_FUNDS, TUnlockAdditionalData>;
 
 type TTxSenderUpgradeState = ITxTypeWithData<ETxSenderType.UPGRADE, TUpgradeAdditionalData>;
 
-type TTxSenderSignInvestmentAgreementState = ITxTypeWithData<ETxSenderType.SIGN_INVESTMENT_AGREEMENT, undefined>;
+type TTxSenderSignInvestmentAgreementState = ITxTypeWithData<
+  ETxSenderType.SIGN_INVESTMENT_AGREEMENT,
+  undefined
+>;
 
 export type TSpecificTransactionState =
   | TTxSenderSignInvestmentAgreementState

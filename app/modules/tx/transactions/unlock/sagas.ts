@@ -13,9 +13,9 @@ import {
   selectLockedEtherUnlockDate,
 } from "../../../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
+import { ETxSenderType } from "../../types";
 import { UserCannotUnlockFunds } from "./errors";
 import { selectCanUnlockWallet } from "./selectors";
-import { ETxSenderType } from "../../types";
 
 export function* generateUnlockEuroTransaction({
   contractsService,

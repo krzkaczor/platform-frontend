@@ -40,7 +40,7 @@ const InvestmentSummaryComponent: React.FunctionComponent<IProps> = ({
         <FormattedMessage id="investment-flow.investment-summary" />
       </Heading>
 
-      <InvestmentTransactionDetails additionalData={additionalData} />
+      <InvestmentTransactionDetails additionalData={additionalData} className="mb-4" />
 
       <div className="text-center mb-4">
         <DocumentTemplateButton

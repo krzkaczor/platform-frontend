@@ -10,7 +10,9 @@ export const selectTxDetails = (state: IAppState) => state.txSender.txDetails;
 
 export const selectTxType = (state: IAppState) => state.txSender.type;
 
-export const selectTxAdditionalData = <T extends ETxSenderType>(state: IAppState): TAdditionalDataByType<T> | undefined => state.txSender.additionalData;
+export const selectTxAdditionalData = <T extends ETxSenderType>(
+  state: IAppState,
+): TAdditionalDataByType<T> | undefined => state.txSender.additionalData;
 
 export const selectTxGasCostEthUlps = (state: IAppState): string => {
   const details = selectTxDetails(state);

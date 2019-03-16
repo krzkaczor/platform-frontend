@@ -9,6 +9,7 @@ import { ITxData } from "../../../../lib/web3/types";
 import { TUnlockAdditionalData } from "../../../../modules/tx/transactions/unlock/types";
 import { TTxAdditionalData } from "../../../../modules/tx/types";
 import { getUnlockedWalletEtherAmountAfterFee } from "../../../../modules/wallet/utils";
+import { CommonHtmlProps } from "../../../../types";
 import { multiplyBigNumbers } from "../../../../utils/BigNumberUtils";
 import { getCurrentUTCTimestamp } from "../../../../utils/Date.utils";
 import { ECurrency, Money } from "../../../shared/Money";
@@ -26,9 +27,9 @@ interface IAdditionalProps {
 }
 
 const UnlockWalletTransactionDetailsLayout: React.FunctionComponent<
-  ITxPendingProps & IAdditionalProps
-> = ({ txData, additionalData, returnedEther }) => (
-  <InfoList>
+  ITxPendingProps & IAdditionalProps & CommonHtmlProps
+> = ({ txData, additionalData, returnedEther, className }) => (
+  <InfoList className={className}>
     <InfoRow
       caption={<FormattedMessage id="unlock-funds-flow.eth-committed" />}
       value={<Money currency={ECurrency.ETH} value={additionalData.lockedEtherBalance} />}
@@ -61,7 +62,10 @@ const UnlockWalletTransactionDetailsLayout: React.FunctionComponent<
   </InfoList>
 );
 
-const UnlockWalletTransactionDetails = compose<ITxPendingProps & IAdditionalProps, ITxPendingProps>(
+const UnlockWalletTransactionDetails = compose<
+  ITxPendingProps & IAdditionalProps & CommonHtmlProps,
+  ITxPendingProps & CommonHtmlProps
+>(
   withState("returnedEther", "updateReturnedFunds", 0),
   lifecycle<ITxPendingProps & IAdditionalProps, {}>({
     componentDidUpdate(): void {

@@ -160,8 +160,8 @@ function* ensureNoPendingTx({ logger }: TGlobalDependencies, type: ETxSenderType
 function* sendTxSubSaga({ web3Manager }: TGlobalDependencies): any {
   const type: ETxSenderType = yield select(selectTxType);
   const txData: ITxData = yield select(selectTxDetails);
-  const txAdditionalData: TAdditionalDataByType<typeof type> = yield select(
-    (state: IAppState) => selectTxAdditionalData<typeof type>(state),
+  const txAdditionalData: TAdditionalDataByType<typeof type> = yield select((state: IAppState) =>
+    selectTxAdditionalData<typeof type>(state),
   );
 
   if (!txData) {

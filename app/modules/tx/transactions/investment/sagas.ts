@@ -28,8 +28,8 @@ import { selectEtherPriceEur } from "../../../shared/tokenPrice/selectors";
 import { selectEtherTokenBalance } from "../../../wallet/selectors";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { selectTxGasCostEthUlps } from "../../sender/selectors";
-import { calculateGasLimitWithOverhead } from "../../utils";
 import { ETxSenderType } from "../../types";
+import { calculateGasLimitWithOverhead } from "../../utils";
 
 export const INVESTMENT_GAS_AMOUNT = "600000";
 

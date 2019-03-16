@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 
 import { Tx } from "../../../../lib/api/users/interfaces";
 import { ITxData } from "../../../../lib/web3/types";
+import { CommonHtmlProps } from "../../../../types";
 import { multiplyBigNumbers } from "../../../../utils/BigNumberUtils";
 import { ECurrency, Money } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
@@ -11,8 +12,11 @@ import { InfoRow } from "../shared/InfoRow";
 export interface ITxPendingProps {
   txData: Readonly<ITxData> | Readonly<Tx>;
 }
-const UpgradeTransactionDetails: React.FunctionComponent<ITxPendingProps> = ({ txData }) => (
-  <InfoList>
+const UpgradeTransactionDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
+  txData,
+  className,
+}) => (
+  <InfoList className={className}>
     <InfoRow caption={<FormattedMessage id="upgrade-flow.to" />} value={txData.to} />
 
     <InfoRow

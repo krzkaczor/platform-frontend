@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { getShareAndTokenPrice } from "../../../../lib/api/eto/EtoUtils";
 import { TInvestmentAdditionalData } from "../../../../modules/tx/transactions/investment/types";
 import { TTxAdditionalData } from "../../../../modules/tx/types";
+import { CommonHtmlProps } from "../../../../types";
 import { addBigNumbers, multiplyBigNumbers } from "../../../../utils/BigNumberUtils";
 import { formatThousands } from "../../../../utils/Number.utils";
 import { CustomTooltip } from "../../../shared/CustomTooltip";
@@ -40,8 +41,9 @@ const NeuRewardCaption: React.FunctionComponent<{ isIcbm?: boolean }> = ({ isIcb
   return isIcbm ? icbmMsg : neuMsg;
 };
 
-const InvestmentTransactionDetails: React.FunctionComponent<ITxPendingProps> = ({
+const InvestmentTransactionDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
   additionalData,
+  className,
 }) => {
   const equityTokensValue = (
     <span>
@@ -80,7 +82,7 @@ const InvestmentTransactionDetails: React.FunctionComponent<ITxPendingProps> = (
   )}`;
 
   return (
-    <InfoList className="mb-4">
+    <InfoList className={className}>
       <InfoRow
         caption={<FormattedMessage id="investment-flow.summary.company" />}
         value={additionalData.eto.companyName}

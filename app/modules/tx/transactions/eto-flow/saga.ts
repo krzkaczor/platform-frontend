@@ -115,5 +115,7 @@ export function* etoSignInvestmentAgreementGenerator(
 ): any {
   const generatedTxDetails = yield neuCall(generateSignInvestmentAgreementTx, extraParam);
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
-  yield put(actions.txSender.txSenderContinueToSummary<ETxSenderType.SIGN_INVESTMENT_AGREEMENT>(undefined));
+  yield put(
+    actions.txSender.txSenderContinueToSummary<ETxSenderType.SIGN_INVESTMENT_AGREEMENT>(undefined),
+  );
 }

@@ -6,6 +6,7 @@ import { externalRoutes } from "../../../../config/externalRoutes";
 import { actions } from "../../../../modules/actions";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TRedistributePayoutAdditionalData } from "../../../../modules/tx/transactions/payout/redistribute/types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { selectEthereumAddressWithChecksum } from "../../../../modules/web3/selectors";
 import { appConnect } from "../../../../store";
 import { EthereumAddressWithChecksum } from "../../../../types";
@@ -14,7 +15,6 @@ import { Button } from "../../../shared/buttons";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ExternalLink } from "../../../shared/links";
 import { RedistributeTransactionDetails } from "./RedistributeTransactionDetails";
-import { ETxSenderType } from "../../../../modules/tx/types";
 
 interface IStateProps {
   additionalData: TRedistributePayoutAdditionalData;
@@ -42,7 +42,7 @@ const InvestorRedistributePayoutSummaryLayout: React.FunctionComponent<TComponen
         <FormattedMessage id="investor-payout.redistribute.summary.description" />
       </p>
 
-      <RedistributeTransactionDetails additionalData={additionalData} />
+      <RedistributeTransactionDetails additionalData={additionalData} className="mb-4" />
 
       <section className="text-center">
         <ExternalLink

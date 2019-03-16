@@ -33,7 +33,7 @@ const BankTransferRedeemSummaryLayout: React.FunctionComponent<IComponentProps> 
       <FormattedMessage id="bank-transfer.redeem.summary.title" />
     </Heading>
 
-    <BankTransferRedeemDetails additionalData={additionalData} />
+    <BankTransferRedeemDetails additionalData={additionalData} className="mb-4" />
 
     <p className="text-warning mx-4 text-center">
       <FormattedMessage id="bank-transfer.redeem.summary.note" />

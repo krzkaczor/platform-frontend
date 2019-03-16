@@ -111,6 +111,8 @@ export function* startInvestorPayoutAcceptGenerator(
   );
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(
-    actions.txSender.txSenderContinueToSummary<ETxSenderType.INVESTOR_ACCEPT_PAYOUT>({ tokensDisbursals }),
+    actions.txSender.txSenderContinueToSummary<ETxSenderType.INVESTOR_ACCEPT_PAYOUT>({
+      tokensDisbursals,
+    }),
   );
 }

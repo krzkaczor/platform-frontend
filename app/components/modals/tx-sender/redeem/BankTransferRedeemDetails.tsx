@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 
 import { TNEurRedeemAdditionalDetails } from "../../../../modules/tx/transactions/redeem/types";
 import { TTxAdditionalData } from "../../../../modules/tx/types";
+import { CommonHtmlProps } from "../../../../types";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../../../shared/Money";
 import { BankNumber } from "../../../wallet/BankAccount";
 import { InfoList } from "../shared/InfoList";
@@ -13,10 +14,11 @@ import { TotalRedeemed } from "./TotalRedeemed";
 export interface ITxPendingProps {
   additionalData: TTxAdditionalData<TNEurRedeemAdditionalDetails>;
 }
-const BankTransferRedeemDetails: React.FunctionComponent<ITxPendingProps> = ({
+const BankTransferRedeemDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
   additionalData,
+  className,
 }) => (
-  <InfoList className="mb-4">
+  <InfoList className={className}>
     <InfoRow
       caption={<FormattedMessage id="bank-transfer.redeem.summary.to-bank-account" />}
       value={

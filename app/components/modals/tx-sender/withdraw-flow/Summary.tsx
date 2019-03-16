@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
-import { Col, Container, Row } from "reactstrap";
+import { Container } from "reactstrap";
 
 import { actions } from "../../../../modules/actions";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
@@ -26,26 +26,17 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
   onAccept,
 }) => (
   <Container>
-    <Row className="mb-4">
-      <Col>
-        <Heading size={EHeadingSize.SMALL} level={4}>
-          <FormattedMessage id="withdraw-flow.summary" />
-        </Heading>
-      </Col>
-    </Row>
+    <Heading size={EHeadingSize.SMALL} level={4} className="mb-4">
+      <FormattedMessage id="withdraw-flow.summary" />
+    </Heading>
 
-    <Row>
-      <Col>
-        <WithdrawTransactionDetails additionalData={txData} />
-      </Col>
-    </Row>
-    <Row>
-      <Col className="text-center">
-        <Button onClick={onAccept} data-test-id="modals.tx-sender.withdraw-flow.summary.accept">
-          <FormattedMessage id="withdraw-flow.confirm" />
-        </Button>
-      </Col>
-    </Row>
+    <WithdrawTransactionDetails additionalData={txData} className="mb-4" />
+
+    <div className="text-center">
+      <Button onClick={onAccept} data-test-id="modals.tx-sender.withdraw-flow.summary.accept">
+        <FormattedMessage id="withdraw-flow.confirm" />
+      </Button>
+    </div>
   </Container>
 );
 

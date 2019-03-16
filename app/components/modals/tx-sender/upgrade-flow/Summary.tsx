@@ -5,13 +5,13 @@ import { Col, Container, Row } from "reactstrap";
 import { ITxData } from "../../../../lib/web3/types";
 import { actions } from "../../../../modules/actions";
 import { selectTxAdditionalData, selectTxDetails } from "../../../../modules/tx/sender/selectors";
+import { TUpgradeAdditionalData } from "../../../../modules/tx/transactions/upgrade/types";
 import { ETokenType, ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { Button } from "../../../shared/buttons";
 import { DocumentTemplateButton } from "../../../shared/DocumentLink";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { UpgradeTransactionDetails } from "./UpgradeTransactionDetails";
-import { TUpgradeAdditionalData } from "../../../../modules/tx/transactions/upgrade/types";
 
 interface IStateProps {
   txData: Readonly<ITxData>;
@@ -36,7 +36,7 @@ export const UpgradeSummaryComponent: React.FunctionComponent<TComponentProps> =
       <FormattedMessage id="upgrade-flow.summary" />
     </Heading>
 
-    <UpgradeTransactionDetails txData={txData} />
+    <UpgradeTransactionDetails txData={txData} className="mb-4" />
 
     {downloadICBMAgreement && (
       <Row>

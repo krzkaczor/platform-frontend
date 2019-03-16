@@ -34,7 +34,11 @@ export const UnlockFundsSummaryComponent: React.FunctionComponent<TComponentProp
       <FormattedMessage id="unlock-funds-flow.summary" />
     </Heading>
 
-    <UnlockWalletTransactionDetails txData={txData} additionalData={additionalData} />
+    <UnlockWalletTransactionDetails
+      txData={txData}
+      additionalData={additionalData}
+      className="mb-4"
+    />
 
     <Row>
       <Col className="text-center">

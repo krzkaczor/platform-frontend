@@ -49,7 +49,9 @@ const InvestorAcceptPayoutSummaryLayout: React.FunctionComponent<TComponentProps
           <FormattedMessage id="investor-payout.accept.summary.combined.description" />
         )}
       </p>
-      <AcceptTransactionDetails additionalData={additionalData} />
+
+      <AcceptTransactionDetails additionalData={additionalData} className="mb-4" />
+
       <section className="text-center">
         <ExternalLink
           className="d-inline-block mb-3"
