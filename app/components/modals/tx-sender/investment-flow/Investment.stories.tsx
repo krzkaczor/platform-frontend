@@ -33,7 +33,7 @@ storiesOf("Investment/Form", module)
         etherPriceEur={"123412341234123412341234"}
         eurPriceEther={"0.123412341234123412341234"}
         investEntireBalance={() => {}}
-        investmentType={EInvestmentType.InvestmentWallet}
+        investmentType={EInvestmentType.Eth}
         minTicketEth={"12341234123412341234"}
         minTicketEur={"1234"}
         maxTicketEur={"123456"}

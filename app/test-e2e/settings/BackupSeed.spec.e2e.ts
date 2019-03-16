@@ -1,4 +1,4 @@
-import { LIGHT_WALLET_PASSWORD_CACHE_TIME } from "../../config/constants";
+import { LIGHT_WALLET_PRIVATE_DATA_CACHE_TIME } from "../../config/constants";
 import { INV_EUR_ICBM_HAS_KYC_KEY, INV_EUR_ICBM_HAS_KYC_SEED } from "../fixtures";
 import { backupLightWalletSeed } from "../shared/backupLightWalletSeed";
 import {
@@ -32,7 +32,7 @@ describe("Backup Seed and Private Key save and view", () => {
 
       confirmAccessModal();
 
-      cy.wait(LIGHT_WALLET_PASSWORD_CACHE_TIME);
+      cy.wait(LIGHT_WALLET_PRIVATE_DATA_CACHE_TIME);
 
       assertLockedAccessModal();
     });

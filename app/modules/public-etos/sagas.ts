@@ -26,6 +26,7 @@ import { actions, TActionFromCreator } from "../actions";
 import { selectUserType } from "../auth/selectors";
 import { selectMyAssets } from "../investor-portfolio/selectors";
 import { neuCall, neuFork, neuTakeEvery, neuTakeUntil } from "../sagasUtils";
+import { selectEthereumAddressWithChecksum } from "../web3/selectors";
 import { etoInProgressPoolingDelay, etoNormalPoolingDelay } from "./constants";
 import { InvalidETOStateError } from "./errors";
 import {
@@ -337,11 +338,13 @@ function* downloadTemplateByType(
   }
 }
 
-export function* loadTokensData(
-  { contractsService }: TGlobalDependencies,
-  action: TActionFromCreator<typeof actions.publicEtos.loadTokensData>,
-): any {
+export function* loadTokensData({ contractsService }: TGlobalDependencies): any {
   const myAssets = yield select(selectMyAssets);
+  const walletAddress = yield select(selectEthereumAddressWithChecksum);
+
+  if (!myAssets) {
+    return;
+  }
 
   for (const eto of myAssets) {
     const equityTokenAddress = eto.contract.equityTokenAddress;
@@ -349,7 +352,7 @@ export function* loadTokensData(
     const equityToken = yield contractsService.getEquityToken(equityTokenAddress);
 
     const { balance, tokensPerShare, tokenController } = yield all({
-      balance: equityToken.balanceOf(action.payload.walletAddress),
+      balance: equityToken.balanceOf(walletAddress),
       tokensPerShare: equityToken.tokensPerShare,
       tokenController: equityToken.tokenController,
     });

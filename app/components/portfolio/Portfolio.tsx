@@ -26,6 +26,7 @@ export const Portfolio = compose<TPortfolioLayoutProps, {}>(
   onEnterAction({
     actionCreator: dispatch => {
       dispatch(actions.publicEtos.loadEtos());
+      dispatch(actions.publicEtos.loadTokensData());
 
       if (process.env.NF_ASSETS_PORTFOLIO_COMPONENT_VISIBLE === "1") {
         dispatch(actions.investorEtoTicket.loadClaimables());
@@ -41,8 +42,8 @@ export const Portfolio = compose<TPortfolioLayoutProps, {}>(
       isVerifiedInvestor: selectIsVerifiedInvestor(state),
     }),
     dispatchToProps: dispatch => ({
-      loadTokensData: (walletAddress: string) => {
-        dispatch(actions.publicEtos.loadTokensData(walletAddress));
+      loadTokensData: () => {
+        dispatch(actions.publicEtos.loadTokensData());
       },
     }),
   }),
@@ -52,7 +53,7 @@ export const Portfolio = compose<TPortfolioLayoutProps, {}>(
       const actualAssets = this.props.myAssets;
 
       if (!isEqual(prevAssets, actualAssets)) {
-        this.props.loadTokensData(this.props.walletAddress);
+        this.props.loadTokensData();
       }
     },
   }),

@@ -26,9 +26,7 @@ export const etoActions = {
     "PUBLIC_ETOS_DOWNLOAD_TEMPLATE_BY_TYPE",
     (etoId: string, documentType: EEtoDocumentType) => ({ etoId, documentType }),
   ),
-  loadTokensData: createActionFactory("PORTFOLIO_LOAD_TOKENS_DATA", (walletAddress: string) => ({
-    walletAddress,
-  })),
+  loadTokensData: createActionFactory("PORTFOLIO_LOAD_TOKENS_DATA"),
   setTokenData: createActionFactory(
     "PORTFOLIO_SET_TOKEN_DATA",
     (previewCode: string, tokenData: IEtoTokenData) => ({

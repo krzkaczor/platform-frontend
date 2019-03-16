@@ -6,7 +6,7 @@ import {
   assertWaitForLatestEmailSentWithSalt,
   clearEmailServer,
   closeModal,
-  confirmAccessModalNoPW,
+  confirmAccessModal,
   convertToUniqueEmail,
   registerWithLightWallet,
   verifyLatestUserEmail,
@@ -34,7 +34,7 @@ describe("Verify Email Widget", () => {
     cy.get(tid("verify-email-widget-form-email-input")).type(secondEmail);
     cy.get(tid("verify-email-widget-form-submit")).awaitedClick();
 
-    confirmAccessModalNoPW();
+    confirmAccessModal();
 
     // Email server takes time before getting the request
     assertWaitForLatestEmailSentWithSalt(secondEmail);

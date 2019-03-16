@@ -72,6 +72,17 @@ yarn intl:extract
 
 [Read more](./docs/working-with-intl.md)
 
+### Deduplicating transitive dependencies
+
+To remove duplicated transitive dependencies after major dependencies upgrade run:
+
+```
+yarn deduplicate
+```
+
+Under the hood above command use [`yarn-deduplicate`](https://github.com/atlassian/yarn-deduplicate)
+package.
+
 ### Update contract artifacts submodule
 
 If you need to push the contract artifacts to the newest version yourself, then run.

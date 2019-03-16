@@ -1,6 +1,7 @@
 import { TMessage } from "../../components/translatedMessages/utils";
 import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
+import { actions } from "../actions";
 
 export interface ISignMessageModalState {
   isModalOpen: boolean;
@@ -18,7 +19,7 @@ export const accessWalletReducer: AppReducer<ISignMessageModalState> = (
   action,
 ): ISignMessageModalState => {
   switch (action.type) {
-    case "SHOW_ACCESS_WALLET_MODAL":
+    case actions.accessWallet.showAccessWalletModal.getType():
       return {
         ...state,
         isModalOpen: true,
@@ -26,18 +27,18 @@ export const accessWalletReducer: AppReducer<ISignMessageModalState> = (
         modalTitle: action.payload.title,
         modalMessage: action.payload.message,
       };
-    case "HIDE_ACCESS_WALLET_MODAL":
+    case actions.accessWallet.hideAccessWalletModal.getType():
       return {
         ...state,
         isModalOpen: false,
       };
-    case "ACCESS_WALLET_SIGNING_ERROR":
+    case actions.accessWallet.signingError.getType():
       return {
         ...state,
         errorMessage: action.payload.errorMessage,
       };
-    case "ACCESS_WALLET_CLEAR_SIGNING_ERROR":
-    case "ACCESS_WALLET_ACCEPT":
+    case actions.accessWallet.clearSigningError.getType():
+    case actions.accessWallet.accept.getType():
       return {
         ...state,
         errorMessage: undefined,

@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedHTMLMessage } from "react-intl-phraseapp";
 
 import { HorizontalLine } from "../../shared/HorizontalLine";
-import { InlineIcon } from "../../shared/InlineIcon";
+import { InlineIcon } from "../../shared/icons";
 
 import * as arrowHead from "../../../assets/img/inline_icons/arrowhead.svg";
 import * as styles from "./OffToOnChainCompany.module.scss";

@@ -1,7 +1,7 @@
 import * as cn from "classnames";
 import * as React from "react";
 
-import { InlineIcon } from "./InlineIcon";
+import { InlineIcon } from "./icons";
 import { ExternalLink } from "./links";
 
 import * as bitcointalk from "../../assets/img/inline_icons/icon-menu-help.svg";

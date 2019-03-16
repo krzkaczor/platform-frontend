@@ -69,6 +69,19 @@ const getEuroLockTransaction = (
   return createInvestmentTxData(state, txData, contractsService.euroLock.address);
 };
 
+const getEuroTokenTransaction = (
+  state: IAppState,
+  contractsService: ContractsService,
+  etoId: string,
+) => {
+  const euroValueUlps = state.investmentFlow.euroValueUlps || "0";
+
+  const txData = contractsService.euroToken
+    .transferTx(etoId, new BigNumber(euroValueUlps))
+    .getData();
+  return createInvestmentTxData(state, txData, contractsService.euroToken.address);
+};
+
 function getEtherTokenTransaction(
   state: IAppState,
   contractsService: ContractsService,
@@ -111,8 +124,10 @@ export function* generateInvestmentTransaction({ contractsService }: TGlobalDepe
   const eto = selectPublicEtoById(state, investmentState.etoId)!;
 
   switch (investmentState.investmentType) {
-    case EInvestmentType.InvestmentWallet:
+    case EInvestmentType.Eth:
       return yield getEtherTokenTransaction(state, contractsService, eto.etoId);
+    case EInvestmentType.NEur:
+      return yield getEuroTokenTransaction(state, contractsService, eto.etoId);
     case EInvestmentType.ICBMEth:
       return yield getEtherLockTransaction(state, contractsService, eto.etoId);
     case EInvestmentType.ICBMnEuro:

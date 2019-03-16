@@ -10,12 +10,9 @@ export enum EBankTransferFlowState {
   SUCCESS = "success",
 }
 
-/**
- * This enum should use two character value convention as it's injected into reference code
- */
 export enum EBankTransferType {
-  PURCHASE = "PU",
-  VERIFY = "VE",
+  PURCHASE,
+  VERIFY,
 }
 
 export interface IBankTransferState {
