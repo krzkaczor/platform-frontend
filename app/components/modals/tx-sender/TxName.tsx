@@ -2,13 +2,14 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { ETxSenderType } from "../../../modules/tx/types";
+import { assertNever } from "../../../utils/assertNever";
 
 interface IProps {
   type: ETxSenderType;
 }
 
 /**
- * Generate transaction name used for title inside TxPending and TxError modals
+ * Generate transaction name used for title inside general TxPending and TxError modals
  */
 const TxName: React.FunctionComponent<IProps> = ({ type }) => {
   switch (type) {
@@ -28,8 +29,12 @@ const TxName: React.FunctionComponent<IProps> = ({ type }) => {
       return <FormattedMessage id="investment-flow.title" />;
     case ETxSenderType.NEUR_WITHDRAW:
       return <FormattedMessage id="bank-transfer.redeem.title" />;
+    case ETxSenderType.SIGN_INVESTMENT_AGREEMENT:
+      return <FormattedMessage id="investment-agreement.title" />;
+    case ETxSenderType.UPGRADE:
+      return <FormattedMessage id="upgrade-flow.title" />;
     default:
-      return <>transaction</>;
+      return assertNever(type);
   }
 };
 

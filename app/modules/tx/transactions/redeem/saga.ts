@@ -3,15 +3,15 @@ import { put, select, take } from "redux-saga/effects";
 import { Q18 } from "../../../../config/constants";
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ITxData } from "../../../../lib/web3/types";
+import { DeepReadonly } from "../../../../types";
 import { actions } from "../../../actions";
+import { selectBankFeeUlps } from "../../../bank-transfer-flow/selectors";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
+import { selectBankAccount } from "../../../kyc/selectors";
+import { TBankAccount } from "../../../kyc/types";
 import { neuCall } from "../../../sagasUtils";
 import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 import { TRedeemAdditionalDetails } from "./types";
-import { selectBankAccount } from "../../../kyc/selectors";
-import { TBankAccount } from "../../../kyc/types";
-import { DeepReadonly } from "../../../../types";
-import { selectBankFeeUlps } from "../../../bank-transfer-flow/selectors";
 
 export function* generateNeuWithdrawTransaction(
   { contractsService, web3Manager }: TGlobalDependencies,
