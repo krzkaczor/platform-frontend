@@ -7,6 +7,7 @@ import { EHeadingSize, Heading } from "../shared/Heading";
 type TProps = {
   "data-test-id"?: string;
   title?: TTranslatedString;
+  titleClassName?: string;
   hint?: TTranslatedString;
   text?: TTranslatedString;
   image?: React.ReactNode;
@@ -14,6 +15,7 @@ type TProps = {
 
 const Message: React.FunctionComponent<TProps> = ({
   "data-test-id": dataTestId,
+  titleClassName,
   image,
   title,
   text,
@@ -24,7 +26,12 @@ const Message: React.FunctionComponent<TProps> = ({
     <section className={cn("text-center", "mx-sm-5")} data-test-id={dataTestId}>
       {image}
       {title && (
-        <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
+        <Heading
+          titleClassName={titleClassName}
+          level={3}
+          decorator={false}
+          size={EHeadingSize.SMALL}
+        >
           {title}
         </Heading>
       )}

@@ -26,8 +26,8 @@ import { BankTransferRedeemSuccess } from "./redeem/BankTransferRedeemSuccess";
 import { BankTransferRedeemSummary } from "./redeem/BankTransferRedeemSummary";
 import { SigningMessage } from "./shared/SigningMessage";
 import { TxError } from "./shared/TxError";
+import { TxExternalPending } from "./shared/TxExternalPending";
 import { TxPending } from "./shared/TxPending";
-import { WatchPendingTxs } from "./shared/WatchPendingTxs";
 import { UnlockWalletSummary } from "./unlock-wallet-flow/Summary";
 import { UpgradeSummary } from "./upgrade-flow/Summary";
 import { UserClaimSuccess } from "./user-claim/Success";
@@ -148,7 +148,7 @@ const SuccessComponent: React.FunctionComponent<{ type?: ETxSenderType; txHash?:
 const TxSenderBody: React.FunctionComponent<Props> = ({ state, blockId, txHash, type, error }) => {
   switch (state) {
     case ETxSenderState.WATCHING_PENDING_TXS:
-      return <WatchPendingTxs txHash={txHash} blockId={blockId} />;
+      return <TxExternalPending txHash={txHash} blockId={blockId} />;
 
     case ETxSenderState.INIT:
       if (!type) {

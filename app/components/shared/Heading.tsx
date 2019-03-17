@@ -13,6 +13,7 @@ export enum EHeadingSize {
 
 interface IProps {
   level: 1 | 2 | 3 | 4 | 5 | 6;
+  titleClassName?: string;
   description?: TTranslatedString;
   decorator?: boolean | string;
   size?: EHeadingSize;
@@ -22,6 +23,7 @@ export const Heading: React.FunctionComponent<IProps & TDataTestId & CommonHtmlP
   level,
   children,
   className,
+  titleClassName,
   decorator,
   description,
   size,
@@ -43,7 +45,7 @@ export const Heading: React.FunctionComponent<IProps & TDataTestId & CommonHtmlP
       {React.createElement(
         `h${level}`,
         {
-          className: cn(styles.heading, { [styles.hasIcon]: isString(decorator) }),
+          className: cn(styles.heading, titleClassName, { [styles.hasIcon]: isString(decorator) }),
         },
         isString(decorator) &&
           React.createElement("img", {

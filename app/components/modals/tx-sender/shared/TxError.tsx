@@ -108,8 +108,9 @@ type TTxErrorLayoutProps = {
 const TxErrorLayout: React.FunctionComponent<TTxErrorLayoutProps> = props => (
   <Message
     data-test-id="modals.shared.signing-message.modal"
-    image={<img src={failedImg} className={cn(styles.eth, "mb-3")} alt="" />}
+    image={<img src={failedImg} className={cn(styles.eth, "mb-5")} alt="" />}
     title={getErrorTitleByType(props.type, props.error)}
+    titleClassName="text-warning"
     text={getErrorMessageByType(props.error)}
   >
     <TxDetails className="mb-3" {...props} />
@@ -127,4 +128,4 @@ const TxError = compose<TTxErrorLayoutProps, IProps>(
   }),
 )(TxErrorLayout);
 
-export { TxError };
+export { TxError, TxErrorLayout };
