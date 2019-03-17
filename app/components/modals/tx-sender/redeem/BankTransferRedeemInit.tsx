@@ -3,6 +3,7 @@ import { FormikConsumer, FormikProps, withFormik } from "formik";
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "recompose";
+import { createNumberMask } from "text-mask-addons";
 
 import { ITxData } from "../../../../lib/web3/types";
 import * as YupTS from "../../../../lib/yup-ts";
@@ -17,9 +18,10 @@ import { doesUserHaveEnoughNEuro, doesUserWithdrawMinimal } from "../../../../mo
 import { appConnect } from "../../../../store";
 import { ERoundingMode, formatToFixed } from "../../../../utils/Money.utils";
 import { onEnterAction } from "../../../../utils/OnEnterAction";
+import { extractNumber } from "../../../../utils/StringUtils";
 import { Button, ButtonSize, EButtonLayout } from "../../../shared/buttons/Button";
 import { ButtonArrowRight } from "../../../shared/buttons/index";
-import { FormField } from "../../../shared/forms/fields/FormField";
+import { FormMaskedInput } from "../../../shared/forms/fields/FormMaskedInput";
 import { Form } from "../../../shared/forms/Form";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, EMoneyFormat, getFormattedMoney } from "../../../shared/Money";
@@ -47,6 +49,7 @@ type IProps = IStateProps & IDispatchProps;
 
 export interface IReedemData {
   amount: string;
+  amount_masked: string;
 }
 
 const getValidators = (minAmount: string, neuroAmount: string) =>
@@ -129,11 +132,18 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
           </section>
 
           <Form>
-            <FormField
+            <FormMaskedInput
               name="amount"
               suffix="EUR"
-              maxLength={15}
               placeholder={`${getFormattedMoney(neuroAmount, ECurrency.EUR, EMoneyFormat.WEI)}`}
+              unmask={extractNumber}
+              mask={createNumberMask({
+                prefix: "",
+                thousandsSeparatorSymbol: " ",
+                allowDecimal: true,
+                decimalLimit: 2,
+                integerLimit: 13,
+              })}
             />
             <section className={styles.section}>
               <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
@@ -161,7 +171,11 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
               <FormattedMessage id="bank-transfer.redeem.init.note" />
             </p>
             <section className="text-center">
-              <ButtonArrowRight disabled={!isValid} type="submit">
+              <ButtonArrowRight
+                data-test-id="bank-transfer.reedem-init.continue"
+                disabled={!isValid}
+                type="submit"
+              >
                 <FormattedMessage id="bank-transfer.redeem.init.continue" />
               </ButtonArrowRight>
             </section>
@@ -202,4 +216,4 @@ const BankTransferRedeemInit = compose<IProps, {}>(
   }),
 )(BankTransferRedeemLayout);
 
-export { BankTransferRedeemLayout, BankTransferRedeemInit, TotalRedeemed, CalculatedFee };
+export { BankTransferRedeemLayout, BankTransferRedeemInit };
