@@ -21,10 +21,20 @@ export const selectMonitoredTxAdditionalData = (
 
   return undefined;
 };
+
 export const selectMonitoredTxData = (state: IAppState): Tx | undefined => {
   const pendingTransaction = state.txMonitor.txs.pendingTransaction;
   if (pendingTransaction) {
     return pendingTransaction.transaction;
+  }
+
+  return undefined;
+};
+
+export const selectMonitoredTxTimestamp = (state: IAppState): number | undefined => {
+  const pendingTransaction = state.txMonitor.txs.pendingTransaction;
+  if (pendingTransaction) {
+    return pendingTransaction.transactionTimestamp;
   }
 
   return undefined;

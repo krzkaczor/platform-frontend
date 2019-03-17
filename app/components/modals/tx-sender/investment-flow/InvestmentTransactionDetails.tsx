@@ -2,15 +2,14 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { getShareAndTokenPrice } from "../../../../lib/api/eto/EtoUtils";
-import { TInvestmentAdditionalData } from "../../../../modules/tx/transactions/investment/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
-import { CommonHtmlProps } from "../../../../types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { addBigNumbers, multiplyBigNumbers } from "../../../../utils/BigNumberUtils";
 import { formatThousands } from "../../../../utils/Number.utils";
 import { CustomTooltip } from "../../../shared/CustomTooltip";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
 import { TimestampRow } from "../shared/TimestampRow";
+import { TransactionDetailsComponent } from "../types";
 import {
   formatEthTsd,
   formatEurTsd,
@@ -22,10 +21,6 @@ import * as neuIcon from "../../../../assets/img/neu_icon.svg";
 import * as info from "../../../../assets/img/notifications/info.svg";
 import * as tokenIcon from "../../../../assets/img/token_icon.svg";
 import * as styles from "./Summary.module.scss";
-
-export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TInvestmentAdditionalData>;
-}
 
 const NeuRewardCaption: React.FunctionComponent<{ isIcbm?: boolean }> = ({ isIcbm }) => {
   const neuMsg = <FormattedMessage id="investment-flow.summary.estimated-reward" />;
@@ -41,9 +36,10 @@ const NeuRewardCaption: React.FunctionComponent<{ isIcbm?: boolean }> = ({ isIcb
   return isIcbm ? icbmMsg : neuMsg;
 };
 
-const InvestmentTransactionDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
+const InvestmentTransactionDetails: TransactionDetailsComponent<ETxSenderType.INVEST> = ({
   additionalData,
   className,
+  txTimestamp,
 }) => {
   const equityTokensValue = (
     <span>
@@ -118,7 +114,7 @@ const InvestmentTransactionDetails: React.FunctionComponent<ITxPendingProps & Co
         value={total}
       />
 
-      {additionalData.timestamp && <TimestampRow timestamp={additionalData.timestamp} />}
+      {txTimestamp && <TimestampRow timestamp={txTimestamp} />}
     </InfoList>
   );
 };

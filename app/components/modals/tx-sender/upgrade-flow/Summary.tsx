@@ -36,7 +36,7 @@ export const UpgradeSummaryComponent: React.FunctionComponent<TComponentProps> =
       <FormattedMessage id="upgrade-flow.summary" />
     </Heading>
 
-    <UpgradeTransactionDetails txData={txData} className="mb-4" />
+    <UpgradeTransactionDetails txData={txData} className="mb-4" additionalData={additionalData} />
 
     {downloadICBMAgreement && (
       <Row>

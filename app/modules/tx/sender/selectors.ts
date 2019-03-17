@@ -1,7 +1,7 @@
 import { IAppState } from "../../../store";
 import { multiplyBigNumbers } from "../../../utils/BigNumberUtils";
-import { ETxSenderType } from "../types";
-import { ETxSenderState, EValidationState, TAdditionalDataByType } from "./reducer";
+import { ETxSenderType, TAdditionalDataByType } from "../types";
+import { ETxSenderState, EValidationState } from "./reducer";
 
 export const selectTxSenderModalOpened = (state: IAppState) =>
   state.txSender.state !== ETxSenderState.UNINITIALIZED;

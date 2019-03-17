@@ -27,25 +27,28 @@ const TxDetails: React.FunctionComponent<IProps & CommonHtmlProps> = props => {
     return null;
   }
 
+  // TODO: investigate why typescript marks `txData` still as undefined after condition above
+  const propsAsAny = props as any;
+
   switch (props.type) {
     case ETxSenderType.INVESTOR_ACCEPT_PAYOUT:
-      return <AcceptTransactionDetails {...props} />;
+      return <AcceptTransactionDetails {...propsAsAny} />;
     case ETxSenderType.USER_CLAIM:
-      return <ClaimTransactionDetails {...props} />;
+      return <ClaimTransactionDetails {...propsAsAny} />;
     case ETxSenderType.WITHDRAW:
-      return <WithdrawTransactionDetails {...props} />;
+      return <WithdrawTransactionDetails {...propsAsAny} />;
     case ETxSenderType.UPGRADE:
-      return <UpgradeTransactionDetails {...props as any} />;
+      return <UpgradeTransactionDetails {...propsAsAny} />;
     case ETxSenderType.UNLOCK_FUNDS:
-      return <UnlockWalletTransactionDetails {...props as any} />;
+      return <UnlockWalletTransactionDetails {...propsAsAny} />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
-      return <RedistributeTransactionDetails {...props} />;
+      return <RedistributeTransactionDetails {...propsAsAny} />;
     case ETxSenderType.ETO_SET_DATE:
-      return <SetDateDetails {...props} />;
+      return <SetDateDetails {...propsAsAny} />;
     case ETxSenderType.INVEST:
-      return <InvestmentTransactionDetails {...props} />;
+      return <InvestmentTransactionDetails {...propsAsAny} />;
     case ETxSenderType.NEUR_REDEEM:
-      return <BankTransferRedeemDetails {...props} />;
+      return <BankTransferRedeemDetails {...propsAsAny} />;
     case ETxSenderType.SIGN_INVESTMENT_AGREEMENT:
       return null;
   }

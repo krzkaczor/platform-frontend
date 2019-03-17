@@ -1,6 +1,6 @@
 import { ITxData } from "../../../lib/web3/types";
 import { AppReducer } from "../../../store";
-import { ETxSenderType, ITxTypeWithData, TSpecificTransactionState } from "../types";
+import { ITxTypeWithData, TSpecificTransactionState } from "../types";
 
 export enum ETransactionErrorType {
   // Flow Specific Errors
@@ -52,11 +52,6 @@ interface ITxSenderCommonState {
 
 export type ITxSenderState = (TSpecificTransactionState | ITxSenderDefaultState) &
   ITxSenderCommonState;
-
-export type TAdditionalDataByType<T extends ETxSenderType> = Extract<
-  TSpecificTransactionState,
-  { type: T }
->["additionalData"];
 
 const initialState: ITxSenderState = {
   type: undefined,

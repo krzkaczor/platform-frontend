@@ -30,9 +30,9 @@ import {
   updatePendingTxs,
 } from "../monitor/sagas";
 import { UserCannotUnlockFunds } from "../transactions/unlock/errors";
-import { ETxSenderType } from "../types";
+import { ETxSenderType, TAdditionalDataByType } from "../types";
 import { validateGas } from "../validator/sagas";
-import { ETransactionErrorType, TAdditionalDataByType } from "./reducer";
+import { ETransactionErrorType } from "./reducer";
 import { selectTxAdditionalData, selectTxDetails, selectTxType } from "./selectors";
 
 export interface ITxSendParams {

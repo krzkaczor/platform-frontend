@@ -1,20 +1,17 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TWithdrawAdditionalData } from "../../../../modules/tx/transactions/withdraw/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
-import { CommonHtmlProps } from "../../../../types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { ECurrency, Money } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
 import { TimestampRow } from "../shared/TimestampRow";
+import { TransactionDetailsComponent } from "../types";
 
-export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TWithdrawAdditionalData>;
-}
-const WithdrawTransactionDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
+const WithdrawTransactionDetails: TransactionDetailsComponent<ETxSenderType.WITHDRAW> = ({
   additionalData,
   className,
+  txTimestamp,
 }) => (
   <InfoList className={className}>
     <InfoRow
@@ -35,7 +32,7 @@ const WithdrawTransactionDetails: React.FunctionComponent<ITxPendingProps & Comm
       data-test-id="modals.tx-sender.withdraw-flow.summary.cost"
     />
 
-    {additionalData.timestamp && <TimestampRow timestamp={additionalData.timestamp} />}
+    {txTimestamp && <TimestampRow timestamp={txTimestamp} />}
   </InfoList>
 );
 

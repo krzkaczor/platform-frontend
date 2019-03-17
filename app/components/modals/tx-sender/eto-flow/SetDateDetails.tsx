@@ -1,20 +1,18 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TEtoSetDateAdditionalData } from "../../../../modules/tx/transactions/eto-flow/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
-import { CommonHtmlProps } from "../../../../types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { TimeLeft } from "../../../shared/TimeLeft";
 import { localTime, utcTime, weekdayLocal, weekdayUTC } from "../../../shared/utils";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
+import { TimestampRow } from "../shared/TimestampRow";
+import { TransactionDetailsComponent } from "../types";
 
-export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TEtoSetDateAdditionalData>;
-}
-const SetDateDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
+const SetDateDetails: TransactionDetailsComponent<ETxSenderType.ETO_SET_DATE> = ({
   additionalData,
   className,
+  txTimestamp,
 }) => {
   const newStartDate = additionalData.newStartDate;
 
@@ -33,6 +31,8 @@ const SetDateDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps>
         caption={<FormattedMessage id="eto.settings.eto-start-date-summary.new-start-date-local" />}
         value={`${weekdayLocal(newStartDate)}, ${localTime(newStartDate)}`}
       />
+
+      {txTimestamp && <TimestampRow timestamp={txTimestamp} />}
     </InfoList>
   );
 };

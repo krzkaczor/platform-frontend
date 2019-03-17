@@ -1,19 +1,16 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TRedistributePayoutAdditionalData } from "../../../../modules/tx/transactions/payout/redistribute/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
-import { CommonHtmlProps } from "../../../../types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { Money } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
+import { TimestampRow } from "../shared/TimestampRow";
+import { TransactionDetailsComponent } from "../types";
 
-export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TRedistributePayoutAdditionalData>;
-}
-const RedistributeTransactionDetails: React.FunctionComponent<
-  ITxPendingProps & CommonHtmlProps
-> = ({ additionalData, className }) => {
+const RedistributeTransactionDetails: TransactionDetailsComponent<
+  ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT
+> = ({ additionalData, className, txTimestamp }) => {
   const tokenDisbursal = additionalData.tokenDisbursals;
 
   return (
@@ -23,6 +20,7 @@ const RedistributeTransactionDetails: React.FunctionComponent<
         caption={<FormattedMessage id="investor-payout.redistribute.summary.total-redistributed" />}
         value={<Money value={tokenDisbursal.amountToBeClaimed} currency={tokenDisbursal.token} />}
       />
+      {txTimestamp && <TimestampRow timestamp={txTimestamp} />}
     </InfoList>
   );
 };

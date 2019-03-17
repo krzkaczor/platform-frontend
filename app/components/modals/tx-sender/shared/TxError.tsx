@@ -8,6 +8,7 @@ import { Tx } from "../../../../lib/api/users/interfaces";
 import {
   selectMonitoredTxAdditionalData,
   selectMonitoredTxData,
+  selectMonitoredTxTimestamp,
 } from "../../../../modules/tx/monitor/selectors";
 import { ETransactionErrorType } from "../../../../modules/tx/sender/reducer";
 import { ETxSenderType, TSpecificTransactionState } from "../../../../modules/tx/types";
@@ -17,7 +18,6 @@ import { Message } from "../../Message";
 import { TxDetails } from "../TxDetails";
 import { TxName } from "../TxName";
 import { TxHashAndBlock } from "./TxHashAndBlock";
-import { IStateProps } from "./TxPending";
 
 import * as failedImg from "../../../../assets/img/ether_fail.svg";
 import * as styles from "./TxError.module.scss";
@@ -25,6 +25,7 @@ import * as styles from "./TxError.module.scss";
 export interface IStateProps {
   txData?: Tx;
   additionalData?: any;
+  txTimestamp?: number;
 }
 
 interface IProps {
@@ -103,6 +104,7 @@ type TTxErrorLayoutProps = {
   error?: ETransactionErrorType;
   blockId?: number;
   txHash?: string;
+  txTimestamp?: number;
 } & TSpecificTransactionState;
 
 const TxErrorLayout: React.FunctionComponent<TTxErrorLayoutProps> = props => (
@@ -123,6 +125,7 @@ const TxError = compose<TTxErrorLayoutProps, IProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
       txData: selectMonitoredTxData(state),
+      txTimestamp: selectMonitoredTxTimestamp(state),
       additionalData: selectMonitoredTxAdditionalData(state),
     }),
   }),

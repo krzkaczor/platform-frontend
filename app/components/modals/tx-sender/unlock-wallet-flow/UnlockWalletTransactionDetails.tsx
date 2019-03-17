@@ -4,22 +4,19 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { compose, lifecycle, withState } from "recompose";
 
 import { PLATFORM_UNLOCK_FEE } from "../../../../config/constants";
-import { Tx } from "../../../../lib/api/users/interfaces";
-import { ITxData } from "../../../../lib/web3/types";
-import { TUnlockAdditionalData } from "../../../../modules/tx/transactions/unlock/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { getUnlockedWalletEtherAmountAfterFee } from "../../../../modules/wallet/utils";
-import { CommonHtmlProps } from "../../../../types";
 import { multiplyBigNumbers } from "../../../../utils/BigNumberUtils";
 import { getCurrentUTCTimestamp } from "../../../../utils/Date.utils";
 import { ECurrency, Money } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
+import { TimestampRow } from "../shared/TimestampRow";
+import { TransactionDetailsComponent } from "../types";
 
-export interface ITxPendingProps {
-  txData: Readonly<ITxData> | Readonly<Tx>;
-  additionalData: TTxAdditionalData<TUnlockAdditionalData>;
-}
+export type TTxPendingProps = React.ComponentProps<
+  TransactionDetailsComponent<ETxSenderType.UNLOCK_FUNDS>
+>;
 
 interface IAdditionalProps {
   returnedEther: BigNumber;
@@ -27,8 +24,8 @@ interface IAdditionalProps {
 }
 
 const UnlockWalletTransactionDetailsLayout: React.FunctionComponent<
-  ITxPendingProps & IAdditionalProps & CommonHtmlProps
-> = ({ txData, additionalData, returnedEther, className }) => (
+  TTxPendingProps & IAdditionalProps
+> = ({ txData, additionalData, returnedEther, className, txTimestamp }) => (
   <InfoList className={className}>
     <InfoRow
       caption={<FormattedMessage id="unlock-funds-flow.eth-committed" />}
@@ -56,18 +53,23 @@ const UnlockWalletTransactionDetailsLayout: React.FunctionComponent<
     <InfoRow
       caption={<FormattedMessage id="unlock-funds-flow.transaction-cost" />}
       value={
-        <Money currency={ECurrency.ETH} value={multiplyBigNumbers([txData.gasPrice, txData.gas])} />
+        <Money
+          currency={ECurrency.ETH}
+          value={multiplyBigNumbers([txData!.gasPrice, txData!.gas])}
+        />
       }
     />
+
+    {txTimestamp && <TimestampRow timestamp={txTimestamp} />}
   </InfoList>
 );
 
 const UnlockWalletTransactionDetails = compose<
-  ITxPendingProps & IAdditionalProps & CommonHtmlProps,
-  ITxPendingProps & CommonHtmlProps
+  TTxPendingProps & IAdditionalProps,
+  React.ComponentProps<TransactionDetailsComponent<ETxSenderType.UNLOCK_FUNDS>>
 >(
   withState("returnedEther", "updateReturnedFunds", 0),
-  lifecycle<ITxPendingProps & IAdditionalProps, {}>({
+  lifecycle<TTxPendingProps & IAdditionalProps, {}>({
     componentDidUpdate(): void {
       const { updateReturnedFunds, additionalData } = this.props;
       const { lockedEtherUnlockDate, lockedEtherBalance } = additionalData;

@@ -1,22 +1,20 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TNEurRedeemAdditionalDetails } from "../../../../modules/tx/transactions/redeem/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
-import { CommonHtmlProps } from "../../../../types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../../../shared/Money";
 import { BankNumber } from "../../../wallet/BankAccount";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
+import { TimestampRow } from "../shared/TimestampRow";
+import { TransactionDetailsComponent } from "../types";
 import { CalculatedFee } from "./CalculatedFee";
 import { TotalRedeemed } from "./TotalRedeemed";
 
-export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TNEurRedeemAdditionalDetails>;
-}
-const BankTransferRedeemDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
+const BankTransferRedeemDetails: TransactionDetailsComponent<ETxSenderType.NEUR_REDEEM> = ({
   additionalData,
   className,
+  txTimestamp,
 }) => (
   <InfoList className={className}>
     <InfoRow
@@ -47,6 +45,8 @@ const BankTransferRedeemDetails: React.FunctionComponent<ITxPendingProps & Commo
       caption={<FormattedMessage id="bank-transfer.redeem.summary.total-return-amount" />}
       value={<TotalRedeemed bankFee={additionalData.bankFee} amount={additionalData.amount} />}
     />
+
+    {txTimestamp && <TimestampRow timestamp={txTimestamp} />}
   </InfoList>
 );
 

@@ -85,11 +85,12 @@ export type TSpecificTransactionState =
   | TTxSenderWithdrawState
   | TTxSenderClaimState;
 
+export type TAdditionalDataByType<T extends ETxSenderType> = Extract<
+  TSpecificTransactionState,
+  { type: T }
+>["additionalData"];
+
 export enum ETokenType {
   ETHER = "ETHER",
   EURO = "EURO",
 }
-
-export type TTxAdditionalData<T extends object> = {
-  timestamp?: number;
-} & T;

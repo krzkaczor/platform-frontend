@@ -1,19 +1,15 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TClaimAdditionalData } from "../../../../modules/tx/transactions/claim/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
-import { CommonHtmlProps } from "../../../../types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { ECurrency, ECurrencySymbol, Money } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
 import { TimestampRow } from "../shared/TimestampRow";
+import { TransactionDetailsComponent } from "../types";
 
-export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TClaimAdditionalData>;
-}
-const ClaimTransactionDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
-  children,
+const ClaimTransactionDetails: TransactionDetailsComponent<ETxSenderType.USER_CLAIM> = ({
+  txTimestamp,
   additionalData,
   className,
 }) => (
@@ -44,9 +40,7 @@ const ClaimTransactionDetails: React.FunctionComponent<ITxPendingProps & CommonH
       value={<Money currency={ECurrency.ETH} value={additionalData.costUlps} />}
     />
 
-    {additionalData.timestamp && <TimestampRow timestamp={additionalData.timestamp} />}
-
-    {children}
+    {txTimestamp && <TimestampRow timestamp={txTimestamp} />}
   </InfoList>
 );
 

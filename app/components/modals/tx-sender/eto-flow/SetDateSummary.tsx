@@ -136,11 +136,7 @@ const SetEtoDateSummary = compose<IProps, {}>(
   setDisplayName("SetEtoDateSummary"),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => {
-      const additionalData = selectTxAdditionalData<ETxSenderType.ETO_SET_DATE>(state);
-
-      if (!additionalData) {
-        throw new Error("Addfjfds");
-      }
+      const additionalData = selectTxAdditionalData<ETxSenderType.ETO_SET_DATE>(state)!;
 
       const constants = selectPlatformTermsConstants(state);
       const changeableTill = moment(additionalData.newStartDate).subtract(

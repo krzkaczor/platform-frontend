@@ -70,10 +70,8 @@ export function* markTransactionAsPending(
       transactionIndex: undefined,
     },
     transactionType: type,
-    transactionAdditionalData: {
-      ...txAdditionalData,
-      timestamp: Date.now(),
-    },
+    transactionAdditionalData: txAdditionalData,
+    transactionTimestamp: Date.now(),
   };
 
   yield apiUserService.addPendingTx(txWithMetadata);

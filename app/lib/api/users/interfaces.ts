@@ -75,6 +75,7 @@ export const TxSchema = YupTS.object({
 export const TxWithMetadataSchema = YupTS.object({
   transaction: TxSchema,
   transactionType: YupTS.string(),
+  transactionTimestamp: YupTS.number(),
 });
 
 export const PendingTxsSchema = YupTS.object({

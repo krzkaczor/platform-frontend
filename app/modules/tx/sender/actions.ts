@@ -1,7 +1,7 @@
 import { ITxData } from "../../../lib/web3/types";
 import { createAction, createActionFactory, createSimpleAction } from "../../actionsUtils";
-import { ETxSenderType } from "../types";
-import { ETransactionErrorType, TAdditionalDataByType } from "./reducer";
+import { ETxSenderType, TAdditionalDataByType } from "../types";
+import { ETransactionErrorType } from "./reducer";
 
 export const txSenderActions = {
   // Modal related actions

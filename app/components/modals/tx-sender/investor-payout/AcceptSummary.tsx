@@ -6,7 +6,7 @@ import { externalRoutes } from "../../../../config/externalRoutes";
 import { actions } from "../../../../modules/actions";
 import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TAcceptPayoutAdditionalData } from "../../../../modules/tx/transactions/payout/accept/types";
-import { ETxSenderType, TTxAdditionalData } from "../../../../modules/tx/types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { selectEthereumAddressWithChecksum } from "../../../../modules/web3/selectors";
 import { appConnect } from "../../../../store";
 import { EthereumAddressWithChecksum } from "../../../../types";
@@ -18,7 +18,7 @@ import { selectCurrencyCode } from "../../../shared/Money";
 import { AcceptTransactionDetails } from "./AcceptTransactionDetails";
 
 interface IStateProps {
-  additionalData: TTxAdditionalData<TAcceptPayoutAdditionalData>;
+  additionalData: TAcceptPayoutAdditionalData;
   walletAddress: EthereumAddressWithChecksum;
 }
 

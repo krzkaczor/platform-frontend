@@ -1,21 +1,16 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { TAcceptPayoutAdditionalData } from "../../../../modules/tx/transactions/payout/accept/types";
-import { TTxAdditionalData } from "../../../../modules/tx/types";
-import { CommonHtmlProps } from "../../../../types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { Money, selectCurrencyCode } from "../../../shared/Money";
 import { InfoList } from "../shared/InfoList";
 import { InfoRow } from "../shared/InfoRow";
 import { TimestampRow } from "../shared/TimestampRow";
+import { TransactionDetailsComponent } from "../types";
 
-export interface ITxPendingProps {
-  additionalData: TTxAdditionalData<TAcceptPayoutAdditionalData>;
-}
-const AcceptTransactionDetails: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
-  additionalData,
-  className,
-}) => (
+const AcceptTransactionDetails: TransactionDetailsComponent<
+  ETxSenderType.INVESTOR_ACCEPT_PAYOUT
+> = ({ additionalData, className, txTimestamp }) => (
   <InfoList className={className}>
     {additionalData.tokensDisbursals.map(disbursal => (
       <InfoRow
@@ -30,7 +25,7 @@ const AcceptTransactionDetails: React.FunctionComponent<ITxPendingProps & Common
         value={<Money value={disbursal.amountToBeClaimed} currency={disbursal.token} />}
       />
     ))}
-    {additionalData.timestamp && <TimestampRow timestamp={additionalData.timestamp} />}
+    {txTimestamp && <TimestampRow timestamp={txTimestamp} />}
   </InfoList>
 );
 

@@ -6,6 +6,7 @@ import { Tx } from "../../../../lib/api/users/interfaces";
 import {
   selectMonitoredTxAdditionalData,
   selectMonitoredTxData,
+  selectMonitoredTxTimestamp,
 } from "../../../../modules/tx/monitor/selectors";
 import { TSpecificTransactionState } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
@@ -17,6 +18,7 @@ import { TxHashAndBlock } from "./TxHashAndBlock";
 
 export interface IStateProps {
   txData?: Tx;
+  txTimestamp?: number;
   additionalData?: TSpecificTransactionState["additionalData"];
 }
 
@@ -30,6 +32,7 @@ type TTxPendingLayoutProps = {
   txData?: Tx;
   blockId?: number;
   txHash?: string;
+  txTimestamp?: number;
 } & TSpecificTransactionState;
 
 const TxPendingLayout: React.FunctionComponent<TTxPendingLayoutProps> = props => (
@@ -54,6 +57,7 @@ const TxPending = compose<TTxPendingLayoutProps, ITxPendingProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
       txData: selectMonitoredTxData(state),
+      txTimestamp: selectMonitoredTxTimestamp(state),
       additionalData: selectMonitoredTxAdditionalData(state),
     }),
   }),
