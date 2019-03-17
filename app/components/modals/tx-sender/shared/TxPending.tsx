@@ -7,7 +7,7 @@ import {
   selectMonitoredTxAdditionalData,
   selectMonitoredTxData,
 } from "../../../../modules/tx/monitor/selectors";
-import { ETxSenderType } from "../../../../modules/tx/types";
+import { TSpecificTransactionState } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { SpinningEthereum } from "../../../shared/ethererum";
 import { Message } from "../../Message";
@@ -17,45 +17,40 @@ import { TxHashAndBlock } from "./TxHashAndBlock";
 
 export interface IStateProps {
   txData?: Tx;
-  additionalData?: any;
+  additionalData?: TSpecificTransactionState["additionalData"];
 }
 
 export interface ITxPendingProps {
   blockId?: number;
   txHash?: string;
-  type: ETxSenderType;
+  type: TSpecificTransactionState["type"];
 }
 
-const TxPendingLayout: React.FunctionComponent<ITxPendingProps & IStateProps> = ({
-  blockId,
-  txHash,
-  type,
-  additionalData,
-  txData,
-}) => (
+type TTxPendingLayoutProps = {
+  txData?: Tx;
+  blockId?: number;
+  txHash?: string;
+} & TSpecificTransactionState;
+
+const TxPendingLayout: React.FunctionComponent<TTxPendingLayoutProps> = props => (
   <Message
     data-test-id="modals.shared.tx-pending.modal"
     image={<SpinningEthereum className="mb-3" />}
     title={
       <FormattedMessage
         id="tx-sender.tx-pending.title"
-        values={{ transaction: <TxName type={type} /> }}
+        values={{ transaction: <TxName type={props.type} /> }}
       />
     }
     text={<FormattedMessage id="tx-sender.tx-pending.description" />}
   >
-    <TxDetails
-      className="mb-3"
-      txData={txData}
-      type={type as any}
-      additionalData={additionalData}
-    />
+    <TxDetails className="mb-3" {...props} />
 
-    <TxHashAndBlock txHash={txHash} blockId={blockId} />
+    <TxHashAndBlock txHash={props.txHash} blockId={props.blockId} />
   </Message>
 );
 
-const TxPending = compose<IStateProps & ITxPendingProps, ITxPendingProps>(
+const TxPending = compose<TTxPendingLayoutProps, ITxPendingProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
       txData: selectMonitoredTxData(state),

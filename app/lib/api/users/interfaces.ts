@@ -75,7 +75,6 @@ export const TxSchema = YupTS.object({
 export const TxWithMetadataSchema = YupTS.object({
   transaction: TxSchema,
   transactionType: YupTS.string(),
-  transactionAdditionalData: YupTS.object({}).optional(),
 });
 
 export const PendingTxsSchema = YupTS.object({
@@ -86,5 +85,7 @@ export const PendingTxsSchema = YupTS.object({
 });
 
 export type Tx = YupTS.TypeOf<typeof TxSchema>;
-export type TxWithMetadata = YupTS.TypeOf<typeof TxWithMetadataSchema>;
+export type TxWithMetadata = YupTS.TypeOf<typeof TxWithMetadataSchema> & {
+  transactionAdditionalData: any;
+};
 export type TPendingTxs = YupTS.TypeOf<typeof PendingTxsSchema>;

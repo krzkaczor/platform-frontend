@@ -1,5 +1,6 @@
 import { Tx } from "../../../lib/api/users/interfaces";
 import { IAppState } from "../../../store";
+import { TSpecificTransactionState } from "../types";
 import { ITxMonitorState } from "./reducer";
 
 export const selectAmountOfPendingTxs = (state: ITxMonitorState): number => {
@@ -10,10 +11,12 @@ export const selectAreTherePendingTxs = (state: ITxMonitorState): boolean => {
   return !!(state.txs.pendingTransaction || state.txs.oooTransactions.length);
 };
 
-export const selectMonitoredTxAdditionalData = (state: IAppState): any | undefined => {
+export const selectMonitoredTxAdditionalData = (
+  state: IAppState,
+): TSpecificTransactionState["additionalData"] | undefined => {
   const pendingTransaction = state.txMonitor.txs.pendingTransaction;
   if (pendingTransaction) {
-    return pendingTransaction.transactionAdditionalData;
+    return (pendingTransaction as any).transactionAdditionalData;
   }
 
   return undefined;

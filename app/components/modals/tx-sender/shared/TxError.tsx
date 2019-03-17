@@ -10,7 +10,7 @@ import {
   selectMonitoredTxData,
 } from "../../../../modules/tx/monitor/selectors";
 import { ETransactionErrorType } from "../../../../modules/tx/sender/reducer";
-import { ETxSenderType } from "../../../../modules/tx/types";
+import { ETxSenderType, TSpecificTransactionState } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { ExternalLink } from "../../../shared/links/ExternalLink";
 import { Message } from "../../Message";
@@ -98,32 +98,27 @@ const getErrorTitleByType = (type: ETxSenderType, error?: ETransactionErrorType)
   }
 };
 
-const TxErrorLayout: React.FunctionComponent<IProps & IStateProps> = ({
-  type,
-  error,
-  additionalData,
-  txHash,
-  blockId,
-  txData,
-}) => (
+type TTxErrorLayoutProps = {
+  txData?: Tx;
+  error?: ETransactionErrorType;
+  blockId?: number;
+  txHash?: string;
+} & TSpecificTransactionState;
+
+const TxErrorLayout: React.FunctionComponent<TTxErrorLayoutProps> = props => (
   <Message
     data-test-id="modals.shared.signing-message.modal"
     image={<img src={failedImg} className={cn(styles.eth, "mb-3")} alt="" />}
-    title={getErrorTitleByType(type, error)}
-    text={getErrorMessageByType(error)}
+    title={getErrorTitleByType(props.type, props.error)}
+    text={getErrorMessageByType(props.error)}
   >
-    <TxDetails
-      className="mb-3"
-      txData={txData}
-      type={type as any}
-      additionalData={additionalData}
-    />
+    <TxDetails className="mb-3" {...props} />
 
-    <TxHashAndBlock txHash={txHash} blockId={blockId} />
+    <TxHashAndBlock txHash={props.txHash} blockId={props.blockId} />
   </Message>
 );
 
-const TxError = compose<IStateProps & IProps, IProps>(
+const TxError = compose<TTxErrorLayoutProps, IProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
       txData: selectMonitoredTxData(state),

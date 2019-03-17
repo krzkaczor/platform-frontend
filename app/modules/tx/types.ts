@@ -14,11 +14,6 @@ export interface IWithdrawDraftType {
   value: string;
 }
 
-export interface INEuroWithdrawDraftType {
-  type: ETxSenderType.WITHDRAW;
-  value: string;
-}
-
 export interface IInvestmentDraftType {
   type: ETxSenderType.INVEST;
 }
@@ -38,7 +33,7 @@ export enum ETxSenderType {
   NEUR_REDEEM = "NEUR_REDEEM",
 }
 
-export interface ITxTypeWithData<T extends ETxSenderType, P> {
+export interface ITxTypeWithData<T extends ETxSenderType | undefined, P> {
   type: T;
   additionalData: P;
 }
