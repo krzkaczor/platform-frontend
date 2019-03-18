@@ -25,7 +25,7 @@ export interface IMoneySuiteWidgetProps {
 
 // For now round down only nEUR
 const selectRoundingMethod = (currency: ECurrency): ERoundingMode | undefined => {
-  switch(currency) {
+  switch (currency) {
     case ECurrency.EUR_TOKEN:
     case ECurrency.ETH:
       return ERoundingMode.DOWN;
