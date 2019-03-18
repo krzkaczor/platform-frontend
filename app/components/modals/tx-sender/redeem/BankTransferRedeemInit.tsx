@@ -1,9 +1,9 @@
 import BigNumber from "bignumber.js";
+import * as cn from "classnames";
 import { FormikConsumer, FormikProps, withFormik } from "formik";
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "recompose";
-import { createNumberMask } from "text-mask-addons";
 
 import { ITxData } from "../../../../lib/web3/types";
 import * as YupTS from "../../../../lib/yup-ts";
@@ -21,7 +21,9 @@ import { onEnterAction } from "../../../../utils/OnEnterAction";
 import { extractNumber } from "../../../../utils/StringUtils";
 import { Button, ButtonSize, EButtonLayout } from "../../../shared/buttons/Button";
 import { ButtonArrowRight } from "../../../shared/buttons/index";
+import { FormLabel } from "../../../shared/forms/fields/FormFieldLabel";
 import { FormMaskedInput } from "../../../shared/forms/fields/FormMaskedInput";
+import { generateMaskFromCurrency } from "../../../shared/forms/fields/utils";
 import { Form } from "../../../shared/forms/Form";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, EMoneyFormat, getFormattedMoney } from "../../../shared/Money";
@@ -49,7 +51,6 @@ type IProps = IStateProps & IDispatchProps;
 
 export interface IReedemData {
   amount: string;
-  amount_masked: string;
 }
 
 const getValidators = (minAmount: string, neuroAmount: string) =>
@@ -111,9 +112,9 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
       {({ values, setFieldValue, isValid, setFieldTouched }: FormikProps<IReedemData>) => (
         <>
           <section className={styles.section}>
-            <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
+            <FormLabel for="amount" className={styles.label}>
               <FormattedMessage id="bank-transfer.redeem.init.redeem-amount" />
-            </Heading>
+            </FormLabel>
             <Button
               className={styles.linkButton}
               onClick={() => {
@@ -135,17 +136,10 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
             <FormMaskedInput
               name="amount"
               suffix="EUR"
-              placeholder={`${getFormattedMoney(neuroAmount, ECurrency.EUR, EMoneyFormat.WEI)}`}
               unmask={extractNumber}
-              mask={createNumberMask({
-                prefix: "",
-                thousandsSeparatorSymbol: " ",
-                allowDecimal: true,
-                decimalLimit: 2,
-                integerLimit: 13,
-              })}
+              mask={generateMaskFromCurrency(ECurrency.EUR)}
             />
-            <section className={styles.section}>
+            <section className={cn(styles.section, "mt-4")}>
               <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
                 <FormattedMessage id="bank-transfer.redeem.init.redeem-fee" />
               </Heading>

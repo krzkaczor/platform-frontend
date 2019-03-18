@@ -35,6 +35,12 @@ storiesOf("Form/MaskedInput", module)
     )),
   )
   .add(
+    "with suffix",
+    formWrapper({ name: 15532.33 })(() => (
+      <FormMaskedInput name="name" mask={mask} suffix="Suffix" />
+    )),
+  )
+  .add(
     "guided",
     formWrapper({})(() => <FormMaskedInput name="name" mask={emailMask} guided={true} />),
   );

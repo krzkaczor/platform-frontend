@@ -12,6 +12,7 @@ export * from "./fields/FormSelectNationalityField";
 export * from "./fields/FormTextArea";
 export * from "./fields/FormFieldColorful";
 export * from "./fields/utils";
+export * from "./fields/FormInputRaw";
 
 export * from "./layouts/CheckboxLayout";
 

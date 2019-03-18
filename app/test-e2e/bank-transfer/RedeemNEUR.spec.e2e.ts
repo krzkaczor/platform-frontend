@@ -6,7 +6,7 @@ import { createAndLoginNewUser } from "../utils/userHelpers";
 import { assertBankAccountDetails } from "./assertions";
 
 // Requires dedicated fixture with NEUR available to redeem
-describe.skip("Redeem NEUR", () => {
+describe("Redeem NEUR", () => {
   beforeEach(() => {
     createAndLoginNewUser({
       type: "investor",
@@ -45,7 +45,7 @@ describe.skip("Redeem NEUR", () => {
     cy.get(tid("bank-transfer.reedem-init.continue")).should("be.disabled");
   });
 
-  it("should strip not allowed characters", () => {
+  it("should correctly format input", () => {
     fillForm(
       {
         amount: "-3s32aa@fax2.24@#2535%s9sf92",
@@ -54,5 +54,14 @@ describe.skip("Redeem NEUR", () => {
     );
 
     cy.get(formField("amount")).should("have.value", "3 322.24");
+
+    fillForm(
+      {
+        amount: "123456789.99",
+      },
+      { submit: false },
+    );
+
+    cy.get(formField("amount")).should("have.value", "123 456 789.99");
   });
 });
