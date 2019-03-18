@@ -7,7 +7,7 @@ import * as styles from "./ErrorBoundary.module.scss";
 
 export const ErrorBoundaryPanel: React.FunctionComponent = () => (
   <Panel className={styles.panel}>
-    <p className="text-center">
+    <p className="mb-0">
       <FormattedMessage id="error-boundary.widget-error-message" />
     </p>
   </Panel>
