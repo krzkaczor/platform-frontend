@@ -130,7 +130,7 @@ const FancyRenderTimeLeft: React.ComponentType<ITimeLeftProps> = ({ timeLeft }) 
   } else {
     return (
       <span className={styles.etoTimeLeft}>
-        {process.env.NF_STORYBOOK_RUN ? (
+        {process.env.NF_STORYBOOK_RUN === "1" ? (
           <img src={test_sheep} alt="no time left" />
         ) : (
           <img src={sheep} alt="no time left" />
@@ -170,7 +170,7 @@ class TimeLeftRefresher extends React.PureComponent<ITimeLeftRefresher, { timeLe
 }
 
 const FancyTimeLeft = ({ finalTime, asUtc }: any) => {
-  return !process.env.NF_STORYBOOK_RUN ? (
+  return process.env.NF_STORYBOOK_RUN !== "1" ? (
     <TimeLeftRefresher finalTime={finalTime} asUtc={asUtc} renderComponent={FancyRenderTimeLeft} />
   ) : (
     <FancyRenderTimeLeft timeLeft={calculateTimeLeft(finalTime, true)} />
@@ -178,7 +178,7 @@ const FancyTimeLeft = ({ finalTime, asUtc }: any) => {
 };
 
 const TimeLeft = ({ finalTime, asUtc, refresh }: any) => {
-  return refresh && !process.env.NF_STORYBOOK_RUN ? (
+  return refresh && process.env.NF_STORYBOOK_RUN !== "1" ? (
     <TimeLeftRefresher finalTime={finalTime} asUtc={asUtc} renderComponent={RenderTimeLeft} />
   ) : (
     <RenderTimeLeft timeLeft={calculateTimeLeft(finalTime, true)} />
