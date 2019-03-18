@@ -1,47 +1,37 @@
 import { BigNumber } from "bignumber.js";
 import { addHexPrefix } from "ethereumjs-util";
 import { delay, END, eventChannel } from "redux-saga";
-import { put } from "redux-saga/effects";
+import { put, select } from "redux-saga/effects";
 import * as Web3 from "web3";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
-import { TPendingTxs, TxWithMetadata } from "../../../lib/api/users/interfaces";
+import { TxWithMetadata } from "../../../lib/api/users/interfaces";
 import { ITxData } from "../../../lib/web3/types";
 import { OutOfGasError, RevertedTransactionError } from "../../../lib/web3/Web3Adapter";
 import { actions } from "../../actions";
 import { neuCall, neuTakeUntil } from "../../sagasUtils";
 import { ETxSenderType } from "../types";
+import { selectMonitoredPendingTransaction } from "./selectors";
 
 const TX_MONITOR_DELAY = 60000;
 
-async function getPendingTransactionsPromise({
+export function* deletePendingTransaction({
   apiUserService,
-}: TGlobalDependencies): Promise<TPendingTxs> {
-  return apiUserService.pendingTxs();
-}
+  logger,
+}: TGlobalDependencies): Iterable<any> {
+  const pendingTransaction: TxWithMetadata | undefined = yield select(
+    selectMonitoredPendingTransaction,
+  );
 
-async function cleanPendingTransactionsPromise(
-  { web3Manager, apiUserService, logger }: TGlobalDependencies,
-  apiPendingTx: TPendingTxs,
-): Promise<TPendingTxs> {
-  // if there's pending transaction then resolve it
-  if (apiPendingTx.pendingTransaction) {
-    const txHash = apiPendingTx.pendingTransaction.transaction.hash;
-    logger.info("Resolving pending transaction with hash", txHash);
-    const transactionReceipt = await web3Manager.internalWeb3Adapter.getTransactionReceipt(txHash);
-
-    // transactionReceipt should be null if transaction is not mined
-    if (transactionReceipt && transactionReceipt.blockNumber) {
-      logger.info(`Resolved transaction ${txHash} at block ${transactionReceipt.blockNumber}`);
-      await apiUserService.deletePendingTx(txHash);
-      // it's resolved so remove
-      return {
-        ...apiPendingTx,
-        pendingTransaction: undefined,
-      };
-    }
+  if (!pendingTransaction) {
+    throw new Error("There should be pending transaction in the pool");
   }
-  return apiPendingTx;
+
+  const txHash = pendingTransaction.transaction.hash;
+  logger.info(`Removing pending transaction from list with hash ${txHash}`);
+
+  yield apiUserService.deletePendingTx(txHash);
+  yield put(actions.txMonitor.deletePendingTx());
 }
 
 export function* markTransactionAsPending(
@@ -79,9 +69,9 @@ export function* markTransactionAsPending(
   yield neuCall(updatePendingTxs);
 }
 
-export function* updatePendingTxs(): any {
-  let apiPendingTx = yield neuCall(getPendingTransactionsPromise);
-  apiPendingTx = yield neuCall(cleanPendingTransactionsPromise, apiPendingTx);
+export function* updatePendingTxs({ apiUserService }: TGlobalDependencies): any {
+  const apiPendingTx = yield apiUserService.pendingTxs();
+
   yield put(actions.txMonitor.setPendingTxs(apiPendingTx));
 }
 

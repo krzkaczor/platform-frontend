@@ -2,26 +2,38 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../../../modules/actions";
+import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { TInvestmentAdditionalData } from "../../../../modules/tx/transactions/investment/types";
+import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { appRoutes } from "../../../appRoutes";
 import { ButtonArrowRight } from "../../../shared/buttons";
 import { ConfettiEthereum } from "../../../shared/ethererum";
 import { EtherscanTxLink } from "../../../shared/links";
 import { Message } from "../../Message";
+import { InvestmentTransactionDetails } from "./InvestmentTransactionDetails";
+
+interface IProps {
+  txHash: string;
+  txTimestamp: number;
+}
+
+interface IStateProps {
+  additionalData: TInvestmentAdditionalData;
+}
 
 interface IDispatchProps {
   goToPortfolio: () => void;
-  txHash: string;
 }
 
-const InvestmentSuccessComponent: React.FunctionComponent<IDispatchProps> = ({
-  goToPortfolio,
-  txHash,
-}) => (
+const InvestmentSuccessComponent: React.FunctionComponent<
+  IProps & IStateProps & IDispatchProps
+> = ({ additionalData, goToPortfolio, txTimestamp, txHash }) => (
   <Message
     data-test-id="investment-flow.success.title"
     image={<ConfettiEthereum className="mb-3" />}
     title={<FormattedMessage id="investment-flow.success.title" />}
+    titleClassName="text-success"
     text={
       <FormattedMessage
         id="investment-flow.success.congratulation-text"
@@ -29,6 +41,12 @@ const InvestmentSuccessComponent: React.FunctionComponent<IDispatchProps> = ({
       />
     }
   >
+    <InvestmentTransactionDetails
+      additionalData={additionalData}
+      className="mb-4"
+      txTimestamp={txTimestamp}
+    />
+
     <ButtonArrowRight
       data-test-id="investment-flow.success.view-your-portfolio"
       onClick={goToPortfolio}
@@ -38,7 +56,10 @@ const InvestmentSuccessComponent: React.FunctionComponent<IDispatchProps> = ({
   </Message>
 );
 
-const InvestmentSuccess = appConnect({
+const InvestmentSuccess = appConnect<IStateProps, IDispatchProps>({
+  stateToProps: state => ({
+    additionalData: selectMonitoredTxAdditionalData<ETxSenderType.INVEST>(state)!,
+  }),
   dispatchToProps: dispatch => ({
     goToPortfolio: () => {
       dispatch(actions.routing.goTo(appRoutes.portfolio));

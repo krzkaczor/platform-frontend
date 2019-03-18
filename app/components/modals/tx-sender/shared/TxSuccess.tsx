@@ -22,7 +22,7 @@ export interface IStateProps {
   additionalData?: TSpecificTransactionState["additionalData"];
 }
 
-export interface ITxPendingProps {
+export interface IExternalProps {
   blockId?: number;
   txHash?: string;
   type: TSpecificTransactionState["type"];
@@ -35,17 +35,23 @@ type TTxPendingLayoutProps = {
   txTimestamp?: number;
 } & TSpecificTransactionState;
 
-const TxPendingLayout: React.FunctionComponent<TTxPendingLayoutProps> = props => (
+const TxSuccessLayout: React.FunctionComponent<TTxPendingLayoutProps> = props => (
   <Message
-    data-test-id="modals.shared.tx-pending.modal"
+    data-test-id="modals.shared.tx-success.modal"
     image={<SpinningEthereum className="mb-3" />}
     title={
       <FormattedMessage
-        id="tx-sender.tx-pending.title"
+        id="tx-sender.tx-success.title"
         values={{ transaction: <TxName type={props.type} /> }}
       />
     }
-    text={<FormattedMessage id="tx-sender.tx-pending.description" />}
+    titleClassName="text-success"
+    text={
+      <FormattedMessage
+        id="tx-sender.tx-success.description"
+        values={{ transaction: <TxName type={props.type} /> }}
+      />
+    }
   >
     <TxDetails className="mb-3" {...props} />
 
@@ -53,7 +59,7 @@ const TxPendingLayout: React.FunctionComponent<TTxPendingLayoutProps> = props =>
   </Message>
 );
 
-const TxPending = compose<TTxPendingLayoutProps, ITxPendingProps>(
+const TxSuccess = compose<TTxPendingLayoutProps, IExternalProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
       txData: selectMonitoredTxData(state),
@@ -61,6 +67,6 @@ const TxPending = compose<TTxPendingLayoutProps, ITxPendingProps>(
       additionalData: selectMonitoredTxAdditionalData(state),
     }),
   }),
-)(TxPendingLayout);
+)(TxSuccessLayout);
 
-export { TxPending, TxPendingLayout };
+export { TxSuccess, TxSuccessLayout };

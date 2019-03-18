@@ -2,52 +2,62 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../../../modules/actions";
-import { selectEtoTokenName } from "../../../../modules/public-etos/selectors";
-import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
+import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { TClaimAdditionalData } from "../../../../modules/tx/transactions/claim/types";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { Button, EButtonLayout } from "../../../shared/buttons";
 import { ConfettiEthereum } from "../../../shared/ethererum";
+import { Message } from "../../Message";
+import { ClaimTransactionDetails } from "./ClaimTransactionDetails";
 
-import * as styles from "./Success.module.scss";
+interface IExternalProps {
+  txTimestamp: number;
+}
 
 interface IDispatchProps {
   goToPortfolio: () => void;
 }
 
 interface IStateProps {
-  tokenName?: string;
+  additionalData: TClaimAdditionalData;
 }
 
-type IProps = IDispatchProps & IStateProps;
+type IProps = IDispatchProps & IStateProps & IExternalProps;
 
 export const UserClaimSuccessComponent: React.FunctionComponent<IProps> = ({
+  txTimestamp,
   goToPortfolio,
-  tokenName,
+  additionalData,
 }) => (
-  <div className="text-center" data-test-id="modals.tx-sender.withdraw-flow.success">
-    <ConfettiEthereum className="mb-3" />
-    <h3 className={styles.title}>
-      <FormattedMessage id="withdraw-flow.success" />
-    </h3>
-    <div className={styles.explanation}>
-      <FormattedMessage id="user-claim-flow.success.congrats" values={{ token: tokenName }} />
-    </div>
-    <div className="mt-4">
-      <Button onClick={goToPortfolio} layout={EButtonLayout.SECONDARY}>
-        <FormattedMessage id="menu.portfolio.view" />
-      </Button>
-    </div>
-  </div>
+  <Message
+    data-test-id="modals.tx-sender.withdraw-flow.success"
+    image={<ConfettiEthereum className="mb-3" />}
+    title={<FormattedMessage id="withdraw-flow.success" />}
+    titleClassName="text-success"
+    text={
+      <FormattedMessage
+        id="user-claim-flow.success.congrats"
+        values={{ token: additionalData.tokenName }}
+      />
+    }
+  >
+    <ClaimTransactionDetails
+      additionalData={additionalData}
+      className="mb-4"
+      txTimestamp={txTimestamp}
+    />
+
+    <Button onClick={goToPortfolio} layout={EButtonLayout.SECONDARY}>
+      <FormattedMessage id="menu.portfolio.view" />
+    </Button>
+  </Message>
 );
 
 export const UserClaimSuccess = appConnect<IStateProps, IDispatchProps>({
-  stateToProps: state => {
-    const { etoId } = selectTxAdditionalData<ETxSenderType.USER_CLAIM>(state)!;
-    return {
-      tokenName: selectEtoTokenName(state, etoId),
-    };
-  },
+  stateToProps: state => ({
+    additionalData: selectMonitoredTxAdditionalData<ETxSenderType.USER_CLAIM>(state)!,
+  }),
   dispatchToProps: dispatch => ({
     goToPortfolio: () => dispatch(actions.routing.goToPortfolio()),
   }),

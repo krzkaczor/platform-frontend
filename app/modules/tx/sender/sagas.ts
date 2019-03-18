@@ -24,6 +24,7 @@ import { selectGasPrice } from "../../gas/selectors";
 import { neuCall, neuRepeatIf } from "../../sagasUtils";
 import {
   createWatchTxChannel,
+  deletePendingTransaction,
   EEventEmitterChannelEvents,
   markTransactionAsPending,
   TEventEmitterChannelEvents,
@@ -52,7 +53,7 @@ export function* txSendSaga({ type, transactionFlowGenerator, extraParam }: ITxS
 
   yield put(actions.txSender.txSenderShowModal(type));
 
-  const { result, cancel } = yield race({
+  const { cancel } = yield race({
     result: neuCall(txSendProcess, type, transactionFlowGenerator, extraParam),
     cancel: take("TX_SENDER_HIDE_MODAL"),
   });
@@ -61,11 +62,13 @@ export function* txSendSaga({ type, transactionFlowGenerator, extraParam }: ITxS
     throw new Error("TX_SENDING_CANCELLED");
   }
 
-  // we need to wait for modal to close anyway
+  // wait for user to close modal
   yield take("TX_SENDER_HIDE_MODAL");
-  yield put(actions.wallet.loadWalletData());
 
-  return result;
+  // when modal was closed delete transaction for pending list
+  yield neuCall(deletePendingTransaction);
+
+  yield put(actions.wallet.loadWalletData());
 }
 
 export function* txSendProcess(
@@ -94,33 +97,29 @@ export function* txSendProcess(
   } catch (error) {
     logger.error(error);
     if (error instanceof OutOfGasError) {
-      return yield put(actions.txSender.txSenderError(ETransactionErrorType.GAS_TOO_LOW));
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.GAS_TOO_LOW));
     } else if (error instanceof LowNonceError) {
-      return yield put(actions.txSender.txSenderError(ETransactionErrorType.NONCE_TOO_LOW));
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.NONCE_TOO_LOW));
     } else if (error instanceof LongTransactionQueError) {
-      return yield put(actions.txSender.txSenderError(ETransactionErrorType.TOO_MANY_TX_IN_QUEUE));
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.TOO_MANY_TX_IN_QUEUE));
     } else if (error instanceof InvalidRlpDataError) {
-      return yield put(actions.txSender.txSenderError(ETransactionErrorType.INVALID_RLP_TX));
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.INVALID_RLP_TX));
     } else if (error instanceof InvalidChangeIdError) {
-      return yield put(actions.txSender.txSenderError(ETransactionErrorType.INVALID_CHAIN_ID));
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.INVALID_CHAIN_ID));
     } else if (error instanceof NotEnoughEtherForGasError) {
-      return yield put(
-        actions.txSender.txSenderError(ETransactionErrorType.NOT_ENOUGH_ETHER_FOR_GAS),
-      );
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.NOT_ENOUGH_ETHER_FOR_GAS));
     } else if (error instanceof UnknownEthNodeError) {
-      return yield put(actions.txSender.txSenderError(ETransactionErrorType.UNKNOWN_ERROR));
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.UNKNOWN_ERROR));
     } else if (error instanceof SignerRejectConfirmationError) {
-      return yield put(actions.txSender.txSenderError(ETransactionErrorType.TX_WAS_REJECTED));
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.TX_WAS_REJECTED));
     } else if (error instanceof LedgerContractsDisabledError) {
-      return yield put(
-        actions.txSender.txSenderError(ETransactionErrorType.LEDGER_CONTRACTS_DISABLED),
-      );
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.LEDGER_CONTRACTS_DISABLED));
     } else if (error instanceof UserCannotUnlockFunds) {
-      return yield put(
+      yield put(
         actions.txSender.txSenderError(ETransactionErrorType.NOT_ENOUGH_NEUMARKS_TO_UNLOCK),
       );
     } else {
-      return yield put(actions.txSender.txSenderError(ETransactionErrorType.UNKNOWN_ERROR));
+      yield put(actions.txSender.txSenderError(ETransactionErrorType.UNKNOWN_ERROR));
     }
   }
 }

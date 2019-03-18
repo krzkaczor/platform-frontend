@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 
 import { ITxData } from "../../../lib/web3/types";
 import { actions } from "../../../modules/actions";
+import { selectMonitoredTxTimestamp } from "../../../modules/tx/monitor/selectors";
 import { ETransactionErrorType, ETxSenderState } from "../../../modules/tx/sender/reducer";
 import { selectTxSenderModalOpened } from "../../../modules/tx/sender/selectors";
 import { ETxSenderType } from "../../../modules/tx/types";
@@ -28,6 +29,7 @@ import { SigningMessage } from "./shared/SigningMessage";
 import { TxError } from "./shared/TxError";
 import { TxExternalPending } from "./shared/TxExternalPending";
 import { TxPending } from "./shared/TxPending";
+import { TxSuccess } from "./shared/TxSuccess";
 import { UnlockWalletSummary } from "./unlock-wallet-flow/Summary";
 import { UpgradeSummary } from "./upgrade-flow/Summary";
 import { UserClaimSuccess } from "./user-claim/Success";
@@ -38,6 +40,7 @@ import { Withdraw } from "./withdraw-flow/Withdraw";
 
 interface IStateProps {
   isOpen: boolean;
+  txTimestamp?: number;
   state: ETxSenderState;
   type?: ETxSenderType;
   details?: ITxData;
@@ -125,30 +128,40 @@ const SummaryComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ t
   }
 };
 
-const SuccessComponent: React.FunctionComponent<{ type?: ETxSenderType; txHash?: string }> = ({
-  type,
-  txHash,
-}) => {
-  switch (type) {
+const SuccessComponent: React.FunctionComponent<{
+  type: ETxSenderType;
+  txHash: string;
+  txTimestamp: number;
+}> = props => {
+  switch (props.type) {
     case ETxSenderType.INVEST:
-      return <InvestmentSuccess txHash={txHash!} />;
+      return <InvestmentSuccess {...props} />;
     case ETxSenderType.USER_CLAIM:
-      return <UserClaimSuccess />;
+      return <UserClaimSuccess {...props} />;
     case ETxSenderType.INVESTOR_ACCEPT_PAYOUT:
-      return <InvestorAcceptPayoutSuccess />;
+      return <InvestorAcceptPayoutSuccess {...props} />;
     case ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT:
-      return <InvestorRedistributePayoutSuccess />;
+      return <InvestorRedistributePayoutSuccess {...props} />;
     case ETxSenderType.NEUR_REDEEM:
-      return <BankTransferRedeemSuccess txHash={txHash!} />;
+      return <BankTransferRedeemSuccess {...props} />;
+    case ETxSenderType.WITHDRAW:
+      return <WithdrawSuccess {...props} />;
     default:
-      return <WithdrawSuccess txHash={txHash!} />;
+      return <TxSuccess {...props} />;
   }
 };
 
-const TxSenderBody: React.FunctionComponent<Props> = ({ state, blockId, txHash, type, error }) => {
+const TxSenderBody: React.FunctionComponent<Props> = ({
+  state,
+  blockId,
+  txHash,
+  type,
+  error,
+  txTimestamp,
+}) => {
   switch (state) {
     case ETxSenderState.WATCHING_PENDING_TXS:
-      return <TxExternalPending txHash={txHash} blockId={blockId} />;
+      return <TxExternalPending txHash={txHash!} blockId={blockId} />;
 
     case ETxSenderState.INIT:
       if (!type) {
@@ -178,14 +191,18 @@ const TxSenderBody: React.FunctionComponent<Props> = ({ state, blockId, txHash, 
       return <TxPending blockId={blockId} txHash={txHash} type={type} />;
 
     case ETxSenderState.DONE:
-      return <SuccessComponent type={type} txHash={txHash!} />;
+      if (!type) {
+        throw new Error("Transaction type needs to be set at transaction success state");
+      }
+
+      return <SuccessComponent type={type} txHash={txHash!} txTimestamp={txTimestamp!} />;
 
     case ETxSenderState.ERROR_SIGN:
       if (!type) {
         throw new Error("Transaction type needs to be set at transaction error state");
       }
 
-      return <TxError blockId={blockId} txHash={txHash} type={type} error={error} />;
+      return <TxError blockId={blockId} txHash={txHash!} type={type} error={error} />;
 
     default:
       return null;
@@ -200,6 +217,7 @@ const TxSenderModal = appConnect<IStateProps, IDispatchProps>({
     txHash: state.txSender.txHash,
     blockId: state.txSender.blockId,
     error: state.txSender.error,
+    txTimestamp: selectMonitoredTxTimestamp(state),
   }),
   dispatchToProps: d => ({
     onCancel: () => d(actions.txSender.txSenderHideModal()),

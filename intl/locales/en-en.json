@@ -1003,6 +1003,8 @@
   "tx-sender.tx-pending-watching.title": "EXTERNAL PENDING TRANSACTION DETECTED",
   "tx-sender.tx-pending.description": "Your transaction is being processed by the Ethereum Network. Please be patient as this may take a while. While the transaction is in process, further transactions are unable to be initiated.",
   "tx-sender.tx-pending.title": "Your {transaction} is pending",
+  "tx-sender.tx-success.description": "Congratulations, your {transaction} is completed.",
+  "tx-sender.tx-success.title": "Successful {transaction}",
   "unlock-funds-flow.amount-returned": "You get",
   "unlock-funds-flow.eth-committed": "Amount of eth committed",
   "unlock-funds-flow.fee": "-%${fee} Fee",

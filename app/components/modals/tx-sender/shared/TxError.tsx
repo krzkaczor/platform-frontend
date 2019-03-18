@@ -32,7 +32,7 @@ interface IProps {
   type: ETxSenderType;
   error?: ETransactionErrorType;
   blockId?: number;
-  txHash?: string;
+  txHash: string;
 }
 
 const getErrorMessageByType = (type?: ETransactionErrorType) => {
@@ -103,7 +103,7 @@ type TTxErrorLayoutProps = {
   txData?: Tx;
   error?: ETransactionErrorType;
   blockId?: number;
-  txHash?: string;
+  txHash: string;
   txTimestamp?: number;
 } & TSpecificTransactionState;
 

@@ -1,19 +1,19 @@
-import { Tx } from "../../../lib/api/users/interfaces";
+import { Tx, TxWithMetadata } from "../../../lib/api/users/interfaces";
 import { IAppState } from "../../../store";
-import { TSpecificTransactionState } from "../types";
+import { ETxSenderType, TAdditionalDataByType } from "../types";
 import { ITxMonitorState } from "./reducer";
-
-export const selectAmountOfPendingTxs = (state: ITxMonitorState): number => {
-  return state.txs.oooTransactions.length + (state.txs.pendingTransaction ? 1 : 0);
-};
 
 export const selectAreTherePendingTxs = (state: ITxMonitorState): boolean => {
   return !!(state.txs.pendingTransaction || state.txs.oooTransactions.length);
 };
 
-export const selectMonitoredTxAdditionalData = (
+export const selectMonitoredPendingTransaction = (state: IAppState): TxWithMetadata | undefined => {
+  return state.txMonitor.txs.pendingTransaction as TxWithMetadata | undefined;
+};
+
+export const selectMonitoredTxAdditionalData = <T extends ETxSenderType>(
   state: IAppState,
-): TSpecificTransactionState["additionalData"] | undefined => {
+): TAdditionalDataByType<T> | undefined => {
   const pendingTransaction = state.txMonitor.txs.pendingTransaction;
   if (pendingTransaction) {
     return (pendingTransaction as any).transactionAdditionalData;

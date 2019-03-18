@@ -12,7 +12,7 @@ import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { WithdrawTransactionDetails } from "./WithdrawTransactionDetails";
 
 interface IStateProps {
-  txData: TWithdrawAdditionalData;
+  additionalData: TWithdrawAdditionalData;
 }
 
 interface IDispatchProps {
@@ -22,7 +22,7 @@ interface IDispatchProps {
 type TComponentProps = IStateProps & IDispatchProps;
 
 export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> = ({
-  txData,
+  additionalData,
   onAccept,
 }) => (
   <Container>
@@ -30,7 +30,7 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
       <FormattedMessage id="withdraw-flow.summary" />
     </Heading>
 
-    <WithdrawTransactionDetails additionalData={txData} className="mb-4" />
+    <WithdrawTransactionDetails additionalData={additionalData} className="mb-4" />
 
     <div className="text-center">
       <Button onClick={onAccept} data-test-id="modals.tx-sender.withdraw-flow.summary.accept">
@@ -42,7 +42,7 @@ export const WithdrawSummaryComponent: React.FunctionComponent<TComponentProps> 
 
 export const WithdrawSummary = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    txData: selectTxAdditionalData<ETxSenderType.WITHDRAW>(state)!,
+    additionalData: selectTxAdditionalData<ETxSenderType.WITHDRAW>(state)!,
   }),
   dispatchToProps: d => ({
     onAccept: () => d(actions.txSender.txSenderAccept()),

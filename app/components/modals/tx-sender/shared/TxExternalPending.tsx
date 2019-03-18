@@ -6,7 +6,7 @@ import { Message } from "../../Message";
 import { TxHashAndBlock } from "./TxHashAndBlock";
 
 export interface IProps {
-  txHash?: string;
+  txHash: string;
   blockId?: number;
 }
 
