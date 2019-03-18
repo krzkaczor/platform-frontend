@@ -6,7 +6,7 @@ import { createAndLoginNewUser } from "../utils/userHelpers";
 import { assertBankAccountDetails } from "./assertions";
 
 // Requires dedicated fixture with NEUR available to redeem
-describe("Redeem NEUR", () => {
+describe.skip("Redeem NEUR", () => {
   beforeEach(() => {
     createAndLoginNewUser({
       type: "investor",
