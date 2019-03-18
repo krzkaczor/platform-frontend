@@ -25,11 +25,14 @@ export interface IMoneySuiteWidgetProps {
 
 // For now round down only nEUR
 const selectRoundingMethod = (currency: ECurrency): ERoundingMode | undefined => {
-  if (currency === ECurrency.EUR_TOKEN) {
-    return ERoundingMode.DOWN;
-  }
+  switch(currency) {
+    case ECurrency.EUR_TOKEN:
+    case ECurrency.ETH:
+      return ERoundingMode.DOWN;
 
-  return undefined;
+    default:
+      return undefined;
+  }
 };
 
 export const MoneySuiteWidget: React.FunctionComponent<IMoneySuiteWidgetProps & TDataTestId> = ({

@@ -16,12 +16,12 @@ import { selectEthereumAddressWithChecksum } from "../../../web3/selectors";
 
 export function* generateNeuWithdrawTransaction(
   { contractsService, web3Manager }: TGlobalDependencies,
-  amountUlps: string,
+  amount: string,
 ): any {
   const from: string = yield select(selectEthereumAddressWithChecksum);
   const gasPriceWithOverhead = yield select(selectStandardGasPriceWithOverHead);
 
-  const txInput = contractsService.euroToken.withdrawTx(new BigNumber(amountUlps)).getData();
+  const txInput = contractsService.euroToken.withdrawTx(new BigNumber(amount)).getData();
 
   const txDetails: Partial<ITxData> = {
     to: contractsService.euroToken.address,
@@ -38,23 +38,26 @@ export function* startNEuroRedeemGenerator(_: TGlobalDependencies): any {
   // Wait for withdraw confirmation
   const action = yield take(actions.txSender.txSenderAcceptDraft);
   const txDataFromUser = action.payload.txDraftData;
+  const selectedAmount = txDataFromUser.value;
 
   const nEURBalanceUlps = yield select((state: IAppState) =>
     selectLiquidEuroTokenBalance(state.wallet),
   );
+
   const nEURBalance = formatMoney(nEURBalanceUlps, MONEY_DECIMALS, 2, ERoundingMode.DOWN);
-  const selectedAmountUlps = convertToBigInt(txDataFromUser.value);
 
   // Whole precision number should be passed when there is whole balance redeemed
+  // also when user provided value has been used, then it have to be converted to Q18 via convertToBigInt
   const redeemAmountUlps =
-    compareBigNumbers(selectedAmountUlps, convertToBigInt(nEURBalance)) === 0
+    compareBigNumbers(selectedAmount, nEURBalance) === 0
       ? nEURBalanceUlps
-      : selectedAmountUlps;
+      : convertToBigInt(selectedAmount);
 
   const generatedTxDetails: ITxData = yield neuCall(
     generateNeuWithdrawTransaction,
     redeemAmountUlps,
   );
+
   yield put(actions.txSender.setTransactionData(generatedTxDetails));
   yield put(
     actions.txSender.txSenderContinueToSummary({
