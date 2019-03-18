@@ -1,9 +1,9 @@
+import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 
 import { EEtoDocumentType, TEtoFormType } from "../../../../lib/api/eto/EtoFileApi.interfaces";
 import { SignInvestmentAgreementLayout } from "./SignInvestmentAgreement";
-import { action } from "@storybook/addon-actions";
 
 const ipfsHash = "1243654we645";
 
@@ -39,12 +39,10 @@ const waitingForNomineeData = {
 };
 
 storiesOf("ETO/SignInvestmentAgreement", module)
-  .add("no doc signed", () => (
-    <SignInvestmentAgreementLayout {...noDocSignedData} />
-  ))
+  .add("no doc signed", () => <SignInvestmentAgreementLayout {...noDocSignedData} />)
   .add("waiting for user to sign again", () => (
-  <SignInvestmentAgreementLayout {...needToSignAgainData} />
-))
+    <SignInvestmentAgreementLayout {...needToSignAgainData} />
+  ))
   .add("waiting for nominee to sign", () => (
-  <SignInvestmentAgreementLayout {...waitingForNomineeData} />
-));
+    <SignInvestmentAgreementLayout {...waitingForNomineeData} />
+  ));

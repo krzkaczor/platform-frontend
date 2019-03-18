@@ -92,7 +92,7 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
     },
     dispatchToProps: dispatch => ({
       downloadAgreementTemplate: (agreementTemplate: IEtoDocument) =>
-        dispatch(actions.etoDocuments.generateTemplate(agreementTemplate))
+        dispatch(actions.etoDocuments.generateTemplate(agreementTemplate)),
     }),
   }),
   branch<IStateProps | null>(props => props === null, renderNothing),

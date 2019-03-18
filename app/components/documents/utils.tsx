@@ -76,8 +76,9 @@ export const renameDocuments = (
 ) => {
   const documents = stateInfo ? [...stateInfo.uploadableDocuments] : [];
 
-  if (stateInfo &&
-      (onChainState === EETOStateOnChain.Claim || onChainState === EETOStateOnChain.Payout)
+  if (
+    stateInfo &&
+    (onChainState === EETOStateOnChain.Claim || onChainState === EETOStateOnChain.Payout)
   ) {
     const i = documents.findIndex(x => x === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT);
     documents[i] = EEtoDocumentType.SIGNED_INVESTMENT_AND_SHAREHOLDER_AGREEMENT;
@@ -99,11 +100,11 @@ const canUploadInOnChainStates = (
 //disable document tile and don't start the signing process if there's a transaction pending
 // this only applies to INVESTMENT_AND_SHAREHOLDER_AGREEMENT now, just to make sure I won't break anything
 const mayBeSignedNow = (documentKey: EEtoDocumentType, transactionPending: boolean) => {
-  switch(documentKey){
+  switch (documentKey) {
     case EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT:
       return !transactionPending;
     default:
-      return true
+      return true;
   }
 };
 
@@ -136,5 +137,7 @@ export const uploadAllowed = (
   ) &&
   canUploadInOnChainStates(etoState, documentKey, onChainState);
 
-export const investmentAgreementNotSigned = (signedInvestmentAgreementUrl: null | string, ipfsHash: string) =>
-  signedInvestmentAgreementUrl === null || signedInvestmentAgreementUrl !== `ipfs:${ipfsHash}`;
+export const investmentAgreementNotSigned = (
+  signedInvestmentAgreementUrl: null | string,
+  ipfsHash: string,
+) => signedInvestmentAgreementUrl === null || signedInvestmentAgreementUrl !== `ipfs:${ipfsHash}`;

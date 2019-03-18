@@ -14,11 +14,11 @@ import {
 } from "../../../../modules/eto-flow/selectors";
 import { appConnect } from "../../../../store";
 import { onEnterAction } from "../../../../utils/OnEnterAction";
+import { investmentAgreementNotSigned } from "../../../documents/utils";
 import { ButtonArrowRight } from "../../../shared/buttons/Button";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { LoadingIndicator } from "../../../shared/loading-indicator/LoadingIndicator";
 import { Panel } from "../../../shared/Panel";
-import { investmentAgreementNotSigned } from "../../../documents/utils";
 
 import * as styles from "../../EtoContentWidget.module.scss";
 
@@ -63,7 +63,7 @@ export const WaitingToBeSigned = ({
   etoId,
   ipfsHash,
   signedInvestmentAgreementUrl,
-  signInvestmentAgreement
+  signInvestmentAgreement,
 }: IWaitingToBeSigned) => (
   <Panel>
     <Heading size={EHeadingSize.SMALL} level={4}>
@@ -87,15 +87,19 @@ export const WaitingToBeSigned = ({
   </Panel>
 );
 
-export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignComponentStateProps & IDispatchProps> = ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
-  return investmentAgreementNotSigned(signedInvestmentAgreementUrl,uploadedAgreement.ipfsHash)
-    ? <WaitingToBeSigned
-        etoId={etoId}
-        ipfsHash={uploadedAgreement.ipfsHash}
-        signedInvestmentAgreementUrl={signedInvestmentAgreementUrl}
-        signInvestmentAgreement={signInvestmentAgreement}
-      />
-    : <WaitingForNominee />
+export const SignInvestmentAgreementLayout: React.FunctionComponent<
+  ISignComponentStateProps & IDispatchProps
+> = ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
+  return investmentAgreementNotSigned(signedInvestmentAgreementUrl, uploadedAgreement.ipfsHash) ? (
+    <WaitingToBeSigned
+      etoId={etoId}
+      ipfsHash={uploadedAgreement.ipfsHash}
+      signedInvestmentAgreementUrl={signedInvestmentAgreementUrl}
+      signInvestmentAgreement={signInvestmentAgreement}
+    />
+  ) : (
+    <WaitingForNominee />
+  );
 };
 
 export const SignInvestmentAgreement = compose<React.FunctionComponent>(

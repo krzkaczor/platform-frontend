@@ -193,7 +193,7 @@ const Documents = compose<React.FunctionComponent>(
       const etoTemplates = selectIssuerEtoTemplates(state);
       const etoDocuments = selectIssuerEtoDocuments(state);
 
-      if(etoId && etoState && isRetailEto && etoTemplates && etoDocuments){
+      if (etoId && etoState && isRetailEto && etoTemplates && etoDocuments) {
         return {
           shouldEtoDataLoad: selectShouldEtoDataLoad(state),
           etoFilesData: selectEtoDocumentData(state.etoDocuments),
@@ -211,7 +211,7 @@ const Documents = compose<React.FunctionComponent>(
           isRetailEto,
         };
       } else {
-        return null
+        return null;
       }
     },
     dispatchToProps: dispatch => ({
