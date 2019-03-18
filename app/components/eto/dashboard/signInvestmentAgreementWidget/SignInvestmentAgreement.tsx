@@ -18,6 +18,7 @@ import { ButtonArrowRight } from "../../../shared/buttons/Button";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { LoadingIndicator } from "../../../shared/loading-indicator/LoadingIndicator";
 import { Panel } from "../../../shared/Panel";
+import { investmentAgreementNotSigned } from "../../../documents/utils";
 
 import * as styles from "../../EtoContentWidget.module.scss";
 
@@ -38,53 +39,63 @@ interface ISignComponentStateProps {
   signedInvestmentAgreementUrl: string | null;
 }
 
-export const SignInvestmentAgreementLayout: React.FunctionComponent<
-  ISignComponentStateProps & IDispatchProps
-> = ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
-  if (
-    signedInvestmentAgreementUrl === null ||
-    signedInvestmentAgreementUrl !== `ifps:${uploadedAgreement.ipfsHash}`
-  ) {
-    //uploaded, not signed
-    // widget says sign me
-    return (
-      <Panel>
-        <Heading size={EHeadingSize.SMALL} level={4}>
-          <FormattedMessage id="download-agreement-widget.sign-on-ethereum" />
-        </Heading>
-        <div className={styles.content}>
-          <p className={cn(styles.text, "pt-2")}>
-            {signedInvestmentAgreementUrl === null ? (
-              <FormattedMessage id="download-agreement-widget.sign-on-ethereum-text" />
-            ) : (
-              <FormattedMessage id="download-agreement-widget.sign-again-text" />
-            )}
-          </p>
-          <ButtonArrowRight
-            data-test-id="eto-dashboard-submit-proposal"
-            onClick={() => signInvestmentAgreement(etoId, uploadedAgreement.ipfsHash)}
-          >
-            <FormattedMessage id="download-agreement-widget.sign-on-ethereum" />
-          </ButtonArrowRight>
-        </div>
-      </Panel>
-    );
-  } else {
-    // uploaded, signed
-    // widget says wait for nominee to sign it
-    return (
-      <Panel>
-        <Heading size={EHeadingSize.SMALL} level={4}>
-          <FormattedMessage id="download-agreement-widget.wait-for-nominee-to-sign" />
-        </Heading>
-        <div className={styles.content}>
-          <p className={cn(styles.text, "pt-2")}>
-            <FormattedMessage id="download-agreement-widget.wait-for-nominee-to-sign-text" />
-          </p>
-        </div>
-      </Panel>
-    );
-  }
+export const WaitingForNominee = () => (
+  <Panel>
+    <Heading size={EHeadingSize.SMALL} level={4}>
+      <FormattedMessage id="download-agreement-widget.wait-for-nominee-to-sign" />
+    </Heading>
+    <div className={styles.content}>
+      <p className={cn(styles.text, "pt-2")}>
+        <FormattedMessage id="download-agreement-widget.wait-for-nominee-to-sign-text" />
+      </p>
+    </div>
+  </Panel>
+);
+
+interface IWaitingToBeSigned {
+  etoId: string;
+  ipfsHash: string;
+  signedInvestmentAgreementUrl: null | string;
+  signInvestmentAgreement: (etoId: string, ipfsHash: string) => void;
+}
+
+export const WaitingToBeSigned = ({
+  etoId,
+  ipfsHash,
+  signedInvestmentAgreementUrl,
+  signInvestmentAgreement
+}: IWaitingToBeSigned) => (
+  <Panel>
+    <Heading size={EHeadingSize.SMALL} level={4}>
+      <FormattedMessage id="download-agreement-widget.sign-on-ethereum" />
+    </Heading>
+    <div className={styles.content}>
+      <p className={cn(styles.text, "pt-2")}>
+        {signedInvestmentAgreementUrl === null ? (
+          <FormattedMessage id="download-agreement-widget.sign-on-ethereum-text" />
+        ) : (
+          <FormattedMessage id="download-agreement-widget.sign-again-text" />
+        )}
+      </p>
+      <ButtonArrowRight
+        data-test-id="eto-dashboard-submit-proposal"
+        onClick={() => signInvestmentAgreement(etoId, ipfsHash)}
+      >
+        <FormattedMessage id="download-agreement-widget.sign-on-ethereum" />
+      </ButtonArrowRight>
+    </div>
+  </Panel>
+);
+
+export const SignInvestmentAgreementLayout: React.FunctionComponent<ISignComponentStateProps & IDispatchProps> = ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
+  return investmentAgreementNotSigned(signedInvestmentAgreementUrl,uploadedAgreement.ipfsHash)
+    ? <WaitingToBeSigned
+        etoId={etoId}
+        ipfsHash={uploadedAgreement.ipfsHash}
+        signedInvestmentAgreementUrl={signedInvestmentAgreementUrl}
+        signInvestmentAgreement={signInvestmentAgreement}
+      />
+    : <WaitingForNominee />
 };
 
 export const SignInvestmentAgreement = compose<React.FunctionComponent>(
@@ -93,8 +104,8 @@ export const SignInvestmentAgreement = compose<React.FunctionComponent>(
       const uploadedAgreement = selectUploadedInvestmentAgreement(state);
 
       const etoId = selectEtoId(state);
-      //there is another widget showing up if there's no agreement uploaded,
-      // so uploadedAgreement=== null is an invalid case
+      // there is another widget showing up if there's no agreement uploaded,
+      // so uploadedAgreement=== null is not a valid case
       if (etoId && uploadedAgreement) {
         return {
           etoId,

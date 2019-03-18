@@ -91,9 +91,8 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
       }
     },
     dispatchToProps: dispatch => ({
-      downloadAgreementTemplate: (agreementTemplate: IEtoDocument) => {
-        return dispatch(actions.etoDocuments.generateTemplate(agreementTemplate));
-      },
+      downloadAgreementTemplate: (agreementTemplate: IEtoDocument) =>
+        dispatch(actions.etoDocuments.generateTemplate(agreementTemplate))
     }),
   }),
   branch<IStateProps | null>(props => props === null, renderNothing),
@@ -108,14 +107,3 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
     renderComponent(SignInvestmentAgreement),
   ),
 )(UploadInvestmentAgreementLayout);
-
-//invalid state, props invalid
-//stateOnChain is < signing
-//stateOnChain is refund
-//stateOnChain is Claim, Payout
-//uploadedAgreement is there
-//uploadedAgreement is null
-//----------//
-//signed agreement loading
-//signed agreement loaded, it's null
-//signed agreemtn loaded, it's a string

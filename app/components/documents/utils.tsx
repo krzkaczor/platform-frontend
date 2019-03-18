@@ -68,17 +68,16 @@ export const getDocumentTemplateTitles = (isRetailEto: boolean) => ({
   signed_investment_and_shareholder_agreement: null,
 });
 
-//in Payout & Claim onChainState
+//if onChainState === < Payout | Claim >
 // INVESTMENT_AND_SHAREHOLDER_AGREEMENT changes to SIGNED_INVESTMENT_AND_SHAREHOLDER_AGREEMENT
 export const renameDocuments = (
   stateInfo: DeepReadonly<TStateInfo> | undefined,
-  onChainState?: EETOStateOnChain,
+  onChainState: EETOStateOnChain,
 ) => {
   const documents = stateInfo ? [...stateInfo.uploadableDocuments] : [];
 
-  if (
-    (stateInfo && onChainState === EETOStateOnChain.Claim) ||
-    onChainState === EETOStateOnChain.Payout
+  if (stateInfo &&
+      (onChainState === EETOStateOnChain.Claim || onChainState === EETOStateOnChain.Payout)
   ) {
     const i = documents.findIndex(x => x === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT);
     documents[i] = EEtoDocumentType.SIGNED_INVESTMENT_AND_SHAREHOLDER_AGREEMENT;
@@ -98,10 +97,14 @@ const canUploadInOnChainStates = (
     : true;
 
 //disable document tile and don't start the signing process if there's a transaction pending
+// this only applies to INVESTMENT_AND_SHAREHOLDER_AGREEMENT now, just to make sure I won't break anything
 const mayBeSignedNow = (documentKey: EEtoDocumentType, transactionPending: boolean) => {
-  return documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
-    ? !transactionPending
-    : true;
+  switch(documentKey){
+    case EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT:
+      return !transactionPending;
+    default:
+      return true
+  }
 };
 
 //disable document tile if there's some activity under way
@@ -132,3 +135,6 @@ export const uploadAllowed = (
     (fileName: string) => fileName === documentKey,
   ) &&
   canUploadInOnChainStates(etoState, documentKey, onChainState);
+
+export const investmentAgreementNotSigned = (signedInvestmentAgreementUrl: null | string, ipfsHash: string) =>
+  signedInvestmentAgreementUrl === null || signedInvestmentAgreementUrl !== `ipfs:${ipfsHash}`;
