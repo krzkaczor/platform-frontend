@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../../../modules/actions";
-import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TInvestmentAdditionalData } from "../../../../modules/tx/transactions/investment/types";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
@@ -58,7 +58,7 @@ const InvestmentSuccessComponent: React.FunctionComponent<
 
 const InvestmentSuccess = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    additionalData: selectMonitoredTxAdditionalData<ETxSenderType.INVEST>(state)!,
+    additionalData: selectTxAdditionalData<ETxSenderType.INVEST>(state)!,
   }),
   dispatchToProps: dispatch => ({
     goToPortfolio: () => {

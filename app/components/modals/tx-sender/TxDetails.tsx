@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Tx } from "../../../lib/api/users/interfaces";
+import { ITxData } from "../../../lib/web3/types";
 import { ETxSenderType, TSpecificTransactionState } from "../../../modules/tx/types";
 import { CommonHtmlProps } from "../../../types";
 import { SetDateDetails } from "./eto-flow/SetDateDetails";
@@ -14,7 +14,7 @@ import { ClaimTransactionDetails } from "./user-claim/ClaimTransactionDetails";
 import { WithdrawTransactionDetails } from "./withdraw-flow/WithdrawTransactionDetails";
 
 type IProps = {
-  txData?: Readonly<Tx>;
+  txData?: ITxData;
 } & TSpecificTransactionState;
 
 /**

@@ -5,12 +5,10 @@ import { compose } from "recompose";
 
 import { externalRoutes } from "../../../../config/externalRoutes";
 import { Tx } from "../../../../lib/api/users/interfaces";
-import {
-  selectMonitoredTxAdditionalData,
-  selectMonitoredTxData,
-  selectMonitoredTxTimestamp,
-} from "../../../../modules/tx/monitor/selectors";
+import { ITxData } from "../../../../lib/web3/types";
+import { selectMonitoredTxTimestamp } from "../../../../modules/tx/monitor/selectors";
 import { ETransactionErrorType } from "../../../../modules/tx/sender/reducer";
+import { selectTxAdditionalData, selectTxDetails } from "../../../../modules/tx/sender/selectors";
 import { ETxSenderType, TSpecificTransactionState } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { ExternalLink } from "../../../shared/links/ExternalLink";
@@ -23,8 +21,8 @@ import * as failedImg from "../../../../assets/img/ether_fail.svg";
 import * as styles from "./TxError.module.scss";
 
 export interface IStateProps {
-  txData?: Tx;
-  additionalData?: any;
+  txData?: ITxData;
+  additionalData?: TSpecificTransactionState["additionalData"];
   txTimestamp?: number;
 }
 
@@ -124,9 +122,9 @@ const TxErrorLayout: React.FunctionComponent<TTxErrorLayoutProps> = props => (
 const TxError = compose<TTxErrorLayoutProps, IProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
-      txData: selectMonitoredTxData(state),
+      txData: selectTxDetails(state),
       txTimestamp: selectMonitoredTxTimestamp(state),
-      additionalData: selectMonitoredTxAdditionalData(state),
+      additionalData: selectTxAdditionalData(state),
     }),
   }),
 )(TxErrorLayout);

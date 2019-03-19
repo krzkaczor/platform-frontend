@@ -66,6 +66,7 @@ function* txMonitorSaga(): any {
 
   yield call(txControllerSaga, sendProcessEffect);
 }
+
 function* txMonitor(_: TGlobalDependencies): Iterable<any> {
   const txs: TPendingTxs = yield select((s: IAppState) => s.txMonitor.txs);
 

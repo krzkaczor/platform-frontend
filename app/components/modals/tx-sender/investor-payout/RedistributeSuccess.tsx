@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../../../modules/actions";
-import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TRedistributePayoutAdditionalData } from "../../../../modules/tx/transactions/payout/redistribute/types";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
@@ -50,9 +50,7 @@ const InvestorRedistributePayoutSuccessLayout: React.FunctionComponent<IProps> =
 
 const InvestorRedistributePayoutSuccess = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    additionalData: selectMonitoredTxAdditionalData<ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT>(
-      state,
-    )!,
+    additionalData: selectTxAdditionalData<ETxSenderType.INVESTOR_REDISTRIBUTE_PAYOUT>(state)!,
   }),
   dispatchToProps: dispatch => ({
     goToPortfolio: () => dispatch(actions.routing.goToPortfolio()),

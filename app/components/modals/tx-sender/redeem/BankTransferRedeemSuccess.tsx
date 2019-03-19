@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../../../modules/actions";
-import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TNEurRedeemAdditionalDetails } from "../../../../modules/tx/transactions/redeem/types";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
@@ -57,7 +57,7 @@ const BankTransferRedeemSuccessComponent: React.FunctionComponent<IComponentProp
 
 const BankTransferRedeemSuccess = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    additionalData: selectMonitoredTxAdditionalData<ETxSenderType.NEUR_REDEEM>(state)!,
+    additionalData: selectTxAdditionalData<ETxSenderType.NEUR_REDEEM>(state)!,
   }),
   dispatchToProps: dispatch => ({
     goToWallet: () => dispatch(actions.routing.goToWallet()),

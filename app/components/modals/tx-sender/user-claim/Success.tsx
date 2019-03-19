@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../../../modules/actions";
-import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TClaimAdditionalData } from "../../../../modules/tx/transactions/claim/types";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
@@ -56,7 +56,7 @@ export const UserClaimSuccessComponent: React.FunctionComponent<IProps> = ({
 
 export const UserClaimSuccess = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    additionalData: selectMonitoredTxAdditionalData<ETxSenderType.USER_CLAIM>(state)!,
+    additionalData: selectTxAdditionalData<ETxSenderType.USER_CLAIM>(state)!,
   }),
   dispatchToProps: dispatch => ({
     goToPortfolio: () => dispatch(actions.routing.goToPortfolio()),

@@ -2,12 +2,9 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "recompose";
 
-import { Tx } from "../../../../lib/api/users/interfaces";
-import {
-  selectMonitoredTxAdditionalData,
-  selectMonitoredTxData,
-  selectMonitoredTxTimestamp,
-} from "../../../../modules/tx/monitor/selectors";
+import { ITxData } from "../../../../lib/web3/types";
+import { selectMonitoredTxTimestamp } from "../../../../modules/tx/monitor/selectors";
+import { selectTxAdditionalData, selectTxDetails } from "../../../../modules/tx/sender/selectors";
 import { TSpecificTransactionState } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { SpinningEthereum } from "../../../shared/ethererum";
@@ -17,7 +14,7 @@ import { TxName } from "../TxName";
 import { TxHashAndBlock } from "./TxHashAndBlock";
 
 export interface IStateProps {
-  txData?: Tx;
+  txData?: ITxData;
   txTimestamp?: number;
   additionalData?: TSpecificTransactionState["additionalData"];
 }
@@ -29,7 +26,7 @@ export interface ITxPendingProps {
 }
 
 type TTxPendingLayoutProps = {
-  txData?: Tx;
+  txData?: ITxData;
   blockId?: number;
   txHash?: string;
   txTimestamp?: number;
@@ -56,9 +53,9 @@ const TxPendingLayout: React.FunctionComponent<TTxPendingLayoutProps> = props =>
 const TxPending = compose<TTxPendingLayoutProps, ITxPendingProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
-      txData: selectMonitoredTxData(state),
+      txData: selectTxDetails(state),
       txTimestamp: selectMonitoredTxTimestamp(state),
-      additionalData: selectMonitoredTxAdditionalData(state),
+      additionalData: selectTxAdditionalData(state),
     }),
   }),
 )(TxPendingLayout);

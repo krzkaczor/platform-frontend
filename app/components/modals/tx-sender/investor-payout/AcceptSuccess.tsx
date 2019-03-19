@@ -2,7 +2,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
 import { actions } from "../../../../modules/actions";
-import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TAcceptPayoutAdditionalData } from "../../../../modules/tx/transactions/payout/accept/types";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
@@ -49,7 +49,7 @@ const InvestorAcceptPayoutSuccessLayout: React.FunctionComponent<IProps> = ({
 
 const InvestorAcceptPayoutSuccess = appConnect<IStateProps, IDispatchProps>({
   stateToProps: state => ({
-    additionalData: selectMonitoredTxAdditionalData<ETxSenderType.INVESTOR_ACCEPT_PAYOUT>(state)!,
+    additionalData: selectTxAdditionalData<ETxSenderType.INVESTOR_ACCEPT_PAYOUT>(state)!,
   }),
   dispatchToProps: dispatch => ({
     goToWallet: () => dispatch(actions.routing.goToWallet()),

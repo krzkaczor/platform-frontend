@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { selectMonitoredTxAdditionalData } from "../../../../modules/tx/monitor/selectors";
+import { selectTxAdditionalData } from "../../../../modules/tx/sender/selectors";
 import { TWithdrawAdditionalData } from "../../../../modules/tx/transactions/withdraw/types";
 import { ETxSenderType } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
@@ -45,6 +45,6 @@ export const WithdrawSuccessLayout: React.FunctionComponent<TProps> = ({
 
 export const WithdrawSuccess = appConnect<IStateProps>({
   stateToProps: state => ({
-    additionalData: selectMonitoredTxAdditionalData<ETxSenderType.WITHDRAW>(state)!,
+    additionalData: selectTxAdditionalData<ETxSenderType.WITHDRAW>(state)!,
   }),
 })(WithdrawSuccessLayout);
