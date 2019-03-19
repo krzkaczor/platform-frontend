@@ -27,6 +27,7 @@ const Message: React.FunctionComponent<TProps> = ({
       {image}
       {title && (
         <Heading
+          className="mb-3"
           titleClassName={titleClassName}
           level={3}
           decorator={false}
@@ -35,7 +36,7 @@ const Message: React.FunctionComponent<TProps> = ({
           {title}
         </Heading>
       )}
-      {hint && <p className={cn("text-warning", "mx-sm-4", "mt-3")}>{hint}</p>}
+      {hint && <p className={cn("text-warning", "mx-sm-4")}>{hint}</p>}
       {text && <p className={cn("mx-sm-4", "mt-3")}>{text}</p>}
       {children}
     </section>

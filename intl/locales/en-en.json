@@ -1126,7 +1126,6 @@
   "withdraw-flow.confirm": "Confirm",
   "withdraw-flow.name": "Withdraw",
   "withdraw-flow.success": "Success! Your transaction is complete",
-  "withdraw-flow.success-transaction-id": "Below is your transaction ID:",
   "withdraw-flow.summary": "WITHDRAWAL TRANSACTION SUMMARY",
   "withdraw-flow.to": "To address",
   "withdraw-flow.transaction-cost": "Transaction cost",

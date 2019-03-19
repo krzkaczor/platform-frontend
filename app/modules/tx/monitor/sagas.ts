@@ -13,7 +13,7 @@ import { actions } from "../../actions";
 import { neuCall, neuTakeUntil } from "../../sagasUtils";
 import { ETransactionErrorType, ETxSenderState } from "../sender/reducer";
 import { ETxSenderType } from "../types";
-import { selectMonitoredPendingTransaction } from "./selectors";
+import { selectPendingTransaction } from "./selectors";
 import { EEventEmitterChannelEvents, TEventEmitterChannelEvents } from "./types";
 
 const TX_MONITOR_DELAY = 60000;
@@ -23,7 +23,7 @@ export function* deletePendingTransaction({
   logger,
 }: TGlobalDependencies): Iterable<any> {
   const pendingTransaction: TxPendingWithMetadata | undefined = yield select(
-    selectMonitoredPendingTransaction,
+    selectPendingTransaction,
   );
 
   if (!pendingTransaction) {
@@ -47,9 +47,7 @@ export function* markTransactionAsPending(
     txAdditionalData,
   }: { txHash: string; type: ETxSenderType; txData: ITxData; txAdditionalData?: any },
 ): any {
-  const currentPending: TxPendingWithMetadata | undefined = yield select(
-    selectMonitoredPendingTransaction,
-  );
+  const currentPending: TxPendingWithMetadata | undefined = yield select(selectPendingTransaction);
 
   if (currentPending) {
     invariant(

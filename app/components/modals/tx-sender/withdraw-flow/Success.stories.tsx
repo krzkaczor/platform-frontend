@@ -18,7 +18,7 @@ const props = {
   txTimestamp: date.valueOf(),
 };
 
-storiesOf("Animations/Success", module)
+storiesOf("Withdraw/Success", module)
   .addDecorator(withModalBody())
   .addDecorator(withMockedDate(dummyNow))
   .add("default", () => <WithdrawSuccessLayout {...props} />);

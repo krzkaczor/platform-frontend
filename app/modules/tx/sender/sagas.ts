@@ -1,7 +1,11 @@
 import { call, Effect, put, race, select, take } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
-import { TPendingTxs, TxPendingWithMetadata } from "../../../lib/api/users/interfaces";
+import {
+  TPendingTxs,
+  TxPendingWithMetadata,
+  TxWithMetadata,
+} from "../../../lib/api/users/interfaces";
 import { BrowserWalletError } from "../../../lib/web3/BrowserWallet";
 import { LedgerContractsDisabledError, LedgerError } from "../../../lib/web3/ledger-wallet/errors";
 import { LightError } from "../../../lib/web3/LightWallet";
@@ -28,12 +32,16 @@ import {
   markTransactionAsPending,
   updatePendingTxs,
 } from "../monitor/sagas";
-import { selectAreTherePendingTxs } from "../monitor/selectors";
+import {
+  selectAreTherePendingTxs,
+  selectAreTherePlatformPendingTxs,
+  selectExternalPendingTransaction,
+} from "../monitor/selectors";
 import { EEventEmitterChannelEvents, TEventEmitterChannelEvents } from "../monitor/types";
 import { UserCannotUnlockFunds } from "../transactions/unlock/errors";
 import { ETxSenderType, TAdditionalDataByType } from "../types";
 import { validateGas } from "../validator/sagas";
-import { ETransactionErrorType, ETxSenderState } from "./reducer";
+import { ETransactionErrorType } from "./reducer";
 import { selectTxAdditionalData, selectTxDetails, selectTxType } from "./selectors";
 
 export interface ITxSendParams {
@@ -44,27 +52,10 @@ export interface ITxSendParams {
   // @see neuCall
 }
 
-export function* txTrySend(txSendParams: ITxSendParams): Iterator<any> {
-  // Get latest pending transactions state before starting new transaction
-  yield neuCall(updatePendingTxs);
-
-  const areTherePendingTxs: boolean = yield select(selectAreTherePendingTxs);
-
-  if (areTherePendingTxs) {
-    // create new detached process
-    yield neuSpawn(txMonitorSaga);
-
-    // cancel current one
-    throw new Error("There is already a pending transaction on the platform");
-  } else {
-    yield txSendSaga(txSendParams);
-  }
-}
-
 function* txMonitorSaga(): any {
-  const sendProcessEffect = neuCall(txMonitor);
+  const txMonitorEffect = neuCall(txMonitor);
 
-  yield call(txControllerSaga, sendProcessEffect);
+  yield call(txControllerSaga, txMonitorEffect);
 }
 
 function* txMonitor(_: TGlobalDependencies): Iterable<any> {
@@ -76,7 +67,7 @@ function* txMonitor(_: TGlobalDependencies): Iterable<any> {
     const txHash = pendingTransaction.transaction.hash;
 
     yield put(
-      actions.txSender.txSenderWatchPendingTxs({
+      actions.txSender.txSenderShowModal({
         additionalData: pendingTransaction.transactionAdditionalData,
         error: pendingTransaction.transactionError,
         state: pendingTransaction.transactionStatus,
@@ -86,22 +77,7 @@ function* txMonitor(_: TGlobalDependencies): Iterable<any> {
       }),
     );
 
-    // If transaction is still pending initiate watch process
-    if (pendingTransaction.transactionStatus === ETxSenderState.MINING) {
-      yield neuCall(watchTxSubSaga, txHash);
-    }
-  } else if (txs.oooTransactions[0]) {
-    const oooTransaction = txs.oooTransactions[0];
-
-    yield put(
-      actions.txSender.txSenderWatchPendingTxs({
-        type: oooTransaction.transactionType as any,
-        state: ETxSenderState.MINING,
-        additionalData: undefined,
-      }),
-    );
-
-    yield neuCall(watchPendingOOOTxSubSaga, oooTransaction.transaction.txhash);
+    yield neuCall(watchTxSubSaga, txHash);
   }
 }
 
@@ -111,8 +87,6 @@ function* txControllerSaga(controlledEffect: Iterator<Effect>): any {
   if (!gasPrice) {
     yield take("GAS_API_LOADED");
   }
-
-  yield put(actions.txSender.txSenderShowModal());
 
   const { cancel } = yield race({
     result: controlledEffect,
@@ -132,7 +106,9 @@ function* txControllerSaga(controlledEffect: Iterator<Effect>): any {
   yield put(actions.wallet.loadWalletData());
 }
 
-function* txSendSaga({ type, transactionFlowGenerator, extraParam }: ITxSendParams): any {
+export function* txSendSaga({ type, transactionFlowGenerator, extraParam }: ITxSendParams): any {
+  yield neuCall(ensureNoPendingTx);
+
   const sendProcessEffect = neuCall(txSendProcess, type, transactionFlowGenerator, extraParam);
 
   yield call(txControllerSaga, sendProcessEffect);
@@ -145,7 +121,7 @@ function* txSendProcess(
   extraParam?: any,
 ): any {
   try {
-    yield put(actions.txSender.txSenderWatchPendingTxsDone(transactionType));
+    yield put(actions.txSender.txSenderShowModal({ type: transactionType as any }));
 
     yield neuRepeatIf("TX_SENDER_CHANGE", "TX_SENDER_ACCEPT", transactionFlowGenerator, extraParam);
     const txData = yield select(selectTxDetails);
@@ -187,6 +163,39 @@ function* txSendProcess(
       );
     } else {
       yield put(actions.txSender.txSenderError(ETransactionErrorType.UNKNOWN_ERROR));
+    }
+  }
+}
+
+function* ensureNoPendingTx({ logger }: TGlobalDependencies): any {
+  while (true) {
+    yield neuCall(updatePendingTxs);
+
+    const areTherePendingTxs: boolean = yield select(selectAreTherePendingTxs);
+    if (!areTherePendingTxs) {
+      return;
+    }
+
+    const areTherePlatformPendingTransactions: boolean = yield select(
+      selectAreTherePlatformPendingTxs,
+    );
+    if (areTherePlatformPendingTransactions) {
+      // create new detached process
+      yield neuSpawn(txMonitorSaga);
+
+      // cancel current one
+      throw new Error("There is already a pending transaction on the platform");
+    }
+
+    const externalPendingTransaction: TxWithMetadata | undefined = yield select(
+      selectExternalPendingTransaction,
+    );
+    if (externalPendingTransaction) {
+      // go to miner
+      const txHash = externalPendingTransaction.transaction.hash;
+      yield put(actions.txSender.txSenderWatchPendingTxs(txHash));
+      logger.info(`Waiting for out of bound transactions: ${txHash}`);
+      yield neuCall(watchPendingOOOTxSubSaga, txHash);
     }
   }
 }

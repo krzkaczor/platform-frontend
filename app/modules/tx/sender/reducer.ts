@@ -67,28 +67,22 @@ export const txSenderReducer: AppReducer<ITxSenderState> = (
   switch (action.type) {
     // Modal related Actions
     case "TX_SENDER_SHOW_MODAL":
-    case "TX_SENDER_HIDE_MODAL":
       return {
         ...initialState,
+        state: ETxSenderState.INIT,
+        ...action.payload.initialState,
       };
+    case "TX_SENDER_HIDE_MODAL":
+      return initialState;
 
     //Pending Transaction Actions
     case "TX_SENDER_WATCH_PENDING_TXS":
       return {
         ...initialState,
-        state: action.payload.state,
-        type: action.payload.type,
-        error: action.payload.error,
-        additionalData: action.payload.additionalData,
+        state: ETxSenderState.WATCHING_PENDING_TXS,
         txHash: action.payload.txHash,
       };
 
-    case "TX_SENDER_WATCH_PENDING_TXS_DONE":
-      return {
-        ...initialState,
-        state: ETxSenderState.INIT,
-        type: action.payload.type,
-      };
     case "TX_SENDER_ACCEPT":
       return {
         ...state,

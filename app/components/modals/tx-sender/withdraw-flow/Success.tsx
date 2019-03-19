@@ -31,7 +31,6 @@ export const WithdrawSuccessLayout: React.FunctionComponent<TProps> = ({
     image={<ConfettiEthereum className="mb-3" />}
     title={<FormattedMessage id="withdraw-flow.success" />}
     titleClassName="text-success"
-    text={<FormattedMessage id="withdraw-flow.success-transaction-id" />}
   >
     <WithdrawTransactionDetails
       additionalData={additionalData}

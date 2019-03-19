@@ -97,6 +97,7 @@ export const PendingTxsSchema = YupTS.object({
 });
 
 export type Tx = YupTS.TypeOf<typeof TxSchema>;
+export type TxWithMetadata = YupTS.TypeOf<typeof TxWithMetadataSchema>;
 export type TxPendingWithMetadata = YupTS.TypeOf<typeof TxPendingWithMetadataSchema> & {
   transactionAdditionalData: any;
 };
