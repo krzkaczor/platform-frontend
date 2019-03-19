@@ -39,8 +39,12 @@ interface ISignComponentStateProps {
   signedInvestmentAgreementUrl: string | null;
 }
 
-export const WaitingForNominee = () => (
-  <Panel>
+interface IExternalProps {
+  layoutClass?: string;
+}
+
+export const WaitingForNominee: React.FunctionComponent<IExternalProps> = ({ layoutClass }) => (
+  <Panel className={cn("h-100", layoutClass)}>
     <Heading size={EHeadingSize.SMALL} level={4}>
       <FormattedMessage id="download-agreement-widget.wait-for-nominee-to-sign" />
     </Heading>
@@ -59,13 +63,14 @@ interface IWaitingToBeSigned {
   signInvestmentAgreement: (etoId: string, ipfsHash: string) => void;
 }
 
-export const WaitingToBeSigned = ({
+export const WaitingToBeSigned: React.FunctionComponent<IWaitingToBeSigned & IExternalProps> = ({
   etoId,
   ipfsHash,
   signedInvestmentAgreementUrl,
   signInvestmentAgreement,
-}: IWaitingToBeSigned) => (
-  <Panel>
+  layoutClass,
+}) => (
+  <Panel className={cn("h-100", layoutClass)}>
     <Heading size={EHeadingSize.SMALL} level={4}>
       <FormattedMessage id="download-agreement-widget.sign-on-ethereum" />
     </Heading>
@@ -88,21 +93,28 @@ export const WaitingToBeSigned = ({
 );
 
 export const SignInvestmentAgreementLayout: React.FunctionComponent<
-  ISignComponentStateProps & IDispatchProps
-> = ({ etoId, signedInvestmentAgreementUrl, uploadedAgreement, signInvestmentAgreement }) => {
+  ISignComponentStateProps & IDispatchProps & IExternalProps
+> = ({
+  etoId,
+  signedInvestmentAgreementUrl,
+  uploadedAgreement,
+  signInvestmentAgreement,
+  layoutClass,
+}) => {
   return investmentAgreementNotSigned(signedInvestmentAgreementUrl, uploadedAgreement.ipfsHash) ? (
     <WaitingToBeSigned
       etoId={etoId}
       ipfsHash={uploadedAgreement.ipfsHash}
       signedInvestmentAgreementUrl={signedInvestmentAgreementUrl}
       signInvestmentAgreement={signInvestmentAgreement}
+      layoutClass={layoutClass}
     />
   ) : (
-    <WaitingForNominee />
+    <WaitingForNominee layoutClass={layoutClass} />
   );
 };
 
-export const SignInvestmentAgreement = compose<React.FunctionComponent>(
+export const SignInvestmentAgreement = compose<React.FunctionComponent<IExternalProps>>(
   appConnect<IStateProps | null, IDispatchProps>({
     stateToProps: state => {
       const uploadedAgreement = selectUploadedInvestmentAgreement(state);

@@ -38,11 +38,19 @@ interface IUploadComponentStateProps {
   uploadedAgreement: IEtoDocument | null;
 }
 
+interface IExternalProps {
+  layoutClass?: string;
+}
+
+interface IEtoCompletedWidgetProps {
+  goToWallet: () => void;
+}
+
 export const UploadInvestmentAgreementLayout: React.FunctionComponent<
-  IUploadComponentStateProps & IDispatchProps
-> = ({ downloadAgreementTemplate, agreementTemplate }) => {
+  IUploadComponentStateProps & IDispatchProps & IExternalProps
+> = ({ downloadAgreementTemplate, agreementTemplate, layoutClass }) => {
   return (
-    <Panel>
+    <Panel className={cn("h-100", layoutClass)}>
       <Heading size={EHeadingSize.SMALL} level={4}>
         <FormattedMessage id="download-agreement-widget.signing-title" />
       </Heading>
@@ -61,8 +69,10 @@ export const UploadInvestmentAgreementLayout: React.FunctionComponent<
   );
 };
 
-export const EtoCompletedWidgetLayout: React.ComponentType<any> = ({ goToWallet }) => (
-  <Panel>
+export const EtoCompletedWidgetLayout: React.ComponentType<
+  IEtoCompletedWidgetProps & IExternalProps
+> = ({ goToWallet, layoutClass }) => (
+  <Panel className={cn("h-100", layoutClass)}>
     <Heading size={EHeadingSize.SMALL} level={4}>
       <FormattedMessage id="download-agreement-widget.success-title" />
     </Heading>
@@ -74,7 +84,7 @@ export const EtoCompletedWidgetLayout: React.ComponentType<any> = ({ goToWallet 
   </Panel>
 );
 
-export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
+export const UploadInvestmentAgreement = compose<React.FunctionComponent<IExternalProps>>(
   createErrorBoundary(ErrorBoundaryPanel),
   appConnect<IStateProps | null, IDispatchProps>({
     stateToProps: state => {
@@ -98,11 +108,11 @@ export const UploadInvestmentAgreement = compose<React.FunctionComponent>(
   branch<IStateProps | null>(props => props === null, renderNothing),
   branch<IStateProps>(props => props.stateOnChain < EETOStateOnChain.Signing, renderNothing),
   branch<IStateProps>(props => props.stateOnChain === EETOStateOnChain.Refund, renderNothing),
-  branch<IStateProps>(
+  branch<IStateProps & IExternalProps>(
     props => props.stateOnChain > EETOStateOnChain.Signing,
     renderComponent(EtoCompletedWidgetLayout),
   ),
-  branch<IStateProps>(
+  branch<IStateProps & IExternalProps>(
     props => props.uploadedAgreement !== null,
     renderComponent(SignInvestmentAgreement),
   ),

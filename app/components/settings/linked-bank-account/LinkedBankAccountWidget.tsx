@@ -60,7 +60,6 @@ const LinkedBankAccountComponent: React.FunctionComponent<
   IComponentProps & IExternalProps
 > = props => (
   <Panel
-    centerContent={false}
     headerText={<FormattedMessage id="linked-bank-account-widget.header" />}
     className={cn("h-100", props.layoutClass)}
   >
