@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { TTranslatedString } from "../../types";
-import { InlineIcon } from "./InlineIcon";
+import { InlineIcon } from "./icons";
 
 import * as indicatorIcon from "../../assets/img/inline_icons/accordion_arrow.svg";
 import * as styles from "./Accordion.module.scss";

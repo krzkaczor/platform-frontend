@@ -1,8 +1,6 @@
 .panel {
   background-color: $neu-white-two;
   box-shadow: $shadow-bottom-black;
-  display: flex;
-  flex-direction: column;
   padding: px-to-rem(30px) px-to-rem(25px) px-to-rem(25px);
 
   &.narrow {
@@ -15,10 +13,4 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: $spacing-vertical-sm-1;
-}
-
-.content {
-  display: flex;
-  flex: 1 1 100%;
-  flex-direction: column;
 }

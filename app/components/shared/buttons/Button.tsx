@@ -2,7 +2,7 @@ import * as cn from "classnames";
 import * as React from "react";
 
 import { CommonHtmlProps } from "../../../types";
-import { InlineIcon } from "../InlineIcon";
+import { InlineIcon } from "../icons";
 import { LoadingIndicator } from "../loading-indicator";
 
 import * as arrowRight from "../../../assets/img/inline_icons/arrow_right.svg";
@@ -19,9 +19,9 @@ export enum EButtonLayout {
 }
 
 export enum ButtonSize {
-  NORMAL = "",
-  SMALL = "small",
-  HUGE = "huge",
+  NORMAL,
+  SMALL = styles.buttonSmall,
+  HUGE = styles.buttonHuge,
 }
 
 export enum ButtonWidth {

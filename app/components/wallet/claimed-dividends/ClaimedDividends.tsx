@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { CommonHtmlProps } from "../../../types";
 import { Button, EButtonLayout } from "../../shared/buttons";
 import { Date } from "../../shared/Date";
-import { InlineIcon } from "../../shared/InlineIcon";
+import { InlineIcon } from "../../shared/icons";
 import { ECurrency, EMoneyTransfer, Money } from "../../shared/Money";
 import { Panel } from "../../shared/Panel";
 import { TableBody } from "../../shared/table/TableBody";

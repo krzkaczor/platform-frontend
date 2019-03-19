@@ -38,7 +38,7 @@ export class LedgerWallet implements IPersonalWallet {
     if (this.waitingForCommand) {
       return true;
     }
-    return testConnection(this.ledgerInstance);
+    return testConnection(this.ledgerInstance.getTransport);
   }
 
   public async signMessage(data: string): Promise<string> {

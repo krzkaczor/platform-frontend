@@ -33,11 +33,13 @@ import { LoadingIndicator } from "../shared/loading-indicator";
 import { BookBuildingWidget } from "./dashboard/bookBuildingWidget/BookBuildingWidget";
 import { ChooseEtoStartDateWidget } from "./dashboard/chooseEtoStartDateWidget/ChooseEtoStartDateWidget";
 import { ETOFormsProgressSection } from "./dashboard/ETOFormsProgressSection";
+import { UploadInvestmentAgreement } from "./dashboard/signInvestmentAgreementWidget/UploadInvestmentAgreementWidget";
 import { SubmitProposalWidget } from "./dashboard/submitProposalWidget/SubmitProposalWidget";
 import { UploadInvestmentMemorandum } from "./dashboard/UploadInvestmentMemorandum";
 import { UploadProspectusWidget } from "./dashboard/UploadProspectusWidget";
 import { UploadTermSheetWidget } from "./dashboard/UploadTermSheetWidget";
 import { DashboardSection } from "./shared/DashboardSection";
+import { EProjecStatusLayout, EProjectStatusSize, ETOState } from "./shared/ETOState";
 
 import * as layoutStyles from "../shared/Layout.module.scss";
 import * as styles from "./EtoDashboard.module.scss";
@@ -184,6 +186,7 @@ const EtoDashboardStateViewComponent: React.FunctionComponent<IEtoStateRender> =
         <>
           <DashboardSection hasDecorator={false} title={dashboardTitle} />
           <WidgetGridLayout>
+            <UploadInvestmentAgreement layoutClass={layoutStyles.span3} />
             <BookBuildingWidget layoutClass={layoutStyles.span3} />
             <ChooseEtoStartDateWidget layoutClass={layoutStyles.span3} />
           </WidgetGridLayout>

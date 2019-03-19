@@ -13,12 +13,7 @@ import {
   LedgerNotAvailableError,
   LedgerNotSupportedVersionError,
 } from "./errors";
-import {
-  ILedgerConfig,
-  ILedgerCustomProvider,
-  ILedgerOutput,
-  IPromisifiedHookedWalletSubProvider,
-} from "./types";
+import { ILedgerConfig, ILedgerOutput, IPromisifiedHookedWalletSubProvider } from "./types";
 
 /**
  * PathComponent contains derivation path divided into base path and index.
@@ -45,22 +40,30 @@ export const obtainPathComponentsFromDerivationPath = (derivationPath: string) =
   return { basePath: matchResult[1], index: parseInt(matchResult[2], 10) };
 };
 
-export const testConnection = async (ledgerInstance: ILedgerCustomProvider): Promise<boolean> => {
+export const testConnection = async (getTransport: () => any): Promise<boolean> => {
   try {
     // this check will successfully detect if ledger is locked or disconnected
-    await getLedgerConfig(ledgerInstance);
+    await getLedgerConfig(getTransport);
     return true;
   } catch {
     return false;
   }
 };
 
-export const testIfUnlocked = async (ledgerInstance: ILedgerCustomProvider): Promise<void> => {
-  await ledgerInstance.getAccounts();
+export const testIfUnlocked = async (getTransport: () => any): Promise<void> => {
+  const Transport = await getTransport();
+  try {
+    const ethInstance = new Eth(Transport);
+    await ethInstance.getAddress("44'/60'/0'/0/0");
+  } catch (e) {
+    throw new LedgerNotAvailableError();
+  } finally {
+    Transport.close();
+  }
 };
 
-const getLedgerConfig = async (ledgerInstance: ILedgerCustomProvider): Promise<ILedgerConfig> => {
-  const Transport = await ledgerInstance.getTransport();
+const getLedgerConfig = async (getTransport: () => any): Promise<ILedgerConfig> => {
+  const Transport = await getTransport();
   try {
     const ethInstance = new Eth(Transport);
     const configration = await ethInstance.getAppConfiguration();
@@ -75,12 +78,14 @@ const getLedgerConfig = async (ledgerInstance: ILedgerCustomProvider): Promise<I
 export const createWeb3WithLedgerProvider = async (
   networkId: string,
   rpcUrl: string,
+  getTransport: () => any,
+  derivationPath: string,
 ): Promise<ILedgerOutput> => {
   const engine = new Web3ProviderEngine();
-  const getTransport = () => TransportU2F.create();
 
   const ledgerProvider = createLedgerSubprovider(getTransport, {
     networkId,
+    path: derivationPath,
   });
   engine.addProvider(ledgerProvider);
   engine.addProvider(
@@ -105,29 +110,15 @@ export const createWeb3WithLedgerProvider = async (
   };
 };
 
-export const connectToLedger = async (
-  networkId: string,
-  rpcUrl: string,
-): Promise<ILedgerOutput> => {
-  let providerEngine: any;
-  try {
-    const { ledgerInstance, ledgerWeb3 } = await createWeb3WithLedgerProvider(networkId, rpcUrl);
-    providerEngine = ledgerWeb3.currentProvider;
-    const ledgerConfig = await getLedgerConfig(ledgerInstance);
-    if (semver.lt(ledgerConfig.version, "1.0.8")) {
-      throw new LedgerNotSupportedVersionError(ledgerConfig.version);
-    }
-    if (ledgerConfig.arbitraryDataEnabled === 0) {
-      throw new LedgerContractsDisabledError();
-    }
-    await testIfUnlocked(ledgerInstance);
-
-    return { ledgerInstance, ledgerWeb3 };
-  } catch (e) {
-    // we need to explicitly stop Web3 Provider engine
-    if (providerEngine) {
-      providerEngine.stop();
-    }
-    throw e;
+export const connectToLedger = async (): Promise<() => any> => {
+  const getTransport = () => TransportU2F.create();
+  const ledgerConfig = await getLedgerConfig(getTransport);
+  if (semver.lt(ledgerConfig.version, "1.0.8")) {
+    throw new LedgerNotSupportedVersionError(ledgerConfig.version);
   }
+  if (ledgerConfig.arbitraryDataEnabled === 0) {
+    throw new LedgerContractsDisabledError();
+  }
+  await testIfUnlocked(getTransport);
+  return getTransport;
 };

@@ -28,7 +28,7 @@ describe("Wallet selector > Browser wizard > reducer", () => {
     );
 
     expect(state).to.be.deep.eq({
-      isLoading: true,
+      isLoading: false,
       approvalRejected: true,
     });
   });

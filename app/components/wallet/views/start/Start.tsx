@@ -146,18 +146,18 @@ export const WalletStart = compose<React.FunctionComponent>(
       error: selectWalletError(state.wallet),
       isUserFullyVerified: selectIsUserFullyVerified(state),
       liquidWalletData: {
-        ethAmount: selectLiquidEtherBalance(state.wallet),
+        ethAmount: selectLiquidEtherBalance(state),
         ethEuroAmount: selectLiquidEtherBalanceEuroAmount(state),
-        neuroAmount: selectLiquidEuroTokenBalance(state.wallet),
-        neuroEuroAmount: selectLiquidEuroTokenBalance(state.wallet),
+        neuroAmount: selectLiquidEuroTokenBalance(state),
+        neuroEuroAmount: selectLiquidEuroTokenBalance(state),
         totalEuroAmount: selectLiquidEuroTotalAmount(state),
       },
       lockedWalletData: {
         hasFunds: selectLockedWalletHasFunds(state),
         ethAmount: selectLockedEtherBalance(state),
         ethEuroAmount: selectLockedEtherBalanceEuroAmount(state),
-        neuroAmount: selectLockedEuroTokenBalance(state.wallet),
-        neuroEuroAmount: selectLockedEuroTokenBalance(state.wallet),
+        neuroAmount: selectLockedEuroTokenBalance(state),
+        neuroEuroAmount: selectLockedEuroTokenBalance(state),
         totalEuroAmount: selectLockedEuroTotalAmount(state),
       },
       icbmWalletData: {

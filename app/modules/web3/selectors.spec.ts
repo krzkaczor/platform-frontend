@@ -51,7 +51,6 @@ describe("web3 > selectors", () => {
           walletType: EWalletType.LIGHT,
           walletSubType: EWalletSubType.UNKNOWN,
           address: dummyEthereumAddress,
-          vault,
           email,
           salt,
         },

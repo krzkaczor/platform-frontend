@@ -10,14 +10,24 @@ interface IJwt {
 }
 
 /**
+ * Gets expiration date
+ */
+export function getJwtExpiryDate(token: string): Moment.Moment {
+  try {
+    const parsedJwt = parseJwt(token);
+    return Moment.unix(parsedJwt.exp);
+  } catch (e) {
+    throw new Error(`Cannot parse JWT token: ${token}`);
+  }
+}
+
+/**
  * Checks if JWT expiration date is further in past than MAX_EXPIRATION_DIFF_MINUTES minutes
  */
 export function isJwtExpiringLateEnough(token: string): boolean {
   try {
-    const parsedJwt = parseJwt(token);
-    const expirationDate = Moment.unix(parsedJwt.exp);
+    const expirationDate = getJwtExpiryDate(token);
     const expirationDiff = expirationDate.diff(Moment(), "minutes");
-
     return expirationDiff >= MAX_EXPIRATION_DIFF_MINUTES;
   } catch (e) {
     throw new Error(`Cannot parse JWT token: ${token}`);

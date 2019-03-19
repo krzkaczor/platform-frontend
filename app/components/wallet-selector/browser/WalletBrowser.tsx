@@ -4,11 +4,10 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { Col, Row } from "reactstrap";
 import { compose } from "redux";
 
-import { BROWSER_WALLET_RECONNECT_INTERVAL } from "../../../config/constants";
 import { actions } from "../../../modules/actions";
 import { selectIsLoginRoute } from "../../../modules/wallet-selector/selectors";
 import { appConnect } from "../../../store";
-import { withActionWatcher } from "../../../utils/withActionWatcher";
+import { onEnterAction } from "../../../utils/OnEnterAction";
 import { Button } from "../../shared/buttons";
 import { HiResImage } from "../../shared/HiResImage";
 import { HorizontalLine } from "../../shared/HorizontalLine";
@@ -18,8 +17,9 @@ import { WarningAlert } from "../../shared/WarningAlert";
 import { getMessageTranslation } from "../../translatedMessages/messages";
 import { TMessage } from "../../translatedMessages/utils";
 
-import * as browserIcon from "../../../assets/img/wallet_selector/browser_icon.svg";
-import * as lockIcon from "../../../assets/img/wallet_selector/lock_icon.svg";
+import * as check_metamask from "../../../assets/img/wallet_selector/check_metamask.svg";
+import * as enter_password from "../../../assets/img/wallet_selector/enter_password.svg";
+import * as reload from "../../../assets/img/wallet_selector/reload.svg";
 import * as styles from "./WalletBrowser.module.scss";
 
 interface IWalletBrowserProps {
@@ -74,13 +74,14 @@ export const WalletBrowserComponent: React.FunctionComponent<
         )}
         <div className={styles.stepCardWrapper}>
           <StepCard
-            img={browserIcon}
-            text={<FormattedMessage id="wallet-selector.browser.steps.2" />}
+            img={check_metamask}
+            text={<FormattedMessage id="wallet-selector.browser.steps.1" />}
           />
           <StepCard
-            img={lockIcon}
-            text={<FormattedMessage id="wallet-selector.browser.steps.3" />}
+            img={enter_password}
+            text={<FormattedMessage id="wallet-selector.browser.steps.2" />}
           />
+          <StepCard img={reload} text={<FormattedMessage id="wallet-selector.browser.steps.3" />} />
         </div>
 
         <HorizontalLine className="mb-4" />
@@ -114,11 +115,13 @@ export const WalletBrowser = compose<React.FunctionComponent>(
       approvalRejected: state.browserWalletWizardState.approvalRejected,
     }),
     dispatchToProps: dispatch => ({
-      handleReset: () => dispatch(actions.walletSelector.browserWalletResetApprovalRequest()),
+      handleReset: () => {
+        dispatch(actions.walletSelector.browserWalletResetApprovalRequest());
+        dispatch(actions.walletSelector.tryConnectingWithBrowserWallet());
+      },
     }),
   }),
-  withActionWatcher({
+  onEnterAction({
     actionCreator: dispatch => dispatch(actions.walletSelector.tryConnectingWithBrowserWallet()),
-    interval: BROWSER_WALLET_RECONNECT_INTERVAL,
   }),
 )(WalletBrowserComponent);

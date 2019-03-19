@@ -2,15 +2,15 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "redux";
 
-import { ButtonLink, EButtonLayout } from "./buttons";
-import { ChartCircle, IChartCircleProps } from "./charts/ChartCircle";
-import { createErrorBoundary } from "./errorBoundary/ErrorBoundary";
-import { ErrorBoundaryPanel } from "./errorBoundary/ErrorBoundaryPanel";
-import { LoadingIndicator } from "./loading-indicator";
-import { Panel } from "./Panel";
-import { Proportion } from "./Proportion";
+import { ButtonLink, EButtonLayout } from "../../shared/buttons";
+import { ChartCircle, IChartCircleProps } from "../../shared/charts/ChartCircle";
+import { createErrorBoundary } from "../../shared/errorBoundary/ErrorBoundary";
+import { ErrorBoundaryPanel } from "../../shared/errorBoundary/ErrorBoundaryPanel";
+import { LoadingIndicator } from "../../shared/loading-indicator";
+import { Panel } from "../../shared/Panel";
+import { Proportion } from "../../shared/Proportion";
 
-import * as arrowRightIcon from "../../assets/img/inline_icons/arrow_right.svg";
+import * as arrowRightIcon from "../../../assets/img/inline_icons/arrow_right.svg";
 import * as styles from "./EtoFormProgressWidget.module.scss";
 
 interface IProps {

@@ -1,7 +1,8 @@
 import { BigNumber } from "bignumber.js";
 import { expect } from "chai";
+import * as jsonwebtoken from "jsonwebtoken";
 
-import { createMount } from "../../../test/createMount";
+import { createMount, remount } from "../../../test/createMount";
 import { dummyEthereumAddress, dummyNetworkId } from "../../../test/fixtures";
 import {
   createIntegrationTestsSetup,
@@ -11,7 +12,6 @@ import {
   wrapWithProviders,
 } from "../../../test/integrationTestUtils";
 import { createMock, tid } from "../../../test/testUtils";
-import { BROWSER_WALLET_RECONNECT_INTERVAL } from "../../config/constants";
 import { symbols } from "../../di/symbols";
 import { SignatureAuthApi } from "../../lib/api/SignatureAuthApi";
 import { getDummyUser } from "../../lib/api/users/fixtures";
@@ -81,7 +81,13 @@ describe("Wallet selector integration", () => {
       createJwt: async () => ({
         statusCode: 200,
         body: {
-          jwt: "JWT",
+          jwt: jsonwebtoken.sign(
+            {
+              exp: Math.floor(Date.now() / 1000) + 60 * 60,
+              data: "foobar",
+            },
+            "secret",
+          ),
         },
       }),
     });
@@ -187,6 +193,7 @@ describe("Wallet selector integration", () => {
     expect(ledgerWalletConnectorMock.finishConnecting).to.be.calledOnce;
     expect(ledgerWalletConnectorMock.finishConnecting).to.be.calledWithExactly(
       expectedDerivationPath,
+      dummyNetworkId,
     );
     expect(dispatchSpy).calledWithExactly(
       actions.web3.newPersonalWalletPlugged(
@@ -241,7 +248,13 @@ describe("Wallet selector integration", () => {
       createJwt: async () => ({
         statusCode: 200,
         body: {
-          jwt: "JWT",
+          jwt: jsonwebtoken.sign(
+            {
+              exp: Math.floor(Date.now() / 1000) + 60 * 60,
+              data: "foobar",
+            },
+            "secret",
+          ),
         },
       }),
     });
@@ -306,8 +319,13 @@ describe("Wallet selector integration", () => {
         throw new BrowserWalletLockedError();
       },
     });
-    await clock.fakeClock.tickAsync(BROWSER_WALLET_RECONNECT_INTERVAL);
-    mountedComponent.update();
+    remount(mountedComponent);
+
+    mountedComponent
+      .find(tid("wallet-selector-browser"))
+      .find(ButtonLink)
+      .simulate("click", { button: 0 });
+    await waitForTid(mountedComponent, "browser-wallet-error-msg");
 
     expect(mountedComponent.find(tid("browser-wallet-error-msg")).text()).to.be.eq(
       "Your wallet seems to be locked — we can't access any accounts",
@@ -321,7 +339,8 @@ describe("Wallet selector integration", () => {
     browserWalletConnectorMock.reMock({
       connect: async () => browserWalletMock,
     });
-    await clock.fakeClock.tickAsync(BROWSER_WALLET_RECONNECT_INTERVAL);
+
+    remount(mountedComponent);
 
     await waitForPredicate(
       () => dispatchSpy.calledWith(actions.routing.goToDashboard()),

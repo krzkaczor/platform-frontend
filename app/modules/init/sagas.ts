@@ -57,7 +57,7 @@ function* initApp({ logger }: TGlobalDependencies): any {
         }
       } else {
         yield put(actions.auth.logout(userType));
-        logger.warn("JTW expiring too soon.");
+        logger.info("JTW expiring too soon.");
       }
     }
 

@@ -2,9 +2,9 @@ import { isMatch } from "lodash/fp";
 import {
   call,
   Effect,
+  fork,
   getContext,
   race,
-  spawn,
   StringableActionCreator,
   take,
   takeEvery,
@@ -34,7 +34,7 @@ export function* neuTakeEvery(
 
 export function* neuFork(saga: TSagaWithDeps, ...args: any[]): Iterator<Effect> {
   const deps: TGlobalDependencies = yield getContext("deps");
-  return yield spawn(saga, deps, args[0], args[1], args[2], args[3], args[4]);
+  return yield fork(saga, deps, args[0], args[1], args[2], args[3], args[4]);
 }
 
 export function* neuCall(saga: TSagaWithDeps, ...args: any[]): Iterator<Effect> {
@@ -99,5 +99,21 @@ export function* neuRepeatIf(
     if (end) {
       return;
     }
+  }
+}
+
+/**
+ *  Executes the generator and restarts running job if a specific actions is fired
+ */
+export function* neuRestartIf(
+  cancelAction: TActionType | TActionType[] | StringableActionCreator<TAction>,
+  saga: TSagaWithDeps,
+  ...args: any[]
+): any {
+  while (true) {
+    yield race({
+      task: neuCall(saga, ...args),
+      cancel: take(cancelAction),
+    });
   }
 }
