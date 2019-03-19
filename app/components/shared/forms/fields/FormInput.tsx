@@ -55,6 +55,7 @@ export const FormInput: React.FunctionComponent<FormInputProps> = ({
             return (
               <FormInputRaw
                 name={name}
+                type={type}
                 placeholder={placeholder}
                 className={className}
                 addonStyle={addonStyle}
@@ -65,7 +66,9 @@ export const FormInput: React.FunctionComponent<FormInputProps> = ({
                 value={val}
                 disabled={disabled}
                 maxLength={maxLength}
+                customValidation={customValidation}
                 customOnBlur={customOnBlur}
+                ignoreTouched={ignoreTouched}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setFieldTouched(name);
                   setFieldValue(
