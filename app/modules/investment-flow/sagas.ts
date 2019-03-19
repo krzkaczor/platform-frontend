@@ -218,7 +218,7 @@ function* start(action: TAction): any {
   yield put(actions.txTransactions.startInvestment());
   yield put(actions.investorEtoTicket.loadEtoInvestorTicket(selectPublicEtoById(state, etoId)!));
 
-  yield take("TX_SENDER_WATCH_PENDING_TXS_DONE");
+  yield take("TX_SENDER_SHOW_MODAL");
   yield getActiveInvestmentTypes();
   yield resetTxDataAndValidations();
 }
