@@ -6,9 +6,12 @@ import { compose } from "recompose";
 import { externalRoutes } from "../../../../config/externalRoutes";
 import { Tx } from "../../../../lib/api/users/interfaces";
 import { ITxData } from "../../../../lib/web3/types";
-import { selectMonitoredTxTimestamp } from "../../../../modules/tx/monitor/selectors";
 import { ETransactionErrorType } from "../../../../modules/tx/sender/reducer";
-import { selectTxAdditionalData, selectTxDetails } from "../../../../modules/tx/sender/selectors";
+import {
+  selectTxAdditionalData,
+  selectTxDetails,
+  selectTxTimestamp,
+} from "../../../../modules/tx/sender/selectors";
 import { ETxSenderType, TSpecificTransactionState } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { ExternalLink } from "../../../shared/links/ExternalLink";
@@ -123,7 +126,7 @@ const TxError = compose<TTxErrorLayoutProps, IProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
       txData: selectTxDetails(state),
-      txTimestamp: selectMonitoredTxTimestamp(state),
+      txTimestamp: selectTxTimestamp(state),
       additionalData: selectTxAdditionalData(state),
     }),
   }),

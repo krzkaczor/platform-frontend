@@ -44,6 +44,7 @@ type ITxSenderDefaultState = ITxTypeWithData<undefined, undefined>;
 interface ITxSenderCommonState {
   state: ETxSenderState;
   txDetails?: ITxData;
+  txTimestamp?: number;
   blockId?: number;
   txHash?: string;
   error?: ETransactionErrorType;

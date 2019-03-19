@@ -55,7 +55,7 @@ export function* txTrySend(txSendParams: ITxSendParams): Iterator<any> {
     yield neuSpawn(txMonitorSaga);
 
     // cancel current one
-    throw new Error("There is already a pending transaction");
+    throw new Error("There is already a pending transaction on the platform");
   } else {
     yield txSendSaga(txSendParams);
   }
@@ -81,6 +81,7 @@ function* txMonitor(_: TGlobalDependencies): Iterable<any> {
         error: pendingTransaction.transactionError,
         state: pendingTransaction.transactionStatus,
         txHash: txHash,
+        txTimestamp: pendingTransaction.transactionTimestamp,
         type: pendingTransaction.transactionType as any,
       }),
     );

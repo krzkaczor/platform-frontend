@@ -2,6 +2,7 @@ import { BigNumber } from "bignumber.js";
 import { addHexPrefix } from "ethereumjs-util";
 import { delay, END, eventChannel } from "redux-saga";
 import { put, select } from "redux-saga/effects";
+import * as Web3 from "web3";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { TPendingTxs, TxPendingWithMetadata } from "../../../lib/api/users/interfaces";
@@ -97,15 +98,19 @@ export function* updatePendingTxs({ apiUserService, web3Manager }: TGlobalDepend
     const txHash = pendingTransaction.transaction.hash;
 
     try {
-      yield web3Manager.internalWeb3Adapter.getTransactionOrThrow(txHash);
+      const transaction: Web3.Transaction | null = yield web3Manager.internalWeb3Adapter.getTransactionOrThrow(
+        txHash,
+      );
 
-      apiPendingTx = {
-        ...apiPendingTx,
-        pendingTransaction: {
-          ...pendingTransaction,
-          transactionStatus: ETxSenderState.DONE,
-        },
-      };
+      if (transaction) {
+        apiPendingTx = {
+          ...apiPendingTx,
+          pendingTransaction: {
+            ...pendingTransaction,
+            transactionStatus: ETxSenderState.DONE,
+          },
+        };
+      }
     } catch (error) {
       if (error instanceof RevertedTransactionError) {
         apiPendingTx = {

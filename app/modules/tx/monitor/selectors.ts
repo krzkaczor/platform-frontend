@@ -17,12 +17,3 @@ export const selectMonitoredPendingTransaction = (
 ): TxPendingWithMetadata | undefined => {
   return state.txMonitor.txs.pendingTransaction as TxPendingWithMetadata | undefined;
 };
-
-export const selectMonitoredTxTimestamp = (state: IAppState): number | undefined => {
-  const pendingTransaction = state.txMonitor.txs.pendingTransaction;
-  if (pendingTransaction) {
-    return pendingTransaction.transactionTimestamp;
-  }
-
-  return undefined;
-};

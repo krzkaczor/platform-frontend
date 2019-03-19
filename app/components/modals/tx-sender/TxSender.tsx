@@ -4,9 +4,8 @@ import { FormattedMessage } from "react-intl-phraseapp";
 
 import { ITxData } from "../../../lib/web3/types";
 import { actions } from "../../../modules/actions";
-import { selectMonitoredTxTimestamp } from "../../../modules/tx/monitor/selectors";
 import { ETransactionErrorType, ETxSenderState } from "../../../modules/tx/sender/reducer";
-import { selectTxSenderModalOpened } from "../../../modules/tx/sender/selectors";
+import { selectTxSenderModalOpened, selectTxTimestamp } from "../../../modules/tx/sender/selectors";
 import { ETxSenderType } from "../../../modules/tx/types";
 import { appConnect } from "../../../store";
 import { LoadingIndicator } from "../../shared/loading-indicator";
@@ -217,7 +216,7 @@ const TxSenderModal = appConnect<IStateProps, IDispatchProps>({
     txHash: state.txSender.txHash,
     blockId: state.txSender.blockId,
     error: state.txSender.error,
-    txTimestamp: selectMonitoredTxTimestamp(state),
+    txTimestamp: selectTxTimestamp(state),
   }),
   dispatchToProps: d => ({
     onCancel: () => d(actions.txSender.txSenderHideModal()),

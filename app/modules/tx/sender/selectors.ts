@@ -14,6 +14,9 @@ export const selectTxAdditionalData = <T extends ETxSenderType>(
   state: IAppState,
 ): TAdditionalDataByType<T> | undefined => state.txSender.additionalData;
 
+export const selectTxTimestamp = (state: IAppState): number | undefined =>
+  state.txSender.txTimestamp;
+
 export const selectTxGasCostEthUlps = (state: IAppState): string => {
   const details = selectTxDetails(state);
   const gasPrice = (details && details.gasPrice) || "0";

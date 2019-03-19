@@ -3,8 +3,11 @@ import { FormattedMessage } from "react-intl-phraseapp";
 import { compose } from "recompose";
 
 import { ITxData } from "../../../../lib/web3/types";
-import { selectMonitoredTxTimestamp } from "../../../../modules/tx/monitor/selectors";
-import { selectTxAdditionalData, selectTxDetails } from "../../../../modules/tx/sender/selectors";
+import {
+  selectTxAdditionalData,
+  selectTxDetails,
+  selectTxTimestamp,
+} from "../../../../modules/tx/sender/selectors";
 import { TSpecificTransactionState } from "../../../../modules/tx/types";
 import { appConnect } from "../../../../store";
 import { SpinningEthereum } from "../../../shared/ethererum";
@@ -60,7 +63,7 @@ const TxSuccess = compose<TTxPendingLayoutProps, IExternalProps>(
   appConnect<IStateProps>({
     stateToProps: state => ({
       txData: selectTxDetails(state),
-      txTimestamp: selectMonitoredTxTimestamp(state),
+      txTimestamp: selectTxTimestamp(state),
       additionalData: selectTxAdditionalData(state),
     }),
   }),
