@@ -90,7 +90,7 @@ export class Web3Adapter {
     return resultData.result;
   }
 
-  public async getTransactionReceipt(txHash: string): Promise<Web3.TransactionReceipt> {
+  public async getTransactionReceipt(txHash: string): Promise<Web3.TransactionReceipt | null> {
     const getTransactionReceipt = promisify<Web3.TransactionReceipt>(
       this.web3.eth.getTransactionReceipt.bind(this.web3.eth),
     );
@@ -138,9 +138,33 @@ export class Web3Adapter {
     return await send(txData);
   }
 
+  /**
+   * Get information about transactions (from `web3.eth.getTransaction`) or `null` when transaction is pending
+   * throws OutOfGasError or RevertedTransactionError in case of transaction not mined successfully
+   */
+  public async getTransactionOrThrow(txHash: string): Promise<Web3.Transaction | null> {
+    const tx = await this.getTransactionByHash(txHash);
+    const txReceipt = await this.getTransactionReceipt(txHash);
+
+    // Both requests `getTx` and `getTransactionReceipt` can end up in two seperate nodes
+    const isMined = tx && tx.blockNumber && txReceipt && txReceipt.blockNumber;
+    if (!isMined) {
+      return null;
+    }
+
+    if (txReceipt!.status === TRANSACTION_STATUS.REVERTED) {
+      if (txReceipt!.gasUsed === tx.gas) {
+        // All gas is burned in this case
+        throw new OutOfGasError();
+      }
+      throw new RevertedTransactionError();
+    }
+
+    return tx;
+  }
+
   public async waitForTx(options: IWaitForTxOptions): Promise<Web3.Transaction> {
     // TODO: Refactor Wait for TX
-    const getTx = promisify<Web3.Transaction>(this.web3.eth.getTransaction);
     return new Promise<Web3.Transaction>((resolve, reject) => {
       this.watchNewBlock(async blockId => {
         try {
@@ -148,20 +172,10 @@ export class Web3Adapter {
             await options.onNewBlock(blockId);
           }
 
-          const tx = await getTx(options.txHash);
-          const txReceipt = await this.getTransactionReceipt(options.txHash);
-          // Both requests `getTx` and `getTransactionReceipt` can end up in two seperate nodes
-          const isMined = tx && tx.blockNumber && txReceipt && txReceipt.blockNumber;
-          if (!isMined) {
-            return;
-          }
+          const tx = await this.getTransactionOrThrow(options.txHash);
 
-          if (txReceipt.status === TRANSACTION_STATUS.REVERTED) {
-            if (txReceipt.gasUsed === tx.gas) {
-              // All gas is burned in this case
-              throw new OutOfGasError();
-            }
-            throw new RevertedTransactionError();
+          if (!tx) {
+            return;
           }
 
           resolve(tx);

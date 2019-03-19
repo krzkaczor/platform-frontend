@@ -1,11 +1,11 @@
 import { ITxData } from "../../../lib/web3/types";
 import { createAction, createActionFactory, createSimpleAction } from "../../actionsUtils";
 import { ETxSenderType, TAdditionalDataByType } from "../types";
-import { ETransactionErrorType } from "./reducer";
+import { ETransactionErrorType, ITxSenderState } from "./reducer";
 
 export const txSenderActions = {
   // Modal related actions
-  txSenderShowModal: (type: ETxSenderType) => createAction("TX_SENDER_SHOW_MODAL", { type }),
+  txSenderShowModal: () => createSimpleAction("TX_SENDER_SHOW_MODAL"),
   txSenderHideModal: () => createSimpleAction("TX_SENDER_HIDE_MODAL"),
   // User awaiting actions
   txSenderAcceptDraft: createActionFactory(
@@ -22,8 +22,8 @@ export const txSenderActions = {
   txSenderReportBlock: (blockId: number) => createAction("TX_SENDER_REPORT_BLOCK", blockId),
   txSenderTxMined: () => createSimpleAction("TX_SENDER_TX_MINED"),
   // Pending transaction related actions
-  txSenderWatchPendingTxs: (txHash: string) =>
-    createAction("TX_SENDER_WATCH_PENDING_TXS", { txHash }),
+  txSenderWatchPendingTxs: (pendingTransaction: ITxSenderState) =>
+    createAction("TX_SENDER_WATCH_PENDING_TXS", { pendingTransaction }),
   txSenderWatchPendingTxsDone: (type: ETxSenderType) =>
     createAction("TX_SENDER_WATCH_PENDING_TXS_DONE", { type }),
   // Error Actions

@@ -1,7 +1,11 @@
 import * as Yup from "yup";
 
+import { ETransactionErrorType, ETxSenderState } from "../../../modules/tx/sender/reducer";
+import { ETxSenderType } from "../../../modules/tx/types";
 import { EWalletSubType, EWalletType } from "../../../modules/web3/types";
 import * as YupTS from "../../yup-ts";
+
+export const OOO_TRANSACTION_TYPE = "mempool";
 
 export enum EUserType {
   INVESTOR = "investor",
@@ -74,19 +78,26 @@ export const TxSchema = YupTS.object({
 
 export const TxWithMetadataSchema = YupTS.object({
   transaction: TxSchema,
-  transactionType: YupTS.string(),
+  transactionType: YupTS.string<typeof OOO_TRANSACTION_TYPE>(),
+});
+
+export const TxPendingWithMetadataSchema = YupTS.object({
+  transaction: TxSchema,
+  transactionType: YupTS.string<ETxSenderType | typeof OOO_TRANSACTION_TYPE>(),
   transactionTimestamp: YupTS.number(),
+  transactionStatus: YupTS.string<ETxSenderState>(),
+  transactionError: YupTS.string<ETransactionErrorType>().optional(),
 });
 
 export const PendingTxsSchema = YupTS.object({
   // it's a pending transaction issued by us
-  pendingTransaction: TxWithMetadataSchema.optional(),
+  pendingTransaction: TxPendingWithMetadataSchema.optional(),
   // list of other pending transaction (out of bounds transactions) issued externally
-  oooTransactions: YupTS.array(TxSchema),
+  oooTransactions: YupTS.array(TxWithMetadataSchema),
 });
 
 export type Tx = YupTS.TypeOf<typeof TxSchema>;
-export type TxWithMetadata = YupTS.TypeOf<typeof TxWithMetadataSchema> & {
+export type TxPendingWithMetadata = YupTS.TypeOf<typeof TxPendingWithMetadataSchema> & {
   transactionAdditionalData: any;
 };
 export type TPendingTxs = YupTS.TypeOf<typeof PendingTxsSchema>;

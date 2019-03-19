@@ -1,7 +1,6 @@
 import { TPendingTxs } from "../../../lib/api/users/interfaces";
 import { AppReducer } from "../../../store";
 import { DeepReadonly } from "../../../types";
-import { actions } from "../../actions";
 
 export interface ITxMonitorState {
   txs: TPendingTxs;
@@ -18,10 +17,8 @@ export const txMonitorReducer: AppReducer<ITxMonitorState> = (
   switch (action.type) {
     case "TX_MONITOR_LOAD_TXS":
       return {
-        txs: action.payload.txs,
+        txs: { ...state.txs, ...action.payload.txs },
       };
-    case actions.txMonitor.deletePendingTx.getType():
-      return initialState;
   }
 
   return state;

@@ -282,7 +282,7 @@ const Documents = compose<React.FunctionComponent>(
         documentsDownloading: selectEtoDocumentsDownloading(state.etoDocuments),
         documentsUploading: selectEtoDocumentsUploading(state.etoDocuments),
         documentsGenerated: selectPendingDownloads(state),
-        transactionPending: selectAreTherePendingTxs(state.txMonitor),
+        transactionPending: selectAreTherePendingTxs(state),
         isRetailEto,
       };
     },
