@@ -1,9 +1,12 @@
 import { interfaces } from "inversify";
 import * as Web3 from "web3";
 
-import { symbols } from "../../di/symbols";
-import { SelectPropertyNames } from "../../types";
-import { ILogger } from "../dependencies/logger";
+import { FAILED_REQUEST_WAIT_TIME, NUMBER_OF_ALLOWED_RETIRES } from "../../../config/constants";
+import { symbols } from "../../../di/symbols";
+import { SelectPropertyNames } from "../../../types";
+import { delay } from "../../../utils/delay";
+import { ILogger } from "../../dependencies/logger";
+import { NodeNotRespondingError } from "./errors";
 
 /**
  * Wrapper on top of web3 Batch API to execute batch request on the next event loop cycle
@@ -26,9 +29,19 @@ class Web3AutoExecuteBatch {
 
   private execute = () => {
     this.logger.info(`Number of web3 node rpc request batched: ${this.web3Batch.requests.length}`);
-
-    this.web3Batch.execute();
-    this.web3Batch = undefined;
+    for (let retries = 0; retries < NUMBER_OF_ALLOWED_RETIRES; retries++) {
+      try {
+        this.web3Batch.execute();
+        this.web3Batch = undefined;
+        return;
+      } catch (e) {
+        delay(FAILED_REQUEST_WAIT_TIME);
+        continue;
+      }
+    }
+    throw new NodeNotRespondingError(
+      `Failed to Connect to RPC Node after ${NUMBER_OF_ALLOWED_RETIRES} retries`,
+    );
   };
 }
 

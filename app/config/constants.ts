@@ -1,5 +1,8 @@
 import BigNumber from "bignumber.js";
 
+/**
+ * Wallet Constants
+ */
 export const LIGHT_WALLET_PASSWORD_CACHE_TIME = 1000 * 3;
 export const LIGHT_WALLET_PRIVATE_DATA_CACHE_TIME = 1000 * 60 * 3;
 
@@ -83,6 +86,8 @@ export const BROWSER_WALLET_RECONNECT_INTERVAL = 1000;
  */
 export const IS_CYPRESS = !!process.env.IS_CYPRESS;
 export const IS_DEV = process.env.NODE_ENV === "development";
+export const NUMBER_OF_ALLOWED_RETIRES = 3;
+export const FAILED_REQUEST_WAIT_TIME = 1000;
 
 /*
  * Storage Listener Constants

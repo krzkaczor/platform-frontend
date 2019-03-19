@@ -37,7 +37,7 @@ import {
   Web3BatchFactoryType,
   web3Factory,
   Web3FactoryType,
-} from "../lib/web3/Web3Batch";
+} from "../lib/web3/Web3Batch/Web3Batch";
 import { Web3Manager } from "../lib/web3/Web3Manager";
 import {
   AsyncIntervalSchedulerFactory,
