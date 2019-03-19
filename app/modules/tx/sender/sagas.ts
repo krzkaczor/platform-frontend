@@ -71,6 +71,7 @@ function* txMonitor(_: TGlobalDependencies): Iterable<any> {
         additionalData: pendingTransaction.transactionAdditionalData,
         error: pendingTransaction.transactionError,
         state: pendingTransaction.transactionStatus,
+        txDetails: pendingTransaction.transaction,
         txHash: txHash,
         txTimestamp: pendingTransaction.transactionTimestamp,
         type: pendingTransaction.transactionType as any,
