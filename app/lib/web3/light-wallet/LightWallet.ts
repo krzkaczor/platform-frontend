@@ -10,20 +10,20 @@ import * as HookedWalletSubprovider from "web3-provider-engine/subproviders/hook
 // tslint:disable-next-line
 import * as RpcSubprovider from "web3-provider-engine/subproviders/rpc";
 
-import { symbols } from "../../di/symbols";
-import { EWalletSubType, EWalletType } from "../../modules/web3/types";
-import { EthereumAddress } from "../../types";
-import { ILogger } from "../dependencies/logger";
-import { ILightWalletMetadata } from "../persistence/WalletMetadataObjectStorage";
+import { symbols } from "../../../di/symbols";
+import { EWalletSubType, EWalletType } from "../../../modules/web3/types";
+import { EthereumAddress } from "../../../types";
+import { ILogger } from "../../dependencies/logger";
+import { ILightWalletMetadata } from "../../persistence/WalletMetadataObjectStorage";
+import { IPersonalWallet, SignerType } from "../PersonalWeb3";
+import { IEthereumNetworkConfig, IRawTxData } from "./../types";
+import { Web3Adapter } from "./../Web3Adapter";
 import {
   getWalletKey,
   getWalletPrivKey,
   getWalletSeed,
   testWalletPassword,
 } from "./LightWalletUtils";
-import { IPersonalWallet, SignerType } from "./PersonalWeb3";
-import { IEthereumNetworkConfig, IRawTxData } from "./types";
-import { Web3Adapter } from "./Web3Adapter";
 
 export interface ICreateVault {
   password: string;

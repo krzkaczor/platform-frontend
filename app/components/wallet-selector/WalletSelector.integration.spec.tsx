@@ -27,13 +27,13 @@ import {
   BrowserWalletConnector,
   BrowserWalletLockedError,
   BrowserWalletMissingError,
-} from "../../lib/web3/BrowserWallet";
+} from "../../lib/web3/browser-wallet/BrowserWallet";
 import { ContractsService } from "../../lib/web3/ContractsService";
 import { LedgerWalletConnector } from "../../lib/web3/ledger-wallet/LedgerConnector";
 import { LedgerWallet } from "../../lib/web3/ledger-wallet/LedgerWallet";
 import { SignerType } from "../../lib/web3/PersonalWeb3";
 import { Web3Adapter } from "../../lib/web3/Web3Adapter";
-import { Web3ManagerMock } from "../../lib/web3/Web3Manager.mock";
+import { Web3ManagerMock } from "../../lib/web3/Web3Manager/Web3Manager.mock";
 import { actions } from "../../modules/actions";
 import { neuCall } from "../../modules/sagasUtils";
 import { initWeb3ManagerEvents } from "../../modules/web3/sagas";

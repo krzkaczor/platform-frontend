@@ -1,9 +1,9 @@
 import { interfaces } from "inversify";
 import * as Web3 from "web3";
 
-import { symbols } from "../../di/symbols";
-import { SelectPropertyNames } from "../../types";
-import { ILogger } from "../dependencies/logger";
+import { symbols } from "../../../di/symbols";
+import { SelectPropertyNames } from "../../../types";
+import { ILogger } from "../../dependencies/logger";
 
 /**
  * Wrapper on top of web3 Batch API to execute batch request on the next event loop cycle

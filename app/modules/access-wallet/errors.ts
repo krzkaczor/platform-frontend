@@ -3,11 +3,11 @@ import {
   MismatchedWalletAddressErrorMessage,
 } from "../../components/translatedMessages/messages";
 import { createMessage, TMessage } from "../../components/translatedMessages/utils";
-import { BrowserWalletError } from "../../lib/web3/BrowserWallet";
-import { mapSignerErrorToErrorMessage } from "../../lib/web3/errors";
+import { BrowserWalletError } from "../../lib/web3/browser-wallet/BrowserWallet";
 import { LedgerError } from "../../lib/web3/ledger-wallet/errors";
-import { LightWalletError } from "../../lib/web3/LightWallet";
-import { SignerError } from "../../lib/web3/Web3Manager";
+import { LightWalletError } from "../../lib/web3/light-wallet/LightWallet";
+import { mapSignerErrorToErrorMessage } from "../../lib/web3/Web3Manager/errors";
+import { SignerError } from "../../lib/web3/Web3Manager/Web3Manager";
 import { EthereumAddress } from "../../types";
 import { mapBrowserWalletErrorToErrorMessage } from "../wallet-selector/browser-wizard/errors";
 import { mapLedgerErrorToErrorMessage } from "../wallet-selector/ledger-wizard/errors";

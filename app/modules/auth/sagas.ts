@@ -5,7 +5,10 @@ import { SignInUserErrorMessage } from "../../components/translatedMessages/mess
 import { createMessage } from "../../components/translatedMessages/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { EUserType } from "../../lib/api/users/interfaces";
-import { SignerRejectConfirmationError, SignerTimeoutError } from "../../lib/web3/Web3Manager";
+import {
+  SignerRejectConfirmationError,
+  SignerTimeoutError,
+} from "../../lib/web3/Web3Manager/Web3Manager";
 import { IAppState } from "../../store";
 import { delay } from "../../utils/delay";
 import { getJwtExpiryDate } from "../../utils/JWTUtils";

@@ -6,7 +6,7 @@ import {
   BrowserWalletLockedError,
   BrowserWalletMismatchedNetworkError,
   BrowserWalletMissingError,
-} from "../../../lib/web3/BrowserWallet";
+} from "../../../lib/web3/browser-wallet/BrowserWallet";
 
 export function mapBrowserWalletErrorToErrorMessage(e: Error): TMessage {
   let messageType = BrowserWalletErrorMessage.GENERIC_ERROR;

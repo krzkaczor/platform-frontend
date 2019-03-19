@@ -4,7 +4,11 @@ import { TGlobalDependencies } from "../../../di/setupBindings";
 import { EUserType, IUser, IUserInput } from "../../../lib/api/users/interfaces";
 import { UserNotExisting } from "../../../lib/api/users/UsersApi";
 import { REGISTRATION_LOGIN_DONE } from "../../../lib/persistence/UserStorage";
-import { SignerRejectConfirmationError } from "../../../lib/web3/Web3Manager";
+import {
+  SignerRejectConfirmationError,
+  SignerTimeoutError,
+  SignerUnknownError,
+} from "../../../lib/web3/Web3Manager/Web3Manager";
 import { IAppState } from "../../../store";
 import { actions } from "../../actions";
 import { loadKycRequestData } from "../../kyc/sagas";
@@ -16,7 +20,6 @@ import { EWalletSubType, EWalletType } from "../../web3/types";
 import { obtainJWT } from "../jwt/sagas";
 import { selectUserType } from "../selectors";
 import { EJwtPermissions } from "./../../../config/constants";
-import { SignerTimeoutError, SignerUnknownError } from "./../../../lib/web3/Web3Manager";
 
 export function* signInUser({
   walletStorage,

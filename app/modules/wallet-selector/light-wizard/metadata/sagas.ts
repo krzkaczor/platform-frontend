@@ -2,7 +2,7 @@ import { select } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ILightWalletRetrieveMetadata } from "../../../../lib/persistence/WalletMetadataObjectStorage";
-import { LightWalletWrongPassword } from "../../../../lib/web3/LightWallet";
+import { LightWalletWrongPassword } from "../../../../lib/web3/light-wallet/LightWallet";
 import { IAppState } from "../../../../store";
 import { neuCall } from "../../../sagasUtils";
 import {

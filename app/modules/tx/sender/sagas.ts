@@ -4,9 +4,9 @@ import { call, put, race, select, take } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../../di/setupBindings";
 import { TPendingTxs, TxWithMetadata } from "../../../lib/api/users/interfaces";
-import { BrowserWalletError } from "../../../lib/web3/BrowserWallet";
+import { BrowserWalletError } from "../../../lib/web3/browser-wallet/BrowserWallet";
 import { LedgerContractsDisabledError, LedgerError } from "../../../lib/web3/ledger-wallet/errors";
-import { LightError } from "../../../lib/web3/LightWallet";
+import { LightError } from "../../../lib/web3/light-wallet/LightWallet";
 import { ITxData } from "../../../lib/web3/types";
 import {
   InvalidChangeIdError,
@@ -17,7 +17,10 @@ import {
   OutOfGasError,
   UnknownEthNodeError,
 } from "../../../lib/web3/Web3Adapter";
-import { SignerError, SignerRejectConfirmationError } from "../../../lib/web3/Web3Manager";
+import {
+  SignerError,
+  SignerRejectConfirmationError,
+} from "../../../lib/web3/Web3Manager/Web3Manager";
 import { IAppState } from "../../../store";
 import { connectWallet } from "../../access-wallet/sagas";
 import { actions } from "../../actions";

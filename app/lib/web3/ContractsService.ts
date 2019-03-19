@@ -19,7 +19,7 @@ import { Neumark } from "../contracts/Neumark";
 import { PlatformTerms } from "../contracts/PlatformTerms";
 import { Universe } from "../contracts/Universe";
 import { ILogger } from "../dependencies/logger";
-import { Web3Manager } from "./Web3Manager";
+import { Web3Manager } from "./Web3Manager/Web3Manager";
 
 @injectable()
 export class ContractsService {

@@ -6,7 +6,7 @@ import { EthereumAddress } from "../../../types";
 import { ILedgerWalletMetadata } from "../../persistence/WalletMetadataObjectStorage";
 import { IPersonalWallet, SignerType } from "../PersonalWeb3";
 import { Web3Adapter } from "../Web3Adapter";
-import { SignerRejectConfirmationError, SignerTimeoutError } from "../Web3Manager";
+import { SignerRejectConfirmationError, SignerTimeoutError } from "../Web3Manager/Web3Manager";
 import {
   LedgerConfirmationRejectedError,
   LedgerNotAvailableError,

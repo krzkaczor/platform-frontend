@@ -27,18 +27,18 @@ import { Storage } from "../lib/persistence/Storage";
 import { USER_JWT_KEY } from "../lib/persistence/UserStorage";
 import { TWalletMetadata } from "../lib/persistence/WalletMetadataObjectStorage";
 import { WalletStorage } from "../lib/persistence/WalletStorage";
-import { BrowserWalletConnector } from "../lib/web3/BrowserWallet";
+import { BrowserWalletConnector } from "../lib/web3/browser-wallet/BrowserWallet";
 import { ContractsService } from "../lib/web3/ContractsService";
 import { LedgerWalletConnector } from "../lib/web3/ledger-wallet/LedgerConnector";
-import { LightWalletConnector } from "../lib/web3/LightWallet";
+import { LightWalletConnector } from "../lib/web3/light-wallet/LightWallet";
 import { IEthereumNetworkConfig } from "../lib/web3/types";
 import {
   web3BatchFactory,
   Web3BatchFactoryType,
   web3Factory,
   Web3FactoryType,
-} from "../lib/web3/Web3Batch";
-import { Web3Manager } from "../lib/web3/Web3Manager";
+} from "../lib/web3/Web3Batch/Web3Batch";
+import { Web3Manager } from "../lib/web3/Web3Manager/Web3Manager";
 import {
   AsyncIntervalSchedulerFactory,
   AsyncIntervalSchedulerFactoryType,

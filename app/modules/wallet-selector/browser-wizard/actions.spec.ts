@@ -11,8 +11,8 @@ import {
   BrowserWallet,
   BrowserWalletConnector,
   BrowserWalletLockedError,
-} from "../../../lib/web3/BrowserWallet";
-import { Web3Manager } from "../../../lib/web3/Web3Manager";
+} from "../../../lib/web3/browser-wallet/BrowserWallet";
+import { Web3Manager } from "../../../lib/web3/Web3Manager/Web3Manager";
 import { IAppState } from "../../../store";
 import { actions } from "../../actions";
 import { EWalletSubType, EWalletType } from "../../web3/types";

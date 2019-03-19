@@ -3,8 +3,8 @@ import { random } from "lodash/fp";
 import { SinonFakeTimers, spy, useFakeTimers } from "sinon";
 import * as Web3 from "web3";
 
-import { createMock } from "../../../test/testUtils";
-import { noopLogger } from "../dependencies/logger";
+import { createMock } from "../../../../test/testUtils";
+import { noopLogger } from "../../dependencies/logger";
 import { Web3AutoExecuteBatch } from "./Web3Batch";
 
 const createJsonRPCRequest = (method: string, params: any[] = []) => ({

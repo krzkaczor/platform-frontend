@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { expectToBeRejected } from "../../../test/testUtils";
+import { expectToBeRejected } from "../../../../test/testUtils";
 import {
   createLightWalletVault,
   deserializeLightWalletVault,

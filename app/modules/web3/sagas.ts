@@ -10,8 +10,8 @@ import {
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { EUserType } from "../../lib/api/users/interfaces";
 import { TWalletMetadata } from "../../lib/persistence/WalletMetadataObjectStorage";
-import { LightWallet } from "../../lib/web3/LightWallet";
-import { EWeb3ManagerEvents } from "../../lib/web3/Web3Manager";
+import { LightWallet } from "../../lib/web3/light-wallet/LightWallet";
+import { EWeb3ManagerEvents } from "../../lib/web3/Web3Manager/Web3Manager";
 import { IAppState } from "../../store";
 import { actions, TAction } from "../actions";
 import { selectUserType } from "../auth/selectors";

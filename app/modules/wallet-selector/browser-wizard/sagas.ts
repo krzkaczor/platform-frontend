@@ -7,7 +7,7 @@ import { TGlobalDependencies } from "../../../di/setupBindings";
 import {
   BrowserWallet,
   BrowserWalletAccountApprovalRejectedError,
-} from "../../../lib/web3/BrowserWallet";
+} from "../../../lib/web3/browser-wallet/BrowserWallet";
 import { IAppState } from "../../../store";
 import { actions } from "../../actions";
 import { neuCall, neuTakeEvery } from "../../sagasUtils";

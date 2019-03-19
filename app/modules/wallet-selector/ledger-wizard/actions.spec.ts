@@ -15,7 +15,7 @@ import { LedgerWalletConnector } from "../../../lib/web3/ledger-wallet/LedgerCon
 import { LedgerWallet } from "../../../lib/web3/ledger-wallet/LedgerWallet";
 import { IDerivationPathToAddress } from "../../../lib/web3/ledger-wallet/types";
 import { Web3Adapter } from "../../../lib/web3/Web3Adapter";
-import { Web3Manager } from "../../../lib/web3/Web3Manager";
+import { Web3Manager } from "../../../lib/web3/Web3Manager/Web3Manager";
 import { IAppState } from "../../../store";
 import { Dictionary } from "../../../types";
 import { actions } from "../../actions";

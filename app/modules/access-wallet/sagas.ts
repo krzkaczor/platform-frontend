@@ -10,16 +10,19 @@ import {
   ILightWalletMetadata,
   ILightWalletRetrieveMetadata,
 } from "../../lib/persistence/WalletMetadataObjectStorage";
-import { BrowserWalletConnector } from "../../lib/web3/BrowserWallet";
+import { BrowserWalletConnector } from "../../lib/web3/browser-wallet/BrowserWallet";
 import { LedgerWalletConnector } from "../../lib/web3/ledger-wallet/LedgerConnector";
-import { LightWalletConnector, LightWalletWrongPassword } from "../../lib/web3/LightWallet";
+import {
+  LightWalletConnector,
+  LightWalletWrongPassword,
+} from "../../lib/web3/light-wallet/LightWallet";
 import {
   deserializeLightWalletVault,
   ILightWalletInstance,
   testWalletPassword,
-} from "../../lib/web3/LightWalletUtils";
+} from "../../lib/web3/light-wallet/LightWalletUtils";
 import { IPersonalWallet } from "../../lib/web3/PersonalWeb3";
-import { SignerError, Web3Manager } from "../../lib/web3/Web3Manager";
+import { SignerError, Web3Manager } from "../../lib/web3/Web3Manager/Web3Manager";
 import { IAppState } from "../../store";
 import { invariant } from "../../utils/invariant";
 import { actions, TActionFromCreator } from "../actions";
