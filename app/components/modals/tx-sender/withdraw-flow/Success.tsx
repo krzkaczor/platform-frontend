@@ -38,7 +38,7 @@ export const WithdrawSuccessLayout: React.FunctionComponent<TProps> = ({
       txTimestamp={txTimestamp}
     />
 
-    <TxHashAndBlock txHash={txHash} />
+    <TxHashAndBlock data-test-id="modals.tx-sender.withdraw-flow" txHash={txHash} />
   </Message>
 );
 

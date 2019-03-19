@@ -2,7 +2,8 @@ import * as cn from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 
-import { CommonHtmlProps } from "../../../../types";
+import { CommonHtmlProps, TDataTestId } from "../../../../types";
+import { makeTid } from "../../../../utils/tidUtils";
 import { EtherscanTxLink } from "../../../shared/links/EtherscanLink";
 
 import * as styles from "./TxHashAndBlock.module.scss";
@@ -12,15 +13,17 @@ export interface ITxPendingProps {
   blockId?: number;
 }
 
-const TxHashAndBlock: React.FunctionComponent<ITxPendingProps & CommonHtmlProps> = ({
+const TxHashAndBlock: React.FunctionComponent<ITxPendingProps & CommonHtmlProps & TDataTestId> = ({
   txHash,
   blockId,
   className,
+  "data-test-id": dataTestId,
 }) => (
   <div className={className}>
     {txHash && (
       <EtherscanTxLink txHash={txHash} className={styles.txHash}>
-        <FormattedMessage id="tx-monitor.details.hash-label" /> {txHash}
+        <FormattedMessage id="tx-monitor.details.hash-label" />{" "}
+        <span data-test-id={makeTid(dataTestId, "tx-hash")}>{txHash}</span>
       </EtherscanTxLink>
     )}
 
