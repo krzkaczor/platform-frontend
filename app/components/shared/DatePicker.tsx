@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl-phraseapp";
 
 import { IS_CYPRESS, IS_DEV } from "../../config/constants";
 import { DatetimeProps, TypedDatetime } from "./forms";
-import { InlineIcon } from "./InlineIcon";
+import { InlineIcon } from "./icons";
 import { TimeLeft } from "./TimeLeft";
 import { utcTime } from "./utils";
 

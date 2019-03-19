@@ -157,7 +157,7 @@ export class BrowserWalletConnector {
   }
 
   private async getBrowserWalletType(web3: Web3): Promise<EWalletSubType> {
-    const nodeIdString = await promisify(web3.version.getNode)();
+    const nodeIdString = await promisify<string>(web3.version.getNode)();
     const matchNodeIdString = nodeIdString.toLowerCase();
 
     if (matchNodeIdString.includes("metamask")) {

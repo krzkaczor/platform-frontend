@@ -1,23 +1,13 @@
-import * as moment from "moment";
-
-import {
-  INV_ETH_EUR_ICBM_M_HAS_KYC_DUP,
-  INV_ETH_EUR_ICBM_M_HAS_KYC_DUP_ADDRESS,
-  INV_EUR_ICBM_HAS_KYC_ADDRESS,
-  INV_EUR_ICBM_HAS_KYC_SEED,
-} from "../fixtures";
-import { clearEmailServer, goToWallet } from "../utils";
+import { INV_ETH_EUR_ICBM_M_HAS_KYC_DUP, INV_EUR_ICBM_HAS_KYC_SEED } from "../fixtures";
+import { assertWallet, clearEmailServer, goToProfile, goToWallet } from "../utils";
 import { fillForm } from "../utils/forms";
-import { assertWallet, goToProfile } from "../utils/index";
 import { tid } from "../utils/selectors";
 import { createAndLoginNewUser } from "../utils/userHelpers";
 import { assertWaitForBankTransferSummary } from "./assertions";
 
 function assertBankTransferFlow({
-  address,
   agreementApprovalRequired,
 }: {
-  address: string;
   agreementApprovalRequired: boolean;
 }): void {
   if (agreementApprovalRequired) {
@@ -43,15 +33,10 @@ function assertBankTransferFlow({
   cy.get(tid("bank-transfer.summary.iban")).contains("LI78088110102905K002E");
   cy.get(tid("bank-transfer.summary.bic")).contains("BFRILI22XXX");
 
-  const date = moment.utc().format("DDMMYYHH");
-
-  // for details how it's generated see `generateReference` method
-  const referenceRegexp = new RegExp(`NF ${address} REF VE${date}\\d\\d.{4}`);
-
   cy.get(tid("bank-transfer.summary.reference-number"))
     .then($e => $e.text().trim())
     .as("referenceNumber")
-    .should("match", referenceRegexp);
+    .should("match", /NR[\w\d]{10}NR/);
 
   clearEmailServer();
 
@@ -78,7 +63,6 @@ describe("Bank Verification", () => {
       cy.get(tid("locked-wallet.neur.bank-account.link-account")).click();
 
       assertBankTransferFlow({
-        address: INV_EUR_ICBM_HAS_KYC_ADDRESS,
         agreementApprovalRequired: true,
       });
     });
@@ -95,7 +79,6 @@ describe("Bank Verification", () => {
       cy.get(tid("linked-bank-account-widget.link-account")).click();
 
       assertBankTransferFlow({
-        address: INV_EUR_ICBM_HAS_KYC_ADDRESS,
         agreementApprovalRequired: true,
       });
     });
@@ -114,7 +97,6 @@ describe("Bank Verification", () => {
       cy.get(tid("locked-wallet.neur.bank-account.link-account")).click();
 
       assertBankTransferFlow({
-        address: INV_ETH_EUR_ICBM_M_HAS_KYC_DUP_ADDRESS,
         agreementApprovalRequired: false,
       });
     });
@@ -133,7 +115,6 @@ describe("Bank Verification", () => {
       cy.get(tid("linked-bank-account-widget.link-different-account")).click();
 
       assertBankTransferFlow({
-        address: INV_ETH_EUR_ICBM_M_HAS_KYC_DUP_ADDRESS,
         agreementApprovalRequired: false,
       });
     });

@@ -6,7 +6,9 @@ import { Panel } from "../Panel";
 import * as styles from "./ErrorBoundary.module.scss";
 
 export const ErrorBoundaryPanel: React.FunctionComponent = () => (
-  <Panel className={styles.panel} centerContent={true}>
-    <FormattedMessage id="error-boundary.widget-error-message" />
+  <Panel className={styles.panel}>
+    <p className="mb-0">
+      <FormattedMessage id="error-boundary.widget-error-message" />
+    </p>
   </Panel>
 );

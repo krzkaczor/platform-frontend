@@ -11,7 +11,7 @@ import { appConnect } from "../../../store";
 import { CommonHtmlProps } from "../../../types";
 import { getDocumentTitles } from "../../documents/utils";
 import { DocumentLink, DocumentTemplateButton } from "../../shared/DocumentLink";
-import { InlineIcon } from "../../shared/InlineIcon";
+import { InlineIcon } from "../../shared/icons";
 import { Panel } from "../../shared/Panel";
 
 import * as icon_link from "../../../assets/img/inline_icons/social_link.svg";

@@ -17,3 +17,8 @@ export function autoUnmountEnzymeComponentsHook(): void {
   mountedComponents.filter(c => c.exists()).forEach(c => c.unmount());
   mountedComponents.length = 0;
 }
+
+export function remount(component: ReactWrapper): void {
+  component.unmount();
+  component.mount();
+}

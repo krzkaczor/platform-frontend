@@ -1,14 +1,13 @@
 import { LightWalletErrorMessage } from "../../../components/translatedMessages/messages";
 import { createMessage, TMessage } from "../../../components/translatedMessages/utils";
+import { LightSignMessageError, LightWalletWrongPassword } from "../../../lib/web3/LightWallet";
 import {
   LightCreationError,
   LightDeserializeError,
   LightKeyEncryptError,
-  LightSignMessageError,
   LightWalletWrongMnemonic,
-  LightWalletWrongPassword,
   LightWrongPasswordSaltError,
-} from "../../../lib/web3/LightWallet";
+} from "./../../../lib/web3/LightWalletUtils";
 
 export function mapLightWalletErrorToErrorMessage(e: Error): TMessage {
   let messageType = LightWalletErrorMessage.GENERIC_ERROR;

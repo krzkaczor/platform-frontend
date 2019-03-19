@@ -27,6 +27,7 @@ export const browserWalletWizardReducer: AppReducer<IBrowserWalletWizardState> =
     case "BROWSER_WALLET_APPROVAL_REJECTED":
       return {
         ...state,
+        isLoading: false,
         approvalRejected: true,
       };
     case "BROWSER_WALLET_APPROVAL_REQUEST_RESET":

@@ -4,7 +4,7 @@ import { Col, Container, Row } from "reactstrap";
 
 import { TTranslatedString } from "../../types";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
-import { InlineIcon } from "./InlineIcon";
+import { InlineIcon } from "./icons";
 
 import * as iconDownload from "../../assets/img/inline_icons/download.svg";
 import * as styles from "./HighlightedStripField.module.scss";

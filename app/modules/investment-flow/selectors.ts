@@ -2,7 +2,7 @@ import { IAppState } from "../../store";
 import { compareBigNumbers } from "../../utils/BigNumberUtils";
 import { EValidationState } from "../tx/sender/reducer";
 import { selectTxValidationState } from "../tx/sender/selectors";
-import { EInvestmentCurrency, EInvestmentType } from "./reducer";
+import { EInvestmentType } from "./reducer";
 
 // State Selectors
 
@@ -40,11 +40,4 @@ export const selectIsReadyToInvest = (state: IAppState) => {
     compareBigNumbers(ethValue, 0) > 0 &&
     selectTxValidationState(state) === EValidationState.VALIDATION_OK
   );
-};
-
-export const selectCurrencyByInvestmentType = (state: IAppState) => {
-  const type = selectInvestmentType(state);
-  return type === EInvestmentType.InvestmentWallet || type === EInvestmentType.ICBMEth
-    ? EInvestmentCurrency.Ether
-    : EInvestmentCurrency.Euro;
 };

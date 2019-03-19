@@ -1,7 +1,7 @@
 .kyc-panel {
   display: flex;
-  flex-flow: row;
-  align-items: center;
+  flex: 1 1 100%;
+  flex-direction: column;
   max-width: px-to-rem(1000px);
   margin: 0 auto;
 

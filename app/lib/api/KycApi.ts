@@ -13,6 +13,7 @@ import {
   KycIndividualDataSchema,
   KycLegalRepresentativeSchema,
   KycRequestStateSchema,
+  TKycBankTransferPurpose,
 } from "./KycApi.interfaces";
 
 const BASE_PATH = "/api/kyc/";
@@ -33,6 +34,7 @@ const BENEFICIAL_OWNER_ENTRY_PATH = "/beneficial-owner/";
 const BENEFICIAL_OWNER_DOCUMENT_PATH = "/beneficial-owner/{boid}/document";
 
 const BANK_ACCOUNT_PATH = "/bank-account";
+const NEUR_PURCHASE_REQUEST_PREPARATION_PATH = "/neur-purchase-request-preparation";
 const NEUR_PURCHASE_REQUEST_PATH = "/neur-purchase-requests";
 
 export class KycApiError extends Error {}
@@ -279,6 +281,15 @@ export class KycApi {
       url: BANK_ACCOUNT_PATH,
       // TODO test why `optional` is not working
       // responseSchema: KycBankAccountSchema,
+    });
+
+    return response.body;
+  }
+
+  public async nEurPurchaseRequestPreparation(): Promise<TKycBankTransferPurpose> {
+    const response = await this.httpClient.post<TKycBankTransferPurpose>({
+      baseUrl: BASE_PATH,
+      url: NEUR_PURCHASE_REQUEST_PREPARATION_PATH,
     });
 
     return response.body;

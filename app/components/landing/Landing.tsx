@@ -9,7 +9,7 @@ import { withContainer } from "../../utils/withContainer";
 import { LayoutUnauthorized } from "../layouts/LayoutUnauthorized";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutUnauthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutUnauthorized";
-import { EtoCard } from "../shared/EtoCard";
+import { EtoOfferingCard } from "./EtoOfferingCard";
 import { Features } from "./parts/Features";
 import { LandingFeatured } from "./parts/LandingFeatured";
 import { LandingHeader } from "./parts/LandingHeader";
@@ -39,7 +39,7 @@ export const LandingComponent: React.FunctionComponent = () => (
         </Row>
 
         <Row>
-          {etoCompaniesCards.filter(e => !e.data.hidden).map((e, index) => (
+          {etoCompaniesCards.filter(e => !e.hidden).map((e, index) => (
             <Col
               xs={12}
               lg={6}
@@ -47,7 +47,7 @@ export const LandingComponent: React.FunctionComponent = () => (
               id={`eto-card-${index}`}
               key={index}
             >
-              <EtoCard {...e} />
+              <EtoOfferingCard {...e} />
             </Col>
           ))}
         </Row>

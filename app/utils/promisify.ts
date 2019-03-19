@@ -1,5 +1,5 @@
 export const promisify = <T>(fn: Function) => {
-  return function(...args: any[]): Promise<any> {
+  return function(...args: any[]): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       fn(...args, (err: any, result: T) => {
         if (err !== null) {
