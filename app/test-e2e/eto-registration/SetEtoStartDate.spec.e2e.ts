@@ -38,7 +38,7 @@ describe("Eto start date setup", () => {
 
       confirmAccessModal();
 
-      cy.get(tid("modals.tx-sender.withdraw-flow.success"));
+      cy.get(tid("modals.shared.tx-success.modal"));
 
       closeModal();
 
