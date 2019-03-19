@@ -12,7 +12,7 @@ import { invariant } from "../../../utils/invariant";
 import { actions } from "../../actions";
 import { neuCall, neuTakeUntil } from "../../sagasUtils";
 import { ETransactionErrorType, ETxSenderState } from "../sender/reducer";
-import { ETxSenderType } from "../types";
+import { ETxSenderType, TSpecificTransactionState } from "../types";
 import { selectPendingTransaction } from "./selectors";
 import { EEventEmitterChannelEvents, TEventEmitterChannelEvents } from "./types";
 
@@ -45,7 +45,12 @@ export function* markTransactionAsPending(
     type,
     txData,
     txAdditionalData,
-  }: { txHash: string; type: ETxSenderType; txData: ITxData; txAdditionalData?: any },
+  }: {
+    txHash: string;
+    type: ETxSenderType;
+    txData: ITxData;
+    txAdditionalData?: TSpecificTransactionState["additionalData"];
+  },
 ): any {
   const currentPending: TxPendingWithMetadata | undefined = yield select(selectPendingTransaction);
 

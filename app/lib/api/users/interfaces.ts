@@ -83,7 +83,7 @@ export const TxWithMetadataSchema = YupTS.object({
 
 export const TxPendingWithMetadataSchema = YupTS.object({
   transaction: TxSchema,
-  transactionType: YupTS.string<ETxSenderType | typeof OOO_TRANSACTION_TYPE>(),
+  transactionType: YupTS.string<ETxSenderType>(),
   transactionTimestamp: YupTS.number(),
   transactionStatus: YupTS.string<ETxSenderState>(),
   transactionError: YupTS.string<ETransactionErrorType>().optional(),

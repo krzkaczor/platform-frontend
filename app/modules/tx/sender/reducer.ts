@@ -51,8 +51,9 @@ interface ITxSenderCommonState {
   validationState?: EValidationState;
 }
 
-export type ITxSenderState = (TSpecificTransactionState | ITxSenderDefaultState) &
-  ITxSenderCommonState;
+type TTransactionState = TSpecificTransactionState | ITxSenderDefaultState;
+
+export type ITxSenderState = TTransactionState & ITxSenderCommonState;
 
 const initialState: ITxSenderState = {
   type: undefined,

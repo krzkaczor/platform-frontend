@@ -13,6 +13,7 @@ import {
   OOO_TRANSACTION_TYPE,
   TPendingTxs,
   TxPendingWithMetadata,
+  TxWithMetadata,
   UserValidator,
 } from "./interfaces";
 
@@ -142,14 +143,16 @@ export class UsersApi {
   }
 
   public async pendingTxs(): Promise<TPendingTxs> {
-    const response = await this.httpClient.get<Array<TxPendingWithMetadata>>({
+    const response = await this.httpClient.get<Array<TxPendingWithMetadata | TxWithMetadata>>({
       baseUrl: USER_API_ROOT,
       url: "/pending_transactions/me",
     });
     if (response.statusCode === 200) {
       return {
         // find transaction with payload
-        pendingTransaction: response.body.find(tx => tx.transactionType !== OOO_TRANSACTION_TYPE),
+        pendingTransaction: response.body.find(
+          tx => tx.transactionType !== OOO_TRANSACTION_TYPE,
+        ) as TxPendingWithMetadata,
         // move other transactions to OOO transactions
         oooTransactions: response.body.filter(tx => tx.transactionType === OOO_TRANSACTION_TYPE),
       };

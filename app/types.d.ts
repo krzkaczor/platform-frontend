@@ -113,6 +113,11 @@ type SelectPropertyNames<T, R> = { [K in keyof T]: T[K] extends R ? K : never }[
  */
 type PickProperties<T, R> = Pick<T, SelectPropertyNames<T, R>>;
 
+/**
+ * Overwrites properties from T1 with one from T2
+ * @example
+ * Overwrite<{ foo: boolean, bar: string }, { foo: number }> // { foo: number, bar: string }
+ */
 export type Overwrite<T1, T2> = { [P in Exclude<keyof T1, keyof T2>]: T1[P] } & T2;
 
 export type TFormikConnect = {

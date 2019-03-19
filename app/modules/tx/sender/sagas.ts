@@ -74,7 +74,7 @@ function* txMonitor(_: TGlobalDependencies): Iterable<any> {
         txDetails: pendingTransaction.transaction,
         txHash: txHash,
         txTimestamp: pendingTransaction.transactionTimestamp,
-        type: pendingTransaction.transactionType as any,
+        type: pendingTransaction.transactionType,
       }),
     );
 
@@ -168,6 +168,11 @@ function* txSendProcess(
   }
 }
 
+/**
+ * Check for pending transactions, behaves differently depending on the tx type
+ * 1. For pending platform tx it will stop current tx (by throwing error) and start monitoring pending transaction
+ * 2. For external pending tx wait for it to finish and then continue with current tx
+ */
 function* ensureNoPendingTx({ logger }: TGlobalDependencies): any {
   while (true) {
     yield neuCall(updatePendingTxs);
