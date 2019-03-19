@@ -52,8 +52,8 @@
     "update-contract-artifacts": "git submodule update --recursive --remote",
     "intl:extract": "./scripts/extract-intl-messages.sh",
     "intl:extract:check": "./scripts/extract-intl-messages.sh --check",
-    "storybook": "NF_STORYBOOK_RUN=1 start-storybook -p 9001 -c .storybook -s ./app/assets",
-    "storybook:screenshots": "NF_STORYBOOK_RUN=1 storybook-chrome-screenshot --debug --inject-files ./.storybook/disables.js -p 9001 -c .storybook --browser-timeout 999999 -s ./app/assets",
+    "storybook": "STORYBOOK_RUN=1 start-storybook -p 9001 -c .storybook -s ./app/assets",
+    "storybook:screenshots": "STORYBOOK_RUN=1 storybook-chrome-screenshot --debug --inject-files ./.storybook/disables.js -p 9001 -c .storybook --browser-timeout 999999 -s ./app/assets",
     "deploy-storybook": "storybook-to-ghpages --out=storybook-static"
   },
   "devDependencies": {
