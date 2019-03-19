@@ -34,7 +34,7 @@
     "start:remote": "(cp -n ./app/config/.env.example .env || true) && NODE_ENV=development webpack-dev-server --config ./webpack/webpack.config.dev-remote.js",
     "start:translate": "(cp -n ./app/config/.env.example .env || true) && NODE_ENV=development && NF_ENABLE_TRANSLATE_OVERLAY=1 webpack-dev-server --config ./webpack/webpack.config.translate.js",
     "storybook": "STORYBOOK_RUN=1 start-storybook -p 9001 -c .storybook -s ./app/assets",
-    "storybook:screenshots": "NF_STORYBOOK_RUN=1 storybook-chrome-screenshot --debug --inject-files ./.storybook/disables.js -p 9001 -c .storybook --browser-timeout 999999 -s ./app/assets",
+    "storybook:screenshots": "STORYBOOK_RUN=1 storybook-chrome-screenshot --debug --inject-files ./.storybook/disables.js -p 9001 -c .storybook --browser-timeout 999999 -s ./app/assets",
     "test": "yarn lint && yarn test:browser && yarn test:node && yarn test:e2e",
     "test:browser": "TS_NODE_PROJECT=tsconfig.spec.json mocha --require ts-node/register --require jsdom-global/register --require ./test/setupBrowserTests.ts './test/setupTestsHooks.ts' './app/**/*.spec.ts?(x)'",
     "test:browser-coverage": "TS_NODE_PROJECT=tsconfig.spec.json nyc mocha --require ts-node/register --require jsdom-global/register --require ./test/setupBrowserTests.ts 'test/setupTestsHooks.ts' './app/**/*.spec.ts?(x)'",
