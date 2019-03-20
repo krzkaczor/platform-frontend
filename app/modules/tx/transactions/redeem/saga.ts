@@ -5,7 +5,6 @@ import { MONEY_DECIMALS } from "../../../../config/constants";
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ITxData } from "../../../../lib/web3/types";
 import { compareBigNumbers } from "../../../../utils/BigNumberUtils";
-import { ERoundingMode, formatMoney } from "../../../../utils/Money.utils";
 import { convertToBigInt } from "../../../../utils/Number.utils";
 import { actions } from "../../../actions";
 import { selectStandardGasPriceWithOverHead } from "../../../gas/selectors";
@@ -41,7 +40,9 @@ export function* startNEuroRedeemGenerator(_: TGlobalDependencies): any {
 
   const nEURBalanceUlps = yield select(selectLiquidEuroTokenBalance);
 
-  const nEURBalance = formatMoney(nEURBalanceUlps, MONEY_DECIMALS, 2, ERoundingMode.DOWN);
+  const nEURBalance = new BigNumber(nEURBalanceUlps)
+    .div(new BigNumber(10).pow(MONEY_DECIMALS))
+    .toFixed(2, BigNumber.ROUND_DOWN);
 
   // Whole precision number should be passed when there is whole balance redeemed
   // also when user provided value has been used, then it have to be converted to Q18 via convertToBigInt
