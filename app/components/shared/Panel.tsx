@@ -11,7 +11,6 @@ export interface IPanelProps {
   rightComponent?: React.ReactNode;
   icon?: string;
   narrow?: boolean;
-  centerContent?: boolean;
 }
 
 const Panel: React.FunctionComponent<IPanelProps & CommonHtmlProps & TDataTestId> = ({
@@ -21,7 +20,6 @@ const Panel: React.FunctionComponent<IPanelProps & CommonHtmlProps & TDataTestId
   className,
   children,
   narrow,
-  centerContent,
   "data-test-id": dataTestId,
 }) => (
   <section
@@ -39,7 +37,7 @@ const Panel: React.FunctionComponent<IPanelProps & CommonHtmlProps & TDataTestId
       </div>
     )}
 
-    <div className={cn(styles.content, centerContent ? "text-center" : null)}>{children}</div>
+    {children}
   </section>
 );
 

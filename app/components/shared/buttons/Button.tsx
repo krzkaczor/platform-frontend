@@ -19,9 +19,9 @@ export enum EButtonLayout {
 }
 
 export enum ButtonSize {
-  NORMAL = "",
-  SMALL = "small",
-  HUGE = "huge",
+  NORMAL,
+  SMALL = styles.buttonSmall,
+  HUGE = styles.buttonHuge,
 }
 
 export enum ButtonWidth {

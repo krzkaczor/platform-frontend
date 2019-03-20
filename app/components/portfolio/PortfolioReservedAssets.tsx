@@ -10,7 +10,7 @@ import { getNeuReward } from "../../modules/investor-portfolio/utils";
 import { EETOStateOnChain } from "../../modules/public-etos/types";
 import { withParams } from "../../utils/withParams";
 import { appRoutes } from "../appRoutes";
-import { EProjectStatusSize, ETOState } from "../shared/ETOState";
+import { EProjectStatusSize, ETOState } from "../eto/shared/ETOState";
 import { Heading } from "../shared/Heading";
 import { ECurrency, ECurrencySymbol, EMoneyFormat, Money } from "../shared/Money";
 import { NumberFormat } from "../shared/NumberFormat";

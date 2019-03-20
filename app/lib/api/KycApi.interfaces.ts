@@ -172,8 +172,13 @@ export const KycBankAccountSchema = YupTS.object({
   verifiedUserAccount: KycBankVerifiedBankAccountSchema.optional(),
 });
 
+export const KycBankTransferPurposeSchema = YupTS.object({
+  purpose: YupTS.string(),
+});
+
 export type KycBankVerifiedBankAccount = YupTS.TypeOf<typeof KycBankVerifiedBankAccountSchema>;
 export type KycBankQuintessenceBankAccount = YupTS.TypeOf<
   typeof KycBankQuintessenceBankAccountSchema
 >;
 export type TKycBankAccount = YupTS.TypeOf<typeof KycBankAccountSchema>;
+export type TKycBankTransferPurpose = YupTS.TypeOf<typeof KycBankTransferPurposeSchema>;

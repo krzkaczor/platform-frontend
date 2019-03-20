@@ -18,7 +18,7 @@ export type TPortfolioLayoutProps = {
 };
 
 export type IPortfolioDispatchProps = {
-  loadTokensData: (walletAddress: string) => void;
+  loadTokensData: () => void;
 };
 
 const PortfolioLayout: React.FunctionComponent<TPortfolioLayoutProps> = ({

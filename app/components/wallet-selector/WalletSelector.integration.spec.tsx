@@ -1,5 +1,6 @@
 import { BigNumber } from "bignumber.js";
 import { expect } from "chai";
+import * as jsonwebtoken from "jsonwebtoken";
 
 import { createMount, remount } from "../../../test/createMount";
 import { dummyEthereumAddress, dummyNetworkId } from "../../../test/fixtures";
@@ -80,7 +81,13 @@ describe("Wallet selector integration", () => {
       createJwt: async () => ({
         statusCode: 200,
         body: {
-          jwt: "JWT",
+          jwt: jsonwebtoken.sign(
+            {
+              exp: Math.floor(Date.now() / 1000) + 60 * 60,
+              data: "foobar",
+            },
+            "secret",
+          ),
         },
       }),
     });
@@ -241,7 +248,13 @@ describe("Wallet selector integration", () => {
       createJwt: async () => ({
         statusCode: 200,
         body: {
-          jwt: "JWT",
+          jwt: jsonwebtoken.sign(
+            {
+              exp: Math.floor(Date.now() / 1000) + 60 * 60,
+              data: "foobar",
+            },
+            "secret",
+          ),
         },
       }),
     });

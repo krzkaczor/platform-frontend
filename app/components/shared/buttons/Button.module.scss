@@ -6,6 +6,8 @@ $_focus-color: $neu-piss-yellow;
 $_active-color: lighten($_hover-color, 20%);
 
 .button {
+  $button: &;
+
   background: transparent;
   border: 0;
   margin: 0;
@@ -90,7 +92,7 @@ $_active-color: lighten($_hover-color, 20%);
       }
     }
 
-    &:global(.small) {
+    &#{$button}-small {
       @include font-button-small;
 
       .content {
@@ -98,7 +100,7 @@ $_active-color: lighten($_hover-color, 20%);
       }
     }
 
-    &:global(.huge) {
+    &#{$button}-huge {
       border: px-to-rem(1px) solid currentColor;
     }
 
@@ -115,7 +117,7 @@ $_active-color: lighten($_hover-color, 20%);
     font-weight: $font-weight-bold;
     text-transform: uppercase;
 
-    &:global(.small) {
+    &#{$button}-small {
       @include font-label;
     }
 
@@ -149,11 +151,10 @@ $_active-color: lighten($_hover-color, 20%);
       }
     }
 
-    .content {
+    > .content {
       padding: 0;
       margin-top: 0;
       justify-content: initial;
-
       text-decoration: underline;
     }
   }
@@ -169,16 +170,16 @@ $_active-color: lighten($_hover-color, 20%);
   }
 
   // sizes
-  &:global(.small) {
+  &-small {
     font-size: 80%;
     font-weight: $font-weight-medium;
 
-    > .content {
+    &:not(#{$button}-inline) > .content {
       padding: px-to-rem(3px) px-to-rem(8px);
     }
   }
 
-  &:global(.huge) {
+  &-huge {
     @include font-headline-medium;
 
     min-width: px-to-rem(216px);

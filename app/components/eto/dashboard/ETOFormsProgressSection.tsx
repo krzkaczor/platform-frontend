@@ -25,8 +25,8 @@ import {
   calculateProductVisionProgress,
 } from "../../../modules/eto-flow/utils";
 import { appConnect } from "../../../store";
-import { EtoFormProgressWidget } from "../../shared/EtoFormProgressWidget";
 import { etoRegisterRoutes } from "../registration/routes";
+import { EtoFormProgressWidget } from "./EtoFormProgressWidget";
 
 interface IEtoRegisteredRoutes {
   [id: string]: EEtoFormTypes;

@@ -11,7 +11,7 @@ export const formWrapper = (formState: any, onSubmit?: (values: any) => any) => 
 ) => () => (
   <Formik initialValues={formState} onSubmit={onSubmit || (() => {})}>
     {({ submitForm, values, submitCount }) => {
-      if (process.env.NF_STORYBOOK_RUN) {
+      if (process.env.STORYBOOK_RUN) {
         // tslint:disable-next-line
         console.log(JSON.stringify(values));
       }

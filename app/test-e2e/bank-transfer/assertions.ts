@@ -1,6 +1,7 @@
 import { get } from "lodash";
 
 import { mockApiUrl } from "../confirm";
+import { tid } from "../utils/selectors";
 
 export const assertWaitForBankTransferSummary = (reference: string, timeout: number = 10000) => {
   expect(timeout, `Email not received in ${timeout} ms`).to.be.gt(0);
@@ -15,4 +16,9 @@ export const assertWaitForBankTransferSummary = (reference: string, timeout: num
     }
     assertWaitForBankTransferSummary(reference, timeout - 1000);
   });
+};
+
+export const assertBankAccountDetails = () => {
+  cy.get(tid("wallet.bank-account.name")).contains("Account Holder Name");
+  cy.get(tid("wallet.bank-account.details")).contains(/Sparkasse Berlin \(\*{16}\d{4}\)/);
 };

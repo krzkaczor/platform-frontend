@@ -71,6 +71,7 @@ export const UnlockedNEURWallet: React.FunctionComponent<IUnlockedNEURWallet & C
                   name: <FormattedMessage id="components.wallet.start.neur-wallet.redeem" />,
                   onClick: onRedeem,
                   disabled: !isUserFullyVerified || isZero(neuroAmount),
+                  "data-test-id": "wallet-balance.neur.redeem-button",
                 },
               ]
             : undefined

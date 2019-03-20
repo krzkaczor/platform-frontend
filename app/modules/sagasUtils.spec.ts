@@ -2,7 +2,7 @@ import { delay } from "redux-saga";
 import { expectSaga } from "redux-saga-test-plan";
 import { cancelled, put } from "redux-saga/effects";
 
-import { neuRepeatIf, neuTakeOnly, neuTakeUntil } from "./sagasUtils";
+import { neuRepeatIf, neuRestartIf, neuTakeOnly, neuTakeUntil } from "./sagasUtils";
 
 describe("sagasUtils", () => {
   describe("neuTakeUntil", () => {
@@ -91,6 +91,26 @@ describe("sagasUtils", () => {
 
     it("should pass args to base saga", () => {
       return expectSaga(neuRepeatIf, "INIT_START", "INIT_END", baseSaga, "foo", "bar")
+        .call.like({ fn: baseSaga, args: ["foo", "bar"] })
+        .silentRun();
+    });
+  });
+
+  describe("neuRestartIf", () => {
+    function* baseSaga(): any {
+      yield delay(10);
+    }
+
+    it("should repeat when repeat action was dispatched", () => {
+      return expectSaga(neuRestartIf, "INIT_END", baseSaga)
+        .call.fn(baseSaga)
+        .dispatch({ type: "INIT_END" })
+        .call.fn(baseSaga)
+        .silentRun();
+    });
+
+    it("should pass args to base saga", () => {
+      return expectSaga(neuRestartIf, "INIT_END", baseSaga, "foo", "bar")
         .call.like({ fn: baseSaga, args: ["foo", "bar"] })
         .silentRun();
     });

@@ -1,37 +1,11 @@
-import * as cn from "classnames";
 import { Field, FieldAttributes, FieldProps, FormikConsumer } from "formik";
 import * as React from "react";
-import { Input, InputGroup, InputGroupAddon } from "reactstrap";
 
-import { CommonHtmlProps, InputType, TTranslatedString } from "../../../../types";
-import { FormFieldError, generateErrorId } from "./FormFieldError";
-import { getComputedValue, isNonValid, withCountedCharacters } from "./utils";
+import { CommonHtmlProps } from "../../../../types";
+import { FormInputRaw, IFormInputRawExternalProps } from "./FormInputRaw";
+import { getComputedValue, isNonValid } from "./utils";
 
-import * as styles from "./FormStyles.module.scss";
-
-export enum InputSize {
-  NORMAL = "",
-  SMALL = "sm",
-}
-
-export interface IFormInputExternalProps {
-  min?: string;
-  max?: string;
-  placeholder?: TTranslatedString;
-  errorMsg?: TTranslatedString;
-  type?: InputType;
-  prefix?: TTranslatedString;
-  suffix?: TTranslatedString;
-  addonStyle?: string;
-  maxLength?: number;
-  charactersLimit?: number;
-  size?: InputSize;
-  customValidation?: (value: any) => string | Function | Promise<void> | undefined;
-  customOnBlur?: Function;
-  ignoreTouched?: boolean;
-}
-
-export type FormInputProps = IFormInputExternalProps & FieldAttributes<any> & CommonHtmlProps;
+export type FormInputProps = IFormInputRawExternalProps & FieldAttributes<any> & CommonHtmlProps;
 
 const transform = (value: string, charactersLimit?: number) => {
   return value !== undefined ? getComputedValue(value, charactersLimit) : "";
@@ -50,104 +24,69 @@ const transformBack = (value: number | string) => {
 /**
  * Formik connected form input without FormGroup and FormFieldLabel.
  */
-export class FormInput extends React.Component<FormInputProps> {
-  static defaultProps = {
-    size: InputSize.NORMAL,
-  };
+export const FormInput: React.FunctionComponent<FormInputProps> = ({
+  type,
+  placeholder,
+  name,
+  prefix,
+  suffix,
+  className,
+  addonStyle,
+  charactersLimit,
+  errorMsg,
+  size,
+  disabled,
+  customValidation,
+  customOnBlur,
+  ignoreTouched,
+  maxLength,
+  ...props
+}) => (
+  <FormikConsumer>
+    {({ touched, errors, setFieldTouched, setFieldValue, submitCount }) => {
+      const invalid = isNonValid(touched, errors, name, submitCount, ignoreTouched);
 
-  render(): React.ReactNode {
-    const {
-      type,
-      placeholder,
-      name,
-      prefix,
-      suffix,
-      className,
-      addonStyle,
-      charactersLimit,
-      errorMsg,
-      size,
-      disabled,
-      customValidation,
-      customOnBlur,
-      ignoreTouched,
-      maxLength,
-      ...props
-    } = this.props;
-    return (
-      <FormikConsumer>
-        {({ touched, errors, setFieldTouched, setFieldValue, submitCount }) => {
-          const invalid = isNonValid(touched, errors, name, submitCount, ignoreTouched);
-
-          return (
-            <Field
-              name={name}
-              validate={customValidation}
-              render={({ field }: FieldProps) => {
-                const val = transform(field.value, charactersLimit);
-                return (
-                  <>
-                    <InputGroup size={size}>
-                      {prefix && (
-                        <InputGroupAddon
-                          addonType="prepend"
-                          className={cn(styles.addon, addonStyle, { "is-invalid": invalid })}
-                        >
-                          {prefix}
-                        </InputGroupAddon>
-                      )}
-                      <Input
-                        {...field}
-                        aria-describedby={generateErrorId(name)}
-                        aria-invalid={invalid}
-                        invalid={invalid}
-                        id={name}
-                        maxLength={maxLength}
-                        className={cn(className, styles.inputField)}
-                        onChange={e => {
-                          setFieldTouched(name);
-                          setFieldValue(
-                            name,
-                            transformBack(
-                              type === "number" && e.target.value !== ""
-                                ? e.target.valueAsNumber
-                                : e.target.value,
-                            ),
-                          );
-                        }}
-                        onBlur={e => {
-                          if (customOnBlur) {
-                            customOnBlur(e);
-                          }
-                        }}
-                        type={type}
-                        value={val}
-                        placeholder={placeholder}
-                        disabled={disabled}
-                        {...props}
-                      />
-                      {suffix && (
-                        <InputGroupAddon
-                          addonType="append"
-                          className={cn(styles.addon, { "is-invalid": invalid })}
-                        >
-                          {suffix}
-                        </InputGroupAddon>
-                      )}
-                    </InputGroup>
-                    <FormFieldError
-                      name={name}
-                      defaultMessage={errorMsg}
-                      ignoreTouched={ignoreTouched}
-                    />
-                    {charactersLimit && <div>{withCountedCharacters(val, charactersLimit)}</div>}
-                  </>
-                );
-              }}
-            />
-          );
-        }}
-      </FormikConsumer>
-    );
-  }
-}
+      return (
+        <Field
+          name={name}
+          validate={customValidation}
+          render={({ field }: FieldProps) => {
+            const val = transform(field.value, charactersLimit);
+            return (
+              <FormInputRaw
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                className={className}
+                addonStyle={addonStyle}
+                prefix={prefix}
+                suffix={suffix}
+                errorMsg={errorMsg}
+                size={size}
+                value={val}
+                disabled={disabled}
+                maxLength={maxLength}
+                customValidation={customValidation}
+                customOnBlur={customOnBlur}
+                ignoreTouched={ignoreTouched}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setFieldTouched(name);
+                  setFieldValue(
+                    name,
+                    transformBack(
+                      type === "number" && e.target.value !== ""
+                        ? e.target.valueAsNumber
+                        : e.target.value,
+                    ),
+                  );
+                }}
+                invalid={invalid}
+                {...props}
+              />
+            );
+          }}
+        />
+      );
+    }}
+  </FormikConsumer>
+);

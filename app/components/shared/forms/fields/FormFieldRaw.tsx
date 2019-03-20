@@ -5,7 +5,7 @@ import { FormGroup, Input, InputGroup, InputGroupAddon, InputProps } from "react
 import { TTranslatedString } from "../../../../types";
 import { FormError } from "./FormFieldError";
 import { FormLabel } from "./FormFieldLabel";
-import { IFormInputExternalProps } from "./FormInput";
+import { IFormInputRawExternalProps } from "./FormInputRaw";
 import { getComputedValue, withCountedCharacters } from "./utils";
 
 import * as styles from "./FormStyles.module.scss";
@@ -18,7 +18,7 @@ export interface IFieldGroupRawExternalProps {
   renderInput?: (props: FieldGroupRawProps) => React.ReactNode;
 }
 
-type FieldGroupRawProps = IFormInputExternalProps & IFieldGroupRawExternalProps & InputProps;
+type FieldGroupRawProps = IFormInputRawExternalProps & IFieldGroupRawExternalProps & InputProps;
 
 const FormFieldRaw: React.FunctionComponent<FieldGroupRawProps> = ({
   value,

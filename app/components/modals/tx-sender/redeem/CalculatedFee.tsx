@@ -14,9 +14,10 @@ const CalculatedFee: React.FunctionComponent<{ amount: string; bankFee: string }
   amount,
   bankFee,
 }) => {
-  const providedAmount = !isNaN(Number(amount))
-    ? getFormattedMoney(amount, ECurrency.EUR, EMoneyFormat.FLOAT, false, ERoundingMode.HALF_UP)
-    : 0;
+  const providedAmount =
+    !isNaN(Number(amount)) && Number(amount) > 0
+      ? getFormattedMoney(amount, ECurrency.EUR, EMoneyFormat.FLOAT, false, ERoundingMode.HALF_UP)
+      : 0;
   const calculatedFee = multiplyBigNumbers([providedAmount, bankFee]);
 
   return (

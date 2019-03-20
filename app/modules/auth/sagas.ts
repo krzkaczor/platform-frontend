@@ -1,18 +1,22 @@
 import { Effect, fork, put, select } from "redux-saga/effects";
 
+import { calculateTimeLeft } from "../../components/shared/utils";
 import { SignInUserErrorMessage } from "../../components/translatedMessages/messages";
 import { createMessage } from "../../components/translatedMessages/utils";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { EUserType } from "../../lib/api/users/interfaces";
 import { SignerRejectConfirmationError, SignerTimeoutError } from "../../lib/web3/Web3Manager";
 import { IAppState } from "../../store";
+import { delay } from "../../utils/delay";
+import { getJwtExpiryDate } from "../../utils/JWTUtils";
 import { actions, TAction } from "../actions";
 import { EInitType } from "../init/reducer";
 import { neuCall, neuTakeEvery, neuTakeLatest } from "../sagasUtils";
 import { selectActivationCodeFromQueryString, selectEmailFromQueryString } from "../web3/selectors";
 import { verifyUserEmailPromise } from "./email/sagas";
+import { JwtNotAvailable } from "./errors";
 import { watchRedirectChannel } from "./jwt/sagas";
-import { selectUserEmail, selectVerifiedUserEmail } from "./selectors";
+import { selectJwt, selectUserEmail, selectVerifiedUserEmail } from "./selectors";
 import { loadUser, signInUser } from "./user/sagas";
 
 function* logoutWatcher(
@@ -93,10 +97,28 @@ function* verifyUserEmail(): Iterator<any> {
   yield put(actions.routing.goToProfile());
 }
 
+/**
+ * JWT Timeout AutoLogout
+ */
+function* handleJwtTimeout({ logger }: TGlobalDependencies): Iterator<any> {
+  try {
+    const jwt: string | undefined = yield select(selectJwt);
+    if (!jwt) throw new JwtNotAvailable();
+    const expiryDate = getJwtExpiryDate(jwt);
+    // Automatically logout after ExpiryDate
+    yield delay(calculateTimeLeft(expiryDate, true) * 1000);
+    yield put(actions.auth.logout());
+  } catch (e) {
+    logger.error(new Error("Failed to Auto Handle JWT AutoLogout"));
+    throw e;
+  }
+}
+
 export const authSagas = function*(): Iterator<Effect> {
   yield fork(watchRedirectChannel);
   yield fork(neuTakeLatest, "AUTH_LOGOUT", logoutWatcher);
   yield fork(neuTakeEvery, "AUTH_SET_USER", setUser);
   yield fork(neuTakeEvery, "AUTH_VERIFY_EMAIL", verifyUserEmail);
   yield fork(neuTakeEvery, "WALLET_SELECTOR_CONNECTED", handleSignInUser);
+  yield fork(neuTakeLatest, "AUTH_LOAD_JWT", handleJwtTimeout);
 };
