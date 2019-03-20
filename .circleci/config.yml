@@ -130,7 +130,7 @@ jobs:
             - v14-deps-
       - run: yarn
       - run: yarn build:prod
-      # - run: yarn storybook:screenshots
+      - run: yarn storybook:screenshots
       - run: yarn codechecks
 
   deploy-storybook:

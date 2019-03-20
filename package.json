@@ -110,6 +110,7 @@
     "@types/storybook__react": "^4.0.0",
     "@types/yup": "^0.26.0",
     "autoprefixer": "^9.4.2",
+    "await-exec": "^0.1.2",
     "babel-loader": "^8.0.4",
     "babel-plugin-react-intl-krzkaczor": "^2.4.1",
     "babel-polyfill": "^6.26.0",

@@ -2541,6 +2541,11 @@ autoprefixer@^9.3.1, autoprefixer@^9.4.2:
     postcss "^7.0.6"
     postcss-value-parser "^3.3.1"
 
+await-exec@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/await-exec/-/await-exec-0.1.2.tgz#c4dc58b415f9daf34fc9d17549f40fbc4839fd6b"
+  integrity sha512-BQUiyBLScS0+YPnnCZZGjb78mZ8sQ8aKgxarDPNw05rpbaCS7VIQSLy2tgjZKct9Dn1xLbKMXOpA98OWei90zA==
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
