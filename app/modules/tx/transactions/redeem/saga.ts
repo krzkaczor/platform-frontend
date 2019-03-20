@@ -4,7 +4,6 @@ import { put, select, take } from "redux-saga/effects";
 import { MONEY_DECIMALS } from "../../../../config/constants";
 import { TGlobalDependencies } from "../../../../di/setupBindings";
 import { ITxData } from "../../../../lib/web3/types";
-import { IAppState } from "../../../../store";
 import { compareBigNumbers } from "../../../../utils/BigNumberUtils";
 import { ERoundingMode, formatMoney } from "../../../../utils/Money.utils";
 import { convertToBigInt } from "../../../../utils/Number.utils";
@@ -40,9 +39,7 @@ export function* startNEuroRedeemGenerator(_: TGlobalDependencies): any {
   const txDataFromUser = action.payload.txDraftData;
   const selectedAmount = txDataFromUser.value;
 
-  const nEURBalanceUlps = yield select((state: IAppState) =>
-    selectLiquidEuroTokenBalance(state.wallet),
-  );
+  const nEURBalanceUlps = yield select(selectLiquidEuroTokenBalance);
 
   const nEURBalance = formatMoney(nEURBalanceUlps, MONEY_DECIMALS, 2, ERoundingMode.DOWN);
 
