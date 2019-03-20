@@ -34,3 +34,5 @@ export {
   weekdayUTC,
   calculateTimeLeft,
 };
+
+// TODO: Move whole file to general app utils folder

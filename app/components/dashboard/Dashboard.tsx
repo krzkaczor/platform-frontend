@@ -3,7 +3,6 @@ import { Col, Row } from "reactstrap";
 
 import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
 import { EtoList } from "./eto-list/EtoList";
-import { EtoListDummies } from "./eto-list/EtoListDummies";
 import { MyPortfolioWidget } from "./my-portfolio/MyPortfolioWidget";
 import { MyWalletWidget } from "./my-wallet/MyWalletWidget";
 
@@ -18,8 +17,7 @@ export const Dashboard = () => (
         <MyWalletWidget className="h-100" />
       </Col>
 
-      {process.env.NF_EQUITY_TOKEN_OFFERINGS_VISIBLE === "1" &&
-        (process.env.NF_ETO_LOAD_REAL_DATA === "1" ? <EtoList /> : <EtoListDummies />)}
+      {process.env.NF_EQUITY_TOKEN_OFFERINGS_VISIBLE === "1" && <EtoList />}
     </Row>
   </LayoutAuthorized>
 );

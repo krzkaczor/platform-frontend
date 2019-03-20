@@ -19,3 +19,13 @@
   justify-content: space-between;
   margin-bottom: 1rem;
 }
+
+.label {
+  @include font-label;
+
+  position: relative;
+
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}

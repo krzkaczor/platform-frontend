@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import * as cn from "classnames";
 import { FormikConsumer, FormikProps, withFormik } from "formik";
 import * as React from "react";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl-phraseapp";
@@ -17,9 +18,12 @@ import { doesUserHaveEnoughNEuro, doesUserWithdrawMinimal } from "../../../../mo
 import { appConnect } from "../../../../store";
 import { ERoundingMode, formatToFixed } from "../../../../utils/Money.utils";
 import { onEnterAction } from "../../../../utils/OnEnterAction";
+import { extractNumber } from "../../../../utils/StringUtils";
 import { Button, ButtonSize, EButtonLayout } from "../../../shared/buttons/Button";
 import { ButtonArrowRight } from "../../../shared/buttons/index";
-import { FormField } from "../../../shared/forms/fields/FormField";
+import { FormLabel } from "../../../shared/forms/fields/FormFieldLabel";
+import { FormMaskedInput } from "../../../shared/forms/fields/FormMaskedInput";
+import { generateMaskFromCurrency } from "../../../shared/forms/fields/utils";
 import { Form } from "../../../shared/forms/Form";
 import { EHeadingSize, Heading } from "../../../shared/Heading";
 import { ECurrency, EMoneyFormat, getFormattedMoney } from "../../../shared/Money";
@@ -108,9 +112,9 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
       {({ values, setFieldValue, isValid, setFieldTouched }: FormikProps<IReedemData>) => (
         <>
           <section className={styles.section}>
-            <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
+            <FormLabel for="amount" className={styles.label}>
               <FormattedMessage id="bank-transfer.redeem.init.redeem-amount" />
-            </Heading>
+            </FormLabel>
             <Button
               className={styles.linkButton}
               onClick={() => {
@@ -135,19 +139,13 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
           </section>
 
           <Form>
-            <FormField
+            <FormMaskedInput
               name="amount"
               suffix="EUR"
-              maxLength={15}
-              placeholder={`${getFormattedMoney(
-                neuroAmount,
-                ECurrency.EUR,
-                EMoneyFormat.WEI,
-                false,
-                ERoundingMode.DOWN,
-              )}`}
+              unmask={extractNumber}
+              mask={generateMaskFromCurrency(ECurrency.EUR)}
             />
-            <section className={styles.section}>
+            <section className={cn(styles.section, "mt-4")}>
               <Heading level={3} decorator={false} size={EHeadingSize.SMALL}>
                 <FormattedMessage id="bank-transfer.redeem.init.redeem-fee" />
               </Heading>
@@ -173,7 +171,11 @@ const BankTransferRedeemLayout: React.FunctionComponent<IProps> = ({
               <FormattedMessage id="bank-transfer.redeem.init.note" />
             </p>
             <section className="text-center">
-              <ButtonArrowRight disabled={!isValid} type="submit">
+              <ButtonArrowRight
+                data-test-id="bank-transfer.reedem-init.continue"
+                disabled={!isValid}
+                type="submit"
+              >
                 <FormattedMessage id="bank-transfer.redeem.init.continue" />
               </ButtonArrowRight>
             </section>
@@ -192,8 +194,8 @@ const BankTransferRedeemInit = compose<IProps, {}>(
   }),
   appConnect<IStateProps, IDispatchProps>({
     stateToProps: state => ({
-      neuroAmount: selectLiquidEuroTokenBalance(state.wallet),
-      neuroEuroAmount: selectLiquidEuroTokenBalance(state.wallet),
+      neuroAmount: selectLiquidEuroTokenBalance(state),
+      neuroEuroAmount: selectLiquidEuroTokenBalance(state),
       bankFee: selectBankFeeUlps(state),
       minAmount: selectBankTransferMinAmount(state),
     }),
@@ -214,4 +216,4 @@ const BankTransferRedeemInit = compose<IProps, {}>(
   }),
 )(BankTransferRedeemLayout);
 
-export { BankTransferRedeemLayout, BankTransferRedeemInit, TotalRedeemed, CalculatedFee };
+export { BankTransferRedeemLayout, BankTransferRedeemInit };

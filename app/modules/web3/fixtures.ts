@@ -10,7 +10,6 @@ export const getDummyLightWalletMetadata = (): ILightWalletMetadata => ({
   walletType: EWalletType.LIGHT,
   walletSubType: EWalletSubType.UNKNOWN,
   address: dummyEthereumAddress,
-  vault: "vault",
   email: "test@example.com",
   salt: "salt",
 });

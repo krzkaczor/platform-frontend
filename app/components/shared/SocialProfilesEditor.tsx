@@ -5,7 +5,7 @@ import * as React from "react";
 import { TSocialChannelsType } from "../../lib/api/eto/EtoApi.interfaces";
 import { CommonHtmlProps, TFormikConnect } from "../../types";
 import { FormField } from "./forms";
-import { InlineIcon } from "./InlineIcon";
+import { InlineIcon } from "./icons";
 
 import * as iconChat from "../../assets/img/inline_icons/icon-menu-help.svg";
 import * as facebookIcon from "../../assets/img/inline_icons/social_facebook.svg";

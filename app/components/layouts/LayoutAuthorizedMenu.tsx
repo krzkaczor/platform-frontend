@@ -20,7 +20,7 @@ import { invariant } from "../../utils/invariant";
 import { appRoutes } from "../appRoutes";
 import { IdentityModal } from "../identity/IdentityModal";
 import { Button, EButtonLayout } from "../shared/buttons";
-import { InlineIcon } from "../shared/InlineIcon";
+import { InlineIcon } from "../shared/icons";
 import { ExternalLink } from "../shared/links";
 
 import * as iconDashboard from "../../assets/img/inline_icons/icon-menu-dashboard.svg";

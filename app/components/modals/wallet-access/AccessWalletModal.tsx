@@ -87,7 +87,7 @@ export const AccessWalletContainer = appConnect<IStateProps, IDispatchProps, IEx
     isUnlocked: selectIsUnlocked(s.web3),
   }),
   dispatchToProps: dispatch => ({
-    onAccept: (password?: string) => dispatch(actions.signMessageModal.accept(password)),
+    onAccept: (password?: string) => dispatch(actions.accessWallet.accept(password)),
   }),
 })(AccessWalletContainerComponent);
 
@@ -114,6 +114,6 @@ export const AccessWalletModal = appConnect<IModalStateProps, IModalDispatchProp
     isOpen: s.accessWallet.isModalOpen,
   }),
   dispatchToProps: dispatch => ({
-    onCancel: () => dispatch(actions.signMessageModal.hideAccessWalletModal()),
+    onCancel: () => dispatch(actions.accessWallet.hideAccessWalletModal()),
   }),
 })(AccessWalletModalComponent);

@@ -14,6 +14,7 @@ import { QuintessenceModal } from "../bank-transfer-flow/QuintessenceModal";
 import { ModalComponentBody } from "../ModalComponentBody";
 import { AccessWalletContainer } from "../wallet-access/AccessWalletModal";
 import { SetEtoDateSummary } from "./eto-flow/SetDateSummary";
+import { SignInvestmentAgreementSummary } from "./eto-flow/SignInvestmentAgreementSummary";
 import { InvestmentSelection } from "./investment-flow/Investment";
 import { InvestmentSuccess } from "./investment-flow/Success";
 import { InvestmentSummary } from "./investment-flow/Summary";
@@ -121,6 +122,8 @@ const SummaryComponent: React.FunctionComponent<{ type?: ETxSenderType }> = ({ t
       return <UnlockWalletSummary />;
     case ETxSenderType.NEUR_WITHDRAW:
       return <BankTransferRedeemSummary />;
+    case ETxSenderType.SIGN_INVESTMENT_AGREEMENT:
+      return <SignInvestmentAgreementSummary />;
     default:
       return <WithdrawSummary />;
   }

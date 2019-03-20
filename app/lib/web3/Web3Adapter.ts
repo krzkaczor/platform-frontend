@@ -37,15 +37,15 @@ export class Web3Adapter {
   }
 
   public async getBalance(address: string): Promise<BigNumber> {
-    return promisify(this.web3.eth.getBalance)(address);
+    return promisify<BigNumber>(this.web3.eth.getBalance)(address);
   }
 
   public async estimateGas(txData: Partial<Web3.TxData>): Promise<number> {
-    return promisify(this.web3.eth.estimateGas)(txData);
+    return promisify<number>(this.web3.eth.estimateGas)(txData);
   }
 
   public async getAccountAddress(): Promise<EthereumAddress> {
-    const getAccounts = promisify(this.web3.eth.getAccounts);
+    const getAccounts = promisify<string[]>(this.web3.eth.getAccounts);
     const accounts = await getAccounts();
     return accounts[0] as EthereumAddress;
   }
@@ -60,7 +60,7 @@ export class Web3Adapter {
     address: EthereumAddress | EthereumAddressWithChecksum,
     data: string,
   ): Promise<string> {
-    const sign = promisify(this.web3.eth.sign);
+    const sign = promisify<string>(this.web3.eth.sign);
     return sign(address, data);
   }
 
@@ -140,7 +140,7 @@ export class Web3Adapter {
 
   public async waitForTx(options: IWaitForTxOptions): Promise<Web3.Transaction> {
     // TODO: Refactor Wait for TX
-    const getTx = promisify(this.web3.eth.getTransaction);
+    const getTx = promisify<Web3.Transaction>(this.web3.eth.getTransaction);
     return new Promise<Web3.Transaction>((resolve, reject) => {
       this.watchNewBlock(async blockId => {
         try {
@@ -196,7 +196,7 @@ export class Web3Adapter {
   }
 
   public async getBlockNumber(): Promise<number> {
-    const getBlockNumber = promisify(this.web3.eth.getBlockNumber);
+    const getBlockNumber = promisify<number>(this.web3.eth.getBlockNumber);
 
     return getBlockNumber();
   }

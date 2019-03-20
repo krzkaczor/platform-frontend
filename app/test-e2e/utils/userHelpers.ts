@@ -4,12 +4,13 @@ import { addHexPrefix, hashPersonalMessage, toBuffer } from "ethereumjs-util";
 import { toChecksumAddress } from "web3-utils";
 
 import { tid } from "../../../test/testUtils";
+import { getVaultKey } from "../../modules/wallet-selector/light-wizard/utils";
 import { promisify } from "../../utils/promisify";
 
 /*
 Pre-login user for faster tests
 */
-
+const VAULT_API_ROOT = "/api/wallet";
 export const INVESTOR_WALLET_KEY = "NF_WALLET_METADATA";
 const ISSUER_WALLET_KEY = "NF_WALLET_ISSUER_METADATA";
 export const JWT_KEY = "NF_JWT";
@@ -48,33 +49,34 @@ export const createAndLoginNewUser = (params: {
         email: "dave@neufund.org",
         salt: salt,
         walletType: "LIGHT",
-        vault: lightWalletInstance.serialize(),
       }),
     );
 
     // fetch a token and store it in local storage
     const jwt = await getJWT(address, lightWalletInstance, walletKey, params.permissions);
     ls.setItem(JWT_KEY, `"${jwt}"`);
+    await createVaultApi(salt, DEFAULT_PASSWORD, lightWalletInstance.serialize());
 
-    if (!params.onlyLogin)
+    if (!params.onlyLogin) {
       // create a user object on the backend
       await createUser(privateKey, params.type, params.kyc);
 
-    // mark backup codes verified
-    await markBackupCodesVerified(jwt);
-    // set correct agreement
-    await setCorrectAgreement(jwt);
+      // mark backup codes verified
+      await markBackupCodesVerified(jwt);
+      // set correct agreement
+      await setCorrectAgreement(jwt);
 
-    if (params.clearPendingTransactions) {
-      await clearPendingTransactions(jwt, address);
+      if (params.clearPendingTransactions) {
+        await clearPendingTransactions(jwt, address);
+      }
+
+      cy.log(
+        `Logged in as ${params.type}`,
+        `KYC: ${params.kyc}, clearPendingTransactions: ${params.clearPendingTransactions}, seed: ${
+          params.seed
+        }`,
+      );
     }
-
-    cy.log(
-      `Logged in as ${params.type}`,
-      `KYC: ${params.kyc}, clearPendingTransactions: ${params.clearPendingTransactions}, seed: ${
-        params.seed
-      }`,
-    );
   });
 };
 
@@ -256,4 +258,23 @@ export const logout = () => {
   cy.log("logging out");
   cy.get(tid("Header-logout")).awaitedClick();
   cy.wait(2000);
+};
+
+export const createVaultApi = async (
+  salt: string,
+  password: string,
+  serializedVault: string,
+): Promise<any> => {
+  const vaultKey = await getVaultKey(salt, password);
+
+  const path = `${VAULT_API_ROOT}/vault/${vaultKey}`;
+  const payload = { wallet: serializedVault };
+  return fetch(path, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+    },
+  });
 };

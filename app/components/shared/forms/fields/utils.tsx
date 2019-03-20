@@ -2,9 +2,11 @@ import { FormikErrors, FormikTouched } from "formik";
 import { get, isFunction } from "lodash";
 import * as React from "react";
 import { FormGroup, InputProps } from "reactstrap";
+import { createNumberMask } from "text-mask-addons/dist/textMaskAddons";
 
 import { Dictionary, TTranslatedString } from "../../../../types";
 import { getFieldSchema, isRequired } from "../../../../utils/yupUtils";
+import { ECurrency, selectDecimalPlaces } from "../../Money";
 import { FormFieldLabel } from "./FormFieldLabel";
 
 export interface IFormField {
@@ -75,4 +77,16 @@ export const isFieldRequired = (validationSchema: any, name: string) => {
   } else {
     return false;
   }
+};
+
+export const generateMaskFromCurrency = (currency: ECurrency, isPrice?: boolean) => {
+  const decimalLimit = selectDecimalPlaces(currency, isPrice);
+  const integerLimit = 15 - decimalLimit; // when over 16 digits Formik starts to throw errors
+  return createNumberMask({
+    prefix: "",
+    thousandsSeparatorSymbol: " ",
+    allowDecimal: true,
+    decimalLimit,
+    integerLimit,
+  });
 };

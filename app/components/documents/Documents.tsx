@@ -2,16 +2,15 @@ import * as cn from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl-phraseapp";
 import { Redirect } from "react-router";
-import { branch, renderComponent, setDisplayName } from "recompose";
+import { branch, renderComponent, renderNothing, setDisplayName } from "recompose";
 import { compose } from "redux";
 
-import { EEtoState, EtoStateToCamelcase } from "../../lib/api/eto/EtoApi.interfaces";
+import { EEtoState } from "../../lib/api/eto/EtoApi.interfaces";
 import {
   EEtoDocumentType,
   IEtoDocument,
   IEtoFiles,
   TEtoDocumentTemplates,
-  TStateInfo,
 } from "../../lib/api/eto/EtoFileApi.interfaces";
 import { ignoredTemplates } from "../../lib/api/eto/EtoFileUtils";
 import { actions } from "../../modules/actions";
@@ -48,7 +47,7 @@ import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoun
 import { Heading } from "../shared/Heading";
 import { LoadingIndicator } from "../shared/loading-indicator";
 import { SingleColDocuments } from "../shared/SingleColDocumentWidget";
-import { getDocumentTitles } from "./utils";
+import { getDocumentTitles, isBusy, isFileUploaded, renameDocuments, uploadAllowed } from "./utils";
 
 import * as styles from "./Documents.module.scss";
 
@@ -58,12 +57,28 @@ interface IComponentStateProps {
   etoFilesData: DeepReadonly<IEtoFiles>;
   loadingData: boolean;
   etoFileLoading: boolean;
-  etoState?: EEtoState;
+  etoState: EEtoState;
   etoTemplates: TEtoDocumentTemplates;
   etoDocuments: TEtoDocumentTemplates;
   documentTitles: TDocumentTitles;
   isRetailEto: boolean;
   onChainState: EETOStateOnChain;
+  documentsDownloading: { [key in EEtoDocumentType]?: boolean };
+  documentsUploading: { [key in EEtoDocumentType]?: boolean };
+  transactionPending: boolean;
+  documentsGenerated: { [ipfsHash: string]: boolean };
+}
+
+interface IExternalStateProps {
+  etoFilesData: DeepReadonly<IEtoFiles>;
+  loadingData: boolean;
+  etoFileLoading: boolean;
+  etoState: EEtoState;
+  etoTemplates?: TEtoDocumentTemplates;
+  etoDocuments?: TEtoDocumentTemplates;
+  documentTitles: TDocumentTitles;
+  isRetailEto: boolean;
+  onChainState?: EETOStateOnChain;
   documentsDownloading: { [key in EEtoDocumentType]?: boolean };
   documentsUploading: { [key in EEtoDocumentType]?: boolean };
   transactionPending: boolean;
@@ -79,98 +94,7 @@ interface IDispatchProps {
   startDocumentDownload: (documentType: EEtoDocumentType) => void;
 }
 
-interface IGeneratedDocumentProps {
-  document: IEtoDocument;
-  generateTemplate: (document: IEtoDocument) => void;
-  documentTitle?: TTranslatedString;
-  busy: boolean;
-}
-
-interface IUploadableDocumentProps {
-  documentTitle: TTranslatedString;
-  documentKey: EEtoDocumentType;
-  etoDocuments: TEtoDocumentTemplates;
-  stateInfo: DeepReadonly<TStateInfo>;
-  etoState: EEtoState;
-  startDocumentDownload: (documentType: EEtoDocumentType) => void;
-  onChainState: EETOStateOnChain;
-  documentUploading: boolean;
-  documentDownloading: boolean;
-  transactionPending: boolean;
-}
-
 export type TDocumentTitles = { [key in EEtoDocumentType]: TTranslatedString };
-
-export const GeneratedDocument: React.FunctionComponent<IGeneratedDocumentProps> = ({
-  document,
-  generateTemplate,
-  documentTitle,
-  busy,
-}) => {
-  return (
-    <ClickableDocumentTile
-      document={document}
-      generateTemplate={generateTemplate}
-      title={documentTitle}
-      extension={".doc"}
-      busy={busy}
-    />
-  );
-};
-
-const UploadableDocument: React.FunctionComponent<IUploadableDocumentProps> = ({
-  documentTitle,
-  documentKey,
-  etoDocuments,
-  stateInfo,
-  etoState,
-  onChainState,
-  startDocumentDownload,
-  documentUploading,
-  documentDownloading,
-  transactionPending,
-}) => {
-  const canUploadInOnChainStates = (
-    etoState: EEtoState,
-    documentKey: EEtoDocumentType,
-    onChainState: EETOStateOnChain,
-  ) =>
-    etoState === EEtoState.ON_CHAIN
-      ? onChainState === EETOStateOnChain.Signing &&
-        documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
-      : true;
-
-  const canUpload =
-    stateInfo &&
-    etoState &&
-    stateInfo.canUploadInStates[EtoStateToCamelcase[etoState]].some(
-      (fileName: string) => fileName === documentKey,
-    ) &&
-    canUploadInOnChainStates(etoState, documentKey, onChainState);
-
-  const mayBeSignedNow = (documentKey: EEtoDocumentType, transactionPending: boolean) => {
-    return documentKey === EEtoDocumentType.INVESTMENT_AND_SHAREHOLDER_AGREEMENT
-      ? !transactionPending
-      : true;
-  };
-
-  const busy = !mayBeSignedNow(documentKey, transactionPending) || documentUploading;
-
-  const isFileUploaded = Object.keys(etoDocuments).some(
-    uploadedKey => etoDocuments[uploadedKey].documentType === documentKey,
-  );
-  return (
-    <UploadableDocumentTile
-      documentKey={documentKey}
-      active={canUpload}
-      busy={busy}
-      typedFileName={documentTitle}
-      isFileUploaded={isFileUploaded}
-      downloadDocumentStart={startDocumentDownload}
-      documentDownloadLinkInactive={documentUploading || documentDownloading}
-    />
-  );
-};
 
 const DocumentsLayout: React.FunctionComponent<IProps> = ({
   etoFilesData,
@@ -188,7 +112,7 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
   documentsGenerated,
 }) => {
   const { allTemplates, stateInfo } = etoFilesData;
-  const generalUploadables = stateInfo ? stateInfo.uploadableDocuments : [];
+  const documents = renameDocuments(stateInfo, onChainState);
   const etoTemplateKeys = Object.keys(etoTemplates);
 
   return (
@@ -205,17 +129,16 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
           {etoTemplateKeys.length !== 0 ? (
             etoTemplateKeys
               .filter(key => !ignoredTemplates.some(template => template === key))
-              .map(key => {
-                return (
-                  <GeneratedDocument
-                    key={key}
-                    document={allTemplates[key]}
-                    generateTemplate={generateTemplate}
-                    documentTitle={documentTitles[allTemplates[key].documentType]}
-                    busy={documentsGenerated[allTemplates[key].ipfsHash]}
-                  />
-                );
-              })
+              .map(key => (
+                <ClickableDocumentTile
+                  key={key}
+                  document={allTemplates[key]}
+                  generateTemplate={generateTemplate}
+                  title={documentTitles[allTemplates[key].documentType]}
+                  extension={".doc"}
+                  busy={documentsGenerated[allTemplates[key].ipfsHash]}
+                />
+              ))
           ) : (
             <div className={styles.note}>
               <FormattedMessage id="documents.please-fill-the-eto-forms-in-order-to-generate-templates" />
@@ -228,24 +151,20 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
             <FormattedMessage id="documents.approved-prospectus-and-agreements-to-upload" />
           </h4>
           {stateInfo &&
-            etoState &&
-            generalUploadables.map((key: EEtoDocumentType) => {
-              return (
-                <UploadableDocument
-                  key={key}
-                  documentKey={key}
-                  documentTitle={documentTitles[key]}
-                  etoDocuments={etoDocuments}
-                  stateInfo={stateInfo}
-                  etoState={etoState}
-                  startDocumentDownload={startDocumentDownload}
-                  onChainState={onChainState}
-                  documentUploading={documentsUploading[key] || false}
-                  documentDownloading={documentsDownloading[key] || false}
-                  transactionPending={transactionPending}
-                />
-              );
-            })}
+            documents.map((key: EEtoDocumentType) => (
+              <UploadableDocumentTile
+                key={key}
+                documentKey={key}
+                active={uploadAllowed(stateInfo, etoState, key, onChainState)}
+                busy={isBusy(key, transactionPending, !!documentsUploading[key])}
+                typedFileName={documentTitles[key]}
+                isFileUploaded={isFileUploaded(etoDocuments, key)}
+                downloadDocumentStart={startDocumentDownload}
+                documentDownloadLinkInactive={
+                  !!documentsUploading[key] || !!documentsDownloading[key]
+                }
+              />
+            ))}
         </section>
         {allTemplates && (
           <SingleColDocuments
@@ -266,25 +185,34 @@ const DocumentsLayout: React.FunctionComponent<IProps> = ({
 const Documents = compose<React.FunctionComponent>(
   createErrorBoundary(ErrorBoundaryLayoutAuthorized),
   setDisplayName("Documents"),
-  appConnect<IStateProps, IDispatchProps>({
+  appConnect<null | IExternalStateProps, IDispatchProps>({
     stateToProps: state => {
+      const etoId = selectEtoId(state);
+      const etoState = selectIssuerEtoState(state);
       const isRetailEto = selectIssuerEtoIsRetail(state);
-      return {
-        shouldEtoDataLoad: selectShouldEtoDataLoad(state),
-        etoFilesData: selectEtoDocumentData(state.etoDocuments),
-        loadingData: selectIssuerEtoLoading(state),
-        etoFileLoading: selectEtoDocumentsLoading(state.etoDocuments),
-        etoState: selectIssuerEtoState(state),
-        onChainState: selectEtoOnChainStateById(state, selectEtoId(state)!)!,
-        etoTemplates: selectIssuerEtoTemplates(state)!,
-        etoDocuments: selectIssuerEtoDocuments(state)!,
-        documentTitles: getDocumentTitles(isRetailEto),
-        documentsDownloading: selectEtoDocumentsDownloading(state.etoDocuments),
-        documentsUploading: selectEtoDocumentsUploading(state.etoDocuments),
-        documentsGenerated: selectPendingDownloads(state),
-        transactionPending: selectAreTherePendingTxs(state.txMonitor),
-        isRetailEto,
-      };
+      const etoTemplates = selectIssuerEtoTemplates(state);
+      const etoDocuments = selectIssuerEtoDocuments(state);
+
+      if (etoId && etoState && isRetailEto && etoTemplates && etoDocuments) {
+        return {
+          shouldEtoDataLoad: selectShouldEtoDataLoad(state),
+          etoFilesData: selectEtoDocumentData(state.etoDocuments),
+          loadingData: selectIssuerEtoLoading(state),
+          etoFileLoading: selectEtoDocumentsLoading(state.etoDocuments),
+          etoState,
+          onChainState: selectEtoOnChainStateById(state, etoId),
+          etoTemplates,
+          etoDocuments,
+          documentTitles: getDocumentTitles(isRetailEto),
+          documentsDownloading: selectEtoDocumentsDownloading(state.etoDocuments),
+          documentsUploading: selectEtoDocumentsUploading(state.etoDocuments),
+          transactionPending: selectAreTherePendingTxs(state.txMonitor),
+          documentsGenerated: selectPendingDownloads(state),
+          isRetailEto,
+        };
+      } else {
+        return null;
+      }
     },
     dispatchToProps: dispatch => ({
       generateTemplate: document => dispatch(actions.etoDocuments.generateTemplate(document)),
@@ -292,6 +220,7 @@ const Documents = compose<React.FunctionComponent>(
         dispatch(actions.etoDocuments.downloadDocumentStart(documentType)),
     }),
   }),
+  branch<null | IExternalStateProps & IDispatchProps>(props => props === null, renderNothing),
   withMetaTags((_, intl) => ({ title: intl.formatIntlMessage("menu.documents-page") })),
   withContainer(LayoutAuthorized),
   branch(

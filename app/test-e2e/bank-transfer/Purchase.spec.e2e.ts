@@ -1,23 +1,13 @@
-import * as moment from "moment";
-
-import {
-  INV_ETH_EUR_ICBM_M_HAS_KYC_DUP,
-  INV_ETH_EUR_ICBM_M_HAS_KYC_DUP_ADDRESS,
-  INV_EUR_ICBM_HAS_KYC_ADDRESS,
-  INV_EUR_ICBM_HAS_KYC_SEED,
-} from "../fixtures";
-import { clearEmailServer, goToWallet } from "../utils";
+import { INV_ETH_EUR_ICBM_M_HAS_KYC_DUP, INV_EUR_ICBM_HAS_KYC_SEED } from "../fixtures";
+import { assertWallet, clearEmailServer, goToProfile, goToWallet } from "../utils";
 import { fillForm } from "../utils/forms";
-import { assertWallet, goToProfile } from "../utils/index";
 import { tid } from "../utils/selectors";
 import { createAndLoginNewUser } from "../utils/userHelpers";
-import { assertWaitForBankTransferSummary } from "./assertions";
+import { assertBankAccountDetails, assertWaitForBankTransferSummary } from "./assertions";
 
 function assertBankTransferFlow({
-  address,
   agreementApprovalRequired,
 }: {
-  address: string;
   agreementApprovalRequired: boolean;
 }): void {
   if (agreementApprovalRequired) {
@@ -41,15 +31,10 @@ function assertBankTransferFlow({
   cy.get(tid("bank-transfer.purchase.summary.iban")).contains("LI78088110102905K002E");
   cy.get(tid("bank-transfer.purchase.summary.bic")).contains("BFRILI22XXX");
 
-  const date = moment.utc().format("DDMMYYHH");
-
-  // for details how it's generated see `generateReference` method
-  const referenceRegexp = new RegExp(`NF ${address} REF PU${date}\\d\\d.{4}`);
-
   cy.get(tid("bank-transfer.purchase.summary.reference-number"))
     .then($e => $e.text().trim())
     .as("referenceNumber")
-    .should("match", referenceRegexp);
+    .should("match", /NR[\w\d]{10}NR/);
 
   clearEmailServer();
 
@@ -60,11 +45,6 @@ function assertBankTransferFlow({
   cy.get(tid("bank-transfer.purchase.success.go-to-wallet")).click();
 
   assertWallet();
-}
-
-function assertBankAccountDetails(): void {
-  cy.get(tid("wallet.bank-account.name")).contains("Account Holder Name");
-  cy.get(tid("wallet.bank-account.details")).contains(/Sparkasse Berlin \(\*{16}\d{4}\)/);
 }
 
 describe("Purchase", () => {
@@ -79,7 +59,6 @@ describe("Purchase", () => {
       cy.get(tid("wallet-balance.neur.purchase-button")).click();
 
       assertBankTransferFlow({
-        address: INV_EUR_ICBM_HAS_KYC_ADDRESS,
         agreementApprovalRequired: true,
       });
     });
@@ -98,7 +77,6 @@ describe("Purchase", () => {
       cy.get(tid("wallet-balance.neur.purchase-button")).click();
 
       assertBankTransferFlow({
-        address: INV_ETH_EUR_ICBM_M_HAS_KYC_DUP_ADDRESS,
         agreementApprovalRequired: false,
       });
     });

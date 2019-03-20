@@ -10,7 +10,6 @@ export interface ICommonWalletMetadata {
 export interface ILightWalletMetadata extends ICommonWalletMetadata {
   walletType: EWalletType.LIGHT;
   walletSubType: EWalletSubType.UNKNOWN;
-  vault: string;
   salt: string;
   email: string;
 }
