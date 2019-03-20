@@ -4521,10 +4521,21 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codechecks@^0.0.38:
-  version "0.0.38"
-  resolved "https://registry.yarnpkg.com/codechecks/-/codechecks-0.0.38.tgz#40e1b5d98f2ec342db2ae848ffe287fcc8fa9cd6"
-  integrity sha512-K+nXhsEoBtWfpl2H/3p5G79H9VcYrnNwQllPNSr2uoMWmkwrMaICy1w1aOzo2fd3nWk5BMxVLPUbeio6KeAsFA==
+codecheck-build-size@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/codecheck-build-size/-/codecheck-build-size-0.0.10.tgz#dada0252bb4e129e1b5343a5e32ffb41238305d9"
+  integrity sha512-+iVg+aAt/2k6Jjqb72KkhZPqNwLIQTo5AwC7fue5xJHESMtDTSDp3AKL0OUM4gM4tRTyqQHgSGaH+D8xhyVnxw==
+  dependencies:
+    bytes "^3.0.0"
+    get-folder-size "^2.0.0"
+    glob "^7.1.3"
+    gzip-size "^5.0.0"
+    lodash "^4.17.11"
+
+codechecks@^0.0.39:
+  version "0.0.39"
+  resolved "https://registry.yarnpkg.com/codechecks/-/codechecks-0.0.39.tgz#5c8d4a31a671abca1afdfa4cb74457a14bed000a"
+  integrity sha512-fcbWJ+mgiMB+lWVsSxZzL4edLV0JF25vAi8+ll3Lb5p3z8lSX13foxs3FiYCapag9AD8iQTqxjxR1gQO9Om4vQ==
   dependencies:
     commander "^2.19.0"
     glob "^7.1.3"
@@ -7366,6 +7377,11 @@ ganache-cli@^6.1.7:
   dependencies:
     source-map-support "^0.5.3"
 
+gar@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/gar/-/gar-1.0.4.tgz#f777bc7db425c0572fdeb52676172ca1ae9888b8"
+  integrity sha512-w4n9cPWyP7aHxKxYHFQMegj7WIAsL/YX/C4Bs5Rr8s1H9M1rNtRWRsw+ovYMkXDQ5S4ZbYHsHAPmevPjPgw44w==
+
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
@@ -7403,6 +7419,14 @@ get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
   integrity sha1-9wLmMSfn4jHBYKgMFVSstw1QR+U=
+
+get-folder-size@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/get-folder-size/-/get-folder-size-2.0.1.tgz#3fe0524dd3bad05257ef1311331417bcd020a497"
+  integrity sha512-+CEb+GDCM7tkOS2wdMKTn9vU7DgnKUTuDlehkNJKNSovdCOVxs14OfKCk4cvSaR3za4gj+OBdl9opPN9xrJ0zA==
+  dependencies:
+    gar "^1.0.4"
+    tiny-each-async "2.0.3"
 
 get-func-name@^2.0.0:
   version "2.0.0"
@@ -15061,6 +15085,11 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+
+tiny-each-async@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/tiny-each-async/-/tiny-each-async-2.0.3.tgz#8ebbbfd6d6295f1370003fbb37162afe5a0a51d1"
+  integrity sha1-jru/1tYpXxNwAD+7NxYq/loKUdE=
 
 tmp@0.0.31:
   version "0.0.31"
