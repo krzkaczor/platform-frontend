@@ -20,8 +20,6 @@ import { DashboardSection } from "../eto/shared/DashboardSection";
 import { LayoutAuthorized } from "../layouts/LayoutAuthorized";
 import { createErrorBoundary } from "../shared/errorBoundary/ErrorBoundary";
 import { ErrorBoundaryLayoutAuthorized } from "../shared/errorBoundary/ErrorBoundaryLayoutAuthorized";
-import { SectionHeader } from "../shared/SectionHeader";
-import { ChangeEmail } from "./change-email/ChangeEmail";
 import { YourEthereumAddressWidget } from "./ethereum-address-widget/YourEthereumAddressWidget";
 import { CheckYourICBMWalletWidget } from "./icbm-wallet-widget/CheckYourICBMWalletWidget";
 import { LinkedBankAccountWidget } from "./linked-bank-account/LinkedBankAccountWidget";
@@ -83,20 +81,6 @@ export const SettingsComponent: React.FunctionComponent<IStateProps> = ({
               <PersonalAccountDetails />
             </Col>
           )}
-
-        {process.env.NF_FEATURE_EMAIL_CHANGE_ENABLED === "1" && (
-          <>
-            {/* TODO: Remove message */}
-            <Col xs={12}>
-              <SectionHeader>
-                <FormattedMessage id="settings.personal-settings.title" />
-              </SectionHeader>
-            </Col>
-            <Col lg={8} xs={12}>
-              <ChangeEmail />
-            </Col>
-          </>
-        )}
       </Row>
       <Row className="row-gutter-top">
         <Col lg={4} xs={12}>

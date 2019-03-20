@@ -24,6 +24,8 @@ describe("Change Email", () => {
     verifyLatestUserEmail();
 
     goToProfile();
+
+    cy.get(tid("verify-email-widget.change-email.button")).click();
   });
 
   it("should allow to change email", () => {
@@ -33,7 +35,7 @@ describe("Change Email", () => {
 
     fillForm({
       email: newEmail,
-      "settings.change-email-component.change-button": { type: "submit" },
+      "verify-email-widget-form-submit": { type: "submit" },
     });
 
     acceptWallet();
@@ -56,9 +58,11 @@ describe("Change Email", () => {
     assertUserInDashboard();
     verifyLatestUserEmail();
 
+    cy.get(tid("verify-email-widget.change-email.button")).click();
+
     fillForm({
       email: email,
-      "settings.change-email-component.change-button": { type: "submit" },
+      "verify-email-widget-form-submit": { type: "submit" },
     });
 
     acceptWallet();
@@ -70,7 +74,7 @@ describe("Change Email", () => {
   it("should not allow to change email to the same as verified", () => {
     fillForm({
       email: email,
-      "settings.change-email-component.change-button": { type: "submit" },
+      "verify-email-widget-form-submit": { type: "submit" },
     });
 
     // assert if error message is present and new email has not been set
@@ -83,7 +87,7 @@ describe("Change Email", () => {
 
     fillForm({
       email: newEmail,
-      "settings.change-email-component.change-button": { type: "submit" },
+      "verify-email-widget-form-submit": { type: "submit" },
     });
 
     acceptWallet();
@@ -93,10 +97,12 @@ describe("Change Email", () => {
     cy.get(tid("profile.verify-email-widget.verified-email")).contains(email);
     cy.get(tid("profile.verify-email-widget.unverified-email")).contains(newEmail);
 
+    cy.get(tid("verify-email-widget.change-email.button")).click();
+
     // fill again with the same email
     fillForm({
       email: newEmail,
-      "settings.change-email-component.change-button": { type: "submit" },
+      "verify-email-widget-form-submit": { type: "submit" },
     });
 
     // assert if error message pooped in

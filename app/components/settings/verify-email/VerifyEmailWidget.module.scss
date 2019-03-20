@@ -13,4 +13,16 @@
 
 .text {
   min-height: px-to-rem(68px);
+  flex-shrink: 0;
+}
+
+.email-verified {
+  flex-basis: 100%;
+  margin: 0;
+  padding: px-to-rem(5px);
+  text-align: center;
+}
+
+.button {
+  flex-shrink: 0;
 }
