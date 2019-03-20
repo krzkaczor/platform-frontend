@@ -33,6 +33,8 @@ export async function main(): Promise<void> {
   });
 
   await visReg();
+
+  await deploy(join(__dirname, "dist"));
 }
 
 async function visReg(): Promise<void> {
@@ -52,6 +54,17 @@ async function visReg(): Promise<void> {
         reportData.newItems.length
       }, Deleted: ${reportData.deletedItems.length}`,
       detailsUrl: codeChecks.getArtifactLink("/storybook-vis-reg-report/index.html"),
+    });
+  }
+}
+
+async function deploy(path: string): Promise<void> {
+  if (codeChecks.isPr()) {
+    await codeChecks.saveCollection("build", path);
+    await codeChecks.success({
+      name: "Commit deployment",
+      shortDescription: "Deployment for commit ready.",
+      detailsUrl: codeChecks.getArtifactLink("/build/index.html"),
     });
   }
 }
