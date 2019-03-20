@@ -129,7 +129,7 @@ jobs:
             - v14-deps-{{ checksum "package.json" }}
             - v14-deps-
       - run: yarn build:prod
-      - run: yarn storybook:screenshots
+      # - run: yarn storybook:screenshots
       - run: yarn codechecks
 
   deploy-storybook:
@@ -159,9 +159,9 @@ workflows:
       - test:
          requires:
            - install-lint
-      - test-e2e:
-          requires:
-            - build-frontend
+      # - test-e2e:
+      #     requires:
+      #       - build-frontend
       - codechecks:
          requires:
            - build-frontend
