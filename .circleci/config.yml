@@ -129,7 +129,7 @@ jobs:
             - v14-deps-{{ checksum "package.json" }}
             - v14-deps-
       - run: yarn
-      - run: yarn build:prod
+      - run: PUBLIC_URL=. yarn build:commit
       - run: yarn storybook:screenshots
       - run: yarn codechecks
 
