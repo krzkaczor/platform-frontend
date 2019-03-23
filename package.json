@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "build:prod": "(cp -n ./app/config/.env.example .env || true) && NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
-    "build:commit": "(cp -n ./app/config/.env.example .env || true) && echo 'NF_RPC_PROVIDER=https://mainnet.infura.io/v3/c7666a65c8544e0c885e9db0210a9618' >> .env && NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
+    "build:commit": "(cp -n ./app/config/.env.commit .env || true) && echo 'NF_RPC_PROVIDER=https://mainnet.infura.io/v3/c7666a65c8544e0c885e9db0210a9618' >> .env && NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
     "build:prod:e2e": "(cp -n ./app/config/.env.e2e .env || true) && NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
     "build:prod:prerender": "./scripts/prerender.sh",
     "build:translate": "(cp -n ./app/config/.env.example .env || true) && NODE_ENV=production && NF_ENABLE_TRANSLATE_OVERLAY=1 webpack --config ./webpack/webpack.config.prod.js",

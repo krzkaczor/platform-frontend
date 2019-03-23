@@ -15,7 +15,7 @@ module.exports = {
   },
   output: {
     path: paths.dist,
-    publicPath: process.env.PUBLIC_URL || "/",
+    publicPath: "/",
   },
   plugins: [
     new CopyWebpackPlugin([{ from: "./app/external/*", to: "./external/", flatten: true }]),
