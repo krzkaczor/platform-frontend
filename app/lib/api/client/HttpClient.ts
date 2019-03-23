@@ -100,7 +100,7 @@ export abstract class HttpClient implements IHttpClient {
         invariant(!headers["Content-Type"], "With form-data you can't set content-type header");
       }
 
-      response = await fetch(fullUrl, {
+      response = await fetch((process.env.NF_BACKEND_ROOT || "") + fullUrl, {
         headers,
         method,
         body,
