@@ -1,4 +1,5 @@
 import { buildSize } from "codecheck-build-size";
+import { typeCoverage } from "codecheck-type-coverage";
 import { codeChecks } from "codechecks";
 import { join } from "path";
 
@@ -35,6 +36,10 @@ export async function main(): Promise<void> {
   await visReg();
 
   await deploy(join(__dirname, "dist"));
+
+  await typeCoverage({
+    tsconfigPath: "./tsconfig.json",
+  });
 }
 
 async function visReg(): Promise<void> {
