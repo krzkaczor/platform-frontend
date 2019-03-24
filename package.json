@@ -121,7 +121,7 @@
     "chai-dom": "^1.8.1",
     "clean-webpack-plugin": "^1.0.0",
     "codecheck-build-size": "^0.0.10",
-    "codechecks": "^0.0.44",
+    "codechecks": "^0.0.45",
     "codecov": "^3.0.0",
     "concurrently": "^4.0.1",
     "copy-webpack-plugin": "^4.6.0",

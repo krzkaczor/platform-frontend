@@ -4490,10 +4490,10 @@ codecheck-build-size@^0.0.10:
     gzip-size "^5.0.0"
     lodash "^4.17.11"
 
-codechecks@^0.0.44:
-  version "0.0.44"
-  resolved "https://registry.yarnpkg.com/codechecks/-/codechecks-0.0.44.tgz#4284c5ca027576750fa9f746a76638a7e1c29188"
-  integrity sha512-xoOOWyK9cDMseG2FBD+LXH5FMeATzbDy3irGrwkQyTQtanD1b1t/gbUX+wyifthxe/J9uGpVPO3XazSQ+jTJEg==
+codechecks@^0.0.45:
+  version "0.0.45"
+  resolved "https://registry.yarnpkg.com/codechecks/-/codechecks-0.0.45.tgz#a6c451768ad404bad089f46bbf612bb3376854d7"
+  integrity sha512-B3lXrlHdpAQyyAYtnX5MT8Vg/l2WgZxzSwkh1i+W+UkfR7LO3aWCtOZJwt7HE1xTm+ciGNhxJCmFk9S95GtMSg==
   dependencies:
     bluebird "^3.5.3"
     commander "^2.19.0"
