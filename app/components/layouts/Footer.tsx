@@ -10,6 +10,7 @@ export const Footer: React.FunctionComponent = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.contentWrapper}>
+        <h2>TEST!</h2>
         <div className={styles.links}>
           <ExternalLink href="https://neufund.org/imprint">
             <FormattedMessage id="footer.links.imprint" />
