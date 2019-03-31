@@ -1,6 +1,4 @@
-import { buildSize } from "codecheck-build-size";
-import { typeCoverage } from "codecheck-type-coverage";
-import { codeChecks } from "codechecks";
+import { codechecks } from "@codechecks/client";
 import { join } from "path";
 
 // tslint:disable-next-line
@@ -12,76 +10,50 @@ export async function main(): Promise<void> {
   await checkPackageLock();
   await checkSmartContractGitModules();
 
-  await buildSize({
-    files: [
-      {
-        path: "dist/*.vendors*.js",
-        maxSize: "1000kB",
-      },
-      {
-        path: "dist/*.main*.js",
-        maxSize: "350kB",
-      },
-      {
-        path: "dist/*.main*.css",
-        maxSize: "60kB",
-      },
-      {
-        path: "dist/*.vendors*.css",
-        maxSize: "20kB",
-      },
-    ],
-  });
-
   await visReg();
-
   await deploy(join(__dirname, "dist"));
-
-  await typeCoverage({
-    tsconfigPath: "./tsconfig.json",
-  });
 }
 
 async function visReg(): Promise<void> {
   const execOptions = { timeout: 300000, cwd: process.cwd(), log: true };
-  await codeChecks.saveCollection("storybook-vis-reg", join(__dirname, "__screenshots__"));
+  await codechecks.saveCollection("storybook-vis-reg", join(__dirname, "__screenshots__"));
 
-  if (codeChecks.isPr()) {
-    await codeChecks.getCollection("storybook-vis-reg", join(__dirname, ".reg/expected"));
+  if (codechecks.isPr()) {
+    await codechecks.getCollection("storybook-vis-reg", join(__dirname, ".reg/expected"));
     await exec("./node_modules/.bin/reg-suit compare", execOptions);
 
-    await codeChecks.saveCollection("storybook-vis-reg-report", join(__dirname, ".reg"));
+    await codechecks.saveCollection("storybook-vis-reg-report", join(__dirname, ".reg"));
 
     const reportData = require("./.reg/out.json");
-    await codeChecks.success({
+    await codechecks.success({
       name: "Visual regression for Storybook",
       shortDescription: `Changed: ${reportData.failedItems.length}, New: ${
         reportData.newItems.length
       }, Deleted: ${reportData.deletedItems.length}`,
-      detailsUrl: codeChecks.getArtifactLink("/storybook-vis-reg-report/index.html"),
+      detailsUrl: codechecks.getArtifactLink("/storybook-vis-reg-report/index.html"),
     });
   }
 }
 
 async function deploy(path: string): Promise<void> {
-  if (codeChecks.isPr()) {
-    await codeChecks.saveCollection("build", path);
-    await codeChecks.success({
+  if (codechecks.isPr()) {
+    await codechecks.saveCollection("build", path);
+    await codechecks.success({
       name: "Commit deployment",
       shortDescription: "Deployment for commit ready.",
-      detailsUrl: codeChecks.getPageLink("build", "index.html"),
+      detailsUrl: codechecks.getPageLink("build", "index.html"),
     });
   }
 }
 
 async function checkPackageLock(): Promise<void> {
-  if (!codeChecks.isPr()) {
+  if (!codechecks.isPr()) {
     return;
   }
-  const hasPackageLock = codeChecks.context.pr!.files.added.includes("package-lock.json");
+  const hasPackageLock = codechecks.context.pr!.files.added.includes("package-lock.json");
 
   if (hasPackageLock) {
-    await codeChecks.failure({
+    await codechecks.failure({
       name: "Package lock detected",
       shortDescription: "Do not use npm, use yarn instead.",
     });
@@ -89,19 +61,19 @@ async function checkPackageLock(): Promise<void> {
 }
 
 async function checkSmartContractGitModules(): Promise<void> {
-  if (!codeChecks.isPr()) {
+  if (!codechecks.isPr()) {
     return;
   }
   const updatesContracts = (
-    codeChecks.context.pr!.meta.body + codeChecks.context.pr!.meta.title
+    codechecks.context.pr!.meta.body + codechecks.context.pr!.meta.title
   ).includes("#with-contracts");
 
-  const hasContractSubmodule = codeChecks.context.pr!.files.changed.some(p =>
+  const hasContractSubmodule = codechecks.context.pr!.files.changed.some(p =>
     p.includes("platform-contracts-artifacts/"),
   );
 
   if (hasContractSubmodule && !updatesContracts) {
-    await codeChecks.failure({
+    await codechecks.failure({
       name: "Smart Contracts Submodule",
       shortDescription:
         "Detected platform-contracts-artifacts in your PR, most likely this is by mistake please push alone",

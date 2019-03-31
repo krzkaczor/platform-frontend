@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "name": "build-size-watcher",
+      "options": {
+        "files": [
+          {
+            "path": "dist/*.vendors*.js",
+            "maxSize": "1000kB"
+          },
+          {
+            "path": "dist/*.main*.js",
+            "maxSize": "350kB"
+          },
+          {
+            "path": "dist/*.main*.css",
+            "maxSize": "60kB"
+          },
+          {
+            "path": "dist/*.vendors*.css",
+            "maxSize": "20kB"
+          }
+        ]
+      }
+    },
+    {
+      "name": "type-coverage-watcher",
+      "options": {
+        "tsconfigPath": "./tsconfig.json"
+      }
+    }
+  ]
+}
