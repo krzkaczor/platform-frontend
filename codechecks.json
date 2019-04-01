@@ -28,6 +28,12 @@
       "options": {
         "tsconfigPath": "./tsconfig.json"
       }
+    },
+    {
+      "name": "commit-deployment",
+      "options": {
+        "buildPath": "./dist"
+      }
     }
   ]
 }

@@ -66,6 +66,7 @@
     "@babel/preset-typescript": "^7.1.0",
     "@codechecks/build-size-watcher": "^0.0.13",
     "@codechecks/client": "^0.0.55",
+    "@codechecks/commit-deployment": "^0.0.4",
     "@codechecks/type-coverage-watcher": "^0.0.7",
     "@cypress/webpack-preprocessor": "2.0.1",
     "@storybook/addon-a11y": "^4.0.9",

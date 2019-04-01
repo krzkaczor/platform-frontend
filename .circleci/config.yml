@@ -130,8 +130,22 @@ jobs:
             - v14-deps-
       - run: yarn
       - run: yarn build:commit
-      - run: yarn storybook:screenshots
       - run: yarn codechecks
+
+  codechecks-vis-reg:
+    docker:
+      - image: krzkaczor/neufund-platform-base
+    working_directory: /home/circleci/app
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v14-deps-{{ checksum "package.json" }}
+            - v14-deps-
+      - run: yarn
+      - run: yarn storybook:screenshots
+      - run: yarn codechecks ./codechecks-vis-reg.ts
 
   deploy-storybook:
     docker:
@@ -164,8 +178,12 @@ workflows:
       #     requires:
       #       - build-frontend
       - codechecks:
-         requires:
-           - build-frontend
+          requires:
+            - build-frontend
+      # vis reg runs as a separate job because it's really slow
+      - codechecks-vis-reg:
+          requires:
+            - build-frontend
 
   nightly:
     triggers:
