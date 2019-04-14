@@ -26,7 +26,8 @@
     "app/**/*.tsx",
     "typings/**/*.ts",
     "test/**/*.ts",
-    "test/**/*.tsx"
+    "test/**/*.tsx",
+    "codechecks.ts"
   ],
   "exclude": ["./app/e2e-test/**"]
 }
