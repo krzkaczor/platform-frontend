@@ -186,15 +186,6 @@ workflows:
          requires:
            - build-frontend
 
-  nightly:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-                - production
     jobs:
       - install-lint
       - test:
